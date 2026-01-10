@@ -4,5 +4,8 @@
 
 workflow_status:
   product-brief: "_bmad-output/planning-artifacts/product-brief-music-theory-2026-01-10.md"
+  prd: "_bmad-output/planning-artifacts/prd.md"
+  ux-design: "_bmad-output/planning-artifacts/ux-design-specification.md"
+  architecture: "_bmad-output/planning-artifacts/architecture.md"
 
 last_updated: "2026-01-10"
