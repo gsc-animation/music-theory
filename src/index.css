@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bamboo: #4CAF50;
+  --color-warm-wood: #8D6E63;
+  --color-rice-paper: #FAFAFA;
+  --color-bright-leaf: #66BB6A;
+  --color-gentle-clay: #E57373;
+  --color-stone-grey: #616161;
+
+  --font-display: "Nunito", sans-serif;
+  --font-body: "Nunito", sans-serif;
+  --font-mono: "Fira Code", monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-rice-paper);
+  color: var(--color-stone-grey);
+}
