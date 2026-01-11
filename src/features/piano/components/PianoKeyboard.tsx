@@ -4,7 +4,8 @@ import PianoKey, { KeyType } from './PianoKey';
 interface PianoKeyboardProps {
   startOctave?: number;
   octaves?: number;
-  onTriggerNote: (note: string) => void;
+  onStartNote: (note: string) => void;
+  onStopNote: (note: string) => void;
 }
 
 const NOTES = [
@@ -25,7 +26,8 @@ const NOTES = [
 const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
   startOctave = 4,
   octaves = 1,
-  onTriggerNote
+  onStartNote,
+  onStopNote
 }) => {
   const renderOctave = (octaveIndex: number) => {
     const currentOctave = startOctave + octaveIndex;
@@ -38,7 +40,7 @@ const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
         {/* White Keys Layer */}
         {whiteKeys.map((note) => (
           <div key={note} className="flex-1">
-            <PianoKey note={note} type="white" onTriggerNote={onTriggerNote} label={note.replace(/[0-9]/g, '')} />
+            <PianoKey note={note} type="white" onStartNote={onStartNote} onStopNote={onStopNote} label={note.replace(/[0-9]/g, '')} />
           </div>
         ))}
 
@@ -59,7 +61,7 @@ const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
                  className="absolute top-0 w-[10%] h-32 pointer-events-auto z-10"
                  style={{ left: `${left}%` }}
                >
-                 <PianoKey note={note} type="black" onTriggerNote={onTriggerNote} />
+                 <PianoKey note={note} type="black" onStartNote={onStartNote} onStopNote={onStopNote} />
                </div>
              );
         })}

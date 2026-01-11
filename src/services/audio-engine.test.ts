@@ -4,9 +4,13 @@ import * as Tone from 'tone';
 
 // Shared mock instance
 const mockTriggerAttackRelease = vi.fn();
+const mockTriggerAttack = vi.fn();
+const mockTriggerRelease = vi.fn();
 const mockSynthInstance = {
   toDestination: vi.fn().mockReturnThis(),
   triggerAttackRelease: mockTriggerAttackRelease,
+  triggerAttack: mockTriggerAttack,
+  triggerRelease: mockTriggerRelease,
 };
 
 // Mock Tone.js
@@ -68,5 +72,19 @@ describe('AudioEngine', () => {
   it('should return context state', () => {
     const state = audioEngine.getState();
     expect(state).toBe('suspended');
+  });
+
+  it('should start a note', async () => {
+    await audioEngine.initialize();
+    // @ts-ignore - method not implemented yet
+    audioEngine.startNote('E4');
+    expect(mockTriggerAttack).toHaveBeenCalledWith('E4');
+  });
+
+  it('should stop a note', async () => {
+    await audioEngine.initialize();
+    // @ts-ignore - method not implemented yet
+    audioEngine.stopNote('E4');
+    expect(mockTriggerRelease).toHaveBeenCalledWith('E4');
   });
 });

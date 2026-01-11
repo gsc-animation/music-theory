@@ -6,26 +6,29 @@ interface PianoKeyProps {
   note: string;
   type: KeyType;
   label?: string;
-  onTriggerNote: (note: string) => void;
+  onStartNote: (note: string) => void;
+  onStopNote: (note: string) => void;
 }
 
-const PianoKey: React.FC<PianoKeyProps> = ({ note, type, label, onTriggerNote }) => {
+const PianoKey: React.FC<PianoKeyProps> = ({ note, type, label, onStartNote, onStopNote }) => {
   const [isActive, setIsActive] = useState(false);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.preventDefault(); // Prevent scrolling/selection
     setIsActive(true);
-    onTriggerNote(note);
+    onStartNote(note);
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
     e.preventDefault();
     setIsActive(false);
+    onStopNote(note);
   };
 
   const handlePointerLeave = (e: React.PointerEvent) => {
     e.preventDefault();
     setIsActive(false);
+    onStopNote(note);
   };
 
   const baseClasses = "relative flex items-end justify-center pb-2 rounded-b-lg shadow-sm transition-colors duration-75 select-none touch-none";

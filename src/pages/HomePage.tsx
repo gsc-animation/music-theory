@@ -4,7 +4,16 @@ import { MusicStaff } from '../features/sheet/components/MusicStaff';
 import { useAudioStore } from '../stores/useAudioStore';
 
 export const HomePage: React.FC = () => {
-  const triggerNote = useAudioStore((state) => state.triggerNote);
+  const activeNotes = useAudioStore((state) => state.activeNotes);
+  const startNote = useAudioStore((state) => state.startNote);
+  const stopNote = useAudioStore((state) => state.stopNote);
+
+  // Format active notes as a chord for VexFlow
+  // e.g. ['C4', 'E4'] -> ['(c4 e4)/w']
+  // This ensures simultaneous notes are rendered together, not sequentially
+  const staffNotes = activeNotes.length > 0
+    ? [`(${activeNotes.map(n => n.toLowerCase()).join(' ')})/w`]
+    : ['b4/w/r'];
 
   return (
     <div className="p-4 flex flex-col items-center gap-6 min-h-screen bg-ricePaper">
@@ -13,7 +22,7 @@ export const HomePage: React.FC = () => {
       <section className="w-full max-w-md space-y-4">
         <h2 className="text-xl text-warmWood font-semibold">Staff Demo</h2>
         <MusicStaff
-          notes={['c4/q', 'd4/q', 'e4/q', 'f4/q']}
+          notes={staffNotes}
           width={350}
           clef="treble"
           timeSignature="4/4"
@@ -29,7 +38,8 @@ export const HomePage: React.FC = () => {
           <PianoKeyboard
             startOctave={4}
             octaves={1}
-            onTriggerNote={triggerNote}
+            onStartNote={startNote}
+            onStopNote={stopNote}
           />
         </div>
       </section>

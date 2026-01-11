@@ -4,15 +4,16 @@ import { audioEngine } from '../services/audio-engine';
 interface AudioState {
   isReady: boolean;
   isPlaying: boolean;
-  currentNote: string | null;
+  activeNotes: string[];
   initializeAudio: () => Promise<void>;
-  triggerNote: (note: string, duration?: string) => void;
+  startNote: (note: string) => void;
+  stopNote: (note: string) => void;
 }
 
 export const useAudioStore = create<AudioState>((set) => ({
   isReady: false,
   isPlaying: false,
-  currentNote: null,
+  activeNotes: [],
 
   initializeAudio: async () => {
     try {
@@ -23,14 +24,22 @@ export const useAudioStore = create<AudioState>((set) => ({
     }
   },
 
-  triggerNote: (note: string, duration: string = '8n') => {
-    audioEngine.playNote(note, duration);
-    set({ currentNote: note, isPlaying: true });
+  startNote: (note: string) => {
+    audioEngine.startNote(note);
+    set((state) => ({
+      activeNotes: [...state.activeNotes, note],
+      isPlaying: true
+    }));
+  },
 
-    // Reset playing state after duration (simplified for now)
-    // In a real app, we might want more complex state management for note release
-    setTimeout(() => {
-        set((state) => state.currentNote === note ? { isPlaying: false, currentNote: null } : {});
-    }, 200);
+  stopNote: (note: string) => {
+    audioEngine.stopNote(note);
+    set((state) => {
+      const newActiveNotes = state.activeNotes.filter(n => n !== note);
+      return {
+        activeNotes: newActiveNotes,
+        isPlaying: newActiveNotes.length > 0
+      };
+    });
   },
 }));

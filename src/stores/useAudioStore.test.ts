@@ -8,6 +8,8 @@ vi.mock('../services/audio-engine', () => ({
   audioEngine: {
     initialize: vi.fn(),
     playNote: vi.fn(),
+    startNote: vi.fn(),
+    stopNote: vi.fn(),
     getState: vi.fn().mockReturnValue('suspended'),
   },
 }));
@@ -18,7 +20,7 @@ describe('useAudioStore', () => {
     // Reset store state
     const { result } = renderHook(() => useAudioStore());
     act(() => {
-      useAudioStore.setState({ isReady: false, isPlaying: false, currentNote: null });
+      useAudioStore.setState({ isReady: false, isPlaying: false, activeNotes: [] });
     });
   });
 
@@ -26,7 +28,7 @@ describe('useAudioStore', () => {
     const { result } = renderHook(() => useAudioStore());
     expect(result.current.isReady).toBe(false);
     expect(result.current.isPlaying).toBe(false);
-    expect(result.current.currentNote).toBe(null);
+    expect(result.current.activeNotes).toEqual([]);
   });
 
   it('should initialize audio', async () => {
@@ -40,15 +42,31 @@ describe('useAudioStore', () => {
     expect(result.current.isReady).toBe(true);
   });
 
-  it('should trigger note', () => {
+  it('should start and track a note', () => {
     const { result } = renderHook(() => useAudioStore());
 
     act(() => {
-      result.current.triggerNote('C4');
+      result.current.startNote('F4');
     });
 
-    expect(audioEngine.playNote).toHaveBeenCalledWith('C4', '8n');
-    expect(result.current.currentNote).toBe('C4');
+    expect(audioEngine.startNote).toHaveBeenCalledWith('F4');
+    expect(result.current.activeNotes).toContain('F4');
     expect(result.current.isPlaying).toBe(true);
+  });
+
+  it('should stop and untrack a note', () => {
+    const { result } = renderHook(() => useAudioStore());
+
+    act(() => {
+      result.current.startNote('G4');
+    });
+    expect(result.current.activeNotes).toContain('G4');
+
+    act(() => {
+      result.current.stopNote('G4');
+    });
+
+    expect(audioEngine.stopNote).toHaveBeenCalledWith('G4');
+    expect(result.current.activeNotes).not.toContain('G4');
   });
 });

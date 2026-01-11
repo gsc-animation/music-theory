@@ -33,6 +33,21 @@ class AudioEngine {
     this.synth.triggerAttackRelease(note, duration);
   }
 
+  public startNote(note: string): void {
+    if (!this.isInitialized || !this.synth) {
+      console.warn('AudioEngine not initialized');
+      return;
+    }
+    this.synth.triggerAttack(note);
+  }
+
+  public stopNote(note: string): void {
+    if (!this.isInitialized || !this.synth) {
+      return;
+    }
+    this.synth.triggerRelease(note);
+  }
+
   public getState(): Tone.ToneContext['state'] {
     return Tone.getContext().state;
   }
