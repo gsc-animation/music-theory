@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import PianoKey from './PianoKey';
+import { useSettingsStore } from '../../../stores/useSettingsStore';
 
 describe('PianoKey', () => {
   const onStartNote = vi.fn();
@@ -8,6 +9,8 @@ describe('PianoKey', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    useSettingsStore.setState({ notationSystem: 'latin' });
+    cleanup();
   });
 
   it('renders white key correctly', () => {
@@ -21,7 +24,7 @@ describe('PianoKey', () => {
     );
     const key = screen.getByRole('button', { name: /C4/i });
     expect(key).toBeInTheDocument();
-    expect(key).toHaveClass('bg-ricePaper');
+    expect(key).toHaveClass('bg-rice-paper');
   });
 
   it('renders black key correctly', () => {
@@ -35,7 +38,7 @@ describe('PianoKey', () => {
     );
     const key = screen.getByRole('button', { name: /C#4/i });
     expect(key).toBeInTheDocument();
-    expect(key).toHaveClass('bg-warmWood');
+    expect(key).toHaveClass('bg-warm-wood');
   });
 
   it('triggers note on pointer down', () => {
@@ -82,12 +85,27 @@ describe('PianoKey', () => {
     expect(onStopNote).toHaveBeenCalledWith('C4');
   });
 
-  it('renders optional label', () => {
-    render(
+  it('renders localized label based on store', () => {
+    useSettingsStore.setState({ notationSystem: 'latin' });
+    const { rerender } = render(
       <PianoKey
         note="C4"
         type="white"
-        label="Do"
+        label="C" // Pass label to enable rendering
+        onStartNote={onStartNote}
+        onStopNote={onStopNote}
+      />
+    );
+    // Should show C (default behavior for C4)
+    expect(screen.getByText('C')).toBeInTheDocument();
+
+    useSettingsStore.setState({ notationSystem: 'solfege' });
+    // Force rerender with new store state
+    rerender(
+      <PianoKey
+        note="C4"
+        type="white"
+        label="C"
         onStartNote={onStartNote}
         onStopNote={onStopNote}
       />

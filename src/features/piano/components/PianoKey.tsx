@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSettingsStore } from '../../../stores/useSettingsStore';
+import { getNoteLabel } from '../../../utils/note-labels';
 
 export type KeyType = 'white' | 'black';
 
@@ -10,8 +12,14 @@ interface PianoKeyProps {
   onStopNote: (note: string) => void;
 }
 
-const PianoKey: React.FC<PianoKeyProps> = ({ note, type, label, onStartNote, onStopNote }) => {
+const PianoKey: React.FC<PianoKeyProps> = ({ note, type, label: _label, onStartNote, onStopNote }) => {
   const [isActive, setIsActive] = useState(false);
+  const notationSystem = useSettingsStore((state) => state.notationSystem);
+
+  const localizedLabel = getNoteLabel(note, notationSystem);
+  // Strip octave numbers for display cleanliness (e.g. "Do4" -> "Do")
+  // Only show label if it was requested (white keys usually)
+  const displayLabel = _label ? localizedLabel.replace(/[0-9]/g, '') : undefined;
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.preventDefault(); // Prevent scrolling/selection
@@ -34,8 +42,8 @@ const PianoKey: React.FC<PianoKeyProps> = ({ note, type, label, onStartNote, onS
   const baseClasses = "relative flex items-end justify-center pb-2 rounded-b-lg shadow-sm transition-colors duration-75 select-none touch-none";
 
   const typeClasses = type === 'white'
-    ? `h-48 w-full z-0 border border-warmWood/20 ${isActive ? 'bg-bambooGreen/20' : 'bg-ricePaper'}`
-    : `h-32 w-2/3 z-10 -mx-[33%] border border-warmWood/40 ${isActive ? 'bg-warmWood/80' : 'bg-warmWood'} text-white`;
+    ? `h-48 w-full z-0 border border-warm-wood/20 ${isActive ? 'bg-bamboo/20' : 'bg-rice-paper'}`
+    : `h-32 w-2/3 z-10 -mx-[33%] border border-warm-wood/40 ${isActive ? 'bg-warm-wood/80' : 'bg-warm-wood'} text-white`;
 
   const activeClasses = isActive ? 'scale-[0.98] origin-top' : '';
 
@@ -48,7 +56,7 @@ const PianoKey: React.FC<PianoKeyProps> = ({ note, type, label, onStartNote, onS
       aria-label={`Piano key ${note}`}
       style={{ touchAction: 'none' }}
     >
-      {label && <span className="text-sm font-bold opacity-80 pointer-events-none">{label}</span>}
+      {displayLabel && <span className="text-sm font-bold opacity-80 pointer-events-none">{displayLabel}</span>}
     </button>
   );
 };

@@ -46,7 +46,7 @@ development_status:
   1-3-audio-engine-singleton-unlock-strategy: done
   1-4-interactive-piano-keyboard-ui: done
   1-5-audio-visual-synchronization-the-loop: done
-  1-6-notation-system-toggle-solfege-latin: backlog
+  1-6-notation-system-toggle-solfege-latin: done
   epic-1-retrospective: optional
 
   epic-2: backlog
