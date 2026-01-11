@@ -59,7 +59,7 @@ development_status:
 
   epic-3: in-progress
   3-1-game-state-management-zustand: done
-  3-2-game-mode-ui-overlay: backlog
+  3-2-game-mode-ui-overlay: done
   3-3-feedback-system-micro-interactions: backlog
   3-4-local-persistence-layer: backlog
   epic-3-retrospective: optional

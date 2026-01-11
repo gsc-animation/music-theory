@@ -1,28 +1,34 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import SaoTrucVisualizer from './SaoTrucVisualizer';
 import { useAudioStore } from '../../../stores/useAudioStore';
 
 // Mock the FingeringChart component to simplify testing (shallow render equivalent)
 vi.mock('./FingeringChart', () => ({
-  default: ({ holes, type }: any) => (
+  default: ({ holes, type }: { holes: unknown[], type: string }) => (
     <div data-testid="fingering-chart">
-      Chart Type: {type}, Holes Count: {holes.length}, First Hole: {holes[0]}
+      Chart Type: {type}, Holes Count: {holes.length}, First Hole: {String(holes[0] || '')}
     </div>
   ),
 }));
 
-// Mock useAudioStore
-vi.mock('../../../stores/useAudioStore', () => ({
-  useAudioStore: vi.fn(),
-}));
+// Mock useAudioStore - Simple and direct
+vi.mock('../../../stores/useAudioStore', () => {
+  return {
+    useAudioStore: vi.fn(),
+  };
+});
 
 describe('SaoTrucVisualizer', () => {
   beforeEach(() => {
-    // Default mock implementation with stable state reference to avoid infinite loops
-    const defaultState = { activeNotes: [] };
-    (useAudioStore as any).mockImplementation((selector: (state: any) => any) => {
-      return selector(defaultState);
+    vi.restoreAllMocks();
+
+    // Default mock implementation - return simple object, NO FUNCTION
+    (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
+      // Create a plain state object
+      const state = { activeNotes: [] };
+      // Execute the selector against this plain object immediately
+      return selector(state);
     });
   });
 
@@ -46,10 +52,9 @@ describe('SaoTrucVisualizer', () => {
   });
 
   it('updates based on active notes', () => {
-    // Mock active notes to be ['C4']
-    const state = { activeNotes: ['C4'] };
-    (useAudioStore as any).mockImplementation((selector: (state: any) => any) => {
-      return selector(state);
+    // Override mock for this test
+    (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
+        return selector({ activeNotes: ['C4'] });
     });
 
     render(<SaoTrucVisualizer />);
@@ -59,9 +64,9 @@ describe('SaoTrucVisualizer', () => {
   });
 
   it('handles empty active notes (default state)', () => {
-    const state = { activeNotes: [] };
-    (useAudioStore as any).mockImplementation((selector: (state: any) => any) => {
-      return selector(state);
+    // Explicit empty
+    (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
+        return selector({ activeNotes: [] });
     });
 
     render(<SaoTrucVisualizer />);
@@ -70,9 +75,8 @@ describe('SaoTrucVisualizer', () => {
   });
 
   it('displays out of range message for invalid notes', async () => {
-    const state = { activeNotes: ['A0'] };
-    (useAudioStore as any).mockImplementation((selector: (state: any) => any) => {
-      return selector(state);
+    (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
+        return selector({ activeNotes: ['A0'] });
     });
 
     render(<SaoTrucVisualizer />);

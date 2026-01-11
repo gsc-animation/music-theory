@@ -9,14 +9,16 @@ export interface MusicStaffProps {
   timeSignature?: string;
   width?: number;
   className?: string;
+  highlightNote?: string | null; // New prop for game mode
 }
 
-export const MusicStaff: React.FC<MusicStaffProps> = ({
+export const MusicStaff: React.FC<MusicStaffProps> = React.memo(({
   notes,
   clef = 'treble',
   timeSignature = '4/4',
   width,
   className,
+  highlightNote,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentWidth, setCurrentWidth] = useState(width || 300);
@@ -57,7 +59,8 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
     containerRef.current.innerHTML = '';
 
     const vf = new Factory({
-      renderer: { elementId: containerRef.current as unknown as string, width: currentWidth, height: 150 }
+      // @ts-expect-error VexFlow types incorrectly require string ID, but accepts HTMLElement
+      renderer: { elementId: containerRef.current, width: currentWidth, height: 150 }
     });
 
     const score = vf.EasyScore();
@@ -65,8 +68,19 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
 
     const measures = distributeNotesToMeasures(notes, timeSignature);
 
-    // If no notes, show a default rest in one measure
-    if (measures.length === 0) {
+    // If highlightNote is present (Game Mode), override standard measures to show single target note
+    if (highlightNote) {
+      // Create a full measure with just the target note as a whole note (or quarter)
+      // Note: highlightNote format is usually "C4", VexFlow needs "c4/w" or similar
+      const formatted = highlightNote.toLowerCase() + '/w';
+      // Clear existing measures and replace with single target note
+      // We'll put it in the first measure for clarity
+      measures.length = 0;
+      measures.push([formatted]);
+
+      // If we want to center it or make it look special, we can handle that below
+      // But replacing 'notes' content effectively switches the view
+    } else if (measures.length === 0) {
        measures.push(['b4/w/r']);
     }
 
@@ -116,7 +130,7 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
       console.error("VexFlow Render Error:", e);
     }
 
-  }, [notes, clef, timeSignature, currentWidth]);
+  }, [notes, clef, timeSignature, currentWidth, highlightNote]);
 
   return (
     <div
@@ -130,4 +144,4 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
       {/* VexFlow will render SVG here */}
     </div>
   );
-};
+});
