@@ -18,7 +18,6 @@ class AudioEngine {
 
     await Tone.start();
     this.isInitialized = true;
-    console.log('Audio Engine Initialized');
   }
 
   public getContext(): Tone.BaseContext {

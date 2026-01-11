@@ -1,6 +1,6 @@
 # Story 1.1: Project Initialization & Architecture Setup
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -84,6 +84,8 @@ Claude 3.5 Sonnet (via Claude Code)
 - Tailwind CSS v4 requires `@tailwindcss/vite` instead of `tailwind.config.js`. Configured via `src/index.css` CSS variables.
 - `@mui/base` installed as `@base-ui/react` (new package name).
 - Added `vitest` and `@testing-library` to support testing as Architecture required `tests/setup.ts`.
+- **Review Update:** Corrected `package.json` name from `temp-app` to `music-theory`.
+- **Review Update:** Removed `console.log` from production code in `audio-engine.ts`.
 
 ### Completion Notes List
 
@@ -95,10 +97,12 @@ Claude 3.5 Sonnet (via Claude Code)
 - Created `AudioEngine` singleton (`src/services/audio-engine.ts`).
 - Added `vitest` unit tests for `AudioEngine` to verify singleton and initialization.
 - Verified build success with PWA manifest generation.
+- **Review Fixes Applied:** Renamed package, cleaned up logging, updated file list.
 
 ### File List
 
 - package.json
+- package-lock.json
 - vite.config.ts
 - index.html
 - src/index.css
@@ -106,3 +110,7 @@ Claude 3.5 Sonnet (via Claude Code)
 - src/services/audio-engine.test.ts
 - tests/setup.ts
 - tsconfig.json
+- tsconfig.app.json
+- tsconfig.node.json
+- eslint.config.js
+- README.md

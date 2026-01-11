@@ -41,8 +41,8 @@ story_location: _bmad-output/implementation-artifacts
 
 development_status:
   epic-1: in-progress
-  1-1-project-initialization-architecture-setup: review
-  1-2-vexflow-music-staff-component: backlog
+  1-1-project-initialization-architecture-setup: done
+  1-2-vexflow-music-staff-component: done
   1-3-audio-engine-singleton-unlock-strategy: backlog
   1-4-interactive-piano-keyboard-ui: backlog
   1-5-audio-visual-synchronization-the-loop: backlog
