@@ -1,9 +1,12 @@
 import { HomePage } from './pages/HomePage';
+import { MainLayout } from './components/layout/MainLayout';
 import './App.css';
 
 function App() {
   return (
-    <HomePage />
+    <MainLayout>
+      <HomePage />
+    </MainLayout>
   );
 }
 
