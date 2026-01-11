@@ -1,4 +1,4 @@
-import { FluteType, Fingering, FingeringDataset } from '../types';
+import type { FluteType, Fingering, FingeringDataset } from '../types';
 import rawData from './fingerings.json';
 
 // Cast the raw JSON to our strict type

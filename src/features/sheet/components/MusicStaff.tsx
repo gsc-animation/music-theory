@@ -103,7 +103,7 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
 
         // Format and draw notes
         // Adjust available width for notes (subtract padding for clef/key sig in first measure)
-        const availableWidth = measureWidth - (index === 0 ? 50 : 10);
+        const availableWidth = measureWidth - (index === 0 ? 80 : 20);
 
         vf.Formatter()
           .joinVoices([voice])

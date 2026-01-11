@@ -1,6 +1,7 @@
 import React from 'react';
 import PianoKeyboard from '../features/piano/components/PianoKeyboard';
 import { MusicStaff } from '../features/sheet/components/MusicStaff';
+import SaoTrucVisualizer from '../features/sao-truc/components/SaoTrucVisualizer';
 import { useAudioStore } from '../stores/useAudioStore';
 import { NotationToggle } from '../components/ui/NotationToggle';
 import { TimeSignatureSelector } from '../components/ui/TimeSignatureSelector';
@@ -21,13 +22,18 @@ export const HomePage: React.FC = () => {
   // Format recorded notes for VexFlow
   // If notes are sequential, VexFlow EasyScore expects comma-separated
   // e.g. "C4, E4, G4"
-  const staffNotes = recordedNotes.length > 0
-    ? recordedNotes.slice(-noteLimit).map(n => n.toLowerCase() + '/q') // Show last N notes
+
+  // Calculate dropping based on measure alignment (Shift by full measures when full)
+  const overflow = Math.max(0, recordedNotes.length - noteLimit);
+  const notesToDrop = Math.ceil(overflow / beatsPerMeasure) * beatsPerMeasure;
+
+  const staffNotes = recordedNotes.slice(notesToDrop).length > 0
+    ? recordedNotes.slice(notesToDrop).map(n => n.toLowerCase() + '/q') // Show last N notes
     : ['b4/w/r'];
 
   return (
     <div className="p-4 flex flex-col items-center gap-6 min-h-screen bg-ricePaper">
-      <header className="w-full max-w-2xl flex justify-between items-center">
+      <header className="w-full max-w-4xl flex justify-between items-center">
         <h1 className="text-3xl font-bold text-bamboo font-heading">{APP_STRINGS.APP_TITLE}</h1>
         <div className="flex gap-4 items-center">
           <button
@@ -42,20 +48,26 @@ export const HomePage: React.FC = () => {
         </div>
       </header>
 
-      <section className="w-full max-w-2xl space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl text-warmWood font-semibold">{APP_STRINGS.STAFF_DEMO_TITLE}</h2>
-        </div>
-        <MusicStaff
-          notes={staffNotes}
-          width={600}
-          clef="treble"
-          timeSignature={timeSignature}
-        />
-        <p className="text-stoneGrey text-center text-sm">
-          {APP_STRINGS.VEXFLOW_CAPTION}
-        </p>
-      </section>
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
+        <section className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl text-warmWood font-semibold">{APP_STRINGS.STAFF_DEMO_TITLE}</h2>
+          </div>
+          <MusicStaff
+            notes={staffNotes}
+            width={800}
+            clef="treble"
+            timeSignature={timeSignature}
+          />
+          <p className="text-stoneGrey text-center text-sm">
+            {APP_STRINGS.VEXFLOW_CAPTION}
+          </p>
+        </section>
+
+        <section className="flex justify-center">
+          <SaoTrucVisualizer />
+        </section>
+      </div>
 
       <section className="w-full max-w-4xl space-y-4">
         <h2 className="text-xl text-warmWood font-semibold">{APP_STRINGS.PIANO_TITLE}</h2>

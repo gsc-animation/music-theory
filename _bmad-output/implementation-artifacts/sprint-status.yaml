@@ -54,11 +54,11 @@ development_status:
   epic-2: in-progress
   2-1-sao-truc-data-model-fingering-charts: done
   2-2-fingering-visualizer-component: done
-  2-3-sao-truc-integration-with-game-loop: backlog
+  2-3-sao-truc-integration-with-game-loop: done
   epic-2-retrospective: optional
 
-  epic-3: backlog
-  3-1-game-state-management-zustand: backlog
+  epic-3: in-progress
+  3-1-game-state-management-zustand: done
   3-2-game-mode-ui-overlay: backlog
   3-3-feedback-system-micro-interactions: backlog
   3-4-local-persistence-layer: backlog

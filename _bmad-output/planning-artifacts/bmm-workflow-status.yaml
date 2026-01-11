@@ -9,5 +9,7 @@ workflow_status:
   architecture: "_bmad-output/planning-artifacts/architecture.md"
   epics: "_bmad-output/planning-artifacts/epics.md"
   test-design: "_bmad-output/planning-artifacts/test-design-system.md"
+  implementation-readiness: skipped
+  sprint-planning: "_bmad-output/implementation-artifacts/sprint-status.yaml"
 
 last_updated: "2026-01-11"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FluteType, HoleState } from '../types';
+import type { FluteType, HoleState } from '../types';
 
 interface FingeringChartProps {
   holes: HoleState[];
@@ -9,7 +9,6 @@ interface FingeringChartProps {
 
 const FingeringChart: React.FC<FingeringChartProps> = ({
   holes,
-  type = '6-hole',
   className
 }) => {
   const renderHole = (state: HoleState, index: number) => {
