@@ -45,4 +45,19 @@ describe('PianoKeyboard', () => {
     fireEvent.pointerDown(c4Key);
     expect(onStartNote).toHaveBeenCalledWith('C4');
     });
+
+    it('positions black keys with high precision', () => {
+      render(<PianoKeyboard startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
+
+      const getLeftStyle = (note: string) => {
+        const key = screen.getByRole('button', { name: new RegExp(note, 'i') });
+        return key.parentElement?.style.left;
+      };
+
+      expect(getLeftStyle('C#4')).toBe('9.2857%');
+      expect(getLeftStyle('D#4')).toBe('23.5714%');
+      expect(getLeftStyle('F#4')).toBe('52.1429%');
+      expect(getLeftStyle('G#4')).toBe('66.4286%');
+      expect(getLeftStyle('A#4')).toBe('80.7143%');
+    });
 });

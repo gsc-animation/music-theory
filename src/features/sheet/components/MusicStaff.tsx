@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Factory } from 'vexflow';
+import { distributeNotesToMeasures } from '../../../utils/music-math';
 
 export interface MusicStaffProps {
   notes: string[];
@@ -28,7 +29,7 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
 
     if (!containerRef.current) return;
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.contentRect) {
@@ -56,26 +57,61 @@ export const MusicStaff: React.FC<MusicStaffProps> = ({
     containerRef.current.innerHTML = '';
 
     const vf = new Factory({
-      renderer: { elementId: containerRef.current, width: currentWidth, height: 150 }
+      renderer: { elementId: containerRef.current as unknown as string, width: currentWidth, height: 150 }
     });
 
     const score = vf.EasyScore();
-    const system = vf.System();
+    const context = vf.getContext();
 
-    // Map notes to string format if needed, or join them
-    // EasyScore expects "C4, D4"
-    // If notes are empty, render a rest or empty voice
-    const notesString = notes.length > 0 ? notes.join(', ') : 'b4/h/r'; // Default rest if empty
+    const measures = distributeNotesToMeasures(notes, timeSignature);
+
+    // If no notes, show a default rest in one measure
+    if (measures.length === 0) {
+       measures.push(['b4/w/r']);
+    }
+
+    // Always divide width by 4 to represent the "4 measure capacity" visual
+    const measureWidth = currentWidth / 4;
 
     try {
-      const voice = score.voice(score.notes(notesString, { stem: 'up' }));
-      voice.setStrict(false); // Allow partial measures (e.g., single note in 4/4)
+      measures.forEach((measureNotes, index) => {
+        // Stop rendering if we exceed 4 measures (safety check, though HomePage limits this)
+        if (index >= 4) return;
 
-      system.addStave({
-        voices: [ voice ]
-      }).addClef(clef).addTimeSignature(timeSignature);
+        const x = index * measureWidth;
+        const y = 0;
 
-      vf.draw();
+        // Create Stave manually
+        const stave = vf.Stave({ x, y, width: measureWidth });
+
+        // Add Clef and Time Signature only to the first measure
+        if (index === 0) {
+          stave.addClef(clef).addTimeSignature(timeSignature);
+        }
+
+        // Draw the stave lines
+        stave.draw();
+
+        // Prepare notes
+        const notesString = measureNotes.join(', ');
+
+        // Create voice
+        const voice = score.voice(score.notes(notesString, { stem: 'up' }));
+
+        // Set strict to false to handle incomplete measures
+        voice.setStrict(false);
+
+        // Format and draw notes
+        // Adjust available width for notes (subtract padding for clef/key sig in first measure)
+        const availableWidth = measureWidth - (index === 0 ? 50 : 10);
+
+        vf.Formatter()
+          .joinVoices([voice])
+          .format([voice], availableWidth);
+
+        voice.draw(context, stave);
+      });
+
     } catch (e) {
       console.error("VexFlow Render Error:", e);
     }

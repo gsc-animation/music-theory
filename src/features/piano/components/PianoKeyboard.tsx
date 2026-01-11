@@ -1,5 +1,5 @@
 import React from 'react';
-import PianoKey, { KeyType } from './PianoKey';
+import PianoKey from './PianoKey';
 
 interface PianoKeyboardProps {
   startOctave?: number;
@@ -49,11 +49,11 @@ const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
              const noteName = note.replace(/[0-9]/g, '');
 
              let left = 0;
-             if (noteName === 'C#') left = 9.3;
-             if (noteName === 'D#') left = 23.6;
-             if (noteName === 'F#') left = 52.1;
-             if (noteName === 'G#') left = 66.4;
-             if (noteName === 'A#') left = 80.7;
+             if (noteName === 'C#') left = 9.2857;
+             if (noteName === 'D#') left = 23.5714;
+             if (noteName === 'F#') left = 52.1429;
+             if (noteName === 'G#') left = 66.4286;
+             if (noteName === 'A#') left = 80.7143;
 
              return (
                <div

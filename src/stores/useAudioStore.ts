@@ -5,15 +5,21 @@ interface AudioState {
   isReady: boolean;
   isPlaying: boolean;
   activeNotes: string[];
+  recordedNotes: string[];
+  timeSignature: string;
   initializeAudio: () => Promise<void>;
   startNote: (note: string) => void;
   stopNote: (note: string) => void;
+  clearRecordedNotes: () => void;
+  setTimeSignature: (signature: string) => void;
 }
 
 export const useAudioStore = create<AudioState>((set) => ({
   isReady: false,
   isPlaying: false,
   activeNotes: [],
+  recordedNotes: [],
+  timeSignature: '4/4',
 
   initializeAudio: async () => {
     try {
@@ -28,6 +34,7 @@ export const useAudioStore = create<AudioState>((set) => ({
     audioEngine.startNote(note);
     set((state) => ({
       activeNotes: [...state.activeNotes, note],
+      recordedNotes: [...state.recordedNotes, note],
       isPlaying: true
     }));
   },
@@ -42,4 +49,8 @@ export const useAudioStore = create<AudioState>((set) => ({
       };
     });
   },
+
+  clearRecordedNotes: () => set({ recordedNotes: [] }),
+
+  setTimeSignature: (signature: string) => set({ timeSignature: signature })
 }));

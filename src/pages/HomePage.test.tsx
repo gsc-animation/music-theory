@@ -33,15 +33,15 @@ describe('HomePage Integration', () => {
         fireEvent.pointerDown(c4Key);
     });
 
-    // Check staff update
-    expect(staff).toHaveTextContent('(c4)/w');
+    // Check staff update - now records history, so "c4" instead of chord "(c4)/w"
+    expect(staff).toHaveTextContent('c4');
 
     // Release key
     act(() => {
         fireEvent.pointerUp(c4Key);
     });
 
-    // Check staff reset
-    expect(staff).toHaveTextContent('b4/w/r');
+    // Check staff persistence (should NOT reset to rest)
+    expect(staff).toHaveTextContent('c4');
   });
 });

@@ -48,7 +48,7 @@ class AudioEngine {
     this.synth.triggerRelease(note);
   }
 
-  public getState(): Tone.ToneContext['state'] {
+  public getState(): Tone.BaseContext['state'] {
     return Tone.getContext().state;
   }
 }

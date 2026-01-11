@@ -20,7 +20,7 @@ describe('useAudioStore', () => {
     // Reset store state
     const { result } = renderHook(() => useAudioStore());
     act(() => {
-      useAudioStore.setState({ isReady: false, isPlaying: false, activeNotes: [] });
+      useAudioStore.setState({ isReady: false, isPlaying: false, activeNotes: [], recordedNotes: [] });
     });
   });
 
@@ -68,5 +68,33 @@ describe('useAudioStore', () => {
 
     expect(audioEngine.stopNote).toHaveBeenCalledWith('G4');
     expect(result.current.activeNotes).not.toContain('G4');
+  });
+
+  it('should record notes history', () => {
+    const { result } = renderHook(() => useAudioStore());
+
+    act(() => {
+      result.current.startNote('C4');
+      result.current.startNote('E4');
+    });
+
+    expect(result.current.recordedNotes).toEqual(['C4', 'E4']);
+
+    act(() => {
+      result.current.clearRecordedNotes();
+    });
+
+    expect(result.current.recordedNotes).toEqual([]);
+  });
+
+  it('should manage time signature', () => {
+    const { result } = renderHook(() => useAudioStore());
+    expect(result.current.timeSignature).toBe('4/4');
+
+    act(() => {
+      result.current.setTimeSignature('3/4');
+    });
+
+    expect(result.current.timeSignature).toBe('3/4');
   });
 });

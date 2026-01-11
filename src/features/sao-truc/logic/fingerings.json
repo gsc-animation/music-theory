@@ -1,0 +1,15 @@
+{
+  "6-hole": {
+    "C4": { "note": "C4", "holes": ["X","X","X","X","X","X"] },
+    "D4": { "note": "D4", "holes": ["O","X","X","X","X","X"] },
+    "E4": { "note": "E4", "holes": ["O","O","X","X","X","X"] },
+    "F4": { "note": "F4", "holes": ["O","O","O","X","X","X"] },
+    "G4": { "note": "G4", "holes": ["O","O","O","O","X","X"] },
+    "A4": { "note": "A4", "holes": ["O","O","O","O","O","X"] },
+    "B4": { "note": "B4", "holes": ["O","O","O","O","O","O"] },
+    "C5": { "note": "C5", "holes": ["X","X","X","X","X","X"] }
+  },
+  "10-hole": {
+    "C4": { "note": "C4", "holes": ["X","X","X","X","X","X","X","X","X","X"] }
+  }
+}

@@ -1,8 +1,13 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import type { UserConfig as ViteUserConfig } from 'vite'
+import type { InlineConfig } from 'vitest/node'
+
+type UserConfig = ViteUserConfig & {
+  test?: InlineConfig
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -37,4 +42,4 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './tests/setup.ts',
   },
-})
+} as UserConfig)
