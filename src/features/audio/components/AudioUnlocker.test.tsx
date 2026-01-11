@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import AudioUnlocker from './AudioUnlocker';
 import { useAudioStore } from '../../../stores/useAudioStore';
-import { AUDIO_STRINGS } from '../../constants';
+import { AUDIO_STRINGS } from '../constants';
 
 // Mock store
 vi.mock('../../../stores/useAudioStore', () => ({

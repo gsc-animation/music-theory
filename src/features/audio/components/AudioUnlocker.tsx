@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAudioStore } from '../../../stores/useAudioStore';
-import { AUDIO_STRINGS } from '../../constants';
+import { AUDIO_STRINGS } from '../constants';
 
 const AudioUnlocker: React.FC = () => {
   const isReady = useAudioStore((state) => state.isReady);
