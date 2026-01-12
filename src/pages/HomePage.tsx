@@ -8,6 +8,9 @@ import { NotationToggle } from '../components/ui/NotationToggle';
 import { TimeSignatureSelector } from '../components/ui/TimeSignatureSelector';
 import { GameOverlay } from '../features/game/components/GameOverlay';
 import { APP_STRINGS } from '../constants/app-strings';
+import { FeedbackEffects } from '../components/ui/FeedbackEffects';
+import { ConfettiExplosion } from '../components/ui/ConfettiExplosion';
+import { requestPersistentStorage, getStorageEstimate } from '../services/storage-manager';
 
 export const HomePage: React.FC = () => {
   const recordedNotes = useAudioStore((state) => state.recordedNotes);
@@ -15,19 +18,65 @@ export const HomePage: React.FC = () => {
   const stopNote = useAudioStore((state) => state.stopNote);
   const clearRecordedNotes = useAudioStore((state) => state.clearRecordedNotes);
   const timeSignature = useAudioStore((state) => state.timeSignature);
+  const playSuccess = useAudioStore((state) => state.playSuccess);
+  const playFailure = useAudioStore((state) => state.playFailure);
 
   // Game Store
   const isPlaying = useGameStore((state) => state.isPlaying);
   const targetNote = useGameStore((state) => state.targetNote);
   const checkAnswer = useGameStore((state) => state.checkAnswer);
+  const streak = useGameStore((state) => state.streak);
+
+  const [lastResult, setLastResult] = React.useState<'success' | 'failure' | null>(null);
+  const [resultTimestamp, setResultTimestamp] = React.useState(0);
+  const [showConfetti, setShowConfetti] = React.useState(false);
+
+  // Initialize storage durability and log stats in dev
+  React.useEffect(() => {
+    const initStorage = async () => {
+      await requestPersistentStorage();
+      if (import.meta.env.DEV) {
+        const stats = await getStorageEstimate();
+        if (stats) {
+          console.log(`Storage Usage: ${(stats.usage / 1024 / 1024).toFixed(2)} MB`);
+          console.log(`Storage Quota: ${(stats.quota / 1024 / 1024).toFixed(2)} MB`);
+        }
+      }
+    };
+    initStorage();
+  }, []);
 
   // Wrap stopNote to check answer in game mode
   const handleStopNote = (note: string) => {
     stopNote(note);
     if (isPlaying) {
-      checkAnswer(note);
+      const isCorrect = checkAnswer(note);
+      setLastResult(isCorrect ? 'success' : 'failure');
+      setResultTimestamp(Date.now());
+
+      if (isCorrect) {
+        playSuccess();
+        // Check for streak milestone (multiple of 10)
+        // Note: streak is already updated in store by checkAnswer, so we check current value + 1 if we were access previous state,
+        // but here we get reactive update. However, checkAnswer updates store immediately.
+        // We need to check if the NEW streak is a milestone.
+        // Actually checkAnswer runs first. So `streak` from store might not be updated in this render cycle yet?
+        // Zustand updates are usually synchronous in actions but React re-render is async.
+        // Better to check the return of a modified checkAnswer or logic here.
+        // Let's rely on the store update in useEffect or just assume if it was correct and (streak + 1) % 10 === 0
+        // But we don't know the exact streak number here reliably without store update.
+        // Let's move the milestone check to a useEffect on streak.
+      } else {
+        playFailure();
+      }
     }
   };
+
+  React.useEffect(() => {
+    if (isPlaying && streak > 0 && streak % 10 === 0) {
+      setShowConfetti(true);
+    }
+  }, [streak, isPlaying]);
 
   // Calculate note limit based on 4 measures (queue behavior)
   const beatsPerMeasure = timeSignature === '3/4' ? 3 : 4;
@@ -49,6 +98,8 @@ export const HomePage: React.FC = () => {
   return (
     <div className="p-4 flex flex-col items-center gap-6 min-h-screen bg-ricePaper relative">
       <GameOverlay />
+      <FeedbackEffects lastResult={lastResult} timestamp={resultTimestamp} />
+      <ConfettiExplosion run={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       <header className="w-full max-w-4xl flex justify-between items-center">
         <h1 className="text-3xl font-bold text-bamboo font-heading">{APP_STRINGS.APP_TITLE}</h1>

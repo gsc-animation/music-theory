@@ -12,6 +12,8 @@ interface AudioState {
   stopNote: (note: string) => void;
   clearRecordedNotes: () => void;
   setTimeSignature: (signature: string) => void;
+  playSuccess: () => void;
+  playFailure: () => void;
 }
 
 export const useAudioStore = create<AudioState>((set) => ({
@@ -52,5 +54,13 @@ export const useAudioStore = create<AudioState>((set) => ({
 
   clearRecordedNotes: () => set({ recordedNotes: [] }),
 
-  setTimeSignature: (signature: string) => set({ timeSignature: signature })
+  setTimeSignature: (signature: string) => set({ timeSignature: signature }),
+
+  playSuccess: () => {
+    audioEngine.playSuccess();
+  },
+
+  playFailure: () => {
+    audioEngine.playFailure();
+  }
 }));

@@ -18,7 +18,7 @@ describe('GameOverlay', () => {
         isPlaying: false,
         score: 0,
         streak: 0,
-        highScore: 10,
+        bestStreak: 10,
         startGame: mockStartGame,
         stopGame: mockStopGame,
       };
@@ -39,7 +39,7 @@ describe('GameOverlay', () => {
         isPlaying: true,
         score: 5,
         streak: 3,
-        highScore: 10,
+        bestStreak: 10,
         startGame: mockStartGame,
         stopGame: mockStopGame,
       };
@@ -58,7 +58,7 @@ describe('GameOverlay', () => {
       return element?.tagName.toLowerCase() === 'span' && content === '3' && element.parentElement?.textContent?.includes('Streak:');
     })).toBeInTheDocument();
 
-    expect(screen.getByText(/High Score:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Best Streak:/i)).toBeInTheDocument();
     expect(screen.getByText(/10/i)).toBeInTheDocument();
   });
 
@@ -74,7 +74,7 @@ describe('GameOverlay', () => {
         isPlaying: true,
         score: 0,
         streak: 0,
-        highScore: 0,
+        bestStreak: 0,
         startGame: mockStartGame,
         stopGame: mockStopGame,
       };

@@ -9,7 +9,8 @@ describe('useGameStore', () => {
       score: 0,
       streak: 0,
       targetNote: null,
-      highScore: 0
+      bestStreak: 0,
+      totalScore: 0
     });
     vi.restoreAllMocks();
   });

@@ -6,6 +6,7 @@ export const APP_STRINGS = {
   GAME: {
     SCORE: 'Score',
     STREAK: 'Streak',
+    BEST_STREAK: 'Best Streak',
     HIGH_SCORE: 'High Score',
     START: 'Start Game',
     STOP: 'Stop Game',

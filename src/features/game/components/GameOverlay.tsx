@@ -6,7 +6,7 @@ export const GameOverlay: React.FC = () => {
   const isPlaying = useGameStore((state) => state.isPlaying);
   const score = useGameStore((state) => state.score);
   const streak = useGameStore((state) => state.streak);
-  const highScore = useGameStore((state) => state.highScore);
+  const bestStreak = useGameStore((state) => state.bestStreak);
   const startGame = useGameStore((state) => state.startGame);
   const stopGame = useGameStore((state) => state.stopGame);
 
@@ -22,7 +22,7 @@ export const GameOverlay: React.FC = () => {
             {APP_STRINGS.GAME.STREAK}: <span className="text-amber-600 dark:text-amber-400 text-lg">{streak}</span>
           </div>
           <div className="text-xs text-stone-400">
-            {APP_STRINGS.GAME.HIGH_SCORE}: {highScore}
+            {APP_STRINGS.GAME.BEST_STREAK}: {bestStreak}
           </div>
         </div>
       )}
