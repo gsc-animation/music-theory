@@ -1,3 +1,5 @@
+import { POINTS_PER_CORRECT_ANSWER } from '../constants';
+
 /**
  * Calculates the new score.
  * @param currentScore Current score
@@ -5,7 +7,7 @@
  * @returns New score
  */
 export const calculateScore = (currentScore: number, isCorrect: boolean): number => {
-  return isCorrect ? currentScore + 1 : currentScore;
+  return isCorrect ? currentScore + POINTS_PER_CORRECT_ANSWER : currentScore;
 };
 
 /**

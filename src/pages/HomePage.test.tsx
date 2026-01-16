@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { HomePage } from './HomePage';
 
 // Mock MusicStaff to verify props
@@ -20,16 +20,18 @@ vi.mock('../services/audio-engine', () => ({
 }));
 
 describe('HomePage Integration', () => {
-  it('updates staff when piano key is pressed', () => {
+  it('updates staff when piano key is pressed', async () => {
     render(<HomePage />);
     const c4Key = screen.getByRole('button', { name: /C4/i });
-    const staff = screen.getByTestId('music-staff-mock');
+
+    // Wait for Suspense to load the lazy component
+    const staff = await waitFor(() => screen.getByTestId('music-staff-mock'));
 
     // Initial state: Rest
     expect(staff).toHaveTextContent('b4/w/r');
 
     // Press key
-    act(() => {
+    await act(async () => {
         fireEvent.pointerDown(c4Key);
     });
 
@@ -37,7 +39,7 @@ describe('HomePage Integration', () => {
     expect(staff).toHaveTextContent('c4');
 
     // Release key
-    act(() => {
+    await act(async () => {
         fireEvent.pointerUp(c4Key);
     });
 

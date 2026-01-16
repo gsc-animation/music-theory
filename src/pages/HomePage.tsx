@@ -1,7 +1,5 @@
 import React from 'react';
 import PianoKeyboard from '../features/piano/components/PianoKeyboard';
-import { MusicStaff } from '../features/sheet/components/MusicStaff';
-import SaoTrucVisualizer from '../features/sao-truc/components/SaoTrucVisualizer';
 import { useAudioStore } from '../stores/useAudioStore';
 import { useGameStore } from '../stores/useGameStore';
 import { NotationToggle } from '../components/ui/NotationToggle';
@@ -11,6 +9,9 @@ import { APP_STRINGS } from '../constants/app-strings';
 import { FeedbackEffects } from '../components/ui/FeedbackEffects';
 import { ConfettiExplosion } from '../components/ui/ConfettiExplosion';
 import { requestPersistentStorage, getStorageEstimate } from '../services/storage-manager';
+
+const MusicStaff = React.lazy(() => import('../features/sheet/components/MusicStaff').then(module => ({ default: module.MusicStaff })));
+const SaoTrucVisualizer = React.lazy(() => import('../features/sao-truc/components/SaoTrucVisualizer'));
 
 export const HomePage: React.FC = () => {
   const recordedNotes = useAudioStore((state) => state.recordedNotes);
@@ -123,20 +124,24 @@ export const HomePage: React.FC = () => {
               {isPlaying ? APP_STRINGS.GAME.TARGET_NOTE : APP_STRINGS.STAFF_DEMO_TITLE}
             </h2>
           </div>
-          <MusicStaff
-            notes={staffNotes}
-            width={800}
-            clef="treble"
-            timeSignature={timeSignature}
-            highlightNote={isPlaying ? targetNote : null}
-          />
+          <React.Suspense fallback={<div className="w-full h-[150px] flex items-center justify-center text-stoneGrey bg-ricePaper rounded-xl border border-warmWood/20">Loading staff...</div>}>
+            <MusicStaff
+              notes={staffNotes}
+              width={800}
+              clef="treble"
+              timeSignature={timeSignature}
+              highlightNote={isPlaying ? targetNote : null}
+            />
+          </React.Suspense>
           <p className="text-stoneGrey text-center text-sm">
             {isPlaying ? APP_STRINGS.GAME.PLAY_INSTRUCTION : APP_STRINGS.VEXFLOW_CAPTION}
           </p>
         </section>
 
         <section className="flex justify-center">
-          <SaoTrucVisualizer />
+          <React.Suspense fallback={<div className="w-[300px] h-[400px] flex items-center justify-center text-stoneGrey bg-ricePaper/50 rounded-xl border border-warmWood/20">Loading visualizer...</div>}>
+            <SaoTrucVisualizer />
+          </React.Suspense>
         </section>
       </div>
 

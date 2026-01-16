@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useGameStore } from './useGameStore';
+import { STORAGE_KEY } from '../features/game/constants';
 
 describe('useGameStore persistence', () => {
   beforeEach(() => {
@@ -37,7 +38,7 @@ describe('useGameStore persistence', () => {
       state: { bestStreak: 5, totalScore: 100 },
       version: 1
     };
-    localStorage.setItem('music-theory-storage', JSON.stringify(existingState));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existingState));
 
     // Re-initialize store (simulate reload)
     // In actual app, this happens on mount. Here we might need to manually trigger rehydration
@@ -55,7 +56,7 @@ describe('useGameStore persistence', () => {
     });
 
     // We can inspect what's in localStorage
-    const stored = JSON.parse(localStorage.getItem('music-theory-storage') || '{}');
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
 
     // Expect persist middleware structure
     expect(stored).toHaveProperty('state');

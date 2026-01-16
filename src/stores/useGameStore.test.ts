@@ -53,7 +53,7 @@ describe('useGameStore', () => {
 
     const state = useGameStore.getState();
     expect(result).toBe(true);
-    expect(state.score).toBe(1);
+    expect(state.score).toBe(10);
     expect(state.streak).toBe(1);
     // Target should change (or be re-generated, likely different)
     // Note: It's possible random gen returns same note if we didn't implement 'prevNote' check in store integration,

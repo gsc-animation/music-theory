@@ -26,11 +26,11 @@ development_status:
   3-1-game-state-management-zustand: done
   3-2-game-mode-ui-overlay: done
   3-3-feedback-system-micro-interactions: done
-  3-4-local-persistence-layer: review
+  3-4-local-persistence-layer: done
   epic-3-retrospective: optional
 
-  epic-4: backlog
-  4-1-pwa-manifest-installability: backlog
-  4-2-service-worker-caching-strategy: backlog
-  4-3-performance-bundle-optimization: backlog
+  epic-4: in-progress
+  4-1-pwa-manifest-installability: done
+  4-2-service-worker-caching-strategy: done
+  4-3-performance-bundle-optimization: review
   epic-4-retrospective: optional

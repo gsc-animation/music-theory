@@ -4,7 +4,7 @@ import { calculateScore, calculateStreak } from './scoring';
 describe('Scoring Logic', () => {
   describe('calculateScore', () => {
     it('increments score on correct answer', () => {
-      expect(calculateScore(10, true)).toBe(11);
+      expect(calculateScore(10, true)).toBe(20);
     });
 
     it('maintains score on incorrect answer', () => {

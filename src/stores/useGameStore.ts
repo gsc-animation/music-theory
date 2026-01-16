@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist, createJSONStorage } from 'zustand/middleware';
 import { generateRandomNote } from '../features/game/logic/note-generator';
+import { POINTS_PER_CORRECT_ANSWER, STORAGE_KEY } from '../features/game/constants';
 import { calculateScore, calculateStreak } from '../features/game/logic/scoring';
 
 interface GameState {
@@ -56,7 +57,7 @@ export const useGameStore = create<GameState>()(
             const newTarget = generateRandomNote(targetNote);
 
             const newBestStreak = Math.max(newStreak, bestStreak);
-            const newTotalScore = totalScore + 10; // Simple score accumulation
+            const newTotalScore = totalScore + POINTS_PER_CORRECT_ANSWER;
 
             set({
               score: newScore,
@@ -75,7 +76,7 @@ export const useGameStore = create<GameState>()(
         }
       }),
       {
-        name: 'music-theory-storage',
+        name: STORAGE_KEY,
         version: 1,
         storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
