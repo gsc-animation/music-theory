@@ -32,5 +32,5 @@ development_status:
   epic-4: in-progress
   4-1-pwa-manifest-installability: done
   4-2-service-worker-caching-strategy: done
-  4-3-performance-bundle-optimization: review
+  4-3-performance-bundle-optimization: done
   epic-4-retrospective: optional
