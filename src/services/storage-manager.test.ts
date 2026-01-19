@@ -55,8 +55,13 @@ describe('Storage Manager', () => {
       const mockPersist = vi.fn().mockRejectedValue(new Error('Failed'));
       global.navigator.storage.persist = mockPersist;
 
+      // Mock console.warn to suppress output
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
       const result = await requestPersistentStorage();
       expect(result).toBe(false);
+
+      consoleSpy.mockRestore();
     });
   });
 
@@ -80,8 +85,13 @@ describe('Storage Manager', () => {
       const mockEstimate = vi.fn().mockRejectedValue(new Error('Failed'));
       global.navigator.storage.estimate = mockEstimate;
 
+      // Mock console.warn to suppress output
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
       const result = await getStorageEstimate();
       expect(result).toBeUndefined();
+
+      consoleSpy.mockRestore();
     });
   });
 });

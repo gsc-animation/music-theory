@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Factory } from 'vexflow';
-import { distributeNotesToMeasures } from '../../../utils/music-math';
+import { distributeNotesToMeasures } from '../../utils/music-math';
 
 export interface MusicStaffProps {
   notes: string[];
@@ -10,6 +10,7 @@ export interface MusicStaffProps {
   width?: number;
   className?: string;
   highlightNote?: string | null; // New prop for game mode
+  cursorPosition?: number; // 0 to 1 progress for playback cursor
 }
 
 export const MusicStaff: React.FC<MusicStaffProps> = React.memo(({
@@ -19,8 +20,10 @@ export const MusicStaff: React.FC<MusicStaffProps> = React.memo(({
   width,
   className,
   highlightNote,
+  cursorPosition,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const vexFlowRef = useRef<HTMLDivElement>(null);
   const [currentWidth, setCurrentWidth] = useState(width || 300);
 
   useEffect(() => {
@@ -53,14 +56,14 @@ export const MusicStaff: React.FC<MusicStaffProps> = React.memo(({
   }, [width]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!vexFlowRef.current) return;
 
     // Clear previous SVG
-    containerRef.current.innerHTML = '';
+    vexFlowRef.current.innerHTML = '';
 
     const vf = new Factory({
       // @ts-expect-error VexFlow types incorrectly require string ID, but accepts HTMLElement
-      renderer: { elementId: containerRef.current, width: currentWidth, height: 150 }
+      renderer: { elementId: vexFlowRef.current, width: currentWidth, height: 150 }
     });
 
     const score = vf.EasyScore();
@@ -117,11 +120,12 @@ export const MusicStaff: React.FC<MusicStaffProps> = React.memo(({
 
         // Format and draw notes
         // Adjust available width for notes (subtract padding for clef/key sig in first measure)
-        const availableWidth = measureWidth - (index === 0 ? 80 : 20);
+        // Use more space for better note distribution
+        const availableWidth = measureWidth - (index === 0 ? 60 : 10);
 
         vf.Formatter()
           .joinVoices([voice])
-          .format([voice], availableWidth);
+          .format([voice], availableWidth, { alignRests: true });
 
         voice.draw(context, stave);
       });
@@ -137,11 +141,24 @@ export const MusicStaff: React.FC<MusicStaffProps> = React.memo(({
       ref={containerRef}
       data-testid="music-staff-container"
       className={clsx(
-        'w-full h-auto flex justify-center bg-ricePaper rounded-xl shadow-sm border border-warmWood/20',
+        'relative w-full h-auto flex justify-center bg-ricePaper rounded-xl shadow-sm border border-warmWood/20',
         className
       )}
     >
-      {/* VexFlow will render SVG here */}
+      {/* VexFlow Container */}
+      <div ref={vexFlowRef} />
+
+      {/* Playback Cursor */}
+      {cursorPosition !== undefined && (
+        <div
+          data-testid="playback-cursor"
+          className="absolute top-8 bottom-8 w-1 bg-red-500 opacity-60 pointer-events-none z-10 will-change-transform"
+          style={{
+            left: 0,
+            transform: `translateX(${cursorPosition * currentWidth}px)`
+          }}
+        />
+      )}
     </div>
   );
 });

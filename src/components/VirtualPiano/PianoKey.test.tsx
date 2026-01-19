@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, cleanup, act } from '@testing-library/react';
 import PianoKey from './PianoKey';
-import { useSettingsStore } from '../../../stores/useSettingsStore';
+import { useSettingsStore } from '../../stores/useSettingsStore';
 
 describe('PianoKey', () => {
   const onStartNote = vi.fn();
@@ -86,7 +86,10 @@ describe('PianoKey', () => {
   });
 
   it('renders localized label based on store', () => {
-    useSettingsStore.setState({ notationSystem: 'latin' });
+    act(() => {
+        useSettingsStore.setState({ notationSystem: 'latin' });
+    });
+
     const { rerender } = render(
       <PianoKey
         note="C4"
@@ -98,7 +101,10 @@ describe('PianoKey', () => {
     );
     expect(screen.getByText('C')).toBeInTheDocument();
 
-    useSettingsStore.setState({ notationSystem: 'solfege' });
+    act(() => {
+        useSettingsStore.setState({ notationSystem: 'solfege' });
+    });
+
     rerender(
       <PianoKey
         note="C4"

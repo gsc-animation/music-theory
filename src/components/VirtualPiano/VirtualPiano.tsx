@@ -1,7 +1,7 @@
 import React from 'react';
 import PianoKey from './PianoKey';
 
-interface PianoKeyboardProps {
+interface VirtualPianoProps {
   startOctave?: number;
   octaves?: number;
   onStartNote: (note: string) => void;
@@ -23,7 +23,7 @@ const NOTES = [
   { note: 'B', type: 'white' },
 ] as const;
 
-const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
+export const VirtualPiano: React.FC<VirtualPianoProps> = ({
   startOctave = 4,
   octaves = 1,
   onStartNote,
@@ -76,4 +76,4 @@ const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
   );
 };
 
-export default PianoKeyboard;
+export default VirtualPiano;

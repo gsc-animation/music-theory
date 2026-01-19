@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import PianoKeyboard from './PianoKeyboard';
+import VirtualPiano from './VirtualPiano';
 
-describe('PianoKeyboard', () => {
+describe('VirtualPiano', () => {
   const onStartNote = vi.fn();
   const onStopNote = vi.fn();
 
@@ -11,7 +11,7 @@ describe('PianoKeyboard', () => {
   });
 
   it('renders one octave of keys correctly', () => {
-    render(<PianoKeyboard startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
+    render(<VirtualPiano startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
 
     // Check for C4 to B4 (12 semitones: 7 white, 5 black)
     // White keys: C, D, E, F, G, A, B
@@ -32,7 +32,7 @@ describe('PianoKeyboard', () => {
   });
 
   it('renders keys in correct order', () => {
-     render(<PianoKeyboard startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
+     render(<VirtualPiano startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
      const keys = screen.getAllByRole('button');
      // Just checking we have keys, specific order is visual but accessibility order should be logical
      // We expect 12 keys
@@ -40,14 +40,14 @@ describe('PianoKeyboard', () => {
     });
 
     it('calls onStartNote when a key is pressed', () => {
-    render(<PianoKeyboard startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
+    render(<VirtualPiano startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
     const c4Key = screen.getByRole('button', { name: /C4/i });
     fireEvent.pointerDown(c4Key);
     expect(onStartNote).toHaveBeenCalledWith('C4');
     });
 
     it('positions black keys with high precision', () => {
-      render(<PianoKeyboard startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
+      render(<VirtualPiano startOctave={4} octaves={1} onStartNote={onStartNote} onStopNote={onStopNote} />);
 
       const getLeftStyle = (note: string) => {
         const key = screen.getByRole('button', { name: new RegExp(note, 'i') });

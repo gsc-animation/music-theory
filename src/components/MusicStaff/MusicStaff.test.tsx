@@ -36,4 +36,11 @@ describe('MusicStaff', () => {
     const svgs = container.querySelectorAll('svg');
     expect(svgs.length).toBe(1);
   });
+
+  it('renders cursor when cursorPosition is provided', () => {
+    render(<MusicStaff notes={['C4']} cursorPosition={0.5} width={400} />);
+    const cursor = screen.getByTestId('playback-cursor');
+    expect(cursor).toBeInTheDocument();
+    expect(cursor).toHaveStyle({ transform: 'translateX(200px)' });
+  });
 });

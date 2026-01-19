@@ -26,4 +26,13 @@ describe('Fingering Engine', () => {
     const fingering = getFingering('C4', 'invalid-type');
     expect(fingering).toBeNull();
   });
+
+  it('normalizes flat notes to sharps (e.g. Db4 -> C#4)', () => {
+    const fingeringDb = getFingering('Db4', '6-hole');
+    const fingeringCs = getFingering('C#4', '6-hole');
+
+    expect(fingeringDb).toBeDefined();
+    expect(fingeringDb?.note).toBe('C#4'); // Expecting normalized note name from JSON if matched
+    expect(fingeringDb).toEqual(fingeringCs);
+  });
 });

@@ -20,15 +20,15 @@ vi.mock('../../../stores/useAudioStore', () => {
 });
 
 describe('SaoTrucVisualizer', () => {
+  // Stable default state to prevent infinite loops in effects
+  const defaultState = { activeNotes: [] as string[] };
+
   beforeEach(() => {
     vi.restoreAllMocks();
 
-    // Default mock implementation - return simple object, NO FUNCTION
+    // Default mock implementation
     (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
-      // Create a plain state object
-      const state = { activeNotes: [] };
-      // Execute the selector against this plain object immediately
-      return selector(state);
+      return selector(defaultState);
     });
   });
 
@@ -52,9 +52,10 @@ describe('SaoTrucVisualizer', () => {
   });
 
   it('updates based on active notes', () => {
-    // Override mock for this test
+    // Override mock for this test with stable state
+    const activeState = { activeNotes: ['C4'] };
     (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
-        return selector({ activeNotes: ['C4'] });
+        return selector(activeState);
     });
 
     render(<SaoTrucVisualizer />);
@@ -64,9 +65,10 @@ describe('SaoTrucVisualizer', () => {
   });
 
   it('handles empty active notes (default state)', () => {
-    // Explicit empty
+    // Explicit empty with stable state
+    const emptyState = { activeNotes: [] };
     (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
-        return selector({ activeNotes: [] });
+        return selector(emptyState);
     });
 
     render(<SaoTrucVisualizer />);
@@ -75,8 +77,9 @@ describe('SaoTrucVisualizer', () => {
   });
 
   it('displays out of range message for invalid notes', async () => {
+    const invalidState = { activeNotes: ['A0'] };
     (useAudioStore as unknown as Mock).mockImplementation((selector: (state: { activeNotes: string[] }) => unknown) => {
-        return selector({ activeNotes: ['A0'] });
+        return selector(invalidState);
     });
 
     render(<SaoTrucVisualizer />);

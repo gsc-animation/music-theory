@@ -13,7 +13,16 @@ describe('FingeringChart', () => {
   it('renders 6 holes', () => {
     const holes: HoleState[] = ['X', 'X', 'X', 'X', 'X', 'X'];
     const { container } = render(<FingeringChart holes={holes} />);
-    // 6 finger holes (circles)
+    // 6 finger holes (circles) + decorative blow hole + maybe others
+    // Let's count circles that look like finger holes (fill-stone-700 or fill-[#fdf6e3])
+    // Or just count total circles and subtract blow hole if needed.
+    // My implementation has:
+    // 1 circle per hole (graphic)
+    // + 1 circle per half hole (graphic background)
+    // + 1 decorative blow hole (ellipse, but rendered as ellipse tag)
+    // But 'circle' tag is used for holes.
+
+    // Closed holes use circle.
     const circles = container.querySelectorAll('circle');
     expect(circles.length).toBe(6);
   });
@@ -22,21 +31,23 @@ describe('FingeringChart', () => {
     const holes: HoleState[] = ['O', 'X', 'O', 'X', 'O', 'X'];
     const { container } = render(<FingeringChart holes={holes} />);
 
-    // Open holes use rice-paper fill
-    const openHoles = container.querySelectorAll('.fill-rice-paper');
+    // Open holes use fill-[#fdf6e3]
+    // Note: CSS class selector with brackets might need escaping or check class list
+    // querySelectorAll('.fill-\\[\\#fdf6e3\\]') might work or just check attribute
+    const openHoles = container.querySelectorAll('.fill-\\[\\#fdf6e3\\]');
     expect(openHoles.length).toBe(3);
 
-    // Closed holes use stone-grey fill
-    const closedHoles = container.querySelectorAll('.fill-stone-grey');
-    expect(closedHoles.length).toBe(3); // Note: stroke-warm-wood might be used too
+    // Closed holes use fill-stone-700
+    const closedHoles = container.querySelectorAll('.fill-stone-700');
+    expect(closedHoles.length).toBe(3);
   });
 
   it('renders half-hole state', () => {
     const holes: HoleState[] = ['H'];
     const { container } = render(<FingeringChart holes={holes} />);
 
-    // Half hole should contain a path with fill-stone-grey
-    const halfHolePart = container.querySelector('path.fill-stone-grey');
+    // Half hole should contain a path with fill-stone-700
+    const halfHolePart = container.querySelector('path.fill-stone-700');
     expect(halfHolePart).toBeInTheDocument();
   });
 
@@ -44,11 +55,8 @@ describe('FingeringChart', () => {
     const holes: HoleState[] = Array(10).fill('X');
     const { container } = render(<FingeringChart holes={holes} type="10-hole" />);
 
-    // 10 finger holes (circles)
-    const circles = container.querySelectorAll('circle.fill-stone-grey'); // Filter for hole circles, excluding blow hole/bg if any
-    // Actually the component implementation uses circle for body parts too?
-    // Let's count circles that have stroke-warm-wood (which are holes)
-    const holeCircles = container.querySelectorAll('circle.stroke-warm-wood');
-    expect(holeCircles.length).toBe(10);
+    // 10 finger holes
+    const closedHoles = container.querySelectorAll('circle.fill-stone-700');
+    expect(closedHoles.length).toBe(10);
   });
 });

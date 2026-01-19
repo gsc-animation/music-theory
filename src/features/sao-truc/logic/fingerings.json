@@ -1,15 +1,44 @@
 {
   "6-hole": {
     "C4": { "note": "C4", "holes": ["X","X","X","X","X","X"] },
+    "C#4": { "note": "C#4", "holes": ["H","X","X","X","X","X"] },
     "D4": { "note": "D4", "holes": ["O","X","X","X","X","X"] },
+    "D#4": { "note": "D#4", "holes": ["H","O","X","X","X","X"] },
     "E4": { "note": "E4", "holes": ["O","O","X","X","X","X"] },
     "F4": { "note": "F4", "holes": ["O","O","O","X","X","X"] },
+    "F#4": { "note": "F#4", "holes": ["O","O","O","H","X","X"] },
     "G4": { "note": "G4", "holes": ["O","O","O","O","X","X"] },
+    "G#4": { "note": "G#4", "holes": ["O","O","O","O","H","X"] },
     "A4": { "note": "A4", "holes": ["O","O","O","O","O","X"] },
+    "A#4": { "note": "A#4", "holes": ["O","O","O","O","O","H"] },
     "B4": { "note": "B4", "holes": ["O","O","O","O","O","O"] },
-    "C5": { "note": "C5", "holes": ["X","X","X","X","X","X"] }
+    "C5": { "note": "C5", "holes": ["X","X","X","X","X","X"] },
+    "C#5": { "note": "C#5", "holes": ["H","X","X","X","X","X"] },
+    "D5": { "note": "D5", "holes": ["O","X","X","X","X","X"] },
+    "D#5": { "note": "D#5", "holes": ["H","O","X","X","X","X"] },
+    "E5": { "note": "E5", "holes": ["O","O","X","X","X","X"] },
+    "F5": { "note": "F5", "holes": ["O","O","O","X","X","X"] },
+    "F#5": { "note": "F#5", "holes": ["O","O","O","H","X","X"] },
+    "G5": { "note": "G5", "holes": ["O","O","O","O","X","X"] },
+    "G#5": { "note": "G#5", "holes": ["O","O","O","O","H","X"] },
+    "A5": { "note": "A5", "holes": ["O","O","O","O","O","X"] },
+    "A#5": { "note": "A#5", "holes": ["O","O","O","O","O","H"] },
+    "B5": { "note": "B5", "holes": ["O","O","O","O","O","O"] },
+    "C6": { "note": "C6", "holes": ["O","X","X","X","X","X"] }
   },
   "10-hole": {
-    "C4": { "note": "C4", "holes": ["X","X","X","X","X","X","X","X","X","X"] }
+    "C4": { "note": "C4", "holes": ["X","X","X","X","X","X","X","X","X","X"] },
+    "C#4": { "note": "C#4", "holes": ["O","X","X","X","X","X","X","X","X","X"] },
+    "D4": { "note": "D4", "holes": ["O","O","X","X","X","X","X","X","X","X"] },
+    "D#4": { "note": "D#4", "holes": ["O","O","O","X","X","X","X","X","X","X"] },
+    "E4": { "note": "E4", "holes": ["O","O","O","O","X","X","X","X","X","X"] },
+    "F4": { "note": "F4", "holes": ["O","O","O","O","O","X","X","X","X","X"] },
+    "F#4": { "note": "F#4", "holes": ["O","O","O","O","O","O","X","X","X","X"] },
+    "G4": { "note": "G4", "holes": ["O","O","O","O","O","O","O","X","X","X"] },
+    "G#4": { "note": "G#4", "holes": ["O","O","O","O","O","O","O","O","X","X"] },
+    "A4": { "note": "A4", "holes": ["O","O","O","O","O","O","O","O","O","X"] },
+    "A#4": { "note": "A#4", "holes": ["O","O","O","O","O","O","O","O","O","O"] },
+    "B4": { "note": "B4", "holes": ["O","O","O","O","O","O","O","O","O","O"] },
+    "C5": { "note": "C5", "holes": ["X","X","X","X","X","X","X","X","X","X"] }
   }
 }

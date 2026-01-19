@@ -6,12 +6,19 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import type { UserConfig as ViteUserConfig } from 'vite'
 import type { InlineConfig } from 'vitest/node'
 
+import path from 'path'
+
 type UserConfig = ViteUserConfig & {
   test?: InlineConfig
 }
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -123,5 +130,6 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './tests/setup.ts',
+    logHeapUsage: true,
   },
 } as UserConfig)

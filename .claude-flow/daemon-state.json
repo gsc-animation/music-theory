@@ -3,44 +3,49 @@
   "startedAt": "2026-01-16T13:31:45.601Z",
   "workers": {
     "map": {
-      "runCount": 0,
-      "successCount": 0,
+      "runCount": 50,
+      "successCount": 50,
       "failureCount": 0,
-      "averageDurationMs": 0,
+      "averageDurationMs": 0.58,
       "isRunning": false,
-      "nextRun": "2026-01-16T13:31:45.601Z"
+      "nextRun": "2026-01-18T23:34:46.047Z",
+      "lastRun": "2026-01-18T23:19:46.004Z"
     },
     "audit": {
-      "runCount": 0,
+      "runCount": 65,
       "successCount": 0,
-      "failureCount": 0,
+      "failureCount": 65,
       "averageDurationMs": 0,
       "isRunning": false,
-      "nextRun": "2026-01-16T13:33:45.601Z"
+      "nextRun": "2026-01-18T23:29:46.005Z",
+      "lastRun": "2026-01-19T00:26:43.247Z"
     },
     "optimize": {
-      "runCount": 0,
+      "runCount": 45,
       "successCount": 0,
-      "failureCount": 0,
+      "failureCount": 45,
       "averageDurationMs": 0,
-      "isRunning": false,
-      "nextRun": "2026-01-16T13:35:45.601Z"
+      "isRunning": true,
+      "nextRun": "2026-01-18T23:34:46.047Z",
+      "lastRun": "2026-01-18T23:19:46.004Z"
     },
     "consolidate": {
-      "runCount": 0,
-      "successCount": 0,
+      "runCount": 28,
+      "successCount": 28,
       "failureCount": 0,
-      "averageDurationMs": 0,
+      "averageDurationMs": 0.7142857142857143,
       "isRunning": false,
-      "nextRun": "2026-01-16T13:37:45.601Z"
+      "nextRun": "2026-01-18T23:49:46.047Z",
+      "lastRun": "2026-01-18T23:19:46.005Z"
     },
     "testgaps": {
-      "runCount": 0,
+      "runCount": 38,
       "successCount": 0,
-      "failureCount": 0,
+      "failureCount": 38,
       "averageDurationMs": 0,
       "isRunning": false,
-      "nextRun": "2026-01-16T13:39:45.601Z"
+      "nextRun": "2026-01-18T23:39:46.047Z",
+      "lastRun": "2026-01-18T23:19:46.004Z"
     },
     "predict": {
       "runCount": 0,
@@ -126,5 +131,5 @@
       }
     ]
   },
-  "savedAt": "2026-01-16T13:31:45.601Z"
+  "savedAt": "2026-01-19T00:26:43.248Z"
 }
