@@ -2,18 +2,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, act, waitFor, cleanup } from '@testing-library/react';
 import { HomePage } from './HomePage';
 import { useAudioStore } from '../stores/useAudioStore';
+import { useNotationStore } from '../stores/useNotationStore';
 
-// Mock MusicStaff to verify props
-// Use a real module mock instead of string to handle React.lazy import correctly in tests
-vi.mock('../components/MusicStaff/MusicStaff', () => ({
-  MusicStaff: ({ notes }: { notes: string[] }) => (
-    <div data-testid="music-staff-mock">{notes.join(', ')}</div>
+// Mock AbcScore component (replacing MusicStaff)
+vi.mock('../components/MusicStaff/AbcScore', () => ({
+  default: ({ notation }: { notation: string }) => (
+    <div data-testid="abc-score-mock">{notation}</div>
   ),
 }));
-
-// We also need to mock the features path if it's imported from there in some places,
-// but HomePage.tsx imports from '../components/MusicStaff/MusicStaff'
-// (which is a lazy import in HomePage.tsx: const MusicStaff = React.lazy(() => import('../components/MusicStaff/MusicStaff')...))
 
 // Mock Audio Engine
 vi.mock('../services/audio-engine', () => ({
@@ -33,43 +29,50 @@ vi.mock('../services/storage-manager', () => ({
 
 describe('HomePage Integration', () => {
   beforeEach(() => {
-    // Reset store state
+    // Reset audio store state
     useAudioStore.setState({
       activeNotes: [],
       recordedNotes: [],
       isPlaying: false,
     });
+    // Reset notation store state
+    useNotationStore.setState({
+      notes: '',
+      header: {
+        title: 'Untitled',
+        meter: '4/4',
+        unitLength: '1/4',
+        key: 'C',
+        tempo: 120,
+      },
+      history: [],
+      historyIndex: -1,
+    });
     cleanup();
   });
 
-  it('updates staff when piano key is pressed', async () => {
+  it('updates ABC notation when piano key is pressed', async () => {
     render(<HomePage />);
     const c4Key = screen.getByRole('button', { name: /C4/i });
 
     // Wait for Suspense to load the lazy component
-    const staff = await waitFor(() => screen.getByTestId('music-staff-mock'));
+    await waitFor(() => screen.getByTestId('abc-score-mock'));
 
-    // Initial state: Rest
-    expect(staff).toHaveTextContent('b4/w/r');
+    // Initial state: no notes in store
+    expect(useNotationStore.getState().notes).toBe('');
 
-    // Press key
+    // Press and release key (note is added on key release)
     await act(async () => {
-        fireEvent.pointerDown(c4Key);
+      fireEvent.pointerDown(c4Key);
+    });
+    await act(async () => {
+      fireEvent.pointerUp(c4Key);
     });
 
-    // Check staff update - now records history
-    // Since we cleared recordedNotes, it should contain just this note formatted for VexFlow
-    // "c4/q" is the expected format from HomePage.tsx logic: .map(n => n.toLowerCase() + '/q')
+    // Check store has the note (C4 becomes 'C' in ABC notation)
     await waitFor(() => {
-       expect(screen.getByTestId('music-staff-mock')).toHaveTextContent('c4/q');
+      const notes = useNotationStore.getState().notes;
+      expect(notes).toContain('C');
     });
-
-    // Release key
-    await act(async () => {
-        fireEvent.pointerUp(c4Key);
-    });
-
-    // Check staff persistence (should NOT reset to rest)
-    expect(screen.getByTestId('music-staff-mock')).toHaveTextContent('c4/q');
   });
 });

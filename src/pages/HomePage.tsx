@@ -1,66 +1,52 @@
 import React from 'react'
-import VirtualPiano from '../components/VirtualPiano/VirtualPiano'
-import { VirtualGuitar } from '../components/VirtualGuitar/VirtualGuitar'
 import { useAudioStore } from '../stores/useAudioStore'
 import { useGameStore } from '../stores/useGameStore'
+import { useNotationStore } from '../stores/useNotationStore'
 import { GameOverlay } from '../features/game/components/GameOverlay'
-import { FeedbackEffects } from '../components/ui/FeedbackEffects'
 import { FeedbackOverlay } from '../components/GameLoop/FeedbackOverlay'
 import { ConfettiExplosion } from '../components/ui/ConfettiExplosion'
 import { Sidebar } from '../components/layout/Sidebar'
-import { ControlsBar } from '../components/ui/ControlsBar'
+import { MainHeader } from '../components/layout/MainHeader'
+import { CollapsiblePanel } from '../components/ui/CollapsiblePanel'
 import { requestPersistentStorage, getStorageEstimate } from '../services/storage-manager'
+import VirtualPiano from '../components/VirtualPiano/VirtualPiano'
+import { VirtualGuitar } from '../components/VirtualGuitar/VirtualGuitar'
 
-const MusicStaff = React.lazy(() => import('../components/MusicStaff/MusicStaff').then(module => ({ default: module.MusicStaff })))
-const HorizontalSaoTrucVisualizer = React.lazy(() => import('../features/sao-truc/components/HorizontalSaoTrucVisualizer'))
+const AbcScore = React.lazy(() => import('../components/MusicStaff/AbcScore'))
+const HorizontalSaoTrucVisualizer = React.lazy(
+  () => import('../features/sao-truc/components/HorizontalSaoTrucVisualizer')
+)
+const ModuleContent = React.lazy(() => import('../components/modules/ModuleContent'))
 
 export const HomePage: React.FC = () => {
-  const recordedNotes = useAudioStore((state) => state.recordedNotes)
   const startNote = useAudioStore((state) => state.startNote)
   const stopNote = useAudioStore((state) => state.stopNote)
-  const timeSignature = useAudioStore((state) => state.timeSignature)
-  const playSuccess = useAudioStore((state) => state.playSuccess)
-  const playFailure = useAudioStore((state) => state.playFailure)
+  const activeNotes = useAudioStore((state) => state.activeNotes)
 
-  // Game Store
   const isPlaying = useGameStore((state) => state.isPlaying)
-  const targetNote = useGameStore((state) => state.targetNote)
-  const checkAnswer = useGameStore((state) => state.checkAnswer)
   const streak = useGameStore((state) => state.streak)
 
-  const [lastResult, setLastResult] = React.useState<'success' | 'failure' | null>(null)
-  const [resultTimestamp, setResultTimestamp] = React.useState(0)
+  const getFullNotation = useNotationStore((state) => state.getFullNotation)
+  const appendNote = useNotationStore((state) => state.appendNote)
+
   const [showConfetti, setShowConfetti] = React.useState(false)
 
-  // Initialize storage durability and log stats in dev
   React.useEffect(() => {
     const initStorage = async () => {
       await requestPersistentStorage()
       if (import.meta.env.DEV) {
         const stats = await getStorageEstimate()
         if (stats) {
-          console.log(`Storage Usage: ${(stats.usage / 1024 / 1024).toFixed(2)} MB`)
-          console.log(`Storage Quota: ${(stats.quota / 1024 / 1024).toFixed(2)} MB`)
+          console.log(`Storage: ${(stats.usage / 1024 / 1024).toFixed(2)} / ${(stats.quota / 1024 / 1024).toFixed(2)} MB`)
         }
       }
     }
     initStorage()
   }, [])
 
-  // Wrap stopNote to check answer in game mode
   const handleStopNote = (note: string) => {
     stopNote(note)
-    if (isPlaying) {
-      const isCorrect = checkAnswer(note, Date.now())
-      setLastResult(isCorrect ? 'success' : 'failure')
-      setResultTimestamp(Date.now())
-
-      if (isCorrect) {
-        playSuccess()
-      } else {
-        playFailure()
-      }
-    }
+    appendNote(note)
   }
 
   React.useEffect(() => {
@@ -69,80 +55,85 @@ export const HomePage: React.FC = () => {
     }
   }, [streak, isPlaying])
 
-  // Calculate note limit based on 4 measures (queue behavior)
-  const beatsPerMeasure = timeSignature === '3/4' ? 3 : 4
-  const maxMeasures = 4
-  const noteLimit = beatsPerMeasure * maxMeasures
-
-  // Calculate dropping based on measure alignment (Shift by full measures when full)
-  const overflow = Math.max(0, recordedNotes.length - noteLimit)
-  const notesToDrop = Math.ceil(overflow / beatsPerMeasure) * beatsPerMeasure
-
-  const staffNotes = recordedNotes.slice(notesToDrop).length > 0
-    ? recordedNotes.slice(notesToDrop).map(n => n.toLowerCase() + '/q')
-    : ['b4/w/r']
-
   return (
-    <div className="flex h-screen bg-gradient-to-br from-[#e0f5f5] to-[#c5e8e8] overflow-hidden">
+    <div className="flex h-screen bg-[#F5F7FA] dark:bg-[#121212] overflow-hidden">
       {/* Sidebar */}
-      <Sidebar className="hidden md:flex flex-shrink-0" />
+      <Sidebar className="hidden md:flex" />
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-y-auto p-4 gap-4">
+      <main className="flex-1 flex flex-col h-full min-w-0 relative">
+        <MainHeader />
+
         <GameOverlay />
         <FeedbackOverlay />
-        <FeedbackEffects lastResult={lastResult} timestamp={resultTimestamp} />
         <ConfettiExplosion run={showConfetti} onComplete={() => setShowConfetti(false)} />
 
-        {/* Music Staff */}
-        <section className="w-full">
-          <React.Suspense fallback={<div className="w-full h-[200px] flex items-center justify-center text-gray-500 bg-white rounded-xl shadow-sm">Loading staff...</div>}>
-            <div className="bg-white rounded-xl shadow-sm p-4 border border-gray-200/50">
-              <MusicStaff
-                notes={staffNotes}
-                clef="treble"
-                timeSignature={timeSignature}
-                highlightNote={isPlaying ? targetNote : null}
-              />
-            </div>
-          </React.Suspense>
-        </section>
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 scroll-smooth no-scrollbar">
+          {/* Music Staff */}
+          <CollapsiblePanel title="Grand Staff View" icon="music_note" defaultOpen>
+            <React.Suspense
+              fallback={
+                <div className="w-full h-[150px] flex items-center justify-center text-slate-400">
+                  Loading staff...
+                </div>
+              }
+            >
+              <AbcScore notation={getFullNotation()} showControls />
+            </React.Suspense>
+          </CollapsiblePanel>
 
-        {/* Piano */}
-        <section className="w-full">
-          <div className="bg-white rounded-xl shadow-sm p-3 border border-gray-200/50">
+          {/* Guitar Fretboard */}
+          <CollapsiblePanel title="Guitar Fretboard" icon="music_note" defaultOpen>
+            <VirtualGuitar
+              activeNotes={activeNotes}
+              onPlayNote={(note) => {
+                startNote(note)
+                setTimeout(() => handleStopNote(note), 200)
+              }}
+            />
+          </CollapsiblePanel>
+
+          {/* Flute */}
+          <CollapsiblePanel title="Flute" icon="graphic_eq" defaultOpen>
+            <React.Suspense
+              fallback={
+                <div className="w-full h-16 flex items-center justify-center text-slate-400">
+                  Loading...
+                </div>
+              }
+            >
+              <HorizontalSaoTrucVisualizer />
+            </React.Suspense>
+          </CollapsiblePanel>
+
+          {/* Piano */}
+          <CollapsiblePanel title="Piano Visualization" icon="piano" defaultOpen>
+            <div className="flex justify-end mb-2">
+              <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">3 Octave Interactive Range</span>
+            </div>
             <VirtualPiano
               startOctave={3}
               octaves={3}
               onStartNote={startNote}
               onStopNote={handleStopNote}
+              activeNotes={activeNotes}
             />
-          </div>
-        </section>
+          </CollapsiblePanel>
 
-        {/* Controls Bar */}
-        <section className="w-full">
-          <ControlsBar />
-        </section>
-
-        {/* Sáo Trúc (Horizontal) */}
-        <section className="w-full">
-          <React.Suspense fallback={<div className="w-full h-16 flex items-center justify-center text-gray-500">Loading...</div>}>
-            <HorizontalSaoTrucVisualizer />
+          {/* Module-specific content (Topics, Theory Panel) */}
+          <React.Suspense
+            fallback={
+              <div className="w-full h-32 flex items-center justify-center text-slate-400">
+                Loading module content...
+              </div>
+            }
+          >
+            <ModuleContent />
           </React.Suspense>
-        </section>
-
-        {/* Guitar */}
-        <section className="w-full">
-          <VirtualGuitar
-            activeNotes={Array.from(useAudioStore.getState().activeNotes)}
-            onPlayNote={(note) => {
-              startNote(note)
-              setTimeout(() => handleStopNote(note), 200)
-            }}
-          />
-        </section>
+        </div>
       </main>
     </div>
   )
 }
+
+export default HomePage

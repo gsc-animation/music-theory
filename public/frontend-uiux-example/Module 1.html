@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interactive Music Studio V2 - Professional Music Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#30e8e8",
+                        "primary-content": "#111818",
+                        "primary-dark": "#1f9d9d",
+                        "primary-darker": "#136363",
+                        "background-light": "#ffffff",
+                        "background-subtle": "#F5F7FA",
+                        "background-dark": "#22252a",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#374151",
+                        "harmonic-tonic": "#3b82f6",
+                        "harmonic-dominant": "#ef4444",
+                        "harmonic-subdominant": "#f59e0b"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "serif": ["Noto Serif", "serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.375rem", "md": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(48, 232, 232, 0.5)',
+                        'paper': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .staff-line {
+            height: 1px;
+            background-color: #cbd5e1;
+            width: 100%;
+        }
+        .dark .staff-line {
+            background-color: #64748b;
+        }
+        .note-head {
+            width: 13px;
+            height: 9px;
+            border-radius: 50%;
+            transform: rotate(-25deg);
+            background-color: #0f172a;
+        }
+        .dark .note-head {
+            background-color: #f1f5f9;
+        }
+        .note-stem {
+            position: absolute;
+            width: 1px;
+            height: 32px;
+            background-color: #0f172a;
+            bottom: 4px;
+            right: 0.5px;
+        }
+        .dark .note-stem {
+            background-color: #f1f5f9;
+        }
+        .piano-key-white {
+            height: 120px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            transition: all 0.1s ease;
+            position: relative;
+        }
+        .piano-key-white:active, .piano-key-white.active {
+            background-color: #30e8e8;
+            box-shadow: inset 0 -5px 0 rgba(0,0,0,0.1);
+        }
+        .piano-key-black {
+            height: 75px;
+            width: 60%;
+            background: #111818;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            z-index: 10;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+        .piano-key-black-wrapper {
+            position: absolute;
+            top: 0;
+            height: 75px;
+            width: 14.28%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .guitar-string {
+            height: 1px;
+            background: #94a3b8;
+            position: relative;
+        }
+        .guitar-fret {
+            border-right: 2px solid #cbd5e1;
+        }
+        .flute-hole {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #1e293b;
+            background-color: #f1f5f9;
+            transition: all 0.2s;
+        }
+        .flute-hole.active {
+            background-color: #30e8e8;
+            border-color: #30e8e8;
+            box-shadow: 0 0 10px rgba(48, 232, 232, 0.6);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .chord-block {
+            min-width: 100px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            cursor: move;
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .clef-treble {
+            font-family: 'serif';
+            font-size: 3.8rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+        .clef-bass {
+            font-family: 'serif';
+            font-size: 2.4rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+        .grand-staff-bracket {
+            border-left: 5px solid #1e293b;
+            border-top: 5px solid #1e293b;
+            border-bottom: 5px solid #1e293b;
+            width: 14px;
+            position: absolute;
+            left: -1px;
+            top: 0;
+            bottom: 0;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+        .dark .grand-staff-bracket {
+            border-color: #94a3b8;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151;
+        }
+        .staff-bar-line {
+            width: 1px;
+            background-color: #94a3b8;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .step-line::after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -20px;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .dark .step-line::after {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="bg-background-subtle dark:bg-background-dark text-[#111818] dark:text-white font-display overflow-hidden h-screen w-full flex">
+<aside class="w-[280px] flex-shrink-0 bg-white dark:bg-[#1a1d21] border-r border-border-light dark:border-border-dark flex flex-col h-full shadow-[2px_0_20px_rgba(0,0,0,0.02)] z-30">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-2 mb-8">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-content">
+<span class="material-symbols-outlined text-[20px]">music_note</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">Music Studio V2</h1>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary-content">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<p class="text-sm font-semibold">Syllabus</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">piano</span>
+<p class="text-sm font-medium">Practice</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<p class="text-sm font-medium">Profile</p>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-6 py-2 no-scrollbar">
+<div class="flex flex-col gap-3">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Learning Path</p>
+<details class="group rounded-xl border border-primary/30 bg-primary/5 dark:bg-primary/10 open:shadow-sm transition-all duration-200" open="">
+<summary class="flex cursor-pointer items-center justify-between gap-3 p-3 list-none">
+<div class="flex items-center gap-3">
+<div class="relative w-7 h-7 flex items-center justify-center">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-slate-200 dark:text-slate-600" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary progress-ring-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="3"></path>
+</svg>
+<span class="absolute text-[9px] font-bold text-primary-darker dark:text-primary">1</span>
+</div>
+<span class="text-sm font-bold text-primary-darker dark:text-primary">Fundamentals</span>
+</div>
+<span class="material-symbols-outlined text-primary-darker group-open:rotate-180 transition-transform text-lg">expand_more</span>
+</summary>
+<div class="px-3 pb-3 pt-0 pl-[48px]">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] font-medium text-slate-500">Module 1: Pitch &amp; Notation</span>
+</div>
+</div>
+</details>
+<details class="group rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 open:shadow-sm transition-all duration-200">
+<summary class="flex cursor-pointer items-center justify-between gap-3 p-3 list-none">
+<div class="flex items-center gap-3">
+<div class="relative w-7 h-7 flex items-center justify-center">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-slate-200 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary progress-ring-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="20, 100" stroke-width="3"></path>
+</svg>
+<span class="absolute text-[9px] font-bold text-slate-500 dark:text-slate-400">2</span>
+</div>
+<span class="text-sm font-medium">Rhythm &amp; Meter</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform text-lg">expand_more</span>
+</summary>
+</details>
+<details class="group rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 open:shadow-sm transition-all duration-200">
+<summary class="flex cursor-pointer items-center justify-between gap-3 p-3 list-none">
+<div class="flex items-center gap-3">
+<div class="relative w-7 h-7 flex items-center justify-center">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-slate-200 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary progress-ring-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="0, 100" stroke-width="3"></path>
+</svg>
+<span class="absolute text-[9px] font-bold text-slate-500 dark:text-slate-400">3</span>
+</div>
+<span class="text-sm font-medium">Melody &amp; Scales</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform text-lg">expand_more</span>
+</summary>
+</details>
+<details class="group rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 open:shadow-sm transition-all duration-200">
+<summary class="flex cursor-pointer items-center justify-between gap-3 p-3 list-none">
+<div class="flex items-center gap-3">
+<div class="relative w-7 h-7 flex items-center justify-center">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-slate-200 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary progress-ring-circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="0, 100" stroke-width="3"></path>
+</svg>
+<span class="absolute text-[9px] font-bold text-slate-500 dark:text-slate-400">4</span>
+</div>
+<span class="text-sm font-medium">Harmony</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform text-lg">expand_more</span>
+</summary>
+</details>
+<details class="group rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 open:shadow-sm transition-all duration-200 opacity-60">
+<summary class="flex cursor-pointer items-center justify-between gap-3 p-3 list-none">
+<div class="flex items-center gap-3">
+<div class="relative w-7 h-7 flex items-center justify-center">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<path class="text-slate-200 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+</svg>
+<span class="material-symbols-outlined text-[14px] text-slate-400 absolute">lock</span>
+</div>
+<span class="text-sm font-medium">Composition</span>
+</div>
+</summary>
+</details>
+</div>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark mt-auto">
+<div class="flex items-center justify-between px-2 mb-3">
+<span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Your Progress</span>
+<div class="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded-full border border-amber-200 dark:border-amber-700/50">
+<span class="material-symbols-outlined text-amber-500 text-[14px]">bolt</span>
+<span class="text-[10px] font-bold text-amber-700 dark:text-amber-400">450 XP</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors cursor-pointer">settings</span>
+<span class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors cursor-pointer">help</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-white dark:border-slate-600 shadow-sm" title="User Profile">
+<div class="w-full h-full bg-gradient-to-tr from-blue-400 to-primary"></div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full min-w-0 relative bg-background-subtle dark:bg-[#121212]">
+<header class="h-[72px] px-8 flex items-center justify-between bg-white/80 dark:bg-[#22252a]/80 backdrop-blur-md sticky top-0 z-20 border-b border-border-light dark:border-border-dark shadow-sm">
+<div class="flex flex-col">
+<h2 class="text-xl font-bold tracking-tight text-[#111818] dark:text-white">Module 1: The Fundamentals</h2>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="font-bold text-primary">Pitch &amp; Notation</span>
+<span>•</span>
+<span>3 topics remaining</span>
+</div>
+</div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-slate-100 dark:bg-slate-800 rounded-full p-1 shadow-inner border border-border-light dark:border-border-dark">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-red-500 hover:bg-white dark:hover:bg-slate-700 shadow-sm transition-all" title="Record">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">fiber_manual_record</span>
+</button>
+<div class="w-px h-5 bg-slate-300 dark:bg-slate-600 mx-1"></div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined">skip_previous</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-[#111818] text-white hover:scale-105 shadow-md transition-all mx-1">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined">skip_next</span>
+</button>
+<div class="w-px h-5 bg-slate-300 dark:bg-slate-600 mx-1"></div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all">
+<span class="material-symbols-outlined">replay</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden xl:flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-slate-400 text-sm">timer</span>
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">120 BPM</span>
+</div>
+<label class="inline-flex items-center cursor-pointer group">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="relative w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary shadow-inner"></div>
+<span class="ms-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-primary-darker transition-colors">VN Mode</span>
+</label>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-4 space-y-3 scroll-smooth no-scrollbar">
+<details class="group bg-white dark:bg-slate-800 rounded-xl shadow-paper border border-slate-200 dark:border-border-dark overflow-hidden" open="">
+<summary class="flex cursor-pointer items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/50 list-none border-b border-slate-100 dark:border-border-dark">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded">Grand Staff View</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform chevron-icon">expand_more</span>
+</summary>
+<div class="p-3 relative overflow-hidden min-h-[220px]">
+<div class="flex flex-wrap gap-2 justify-between items-center mb-6 border-b border-slate-100 dark:border-slate-700 pb-2">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2">
+<div class="flex bg-slate-100 dark:bg-slate-700 rounded-md p-0.5 border border-slate-200 dark:border-slate-600">
+<button class="px-2 py-0.5 text-[9px] font-bold bg-white dark:bg-slate-800 shadow-sm rounded-sm text-slate-700 dark:text-slate-200">2 Staffs</button>
+<button class="px-2 py-0.5 text-[9px] font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 hover:bg-slate-200/50 rounded-sm">1 Staff</button>
+</div>
+<div class="h-4 w-px bg-slate-300 dark:bg-slate-600"></div>
+<button class="flex items-center gap-1 px-2 py-0.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-600 dark:text-slate-300 rounded text-[9px] font-bold border border-slate-200 dark:border-slate-600 transition-colors">
+<span class="material-symbols-outlined text-[12px]">upload_file</span> Load .mxl
+                            </button>
+<div class="h-4 w-px bg-slate-300 dark:bg-slate-600 mx-1"></div>
+<label class="flex items-center gap-2 cursor-pointer group select-none">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-6 h-3.5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-2.5 after:w-2.5 after:transition-all peer-checked:bg-primary shadow-inner"></div>
+</div>
+<span class="text-[9px] font-bold text-slate-500 group-hover:text-slate-700 dark:text-slate-400">Note Names</span>
+</label>
+</div>
+</div>
+<div class="text-[10px] text-slate-400 font-serif italic">Concerto in C Major</div>
+</div>
+<div class="w-full max-w-4xl mx-auto relative pt-4 pb-12 px-16 select-none">
+<div class="relative">
+<div class="grand-staff-bracket"></div>
+<div class="staff-bar-line left-0 bg-[#1e293b] dark:bg-[#94a3b8] w-[2px]"></div>
+<div class="staff-bar-line right-0"></div>
+<div class="flex flex-col gap-[60px]">
+<div class="relative h-10 w-full">
+<div class="absolute -left-10 -top-[22px] clef-treble text-[#1e293b] dark:text-[#e2e8f0] z-10">𝄞</div>
+<div class="flex flex-col justify-between h-full w-full absolute top-0 left-0">
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+</div>
+<div class="absolute left-[20%] top-[40px] flex flex-col items-center group cursor-pointer hover:scale-110 transition-transform">
+<div class="absolute top-[5px] w-6 h-[1px] bg-[#1e293b] dark:bg-[#cbd5e1]"></div>
+<div class="note-head bg-[#1e293b] dark:bg-primary"></div>
+<div class="note-stem dark:bg-primary bg-[#1e293b] -top-[28px] !h-[35px] right-[0.5px]"></div>
+<span class="absolute top-6 text-[10px] font-bold font-serif text-slate-500 dark:text-slate-300">C4</span>
+</div>
+<div class="absolute left-[35%] top-[30px] flex flex-col items-center group cursor-pointer hover:scale-110 transition-transform">
+<div class="note-head bg-[#1e293b] dark:bg-primary"></div>
+<div class="note-stem dark:bg-primary bg-[#1e293b] -top-[28px] !h-[35px] right-[0.5px]"></div>
+<span class="absolute top-6 text-[10px] font-bold font-serif text-slate-500 dark:text-slate-300">E4</span>
+</div>
+<div class="absolute left-[50%] top-[20px] flex flex-col items-center group cursor-pointer hover:scale-110 transition-transform">
+<div class="note-head bg-[#1e293b] dark:bg-primary"></div>
+<div class="note-stem dark:bg-primary bg-[#1e293b] -top-[28px] !h-[35px] right-[0.5px]"></div>
+<span class="absolute top-6 text-[10px] font-bold font-serif text-slate-500 dark:text-slate-300">G4</span>
+</div>
+</div>
+<div class="relative h-10 w-full">
+<div class="absolute -left-10 -top-[16px] clef-bass text-[#1e293b] dark:text-[#e2e8f0] z-10">𝄢</div>
+<div class="flex flex-col justify-between h-full w-full absolute top-0 left-0">
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+<div class="staff-line"></div>
+</div>
+<div class="absolute left-[20%] top-[15px] flex flex-col items-center group cursor-pointer hover:scale-110 transition-transform">
+<div class="note-head bg-[#1e293b] dark:bg-primary"></div>
+<div class="note-stem dark:bg-primary bg-[#1e293b] -top-[28px] !h-[35px] right-[0.5px]"></div>
+<span class="absolute top-6 text-[10px] font-bold font-serif text-slate-500 dark:text-slate-300">C3</span>
+</div>
+<div class="absolute left-[50%] -top-[5px] flex flex-col items-center group cursor-pointer hover:scale-110 transition-transform">
+<div class="note-head bg-[#1e293b] dark:bg-primary"></div>
+<div class="note-stem dark:bg-primary bg-[#1e293b] top-[5px] !h-[30px] !left-[0.5px] !bottom-auto"></div>
+<span class="absolute top-9 text-[10px] font-bold font-serif text-slate-500 dark:text-slate-300">G3</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</details>
+<div class="space-y-4 pt-2">
+<div class="flex items-center gap-3 px-1 mb-2">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+<h3 class="text-sm font-bold text-primary-darker dark:text-primary uppercase tracking-widest">Module 1: The Fundamentals (Pitch &amp; Notation)</h3>
+</div>
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-slate-200 dark:border-border-dark overflow-hidden flex flex-col md:flex-row items-stretch min-h-[140px]">
+<div class="w-12 bg-primary/5 dark:bg-primary/10 flex items-center justify-center border-r border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-xs font-black text-primary rotate-[-90deg]">STEP 01</span>
+</div>
+<div class="p-5 flex-1 flex flex-col md:flex-row md:items-center gap-6">
+<div class="md:w-1/4">
+<h4 class="text-[10px] font-bold uppercase text-slate-500 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">grid_4x4</span> Staff &amp; Clefs</h4>
+<p class="text-[11px] text-slate-400 leading-relaxed">The foundation of musical notation. Clefs assign pitch to lines and spaces.</p>
+</div>
+<div class="flex-1 flex items-center justify-around bg-slate-50 dark:bg-slate-900/50 rounded-lg py-2 border border-slate-100 dark:border-slate-700/50">
+<div class="relative w-32 h-14 border-l-2 border-slate-800 dark:border-slate-400">
+<div class="flex flex-col justify-between h-full w-full absolute top-0 left-0 py-1">
+<div class="staff-line"></div><div class="staff-line"></div><div class="staff-line"></div><div class="staff-line"></div><div class="staff-line"></div>
+</div>
+<span class="absolute -left-1.5 -top-1 text-4xl font-serif dark:text-slate-200 text-slate-800">𝄞</span>
+</div>
+<div class="relative w-32 h-14 border-l-2 border-slate-800 dark:border-slate-400">
+<div class="flex flex-col justify-between h-full w-full absolute top-0 left-0 py-1">
+<div class="staff-line"></div><div class="staff-line"></div><div class="staff-line"></div><div class="staff-line"></div><div class="staff-line"></div>
+</div>
+<span class="absolute -left-1 top-0 text-3xl font-serif dark:text-slate-200 text-slate-800">𝄢</span>
+</div>
+</div>
+</div>
+</div>
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-slate-200 dark:border-border-dark overflow-hidden flex flex-col md:flex-row items-stretch min-h-[140px]">
+<div class="w-12 bg-primary/5 dark:bg-primary/10 flex items-center justify-center border-r border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-xs font-black text-primary rotate-[-90deg]">STEP 02</span>
+</div>
+<div class="p-5 flex-1 flex flex-col md:flex-row md:items-center gap-6">
+<div class="md:w-1/4">
+<h4 class="text-[10px] font-bold uppercase text-slate-500 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sort_by_alpha</span> Musical Alphabet</h4>
+<p class="text-[11px] text-slate-400 leading-relaxed">Music uses seven letters that repeat in cycles across octaves.</p>
+</div>
+<div class="flex-1 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-100 dark:border-slate-700/50">
+<span class="w-8 h-8 rounded-full bg-primary text-primary-content font-bold flex items-center justify-center text-xs shadow-sm">A</span>
+<span class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 text-slate-500 font-bold flex items-center justify-center text-xs border border-slate-200 dark:border-slate-600">B</span>
+<span class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 text-slate-500 font-bold flex items-center justify-center text-xs border border-slate-200 dark:border-slate-600">C</span>
+<span class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 text-slate-500 font-bold flex items-center justify-center text-xs border border-slate-200 dark:border-slate-600">D</span>
+<span class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 text-slate-500 font-bold flex items-center justify-center text-xs border border-slate-200 dark:border-slate-600">E</span>
+<span class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 text-slate-500 font-bold flex items-center justify-center text-xs border border-slate-200 dark:border-slate-600">F</span>
+<span class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 text-slate-500 font-bold flex items-center justify-center text-xs border border-slate-200 dark:border-slate-600">G</span>
+</div>
+</div>
+</div>
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-slate-200 dark:border-border-dark overflow-hidden flex flex-col md:flex-row items-stretch min-h-[140px]">
+<div class="w-12 bg-primary/5 dark:bg-primary/10 flex items-center justify-center border-r border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-xs font-black text-primary rotate-[-90deg]">STEP 03</span>
+</div>
+<div class="p-5 flex-1 flex flex-col md:flex-row md:items-center gap-6">
+<div class="md:w-1/4">
+<h4 class="text-[10px] font-bold uppercase text-slate-500 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">music_note</span> Accidentals</h4>
+<p class="text-[11px] text-slate-400 leading-relaxed">Symbols that modify the pitch of a note by raising or lowering it.</p>
+</div>
+<div class="flex-1 flex gap-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-100 dark:border-slate-700/50">
+<button class="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded flex flex-col items-center justify-center hover:border-primary transition-colors group/btn">
+<span class="font-serif text-3xl leading-none mb-1 group-hover/btn:text-primary transition-colors">♭</span>
+<span class="text-[9px] uppercase font-bold text-slate-500">Flat</span>
+</button>
+<button class="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded flex flex-col items-center justify-center hover:border-primary transition-colors group/btn">
+<span class="font-serif text-3xl leading-none mb-1 group-hover/btn:text-primary transition-colors">♮</span>
+<span class="text-[9px] uppercase font-bold text-slate-500">Natural</span>
+</button>
+<button class="flex-1 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded flex flex-col items-center justify-center hover:border-primary transition-colors group/btn">
+<span class="font-serif text-3xl leading-none mb-1 group-hover/btn:text-primary transition-colors">♯</span>
+<span class="text-[9px] uppercase font-bold text-slate-500">Sharp</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-slate-200 dark:border-border-dark overflow-hidden flex flex-col md:flex-row items-stretch min-h-[140px]">
+<div class="w-12 bg-primary/5 dark:bg-primary/10 flex items-center justify-center border-r border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-xs font-black text-primary rotate-[-90deg]">STEP 04</span>
+</div>
+<div class="p-5 flex-1 flex flex-col md:flex-row md:items-center gap-6">
+<div class="md:w-1/4">
+<h4 class="text-[10px] font-bold uppercase text-slate-500 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">linear_scale</span> Intervals</h4>
+<p class="text-[11px] text-slate-400 leading-relaxed">The distance between two notes measured in tones and semitones.</p>
+</div>
+<div class="flex-1 space-y-4 bg-slate-50 dark:bg-slate-900/50 rounded-lg p-5 border border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-3">
+<span class="text-[9px] font-bold w-14 text-right text-slate-600 dark:text-slate-400">Semitone</span>
+<div class="h-4 flex-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative shadow-inner">
+<div class="absolute left-0 top-0 bottom-0 w-[50%] bg-indigo-400"></div>
+</div>
+<span class="text-[9px] text-slate-400 font-mono w-14">1/2 Step</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[9px] font-bold w-14 text-right text-slate-600 dark:text-slate-400">Tone</span>
+<div class="h-4 flex-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative shadow-inner">
+<div class="absolute left-0 top-0 bottom-0 w-[100%] bg-primary"></div>
+</div>
+<span class="text-[9px] text-slate-400 font-mono w-14">Whole Step</span>
+</div>
+</div>
+</div>
+</div>
+<div class="relative bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-slate-200 dark:border-border-dark overflow-hidden flex flex-col md:flex-row items-stretch min-h-[140px]">
+<div class="w-12 bg-primary/5 dark:bg-primary/10 flex items-center justify-center border-r border-slate-100 dark:border-slate-700 shrink-0">
+<span class="text-xs font-black text-primary rotate-[-90deg]">STEP 05</span>
+</div>
+<div class="p-5 flex-1 flex flex-col md:flex-row md:items-center gap-6">
+<div class="md:w-1/4">
+<h4 class="text-[10px] font-bold uppercase text-slate-500 mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">swap_horiz</span> Enharmonics</h4>
+<p class="text-[11px] text-slate-400 leading-relaxed">Different names for the exact same sounding pitch.</p>
+</div>
+<div class="flex-1 flex gap-6 bg-slate-50 dark:bg-slate-900/50 rounded-lg p-4 border border-slate-100 dark:border-slate-700/50 justify-center">
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800 px-6 py-2 rounded-lg border border-slate-100 dark:border-slate-700 shadow-sm">
+<span class="font-bold font-serif text-xl text-slate-700 dark:text-slate-200">C♯</span>
+<span class="material-symbols-outlined text-sm text-slate-400">equal</span>
+<span class="font-bold font-serif text-xl text-slate-700 dark:text-slate-200">D♭</span>
+</div>
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800 px-6 py-2 rounded-lg border border-slate-100 dark:border-slate-700 shadow-sm">
+<span class="font-bold font-serif text-xl text-slate-700 dark:text-slate-200">F♯</span>
+<span class="material-symbols-outlined text-sm text-slate-400">equal</span>
+<span class="font-bold font-serif text-xl text-slate-700 dark:text-slate-200">G♭</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<details class="group bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-border-light dark:border-border-dark overflow-hidden">
+<summary class="flex cursor-pointer items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/50 list-none border-b border-border-light dark:border-border-dark">
+<h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">view_timeline</span> Harmonic Timeline
+                </h3>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform chevron-icon">expand_more</span>
+</summary>
+<div class="h-16 flex items-stretch overflow-x-auto no-scrollbar relative">
+<div class="chord-block bg-harmonic-tonic/10 border-l-4 border-harmonic-tonic z-10 w-[25%]">
+<span class="text-sm font-bold text-harmonic-tonic">C</span>
+<span class="text-[9px] font-semibold text-slate-500">I</span>
+</div>
+<div class="chord-block bg-harmonic-subdominant/10 border-l-4 border-harmonic-subdominant z-10 w-[12.5%]">
+<span class="text-sm font-bold text-harmonic-subdominant">F</span>
+<span class="text-[9px] font-semibold text-slate-500">IV</span>
+</div>
+<div class="chord-block bg-harmonic-dominant/10 border-l-4 border-harmonic-dominant z-10 w-[12.5%]">
+<span class="text-sm font-bold text-harmonic-dominant">G7</span>
+<span class="text-[9px] font-semibold text-slate-500">V7</span>
+</div>
+<div class="chord-block bg-harmonic-tonic/10 border-l-4 border-harmonic-tonic z-10 w-[25%]">
+<span class="text-sm font-bold text-harmonic-tonic">Am</span>
+<span class="text-[9px] font-semibold text-slate-500">vi</span>
+</div>
+<div class="chord-block bg-slate-100/30 border-dashed border-2 border-slate-200 dark:border-slate-700 z-10 w-[25%] flex-row gap-2">
+<span class="material-symbols-outlined text-slate-300">add_circle</span>
+<span class="text-[9px] font-bold text-slate-400 uppercase">Drop chord</span>
+</div>
+</div>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-700 relative">
+<div class="absolute left-0 top-0 bottom-0 w-[42%] bg-primary"></div>
+</div>
+</details>
+<div class="flex flex-col lg:flex-row gap-3 items-start">
+<details class="group w-full lg:w-[30%] bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-border-light dark:border-border-dark overflow-hidden">
+<summary class="flex cursor-pointer items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/50 list-none border-b border-border-light dark:border-border-dark">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">school</span> Theory Panel
+                    </h3>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform chevron-icon">expand_more</span>
+</summary>
+<div class="p-4 flex flex-col gap-4">
+<div class="relative flex flex-col items-center justify-center pt-2 pb-4">
+<div class="absolute top-0 left-0 px-2 py-0.5 rounded bg-primary/10 text-primary text-[9px] font-bold uppercase tracking-wide">Key Center</div>
+<div class="relative w-32 h-32 mt-4 rounded-full border-[6px] border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-inner flex items-center justify-center">
+<div class="absolute inset-0 rounded-full">
+<div class="absolute top-1 left-1/2 -translate-x-1/2 text-[10px] font-bold text-primary">C</div>
+<div class="absolute top-[12%] right-[22%] text-[8px] font-bold text-slate-400">G</div>
+<div class="absolute top-[35%] right-[6%] text-[8px] font-bold text-slate-400">D</div>
+<div class="absolute top-[62%] right-[6%] text-[8px] font-bold text-slate-400">A</div>
+<div class="absolute bottom-[12%] right-[22%] text-[8px] font-bold text-slate-400">E</div>
+<div class="absolute bottom-1 left-1/2 -translate-x-1/2 text-[8px] font-bold text-slate-400">F#</div>
+<div class="absolute bottom-[12%] left-[22%] text-[8px] font-bold text-slate-400">Ab</div>
+<div class="absolute top-[62%] left-[6%] text-[8px] font-bold text-slate-400">Eb</div>
+<div class="absolute top-[35%] left-[6%] text-[8px] font-bold text-slate-400">Bb</div>
+<div class="absolute top-[12%] left-[22%] text-[8px] font-bold text-slate-400">F</div>
+</div>
+<div class="w-14 h-14 rounded-full bg-slate-50 dark:bg-slate-700 shadow-[0_4px_10px_rgba(0,0,0,0.1)] border border-slate-200 dark:border-slate-600 flex items-center justify-center z-10 cursor-pointer hover:scale-105 transition-transform group/dial">
+<div class="text-center">
+<div class="text-lg font-bold text-primary-darker dark:text-primary leading-none">C</div>
+<div class="text-[7px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Major</div>
+</div>
+</div>
+<div class="absolute -inset-[3px] rounded-full border-[3px] border-primary border-r-transparent border-b-transparent border-l-transparent rotate-0 pointer-events-none opacity-50"></div>
+</div>
+</div>
+<div class="space-y-2">
+<h4 class="text-[9px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-700 pb-1 mb-2">Diatonic Palette</h4>
+<div class="grid grid-cols-4 gap-2">
+<button class="relative flex flex-col items-center justify-center h-12 rounded-lg bg-harmonic-tonic text-white shadow-sm hover:translate-y-[-1px] transition-transform">
+<span class="text-xs font-bold">I</span>
+<span class="text-[8px] opacity-90 font-medium">CMaj7</span>
+</button>
+<button class="relative flex flex-col items-center justify-center h-12 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="text-xs font-bold">ii</span>
+<span class="text-[8px] text-slate-400">Dm7</span>
+</button>
+<button class="relative flex flex-col items-center justify-center h-12 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="text-xs font-bold">iii</span>
+<span class="text-[8px] text-slate-400">Em7</span>
+</button>
+<button class="relative flex flex-col items-center justify-center h-12 rounded-lg bg-harmonic-subdominant text-white shadow-sm hover:translate-y-[-1px] transition-transform">
+<span class="text-xs font-bold">IV</span>
+<span class="text-[8px] opacity-90 font-medium">FMaj7</span>
+</button>
+</div>
+</div>
+</div>
+</details>
+<div class="w-full lg:w-[70%] flex flex-col gap-3">
+<details class="group bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-border-light dark:border-border-dark overflow-hidden" open="">
+<summary class="flex cursor-pointer items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/50 list-none border-b border-border-light dark:border-border-dark">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] rotate-90">music_note</span> Guitar Fretboard
+                        </h3>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform chevron-icon">expand_more</span>
+</summary>
+<div class="p-3">
+<div class="flex justify-end mb-2">
+<span class="text-[9px] text-slate-400 uppercase font-medium tracking-wide">C Major Voicing</span>
+</div>
+<div class="flex gap-4 w-full">
+<div class="flex flex-col justify-between h-[100px] py-1 text-[10px] font-bold text-slate-400 text-right w-4 shrink-0">
+<span>E</span><span>B</span><span>G</span><span>D</span><span>A</span><span>E</span>
+</div>
+<div class="flex-1 relative py-1 px-1 overflow-hidden w-full">
+<div class="absolute inset-0 flex border-b-2 border-slate-300 dark:border-slate-600 bg-[#f8fafc] dark:bg-[#1e293b]">
+<div class="flex-1 guitar-fret relative"></div><div class="flex-1 guitar-fret relative"></div><div class="flex-1 guitar-fret relative bg-slate-100/50 dark:bg-slate-700/30"></div>
+</div>
+<div class="relative z-10 flex flex-col justify-between h-[100px]">
+<div class="guitar-string"></div>
+<div class="guitar-string flex items-center"><div class="absolute left-[6%] -translate-x-1/2 w-3 h-3 bg-primary rounded-full shadow-glow border border-white z-20 flex items-center justify-center"><span class="text-[7px] font-bold text-primary-content">C</span></div></div>
+<div class="guitar-string"><div class="absolute left-[-5px] w-3 h-3 bg-primary rounded-full shadow-glow border border-white z-20 flex items-center justify-center"><span class="text-[7px] font-bold text-primary-content">G</span></div></div>
+</div>
+</div>
+</div>
+</div>
+</details>
+<details class="group bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-border-light dark:border-border-dark overflow-hidden" open="">
+<summary class="flex cursor-pointer items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/50 list-none border-b border-border-light dark:border-border-dark">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">graphic_eq</span> Flute
+                        </h3>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform chevron-icon">expand_more</span>
+</summary>
+<div class="p-3">
+<div class="flex-1 flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg p-2 border border-slate-100 dark:border-slate-800">
+<div class="relative flex items-center w-full justify-center">
+<div class="w-10 h-5 bg-slate-300 dark:bg-slate-700 rounded-l-full relative border-r-4 border-slate-400 shadow-sm z-10 shrink-0"></div>
+<div class="h-5 w-full max-w-2xl bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800 flex items-center justify-evenly px-4 rounded-r-full shadow-sm gap-2">
+<div class="flute-hole w-4 h-4 active flex items-center justify-center"><span class="text-[7px] font-bold text-primary-content">1</span></div>
+<div class="flute-hole w-4 h-4 active flex items-center justify-center"><span class="text-[7px] font-bold text-primary-content">2</span></div>
+<div class="flute-hole w-4 h-4 active flex items-center justify-center"><span class="text-[7px] font-bold text-primary-content">3</span></div>
+<div class="flute-hole w-4 h-4 flex items-center justify-center border-slate-400 bg-slate-300 dark:bg-slate-600"><span class="text-[7px] font-bold text-slate-500">4</span></div>
+<div class="flute-hole w-4 h-4 flex items-center justify-center border-slate-400 bg-slate-300 dark:bg-slate-600"><span class="text-[7px] font-bold text-slate-500">5</span></div>
+<div class="flute-hole w-4 h-4 flex items-center justify-center border-slate-400 bg-slate-300 dark:bg-slate-600"><span class="text-[7px] font-bold text-slate-500">6</span></div>
+</div>
+</div>
+</div>
+</div>
+</details>
+<details class="group bg-white dark:bg-slate-800 rounded-xl shadow-soft border border-border-light dark:border-border-dark overflow-hidden" open="">
+<summary class="flex cursor-pointer items-center justify-between px-3 py-2 bg-slate-50 dark:bg-slate-800/50 list-none border-b border-border-light dark:border-border-dark">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">piano</span> Piano Visualization
+                        </h3>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform chevron-icon">expand_more</span>
+</summary>
+<div class="p-3">
+<div class="flex justify-end mb-2">
+<span class="text-[9px] text-slate-400 uppercase font-medium tracking-wide">3 Octave Interactive Range</span>
+</div>
+<div class="relative h-[120px] w-full select-none overflow-x-auto no-scrollbar">
+<div class="flex h-full min-w-full justify-between">
+<div class="relative flex flex-1">
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">C3</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">D3</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">E3</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">F3</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">G3</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">A3</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">B3</div>
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+<div class="piano-key-black-wrapper left-[10%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[24%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[53%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[67%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[81%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+</div>
+</div>
+<div class="relative flex flex-1">
+<div class="piano-key-white active flex-1 flex items-end justify-center pb-2 text-[8px] text-primary-content font-bold">C4</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">D4</div>
+<div class="piano-key-white active flex-1 flex items-end justify-center pb-2 text-[8px] text-primary-content font-bold">E4</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">F4</div>
+<div class="piano-key-white active flex-1 flex items-end justify-center pb-2 text-[8px] text-primary-content font-bold">G4</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">A4</div>
+<div class="piano-key-white flex-1 flex items-end justify-center pb-2 text-[8px] text-slate-400">B4</div>
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+<div class="piano-key-black-wrapper left-[10%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[24%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[53%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[67%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+<div class="piano-key-black-wrapper left-[81%] h-[75px]"><div class="piano-key-black h-full"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+<section class="bg-primary/5 rounded-xl border border-primary/20 p-4">
+<h4 class="text-xs font-bold text-primary-dark uppercase mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span> Composer's Workbench - Logic Brief
+            </h4>
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<h5 class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase mb-1">Interaction Flow</h5>
+<ul class="text-[10px] text-slate-500 dark:text-slate-400 space-y-1 list-disc pl-4">
+<li><strong>Select:</strong> Click a topic from the <span class="text-primary font-bold">Fundamentals Journey</span>.</li>
+<li><strong>Compose:</strong> Drag chosen chords into the <span class="text-primary font-bold">Harmonic Timeline</span>.</li>
+<li><strong>Visualize:</strong> Real-time feedback across the <span class="text-primary font-bold">Grand Staff</span> and instruments.</li>
+</ul>
+</div>
+<div>
+<h5 class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase mb-1">State Logic (Key filtering)</h5>
+<pre class="bg-slate-900 text-slate-300 p-2 rounded text-[8px] overflow-x-auto">{
+  "currentKey": "C_Major",
+  "diatonicChords": ["C", "Dm", "Em", "F", "G7", "Am", "Bdim"],
+  "harmonicFunctionMap": {
+    "C": "TONIC", "F": "SUBDOMINANT", "G7": "DOMINANT"
+  }
+}</pre>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>

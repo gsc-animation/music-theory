@@ -1,0 +1,24 @@
+/* react-split gutter styles */
+.split {
+  display: flex;
+}
+
+.gutter {
+  background-color: #e5e7eb;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.dark .gutter {
+  background-color: #374151;
+}
+
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfwY8QK0OhhYMHX//fmK0kUWNGsOxFwC0JVj6T4ZnqQAAAABJRU5ErkJggg==');
+}
+
+.gutter.gutter-vertical {
+  cursor: row-resize;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMytMlZwAAAAAnRSTlMAZj0Ygh8AAAAeSURBVHgBY2BgBwKBqCPgAABWCQD5qlEDAAzFMgYAPz/vZfAAAAAASUVORK5CYII=');
+}

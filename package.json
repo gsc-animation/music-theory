@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
+    "@monaco-editor/react": "^4.7.0",
+    "abcjs": "^6.6.0",
     "claude-flow": "^3.0.0-alpha.82",
     "clsx": "^2.1.1",
     "framer-motion": "^12.25.0",
@@ -21,9 +23,11 @@
     "react-confetti": "^6.4.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.12.0",
+    "react-split": "^2.0.14",
     "react-use": "^17.6.0",
     "tailwind-merge": "^3.4.0",
     "tone": "^15.1.22",
+    "use-debounce": "^10.1.0",
     "vexflow": "^5.0.0",
     "zustand": "^5.0.9"
   },

@@ -8,6 +8,7 @@ interface PianoKeyProps {
   note: string
   type: KeyType
   label?: string
+  isHighlighted?: boolean // For cross-instrument highlighting
   onStartNote: (note: string) => void
   onStopNote: (note: string) => void
 }
@@ -16,18 +17,20 @@ const PianoKey: React.FC<PianoKeyProps> = ({
   note,
   type,
   label: _label,
+  isHighlighted = false,
   onStartNote,
   onStopNote,
 }) => {
   const [isActive, setIsActive] = useState(false)
-  const [isPressed, setIsPressed] = useState(false) // Track if key was pressed
+  const [isPressed, setIsPressed] = useState(false)
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const localizedLabel = getNoteLabel(note, notationSystem)
-  // Strip octave numbers for display cleanliness (e.g. "Do4" -> "Do")
-  // Only show label if it was requested (white keys usually)
   const displayLabel = _label ? localizedLabel.replace(/[0-9]/g, '') : undefined
+
+  // Combined active state (local press OR cross-instrument highlight)
+  const showActive = isActive || isHighlighted
 
   const clearHighlightTimeout = () => {
     if (timeoutRef.current) {
@@ -77,12 +80,13 @@ const PianoKey: React.FC<PianoKeyProps> = ({
   const baseClasses =
     'relative flex items-end justify-center pb-2 rounded-b-lg shadow-sm transition-colors duration-75 select-none touch-none'
 
+  // Module 5 colors: white keys white bg, black keys #111818, active cyan #30e8e8
   const typeClasses =
     type === 'white'
-      ? `h-48 w-full z-0 border border-warm-wood/20 ${isActive ? 'bg-bamboo/20' : 'bg-rice-paper'}`
-      : `h-32 w-full z-10 border border-warm-wood/40 ${isActive ? 'bg-warm-wood/80' : 'bg-warm-wood'} text-white`
+      ? `h-[120px] w-full z-0 border border-slate-200 ${showActive ? 'bg-[#30e8e8]' : 'bg-white'}`
+      : `h-[75px] w-full z-10 ${showActive ? 'bg-[#30e8e8]' : 'bg-[#111818]'} text-white rounded-b`
 
-  const activeClasses = isActive ? 'scale-[0.98] origin-top' : ''
+  const activeClasses = showActive ? 'shadow-[inset_0_-5px_0_rgba(0,0,0,0.1)]' : ''
 
   return (
     <button

@@ -24,7 +24,7 @@ describe('PianoKey', () => {
     );
     const key = screen.getByRole('button', { name: /C4/i });
     expect(key).toBeInTheDocument();
-    expect(key).toHaveClass('bg-rice-paper');
+    expect(key).toHaveClass('bg-white');
   });
 
   it('renders black key correctly', () => {
@@ -38,7 +38,7 @@ describe('PianoKey', () => {
     );
     const key = screen.getByRole('button', { name: /C#4/i });
     expect(key).toBeInTheDocument();
-    expect(key).toHaveClass('bg-warm-wood');
+    expect(key).toHaveClass('bg-[#111818]');
   });
 
   it('triggers note on pointer down', () => {
@@ -131,24 +131,24 @@ describe('PianoKey', () => {
 
     // Press down
     fireEvent.pointerDown(key);
-    expect(key).toHaveClass('bg-bamboo/20');
+    expect(key).toHaveClass('bg-[#30e8e8]');
 
     // Release
     fireEvent.pointerUp(key);
-    expect(key).toHaveClass('bg-bamboo/20');
+    expect(key).toHaveClass('bg-[#30e8e8]');
 
     // Advance 200ms
     act(() => {
       vi.advanceTimersByTime(200);
     });
-    expect(key).toHaveClass('bg-bamboo/20');
+    expect(key).toHaveClass('bg-[#30e8e8]');
 
     // Advance past 300ms
     act(() => {
       vi.advanceTimersByTime(101);
     });
-    expect(key).toHaveClass('bg-rice-paper');
-    expect(key).not.toHaveClass('bg-bamboo/20');
+    expect(key).toHaveClass('bg-white');
+    expect(key).not.toHaveClass('bg-[#30e8e8]');
 
     vi.useRealTimers();
   });

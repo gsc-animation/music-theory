@@ -2,7 +2,31 @@
 @source "../index.html";
 @source "../src";
 
+/* abcjs audio controls */
+@import 'abcjs/abcjs-audio.css';
+
 @theme {
+  /* Primary colors */
+  --color-primary: #30e8e8;
+  --color-primary-content: #111818;
+  --color-primary-dark: #1f9d9d;
+  --color-primary-darker: #136363;
+
+  /* Background colors */
+  --color-background-light: #ffffff;
+  --color-background-subtle: #F5F7FA;
+  --color-background-dark: #22252a;
+
+  /* Border colors */
+  --color-border-light: #e2e8f0;
+  --color-border-dark: #374151;
+
+  /* Harmonic function colors */
+  --color-harmonic-tonic: #3b82f6;
+  --color-harmonic-dominant: #ef4444;
+  --color-harmonic-subdominant: #f59e0b;
+
+  /* Legacy colors */
   --color-bamboo: #4CAF50;
   --color-warm-wood: #8D6E63;
   --color-rice-paper: #FAFAFA;
@@ -10,13 +34,62 @@
   --color-gentle-clay: #E57373;
   --color-stone-grey: #616161;
 
-  --font-display: "Nunito", sans-serif;
-  --font-body: "Nunito", sans-serif;
+  /* Typography */
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
   --font-mono: "Fira Code", monospace;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 15px rgba(48, 232, 232, 0.5);
+  --shadow-paper: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-rice-paper);
+  background-color: var(--color-background-subtle);
   color: var(--color-stone-grey);
+}
+
+/* Staff and notation styles */
+.staff-line {
+  height: 1px;
+  background-color: #cbd5e1;
+  width: 100%;
+}
+.dark .staff-line {
+  background-color: #64748b;
+}
+
+/* Progress ring animation */
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Details marker removal */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chord block styles */
+.chord-block {
+  min-width: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: move;
 }

@@ -4,6 +4,7 @@ import PianoKey from './PianoKey';
 interface VirtualPianoProps {
   startOctave?: number;
   octaves?: number;
+  activeNotes?: string[];
   onStartNote: (note: string) => void;
   onStopNote: (note: string) => void;
 }
@@ -26,6 +27,7 @@ const NOTES = [
 export const VirtualPiano: React.FC<VirtualPianoProps> = ({
   startOctave = 4,
   octaves = 1,
+  activeNotes = [],
   onStartNote,
   onStopNote
 }) => {
@@ -40,7 +42,7 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
         {/* White Keys Layer */}
         {whiteKeys.map((note) => (
           <div key={note} className="flex-1">
-            <PianoKey note={note} type="white" onStartNote={onStartNote} onStopNote={onStopNote} label={note.replace(/[0-9]/g, '')} />
+            <PianoKey note={note} type="white" onStartNote={onStartNote} onStopNote={onStopNote} label={note.replace(/[0-9]/g, '')} isHighlighted={activeNotes.includes(note)} />
           </div>
         ))}
 
@@ -61,7 +63,7 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
                  className="absolute top-0 w-[10%] h-32 pointer-events-auto z-10"
                  style={{ left: `${left}%` }}
                >
-                 <PianoKey note={note} type="black" onStartNote={onStartNote} onStopNote={onStopNote} />
+                 <PianoKey note={note} type="black" onStartNote={onStartNote} onStopNote={onStopNote} isHighlighted={activeNotes.includes(note)} />
                </div>
              );
         })}
