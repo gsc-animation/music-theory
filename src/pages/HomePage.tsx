@@ -12,7 +12,7 @@ import { requestPersistentStorage, getStorageEstimate } from '../services/storag
 import VirtualPiano from '../components/VirtualPiano/VirtualPiano'
 import { VirtualGuitar } from '../components/VirtualGuitar/VirtualGuitar'
 
-const AbcScore = React.lazy(() => import('../components/MusicStaff/AbcScore'))
+const GrandStaffView = React.lazy(() => import('../components/MusicStaff/GrandStaffView'))
 const HorizontalSaoTrucVisualizer = React.lazy(
   () => import('../features/sao-truc/components/HorizontalSaoTrucVisualizer')
 )
@@ -26,7 +26,6 @@ export const HomePage: React.FC = () => {
   const isPlaying = useGameStore((state) => state.isPlaying)
   const streak = useGameStore((state) => state.streak)
 
-  const getFullNotation = useNotationStore((state) => state.getFullNotation)
   const appendNote = useNotationStore((state) => state.appendNote)
 
   const [showConfetti, setShowConfetti] = React.useState(false)
@@ -37,7 +36,9 @@ export const HomePage: React.FC = () => {
       if (import.meta.env.DEV) {
         const stats = await getStorageEstimate()
         if (stats) {
-          console.log(`Storage: ${(stats.usage / 1024 / 1024).toFixed(2)} / ${(stats.quota / 1024 / 1024).toFixed(2)} MB`)
+          console.log(
+            `Storage: ${(stats.usage / 1024 / 1024).toFixed(2)} / ${(stats.quota / 1024 / 1024).toFixed(2)} MB`
+          )
         }
       }
     }
@@ -78,7 +79,7 @@ export const HomePage: React.FC = () => {
                 </div>
               }
             >
-              <AbcScore notation={getFullNotation()} showControls />
+              <GrandStaffView />
             </React.Suspense>
           </CollapsiblePanel>
 
@@ -109,7 +110,9 @@ export const HomePage: React.FC = () => {
           {/* Piano */}
           <CollapsiblePanel title="Piano Visualization" icon="piano" defaultOpen>
             <div className="flex justify-end mb-2">
-              <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">3 Octave Interactive Range</span>
+              <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">
+                3 Octave Interactive Range
+              </span>
             </div>
             <VirtualPiano
               startOctave={3}

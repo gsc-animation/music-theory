@@ -1,6 +1,9 @@
 import React from 'react'
 import { useModuleStore } from '../../stores/useModuleStore'
+import { useSettingsStore } from '../../stores/useSettingsStore'
 import { ProgressRing } from '../ui/ProgressRing'
+import { useGameStore } from '../../stores/useGameStore'
+import { APP_STRINGS } from '../../constants/app-strings'
 
 interface SidebarProps {
   className?: string
@@ -24,6 +27,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   const currentModuleId = useModuleStore((state) => state.currentModuleId)
   const setCurrentModule = useModuleStore((state) => state.setCurrentModule)
   const totalXP = useModuleStore((state) => state.totalXP)
+  
+  const startGame = useGameStore((state) => state.startGame)
+  const stopGame = useGameStore((state) => state.stopGame)
+  const isPlaying = useGameStore((state) => state.isPlaying)
+
+  const { theme, toggleTheme } = useSettingsStore()
+
+  // Calculate theme icon
+  const getThemeIcon = () => {
+    if (theme === 'system') return 'brightness_auto'
+    return theme === 'dark' ? 'dark_mode' : 'light_mode'
+  }
 
   return (
     <aside
@@ -69,6 +84,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Game Control Button */}
+        <div className="mt-4">
+          <button
+            onClick={isPlaying ? stopGame : startGame}
+            className={`
+              w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-sm
+              ${isPlaying 
+                ? 'bg-rose-100 text-rose-700 hover:bg-rose-200 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50 dark:border-rose-800' 
+                : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50 dark:border-emerald-800'
+              }
+            `}
+          >
+            <span className="material-symbols-outlined">
+              {isPlaying ? 'stop_circle' : 'play_circle'}
+            </span>
+            {isPlaying ? APP_STRINGS.GAME.STOP : APP_STRINGS.GAME.START}
+          </button>
         </div>
       </div>
 
@@ -160,9 +194,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             </span>
           </div>
           <div className="flex items-center gap-1">
-            <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <button 
+              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              onClick={() => toggleTheme()}
+              title={`Theme: ${theme}`}
+            >
               <span className="material-symbols-outlined text-slate-400 text-[20px]">
-                settings
+                {getThemeIcon()}
               </span>
             </button>
             <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">

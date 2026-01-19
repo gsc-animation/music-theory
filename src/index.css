@@ -2,6 +2,8 @@
 @source "../index.html";
 @source "../src";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* abcjs audio controls */
 @import 'abcjs/abcjs-audio.css';
 
@@ -49,6 +51,11 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-background-subtle);
   color: var(--color-stone-grey);
+}
+
+.dark body {
+  background-color: var(--color-background-dark);
+  color: var(--color-rice-paper);
 }
 
 /* Staff and notation styles */

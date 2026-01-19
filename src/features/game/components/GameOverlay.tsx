@@ -7,8 +7,6 @@ export const GameOverlay: React.FC = () => {
   const score = useGameStore((state) => state.score);
   const streak = useGameStore((state) => state.streak);
   const bestStreak = useGameStore((state) => state.bestStreak);
-  const startGame = useGameStore((state) => state.startGame);
-  const stopGame = useGameStore((state) => state.stopGame);
 
   return (
     <div className="fixed top-12 sm:top-4 left-0 right-0 p-2 sm:p-4 pointer-events-none flex justify-between items-start z-10">
@@ -27,24 +25,7 @@ export const GameOverlay: React.FC = () => {
         </div>
       )}
 
-      {/* Game Controls */}
-      <div className="pointer-events-auto ml-auto">
-        {!isPlaying ? (
-          <button
-            onClick={startGame}
-            className="px-4 sm:px-6 py-2 sm:py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-lg font-bold transition-all transform hover:scale-105 active:scale-95 min-w-[48px] min-h-[48px] text-sm sm:text-base"
-          >
-            {APP_STRINGS.GAME.START}
-          </button>
-        ) : (
-          <button
-            onClick={stopGame}
-            className="px-3 sm:px-4 py-2 bg-stone-500 hover:bg-stone-600 text-white rounded-lg shadow font-medium transition-all min-w-[48px] min-h-[48px] text-sm"
-          >
-            {APP_STRINGS.GAME.STOP}
-          </button>
-        )}
-      </div>
+      {/* Game Controls - Moved to Sidebar */}
     </div>
   );
 };
