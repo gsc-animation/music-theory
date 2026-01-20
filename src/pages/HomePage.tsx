@@ -12,11 +12,14 @@ import { requestPersistentStorage, getStorageEstimate } from '../services/storag
 import VirtualPiano from '../components/VirtualPiano/VirtualPiano'
 import { VirtualGuitar } from '../components/VirtualGuitar/VirtualGuitar'
 
-const GrandStaffView = React.lazy(() => import('../components/MusicStaff/GrandStaffView'))
+const AbcGrandStaff = React.lazy(() => import('../components/MusicStaff/AbcGrandStaff'))
 const HorizontalSaoTrucVisualizer = React.lazy(
   () => import('../features/sao-truc/components/HorizontalSaoTrucVisualizer')
 )
 const ModuleContent = React.lazy(() => import('../components/modules/ModuleContent'))
+const StaffRangeVisualTest = React.lazy(
+  () => import('../components/MusicStaff/StaffRangeVisualTest')
+)
 
 export const HomePage: React.FC = () => {
   const startNote = useAudioStore((state) => state.startNote)
@@ -79,7 +82,7 @@ export const HomePage: React.FC = () => {
                 </div>
               }
             >
-              <GrandStaffView />
+              <AbcGrandStaff />
             </React.Suspense>
           </CollapsiblePanel>
 
@@ -133,6 +136,19 @@ export const HomePage: React.FC = () => {
           >
             <ModuleContent />
           </React.Suspense>
+
+          {/* Staff Range Test - Piano & Guitar */}
+          <CollapsiblePanel title="Staff Range Test (ABC)" icon="music_note" defaultOpen={false}>
+            <React.Suspense
+              fallback={
+                <div className="w-full h-32 flex items-center justify-center text-slate-400">
+                  Loading staff range test...
+                </div>
+              }
+            >
+              <StaffRangeVisualTest />
+            </React.Suspense>
+          </CollapsiblePanel>
         </div>
       </main>
     </div>

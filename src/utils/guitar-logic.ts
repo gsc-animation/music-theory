@@ -2,7 +2,8 @@
 // Notes in chromatic order
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-// Standard Tuning: E4, B3, G3, D3, A2, E2 (String 1 to 6)
+// Standard Guitar Tuning: E4, B3, G3, D3, A2, E2 (String 1 to 6)
+// Range: E2 to approximately E5 (with 8 frets)
 export const GUITAR_TUNING = ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'];
 
 /**

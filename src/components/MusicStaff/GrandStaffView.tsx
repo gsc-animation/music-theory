@@ -3,19 +3,21 @@ import { useAudioStore } from '../../stores/useAudioStore'
 import clsx from 'clsx'
 
 /**
- * Map note names to staff positions
- * Position 0 = middle C (C4), positive = up, negative = down
- * Each step = one line/space on staff
+ * Map note names to staff positions - SEQUENTIAL (each note = 1 step)
+ * Position 0 = Middle C (C4)
+ * Each step = one line/space on staff (5px)
+ *
+ * Treble staff lines (bottom to top): E4, G4, B4, D5, F5
+ * Bass staff lines (bottom to top): G2, B2, D3, F3, A3
  */
 const NOTE_POSITIONS: Record<string, number> = {
-  // Bass clef notes (below middle C)
-  C2: -14,
-  D2: -13,
+  // E2-B2: Extended bass for guitar
   E2: -12,
   F2: -11,
   G2: -10,
   A2: -9,
   B2: -8,
+  // C3-B3: Bass clef
   C3: -7,
   D3: -6,
   E3: -5,
@@ -23,9 +25,9 @@ const NOTE_POSITIONS: Record<string, number> = {
   G3: -3,
   A3: -2,
   B3: -1,
-  // Middle C
+  // C4: Middle C (ledger line)
   C4: 0,
-  // Treble clef notes (above middle C)
+  // D4-B5: Treble clef
   D4: 1,
   E4: 2,
   F4: 3,
@@ -39,14 +41,10 @@ const NOTE_POSITIONS: Record<string, number> = {
   G5: 11,
   A5: 12,
   B5: 13,
-  C6: 14,
-  D6: 15,
-  E6: 16,
 }
 
-// Also handle sharps/flats by mapping to base note positions
+// Handle sharps/flats by mapping to base note positions
 const getNotePosition = (note: string): number | null => {
-  // Normalize: C#4 -> C4, Db4 -> D4, etc.
   const match = note.match(/^([A-G])([#b])?(\d)$/)
   if (!match) return null
   const [, letter, , octave] = match
@@ -69,27 +67,85 @@ const getNoteDisplayName = (note: string): string => {
 interface StaffNoteProps {
   note: string
   position: number
-  xPosition: number // Horizontal position as percentage
-  isActive?: boolean // Currently being played
+  xPosition: number
+  isActive?: boolean
+  staffType: 'treble' | 'bass' | 'middle'
 }
 
+/**
+ * StaffNote - Renders a note on the staff
+ * Position is calculated relative to the staff it belongs to:
+ * - Treble: position 1-13, bottom of staff = position ~2 (E4)
+ * - Bass: position -12 to -1, bottom of staff = position ~-10 (G2)
+ * - Middle: position 0 (C4 ledger line)
+ */
 const StaffNote: React.FC<StaffNoteProps> = ({
   note,
   position,
   xPosition,
   isActive = false,
+  staffType,
 }) => {
   const accidental = isSharpOrFlat(note)
 
-  // Position calculation:
-  // Middle C (position 0) is at the ledger line between staves
-  // Each position step = 5px (half a staff line spacing)
-  // Staff gap center is at ~60px from treble bottom
-  const baseOffset = 60 // Center point between staves
-  const pixelOffset = baseOffset - position * 5
+  /**
+   * Calculate pixel offset relative to the staff container
+   *
+   * Staff height = 40px (h-10)
+   * 5 lines spaced 10px apart (0, 10, 20, 30, 40)
+   * Notes on lines: position at line px value
+   * Notes on spaces: position at line px value + 5 (halfway between lines)
+   *
+   * TREBLE CLEF (staff lines from top to bottom):
+   *   Line 1 (top):    F5 = position 10 -> 0px
+   *   Line 2:          D5 = position 8  -> 10px
+   *   Line 3:          B4 = position 6  -> 20px
+   *   Line 4:          G4 = position 4  -> 30px
+   *   Line 5 (bottom): E4 = position 2  -> 40px
+   *
+   *   Spaces from top to bottom:
+   *   E5 = position 9  -> 5px  (between F5 and D5)
+   *   C5 = position 7  -> 15px (between D5 and B4)
+   *   A4 = position 5  -> 25px (between B4 and G4)
+   *   F4 = position 3  -> 35px (between G4 and E4)
+   *   D4 = position 1  -> 45px (below E4, needs ledger line)
+   *
+   * BASS CLEF (staff lines from top to bottom):
+   *   Line 1 (top):    A3 = position -2  -> 0px
+   *   Line 2:          F3 = position -4  -> 10px
+   *   Line 3:          D3 = position -6  -> 20px
+   *   Line 4:          B2 = position -8  -> 30px
+   *   Line 5 (bottom): G2 = position -10 -> 40px
+   *
+   *   Spaces from top to bottom:
+   *   G3 = position -3  -> 5px  (between A3 and F3)
+   *   E3 = position -5  -> 15px (between F3 and D3)
+   *   C3 = position -7  -> 25px (between D3 and B2)
+   *   A2 = position -9  -> 35px (between B2 and G2)
+   */
+  let pixelOffset: number
 
-  // Determine if we need ledger lines
-  const needsLedgerLine = position === 0 // Middle C
+  if (staffType === 'treble') {
+    // Treble: each step of position = 5px
+    // Reference: position 10 (F5) = 0px (top line)
+    // Formula: (10 - position) * 5
+    // position 10 -> 0px, position 2 -> 40px, position 1 -> 45px (below staff)
+    pixelOffset = (10 - position) * 5
+  } else if (staffType === 'bass') {
+    // Bass: each step of position = 5px
+    // Reference: position -2 (A3) = 0px (top line)
+    // Formula: (-2 - position) * 5
+    // position -2 -> 0px, position -10 -> 40px, position -11 -> 45px (below staff)
+    pixelOffset = (-2 - position) * 5
+  } else {
+    // Middle C (position 0) - on ledger line between staves
+    // Position it below treble: (10 - 0) * 5 = 50px below treble top
+    // But since it's rendered separately, we just center it
+    pixelOffset = 0
+  }
+
+  // Clamp to reasonable range for visibility (allow notes above and below staff)
+  const clampedOffset = Math.max(-30, Math.min(70, pixelOffset))
 
   return (
     <div
@@ -98,13 +154,13 @@ const StaffNote: React.FC<StaffNoteProps> = ({
         isActive ? 'scale-110' : 'hover:scale-105'
       )}
       style={{
-        top: `${pixelOffset}px`,
+        top: `${clampedOffset}px`,
         left: `${xPosition}%`,
-        transform: 'translateX(-50%)',
+        transform: 'translate(-50%, -50%)',
       }}
     >
-      {/* Ledger line for middle C */}
-      {needsLedgerLine && (
+      {/* Ledger line for notes outside staff */}
+      {(position === 0 || position <= 1 || position >= 11 || position <= -9 || position >= -1) && (
         <div className="absolute w-6 h-[1px] bg-slate-400 dark:bg-slate-500 -left-1" />
       )}
       {/* Accidental symbol */}
@@ -122,12 +178,12 @@ const StaffNote: React.FC<StaffNoteProps> = ({
             : 'bg-slate-700 dark:bg-slate-300'
         )}
       />
-      {/* Note stem */}
+      {/* Note stem - up for notes below middle, down for above */}
       <div
         className={clsx(
           'absolute w-[1px] h-8',
           isActive ? 'bg-primary' : 'bg-slate-700 dark:bg-slate-300',
-          position >= 0 ? 'bottom-[4px] right-[0.5px]' : 'top-[4px] left-[0.5px]'
+          position >= 4 ? 'top-[4px] left-[0.5px]' : 'bottom-[4px] right-[0.5px]'
         )}
       />
       {/* Note label */}
@@ -149,31 +205,34 @@ export interface GrandStaffViewProps {
 
 /**
  * GrandStaffView - Displays a proper grand staff (treble + bass clefs)
- * that accumulates notes when instruments are played
+ * C4 is Middle C (center note on ledger line)
  */
 export const GrandStaffView: React.FC<GrandStaffViewProps> = ({ className }) => {
   const activeNotes = useAudioStore((state) => state.activeNotes)
   const recordedNotes = useAudioStore((state) => state.recordedNotes)
   const clearRecordedNotes = useAudioStore((state) => state.clearRecordedNotes)
 
-  // Calculate max notes to display (limit to avoid overcrowding)
   const MAX_VISIBLE_NOTES = 16
   const visibleNotes = recordedNotes.slice(-MAX_VISIBLE_NOTES)
 
-  // Get notes with their positions and horizontal placement
   const notesToRender = visibleNotes
     .map((note, index) => ({
       note,
       position: getNotePosition(note),
-      // Spread notes across 10% to 90% of width
       xPosition: 15 + (index / Math.max(visibleNotes.length - 1, 1)) * 70,
       isActive: activeNotes.includes(note),
     }))
-    .filter((n): n is { note: string; position: number; xPosition: number; isActive: boolean } =>
-      n.position !== null
+    .filter(
+      (n): n is { note: string; position: number; xPosition: number; isActive: boolean } =>
+        n.position !== null
     )
 
   const noteCount = recordedNotes.length
+
+  // Separate notes by staff
+  const trebleNotes = notesToRender.filter((n) => n.position > 0)
+  const bassNotes = notesToRender.filter((n) => n.position < 0)
+  const middleCNotes = notesToRender.filter((n) => n.position === 0)
 
   return (
     <div className={clsx('p-3 relative overflow-hidden min-h-[220px]', className)}>
@@ -190,7 +249,6 @@ export const GrandStaffView: React.FC<GrandStaffViewProps> = ({ className }) => 
               </button>
             </div>
             <div className="h-4 w-px bg-slate-300 dark:bg-slate-600" />
-            {/* Clear Staff button */}
             <button
               onClick={clearRecordedNotes}
               disabled={noteCount === 0}
@@ -245,18 +303,17 @@ export const GrandStaffView: React.FC<GrandStaffViewProps> = ({ className }) => 
                 <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
               </div>
 
-              {/* Render treble clef notes (position > 0) */}
-              {notesToRender
-                .filter((n) => n.position > 0)
-                .map((n, i) => (
-                  <StaffNote
-                    key={`treble-${i}-${n.note}`}
-                    note={n.note}
-                    position={n.position}
-                    xPosition={n.xPosition}
-                    isActive={n.isActive}
-                  />
-                ))}
+              {/* Render treble clef notes */}
+              {trebleNotes.map((n, i) => (
+                <StaffNote
+                  key={`treble-${i}-${n.note}`}
+                  note={n.note}
+                  position={n.position}
+                  xPosition={n.xPosition}
+                  isActive={n.isActive}
+                  staffType="treble"
+                />
+              ))}
             </div>
 
             {/* Bass Staff */}
@@ -274,38 +331,36 @@ export const GrandStaffView: React.FC<GrandStaffViewProps> = ({ className }) => 
                 <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
               </div>
 
-              {/* Render bass clef notes (position < 0) */}
-              {notesToRender
-                .filter((n) => n.position < 0)
-                .map((n, i) => (
-                  <StaffNote
-                    key={`bass-${i}-${n.note}`}
-                    note={n.note}
-                    position={n.position}
-                    xPosition={n.xPosition}
-                    isActive={n.isActive}
-                  />
-                ))}
+              {/* Render bass clef notes */}
+              {bassNotes.map((n, i) => (
+                <StaffNote
+                  key={`bass-${i}-${n.note}`}
+                  note={n.note}
+                  position={n.position}
+                  xPosition={n.xPosition}
+                  isActive={n.isActive}
+                  staffType="bass"
+                />
+              ))}
             </div>
           </div>
 
           {/* Middle C (between staves) */}
-          {notesToRender
-            .filter((n) => n.position === 0)
-            .map((n, i) => (
-              <div
-                key={`middleC-${i}`}
-                className="absolute"
-                style={{ top: '50%', marginTop: '-5px', left: `${n.xPosition}%` }}
-              >
-                <StaffNote
-                  note={n.note}
-                  position={n.position}
-                  xPosition={50}
-                  isActive={n.isActive}
-                />
-              </div>
-            ))}
+          {middleCNotes.map((n, i) => (
+            <div
+              key={`middleC-${i}`}
+              className="absolute"
+              style={{ top: '50%', marginTop: '-5px', left: `${n.xPosition}%` }}
+            >
+              <StaffNote
+                note={n.note}
+                position={n.position}
+                xPosition={50}
+                isActive={n.isActive}
+                staffType="middle"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

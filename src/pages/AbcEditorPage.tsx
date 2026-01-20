@@ -33,6 +33,22 @@ L:1/4
 Q:80
 K:C
 [CEG]4 | [FAC]4 | [GBD]4 | [CEG]4 |]`,
+
+  pianoRange: `X:1
+T:Piano Staff Range (C3-B5) - Chromatic
+M:4/4
+L:1/4
+Q:120
+K:C
+C ^C D ^D | E F ^F G | ^G A ^A B | c ^c d ^d | e f ^f g | ^g a ^a b | c' ^c' d' ^d' | e' f' ^f' g' | ^g' a' ^a' b' |]`,
+
+  guitarRange: `X:1
+T:Guitar Staff Range (E2-E5) - Chromatic
+M:4/4
+L:1/4
+Q:120
+K:C
+E, F, ^F, G, | ^G, A, ^A, B, | C ^C D ^D | E F ^F G | ^G A ^A B | c ^c d ^d | e f ^f g | ^g a ^a b | c' ^c' d' ^d' | e' |]`,
 }
 
 /**
@@ -104,6 +120,18 @@ export const AbcEditorPage: React.FC = () => {
             className="px-3 py-1.5 text-xs font-medium bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-200 rounded-lg hover:bg-amber-200 dark:hover:bg-amber-800 transition-colors"
           >
             Chords
+          </button>
+          <button
+            onClick={() => handleLoadSample('pianoRange')}
+            className="px-3 py-1.5 text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors"
+          >
+            Piano C3-B5
+          </button>
+          <button
+            onClick={() => handleLoadSample('guitarRange')}
+            className="px-3 py-1.5 text-xs font-medium bg-cyan-100 text-cyan-700 dark:bg-cyan-900 dark:text-cyan-200 rounded-lg hover:bg-cyan-200 dark:hover:bg-cyan-800 transition-colors"
+          >
+            Guitar E2-E5
           </button>
 
           {/* Dark Mode Toggle */}
