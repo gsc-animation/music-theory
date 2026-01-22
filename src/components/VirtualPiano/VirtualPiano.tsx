@@ -41,7 +41,7 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
       <div key={octaveIndex} className="relative flex h-48 w-full max-w-md select-none touch-none" style={{ touchAction: 'none' }}>
         {/* White Keys Layer */}
         {whiteKeys.map((note) => (
-          <div key={note} className="flex-1">
+          <div key={note} className="flex-1 h-full">
             <PianoKey note={note} type="white" onStartNote={onStartNote} onStopNote={onStopNote} label={note.replace(/[0-9]/g, '')} isHighlighted={activeNotes.includes(note)} />
           </div>
         ))}

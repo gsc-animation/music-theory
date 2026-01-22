@@ -78,7 +78,7 @@ const PianoKey: React.FC<PianoKeyProps> = ({
   }, [])
 
   const baseClasses =
-    'relative flex items-end justify-center pb-2 rounded-b-lg shadow-sm transition-colors duration-75 select-none touch-none'
+    'relative flex items-end justify-center pb-2 rounded-b-lg shadow-sm transition-colors duration-75 select-none touch-none cursor-pointer h-full'
 
   // Module 5 colors: white keys white bg, black keys #111818, active cyan #30e8e8
   const typeClasses =

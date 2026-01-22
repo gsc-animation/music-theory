@@ -51,10 +51,11 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
   const recordedNotes = useAudioStore((state) => state.recordedNotes)
 
   const displayNotes = useMemo(() => {
-    const allNotes = new Set<string>()
-    activeNotes.forEach((n: string) => allNotes.add(n))
-    recordedNotes.slice(-12).forEach((n: string) => allNotes.add(n))
-    return Array.from(allNotes)
+    // Get last 16 recorded notes (preserve duplicates and order)
+    const recentNotes = recordedNotes.slice(-16)
+    // Add any currently active notes at the end
+    const allNotes = [...recentNotes, ...activeNotes.filter((n: string) => !recentNotes.includes(n))]
+    return allNotes.slice(-16) // Limit to 16 notes total
   }, [activeNotes, recordedNotes])
 
   const generateAbc = useCallback(() => {
