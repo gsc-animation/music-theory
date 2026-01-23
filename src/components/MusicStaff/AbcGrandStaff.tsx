@@ -8,10 +8,19 @@ import { getNoteLabel } from '../../utils/note-labels'
 /**
  * Convert MIDI pitch number to standard note name (e.g., "C4")
  * MIDI: 60 = C4 (middle C)
+ * Valid range: 21 (A0) to 108 (C8) for standard piano
+ * Returns empty string for invalid pitches to prevent ghost notes
  */
 const midiPitchToNoteName = (midiPitch: number): string => {
+  // Filter out invalid pitches (must be positive and within reasonable range)
+  // MIDI 12 = C0, MIDI 24 = C1, ... MIDI 60 = C4, MIDI 108 = C8
+  if (midiPitch < 12 || midiPitch > 127) {
+    console.warn('Invalid MIDI pitch:', midiPitch)
+    return ''
+  }
+
   const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-  // MIDI 0 = C-1, MIDI 60 = C4
+  // MIDI 0 = C-1, MIDI 12 = C0, MIDI 60 = C4
   const octave = Math.floor(midiPitch / 12) - 1
   const noteIndex = midiPitch % 12
   return `${noteNames[noteIndex]}${octave}`
@@ -26,6 +35,7 @@ class CursorControl {
   private onNotePlay?: (notes: string[]) => void
   private onNoteStop?: (notes: string[]) => void
   private currentNotes: string[] = []
+  private isPlaybackActive: boolean = false // Only highlight when playback is running
 
   constructor(
     rootSelector: string,
@@ -38,6 +48,7 @@ class CursorControl {
   }
 
   onStart() {
+    this.isPlaybackActive = true // Playback started
     const svg = document.querySelector(this.rootSelector + ' svg')
     if (!svg) return
 
@@ -71,11 +82,16 @@ class CursorControl {
       })
     })
 
-    // Extract notes from midiPitches and highlight instruments
-    if (ev.midiPitches && ev.midiPitches.length > 0 && this.onNotePlay) {
-      const notes = ev.midiPitches.map((p) => midiPitchToNoteName(p.pitch))
-      this.currentNotes = notes
-      this.onNotePlay(notes)
+    // Only highlight instruments if playback is actually running
+    // This prevents ghost notes during synth initialization
+    if (this.isPlaybackActive && ev.midiPitches && ev.midiPitches.length > 0 && this.onNotePlay) {
+      const notes = ev.midiPitches
+        .map((p) => midiPitchToNoteName(p.pitch))
+        .filter((note) => note !== '') // Filter out invalid pitches
+      if (notes.length > 0) {
+        this.currentNotes = notes
+        this.onNotePlay(notes)
+      }
     }
 
     // Move cursor
@@ -88,6 +104,8 @@ class CursorControl {
   }
 
   onFinished() {
+    this.isPlaybackActive = false // Playback stopped
+
     // Stop any remaining notes
     if (this.currentNotes.length > 0 && this.onNoteStop) {
       this.onNoteStop(this.currentNotes)
