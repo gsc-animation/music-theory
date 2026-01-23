@@ -11,6 +11,10 @@ interface CollapsiblePanelProps {
    * If not provided, the title will be used as the id.
    */
   persistId?: string
+  /**
+   * Extra content to render in the header (e.g., checkbox, buttons)
+   */
+  headerExtra?: React.ReactNode
 }
 
 const STORAGE_KEY_PREFIX = 'collapsible-panel-state:'
@@ -27,6 +31,7 @@ export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = ({
   children,
   className = '',
   persistId,
+  headerExtra,
 }) => {
   const storageKey = `${STORAGE_KEY_PREFIX}${persistId || title}`
 
@@ -60,14 +65,19 @@ export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = ({
       open={isOpen}
       onToggle={handleToggle}
     >
-      <summary className="flex cursor-pointer items-center justify-between gap-3 p-4 list-none select-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-        <div className="flex items-center gap-3">
-          {icon && <span className="material-symbols-outlined text-[#30e8e8] text-xl">{icon}</span>}
-          <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+      <summary className="flex cursor-pointer items-center justify-between gap-3 p-2 list-none select-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+        <div className="flex items-center gap-2">
+          {icon && <span className="material-symbols-outlined text-[#30e8e8] text-lg">{icon}</span>}
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
             {title}
           </span>
+          {headerExtra && (
+            <div className="ml-2" onClick={(e) => e.stopPropagation()}>
+              {headerExtra}
+            </div>
+          )}
         </div>
-        <span className="material-symbols-outlined text-slate-400 text-lg transition-transform duration-200 group-open:rotate-180">
+        <span className="material-symbols-outlined text-slate-400 text-base transition-transform duration-200 group-open:rotate-180">
           expand_more
         </span>
       </summary>

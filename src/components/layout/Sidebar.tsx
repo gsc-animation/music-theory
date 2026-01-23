@@ -56,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             <span className="material-symbols-outlined text-[20px]">music_note</span>
           </div>
           <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-            Music Studio
+            Study Music Theory for SY
           </h1>
         </div>
 

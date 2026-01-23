@@ -1,5 +1,6 @@
 import React from 'react'
 import { useModuleStore } from '../../stores/useModuleStore'
+import { useAudioStore } from '../../stores/useAudioStore'
 
 interface MainHeaderProps {
   className?: string
@@ -12,6 +13,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
   const modules = useModuleStore((state) => state.modules)
   const currentModuleId = useModuleStore((state) => state.currentModuleId)
   const currentModule = modules.find((m) => m.id === currentModuleId)
+  const replayRecordedNotes = useAudioStore((state) => state.replayRecordedNotes)
 
   return (
     <header
@@ -66,6 +68,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
         <button
           className="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all"
           title="Replay"
+          onClick={replayRecordedNotes}
         >
           <span className="material-symbols-outlined">replay</span>
         </button>

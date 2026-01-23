@@ -32,6 +32,7 @@ export const HomePage: React.FC = () => {
   const appendNote = useNotationStore((state) => state.appendNote)
 
   const [showConfetti, setShowConfetti] = React.useState(false)
+  const [showNoteNames, setShowNoteNames] = React.useState(false)
 
   React.useEffect(() => {
     const initStorage = async () => {
@@ -74,7 +75,22 @@ export const HomePage: React.FC = () => {
 
         <div className="flex-1 overflow-y-auto p-4 space-y-3 scroll-smooth no-scrollbar">
           {/* Music Staff */}
-          <CollapsiblePanel title="Grand Staff View" icon="music_note" defaultOpen>
+          <CollapsiblePanel
+            title="Grand Staff View"
+            icon="music_note"
+            defaultOpen
+            headerExtra={
+              <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
+                <input
+                  type="checkbox"
+                  checked={showNoteNames}
+                  onChange={(e) => setShowNoteNames(e.target.checked)}
+                  className="w-3 h-3 accent-[#30e8e8]"
+                />
+                <span>Notes</span>
+              </label>
+            }
+          >
             <React.Suspense
               fallback={
                 <div className="w-full h-[150px] flex items-center justify-center text-slate-400">
@@ -82,7 +98,7 @@ export const HomePage: React.FC = () => {
                 </div>
               }
             >
-              <AbcGrandStaff />
+              <AbcGrandStaff showNoteNames={showNoteNames} />
             </React.Suspense>
           </CollapsiblePanel>
 

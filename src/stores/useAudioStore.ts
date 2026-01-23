@@ -14,6 +14,7 @@ interface AudioState {
   setTimeSignature: (signature: string) => void;
   playSuccess: () => void;
   playFailure: () => void;
+  replayRecordedNotes: () => void;
 }
 
 export const useAudioStore = create<AudioState>((set) => ({
@@ -61,6 +62,21 @@ export const useAudioStore = create<AudioState>((set) => ({
   },
 
   playFailure: () => {
-    audioEngine.playFailure();
+    audioEngine.playFailure()
+  },
+
+  replayRecordedNotes: () => {
+    const state = useAudioStore.getState()
+    const notes = state.recordedNotes
+    if (notes.length === 0) return
+
+    notes.forEach((note, index) => {
+      setTimeout(() => {
+        audioEngine.startNote(note)
+        setTimeout(() => {
+          audioEngine.stopNote(note)
+        }, 150)
+      }, index * 200)
+    })
   }
-}));
+}))
