@@ -1,13 +1,179 @@
-import React, { useEffect, useRef, useMemo, useCallback } from 'react'
+import React, { useEffect, useRef, useMemo, useCallback, useState } from 'react'
 import abcjs from 'abcjs'
+import 'abcjs/abcjs-audio.css'
 import { useAudioStore } from '../../stores/useAudioStore'
 import { useSettingsStore } from '../../stores/useSettingsStore'
 import { getNoteLabel } from '../../utils/note-labels'
 
 /**
+ * Convert MIDI pitch number to standard note name (e.g., "C4")
+ * MIDI: 60 = C4 (middle C)
+ */
+const midiPitchToNoteName = (midiPitch: number): string => {
+  const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+  // MIDI 0 = C-1, MIDI 60 = C4
+  const octave = Math.floor(midiPitch / 12) - 1
+  const noteIndex = midiPitch % 12
+  return `${noteNames[noteIndex]}${octave}`
+}
+
+/**
+ * Cursor control for abcjs playback animation with instrument highlighting
+ */
+class CursorControl {
+  private cursor: SVGLineElement | null = null
+  private rootSelector: string
+  private onNotePlay?: (notes: string[]) => void
+  private onNoteStop?: (notes: string[]) => void
+  private currentNotes: string[] = []
+
+  constructor(
+    rootSelector: string,
+    onNotePlay?: (notes: string[]) => void,
+    onNoteStop?: (notes: string[]) => void
+  ) {
+    this.rootSelector = rootSelector
+    this.onNotePlay = onNotePlay
+    this.onNoteStop = onNoteStop
+  }
+
+  onStart() {
+    const svg = document.querySelector(this.rootSelector + ' svg')
+    if (!svg) return
+
+    this.cursor = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+    this.cursor.setAttribute('class', 'abcjs-cursor')
+    this.cursor.setAttributeNS(null, 'x1', '0')
+    this.cursor.setAttributeNS(null, 'y1', '0')
+    this.cursor.setAttributeNS(null, 'x2', '0')
+    this.cursor.setAttributeNS(null, 'y2', '0')
+    svg.appendChild(this.cursor)
+  }
+
+  onEvent(ev: abcjs.synth.CursorEvent) {
+    // Skip if this is a measure start event without position
+    if (ev.measureStart === true && ev.left === null) return
+
+    // Stop previous notes
+    if (this.currentNotes.length > 0 && this.onNoteStop) {
+      this.onNoteStop(this.currentNotes)
+      this.currentNotes = []
+    }
+
+    // Remove previous highlights
+    const lastSelection = document.querySelectorAll(this.rootSelector + ' .abcjs-highlight')
+    lastSelection.forEach((el) => el.classList.remove('abcjs-highlight'))
+
+    // Highlight current notes on staff
+    ev.elements.forEach((noteGroup) => {
+      noteGroup.forEach((note) => {
+        note.classList.add('abcjs-highlight')
+      })
+    })
+
+    // Extract notes from midiPitches and highlight instruments
+    if (ev.midiPitches && ev.midiPitches.length > 0 && this.onNotePlay) {
+      const notes = ev.midiPitches.map((p) => midiPitchToNoteName(p.pitch))
+      this.currentNotes = notes
+      this.onNotePlay(notes)
+    }
+
+    // Move cursor
+    if (this.cursor && ev.left != null && ev.top != null && ev.height != null) {
+      this.cursor.setAttribute('x1', String(ev.left - 2))
+      this.cursor.setAttribute('x2', String(ev.left - 2))
+      this.cursor.setAttribute('y1', String(ev.top))
+      this.cursor.setAttribute('y2', String(ev.top + ev.height))
+    }
+  }
+
+  onFinished() {
+    // Stop any remaining notes
+    if (this.currentNotes.length > 0 && this.onNoteStop) {
+      this.onNoteStop(this.currentNotes)
+      this.currentNotes = []
+    }
+
+    const lastSelection = document.querySelectorAll(this.rootSelector + ' .abcjs-highlight')
+    lastSelection.forEach((el) => el.classList.remove('abcjs-highlight'))
+
+    if (this.cursor) {
+      this.cursor.setAttribute('x1', '0')
+      this.cursor.setAttribute('x2', '0')
+      this.cursor.setAttribute('y1', '0')
+      this.cursor.setAttribute('y2', '0')
+    }
+  }
+}
+
+/**
+ * Convert ABC note name to standard note format (e.g., "C4", "E5")
+ * ABC notation:
+ * - Uppercase C-B = octave 4 (middle C octave)
+ * - C, D, E, etc. with commas = lower octaves (C, = C3, C,, = C2)
+ * - Lowercase c-b = octave 5
+ * - c' d' = octave 6, c'' = octave 7, etc.
+ * - ^ = sharp, _ = flat
+ */
+const abcNoteToStandardNote = (abcName: string): string => {
+  if (!abcName) return ''
+
+  // Parse the ABC note name
+  let letter = ''
+  let accidental = ''
+  let octave = 4 // default for uppercase
+
+  let i = 0
+
+  // Check for accidentals at start
+  if (abcName[i] === '^') {
+    accidental = '#'
+    i++
+    if (abcName[i] === '^') i++ // double sharp
+  } else if (abcName[i] === '_') {
+    accidental = 'b'
+    i++
+    if (abcName[i] === '_') i++ // double flat
+  } else if (abcName[i] === '=') {
+    i++ // natural, no accidental
+  }
+
+  // Get the note letter
+  if (i < abcName.length) {
+    letter = abcName[i].toUpperCase()
+    // If lowercase, it's octave 5
+    if (abcName[i] === abcName[i].toLowerCase() && abcName[i] !== abcName[i].toUpperCase()) {
+      octave = 5
+    }
+    i++
+  }
+
+  // Count commas (lower octave) or apostrophes (higher octave)
+  while (i < abcName.length) {
+    if (abcName[i] === ',') {
+      octave--
+      i++
+    } else if (abcName[i] === "'") {
+      octave++
+      i++
+    } else {
+      break
+    }
+  }
+
+  if (!letter || !/[A-G]/.test(letter)) return ''
+
+  return `${letter}${accidental}${octave}`
+}
+
+/**
  * Convert note format (e.g., "C4", "F#5") to ABC notation
  */
-const noteToAbc = (note: string, showNoteNames: boolean = false, notationSystem: 'latin' | 'solfege' = 'latin'): string => {
+const noteToAbc = (
+  note: string,
+  showNoteNames: boolean = false,
+  notationSystem: 'latin' | 'solfege' = 'latin'
+): string => {
   const match = note.match(/^([A-G])([#b]?)(\d)$/)
   if (!match) return ''
 
@@ -50,7 +216,7 @@ interface AbcGrandStaffProps {
 }
 
 /**
- * AbcGrandStaff - Renders a Grand Staff using abcjs
+ * AbcGrandStaff - Renders a Grand Staff using abcjs with audio playback and click interactivity
  * Displays 2 rows of grand staff, each row with 4 measures x 4 beats
  */
 export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
@@ -58,17 +224,36 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
   showNoteNames = false,
   className = '',
 }) => {
+  // Generate stable ID for this instance
+  const [instanceId] = useState(() => `abc-staff-${Math.random().toString(36).slice(2, 9)}`)
+
   const containerRef = useRef<HTMLDivElement>(null)
-  const activeNotes = useAudioStore((state) => state.activeNotes)
+  const audioContainerRef = useRef<HTMLDivElement>(null)
+
+  // Refs for abcjs synth objects
+  const synthRef = useRef<InstanceType<typeof abcjs.synth.CreateSynth> | null>(null)
+  const synthControlRef = useRef<InstanceType<typeof abcjs.synth.SynthController> | null>(null)
+  const cursorControlRef = useRef<CursorControl | null>(null)
+
+  // Use playNote/releaseNote for click preview (plays audio)
+  const playNote = useAudioStore((state) => state.playNote)
+  const releaseNote = useAudioStore((state) => state.releaseNote)
+  // Use highlightNote/unhighlightNote for playback sync (no audio, just visual)
+  const highlightNote = useAudioStore((state) => state.highlightNote)
+  const unhighlightNote = useAudioStore((state) => state.unhighlightNote)
   const recordedNotes = useAudioStore((state) => state.recordedNotes)
   const notationSystem = useSettingsStore((state) => state.notationSystem)
+  const bpm = useSettingsStore((state) => state.bpm)
 
+  const paperId = useMemo(() => `paper-${instanceId}`, [instanceId])
+  const audioId = useMemo(() => `audio-${instanceId}`, [instanceId])
+
+  // Only use recordedNotes for display - activeNotes is for highlighting instruments only
+  // This prevents the staff from re-rendering when notes are played for preview
   const displayNotes = useMemo(() => {
     // Get last 32 recorded notes for 2 rows x 4 measures x 4 notes = 32 notes max
-    const recentNotes = recordedNotes.slice(-32)
-    const allNotes = [...recentNotes, ...activeNotes.filter((n: string) => !recentNotes.includes(n))]
-    return allNotes.slice(-32)
-  }, [activeNotes, recordedNotes])
+    return recordedNotes.slice(-32)
+  }, [recordedNotes])
 
   const generateAbc = useCallback(() => {
     // Helper to create synchronized grand staff measures
@@ -76,7 +261,7 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
     const createSyncedMeasures = (notes: string[], count: number) => {
       const trebleParts: string[] = []
       const bassParts: string[] = []
-      
+
       for (let i = 0; i < count; i++) {
         const note = notes[i]
         if (note) {
@@ -99,57 +284,111 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
           trebleParts.push('z')
           bassParts.push('z')
         }
-        
+
         // Add bar line after every 4 notes
         if ((i + 1) % 4 === 0 && i < count - 1) {
           trebleParts.push('|')
           bassParts.push('|')
         }
       }
-      
+
       return {
         treble: trebleParts.join(' ') + ' |',
-        bass: bassParts.join(' ') + ' |'
+        bass: bassParts.join(' ') + ' |',
       }
     }
 
+    // Generate sample notes for default display
+    const generateSampleNotes = () => {
+      // Sample notes to show when no notes have been recorded
+      const sampleTreble = ['C4', 'E4', 'G4', 'B4', 'C5', 'E5', 'G5', 'B5']
+      const sampleBass = ['D3', 'F3', 'A3', 'C4', 'D4', 'F4', 'A4', 'C5']
+
+      // For two-stave display, alternate treble and bass
+      if (showTwoStaves) {
+        const trebleRow: string[] = []
+        const bassRow: string[] = []
+
+        for (let i = 0; i < 16; i++) {
+          const noteIdx = i % 8
+          if (i % 2 === 0) {
+            // Treble note
+            trebleRow.push(noteToAbc(sampleTreble[noteIdx], showNoteNames, notationSystem))
+            bassRow.push('z')
+          } else {
+            // Bass note
+            trebleRow.push('z')
+            bassRow.push(noteToAbc(sampleBass[noteIdx], showNoteNames, notationSystem))
+          }
+          // Add bar line after every 4 notes
+          if ((i + 1) % 4 === 0 && i < 15) {
+            trebleRow.push('|')
+            bassRow.push('|')
+          }
+        }
+
+        return {
+          treble: trebleRow.join(' ') + ' |',
+          bass: bassRow.join(' ') + ' |',
+        }
+      }
+
+      // Single staff - just show ascending notes
+      const singleRow = [...sampleTreble, ...sampleBass.slice(0, 8)]
+        .map((n) => noteToAbc(n, showNoteNames, notationSystem))
+        .join(' ')
+      return { single: singleRow }
+    }
+
     if (displayNotes.length === 0) {
+      const sample = generateSampleNotes()
+
       if (showTwoStaves) {
         // Default display: 2 rows with sample notes
         return `X:1
+T:Grand Staff
 M:4/4
 L:1/4
+Q:${bpm}
 K:C clef=treble
 %%staves {1 2}
 V:1 clef=treble
 V:2 clef=bass
-[V:1] C z E z | G z B z | c z e z | g z b z |
-[V:2] z D z F | z A z C | z d z f | z a z c' |
-[V:1] C z E z | G z B z | c z e z | g z b z |
-[V:2] z D z F | z A z C | z d z f | z a z c' |`
+[V:1] ${sample.treble}
+[V:2] ${sample.bass}
+[V:1] ${sample.treble}
+[V:2] ${sample.bass}`
       }
       return `X:1
+T:Grand Staff
 M:4/4
 L:1/4
+Q:${bpm}
 K:C
-C D E F | G A B c | c d e f | g a b c' |
-C D E F | G A B c | c d e f | g a b c' |`
+${'single' in sample ? sample.single : ''} |
+${'single' in sample ? sample.single : ''} |`
     }
 
     if (showTwoStaves) {
       // Row 1: first 16 notes (4 measures x 4 notes)
       const row1Notes = displayNotes.slice(0, 16)
       const row1 = createSyncedMeasures(row1Notes, 16)
-      
+
       // Row 2: next 16 notes
       const row2Notes = displayNotes.slice(16, 32)
-      const row2 = row2Notes.length > 0 
-        ? createSyncedMeasures(row2Notes, 16)
-        : { treble: 'z z z z | z z z z | z z z z | z z z z |', bass: 'z z z z | z z z z | z z z z | z z z z |' }
+      const row2 =
+        row2Notes.length > 0
+          ? createSyncedMeasures(row2Notes, 16)
+          : {
+              treble: 'z z z z | z z z z | z z z z | z z z z |',
+              bass: 'z z z z | z z z z | z z z z | z z z z |',
+            }
 
       return `X:1
+T:Grand Staff
 M:4/4
 L:1/4
+Q:${bpm}
 K:C clef=treble
 %%staves {1 2}
 V:1 clef=treble
@@ -166,19 +405,108 @@ V:2 clef=bass
       .join(' ')
 
     return `X:1
+T:Grand Staff
 M:4/4
 L:1/4
+Q:120
 K:C
 ${abcNotes} |`
-  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem])
+  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem, bpm])
 
+  // Track controller loaded state
+  const [isControllerReady, setControllerReady] = useState(false)
+
+  // Callbacks for instrument highlighting during playback (no audio - abcjs plays audio)
+  const handlePlaybackNotePlay = useCallback(
+    (notes: string[]) => {
+      notes.forEach((note) => highlightNote(note))
+    },
+    [highlightNote]
+  )
+
+  const handlePlaybackNoteStop = useCallback(
+    (notes: string[]) => {
+      notes.forEach((note) => unhighlightNote(note))
+    },
+    [unhighlightNote]
+  )
+
+  // Initialize synth objects and load controller UI
+  useEffect(() => {
+    // Create synth objects
+    synthRef.current = new abcjs.synth.CreateSynth()
+    synthControlRef.current = new abcjs.synth.SynthController()
+
+    // Create cursor control with callbacks for instrument highlighting
+    cursorControlRef.current = new CursorControl(
+      `#${paperId}`,
+      handlePlaybackNotePlay,
+      handlePlaybackNoteStop
+    )
+
+    // Need a small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      if (!synthControlRef.current || !cursorControlRef.current) return
+
+      synthControlRef.current.load(
+        `#${audioId}`,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        cursorControlRef.current as any,
+        {
+          displayLoop: true,
+          displayRestart: true,
+          displayPlay: true,
+          displayProgress: true,
+          displayWarp: true,
+        }
+      )
+      setControllerReady(true)
+      console.log('AbcGrandStaff: Controller loaded with cursor control')
+    }, 100)
+
+    return () => {
+      clearTimeout(timer)
+      synthRef.current = null
+      synthControlRef.current = null
+      cursorControlRef.current = null
+      setControllerReady(false)
+    }
+    // Note: handlePlaybackNotePlay/Stop are stable callbacks, so we don't need them as dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paperId, audioId])
+
+  // Click listener for individual notes - uses playNote instead of startNote
+  // This plays the note and highlights instruments but doesn't add to recordedNotes
+  const handleNoteClick = useCallback(
+    (abcelem: abcjs.AbcElem) => {
+      if (abcelem.el_type === 'note' && abcelem.pitches && abcelem.pitches.length > 0) {
+        // Play clicked note(s) without recording
+        abcelem.pitches.forEach((pitch) => {
+          // Use the ABC note name (e.g., "C", "c", "c'") and convert to standard format
+          const noteName = abcNoteToStandardNote(pitch.name)
+          console.log('Note clicked:', pitch.name, '->', noteName)
+          if (noteName) {
+            playNote(noteName)
+            // Release note after 500ms
+            setTimeout(() => releaseNote(noteName), 500)
+          }
+        })
+      }
+    },
+    [playNote, releaseNote]
+  )
+
+  // Store the current visualObj for audio setup
+  const visualObjRef = useRef<abcjs.TuneObject | null>(null)
+
+  // Render notation
   useEffect(() => {
     if (!containerRef.current) return
 
     const abc = generateAbc()
 
     try {
-      abcjs.renderAbc(containerRef.current, abc, {
+      const rendered = abcjs.renderAbc(paperId, abc, {
         responsive: 'resize',
         add_classes: true,
         staffwidth: 740,
@@ -186,23 +514,52 @@ ${abcNotes} |`
         paddingbottom: 5,
         paddingleft: 10,
         paddingright: 10,
+        clickListener: handleNoteClick,
         wrap: {
           minSpacing: 1.8,
           maxSpacing: 2.7,
           preferredMeasuresPerLine: 4,
         },
       })
+
+      if (rendered[0]) {
+        visualObjRef.current = rendered[0]
+      }
     } catch (error) {
       console.warn('AbcGrandStaff: Render error:', error)
     }
-  }, [generateAbc])
+  }, [generateAbc, paperId, handleNoteClick])
+
+  // Setup audio after controller is loaded and notation is rendered
+  useEffect(() => {
+    if (!isControllerReady) return
+    if (!visualObjRef.current) return
+    if (!synthRef.current || !synthControlRef.current) return
+
+    const setupAudio = async () => {
+      try {
+        await synthRef.current!.init({ visualObj: visualObjRef.current! })
+        await synthControlRef.current!.setTune(visualObjRef.current!, false, {
+          chordsOff: false,
+        })
+        console.log('AbcGrandStaff: Audio ready')
+      } catch (err) {
+        console.warn('AbcGrandStaff: Audio setup error:', err)
+      }
+    }
+
+    setupAudio()
+  }, [isControllerReady, generateAbc]) // Re-run when controller is ready or notation changes
 
   return (
     <div className={`abc-grand-staff ${className}`}>
       <div
+        id={paperId}
         ref={containerRef}
-        className="abc-paper bg-slate-800/50 rounded-lg min-h-[280px] overflow-hidden"
+        className="abc-paper bg-slate-800/50 rounded-lg min-h-[280px] overflow-hidden cursor-pointer"
       />
+      {/* Audio controls */}
+      <div id={audioId} ref={audioContainerRef} className="abc-audio mt-2" />
       <style>{`
         .abc-grand-staff .abcjs-container svg {
           width: 100%;
@@ -230,9 +587,43 @@ ${abcNotes} |`
           fill: #30e8e8 !important;
           stroke: #30e8e8 !important;
         }
+        /* Note hover effect for clickable notes */
+        .abc-grand-staff .abcjs-note:hover path {
+          fill: #30e8e8 !important;
+          stroke: #30e8e8 !important;
+        }
         /* Hide voice names */
         .abc-grand-staff text.abcjs-voice-name {
           display: none;
+        }
+        /* Cursor styling */
+        .abc-grand-staff .abcjs-cursor {
+          stroke: #30e8e8;
+          stroke-width: 2;
+          opacity: 0.8;
+        }
+        /* Audio controls styling for dark theme */
+        .abc-grand-staff .abc-audio {
+          background: transparent;
+        }
+        .abc-grand-staff .abcjs-inline-audio {
+          background-color: rgba(30, 41, 59, 0.8);
+          border-radius: 8px;
+          padding: 8px 12px;
+        }
+        .abc-grand-staff .abcjs-inline-audio .abcjs-btn {
+          background-color: #30e8e8;
+          border: none;
+          color: #0f172a;
+        }
+        .abc-grand-staff .abcjs-inline-audio .abcjs-btn:hover {
+          background-color: #22d3ee;
+        }
+        .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background {
+          background-color: #334155;
+        }
+        .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator {
+          background-color: #30e8e8;
         }
       `}</style>
     </div>

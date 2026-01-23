@@ -11,7 +11,13 @@ declare module 'abcjs' {
     paddingbottom?: number
     paddingleft?: number
     paddingright?: number
-    clickListener?: (abcelem: AbcElem, tuneNumber: number, classes: string, analysis: Analysis, drag: Drag) => void
+    clickListener?: (
+      abcelem: AbcElem,
+      tuneNumber: number,
+      classes: string,
+      analysis: Analysis,
+      drag: Drag
+    ) => void
   }
 
   export interface AbcElem {
@@ -77,11 +83,7 @@ declare module 'abcjs' {
         cursorControl: CursorControl | null,
         options?: SynthControllerOptions
       ): void
-      setTune(
-        visualObj: TuneObject,
-        userAction: boolean,
-        options?: AudioOptions
-      ): Promise<void>
+      setTune(visualObj: TuneObject, userAction: boolean, options?: AudioOptions): Promise<void>
       play(): void
       pause(): void
       restart(): void
@@ -103,11 +105,17 @@ declare module 'abcjs' {
     }
 
     export interface CursorEvent {
-      measureStart: boolean
-      left: number | null
-      top: number
-      height: number
+      measureStart?: boolean
+      left?: number | null
+      top?: number
+      height?: number
       elements: HTMLElement[][]
+      midiPitches?: {
+        pitch: number
+        durationInMeasures: number
+        volume: number
+        instrument: number
+      }[]
     }
 
     export function getMidiFile(

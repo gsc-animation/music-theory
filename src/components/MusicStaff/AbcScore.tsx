@@ -41,7 +41,7 @@ class CursorControl {
     })
 
     // Move cursor
-    if (this.cursor && ev.left !== null) {
+    if (this.cursor && ev.left != null && ev.top != null && ev.height != null) {
       this.cursor.setAttribute('x1', String(ev.left - 2))
       this.cursor.setAttribute('x2', String(ev.left - 2))
       this.cursor.setAttribute('y1', String(ev.top))
@@ -80,7 +80,7 @@ export const AbcScore: React.FC<AbcScoreProps> = ({
 }) => {
   // Generate stable ID for this instance
   const [instanceId] = useState(() => `abc-${Math.random().toString(36).slice(2, 9)}`)
-  
+
   // Refs for abcjs objects (only accessed in effects)
   const synthRef = useRef<InstanceType<typeof abcjs.synth.CreateSynth> | null>(null)
   const synthControlRef = useRef<InstanceType<typeof abcjs.synth.SynthController> | null>(null)
@@ -96,7 +96,7 @@ export const AbcScore: React.FC<AbcScoreProps> = ({
     synthRef.current = new abcjs.synth.CreateSynth()
     synthControlRef.current = new abcjs.synth.SynthController()
     cursorControlRef.current = new CursorControl(`#${paperId}`)
-    
+
     return () => {
       synthRef.current = null
       synthControlRef.current = null

@@ -61,11 +61,6 @@ const isSharpOrFlat = (note: string): 'sharp' | 'flat' | null => {
   return null
 }
 
-// Get display name for note (without octave)
-const getNoteDisplayName = (note: string): string => {
-  return note.replace(/(\d)/, '')
-}
-
 // Get localized display name for note (respects VN Mode)
 const getLocalizedNoteDisplayName = (note: string, notationSystem: 'latin' | 'solfege'): string => {
   const noteWithoutOctave = note.replace(/(\d)/, '')
