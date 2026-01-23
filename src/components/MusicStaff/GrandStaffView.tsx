@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAudioStore } from '../../stores/useAudioStore'
+import { useSettingsStore } from '../../stores/useSettingsStore'
+import { getNoteLabel } from '../../utils/note-labels'
 import clsx from 'clsx'
 
 /**
@@ -59,9 +61,15 @@ const isSharpOrFlat = (note: string): 'sharp' | 'flat' | null => {
   return null
 }
 
-// Get display name for note
+// Get display name for note (without octave)
 const getNoteDisplayName = (note: string): string => {
   return note.replace(/(\d)/, '')
+}
+
+// Get localized display name for note (respects VN Mode)
+const getLocalizedNoteDisplayName = (note: string, notationSystem: 'latin' | 'solfege'): string => {
+  const noteWithoutOctave = note.replace(/(\d)/, '')
+  return getNoteLabel(noteWithoutOctave, notationSystem)
 }
 
 interface StaffNoteProps {
@@ -87,6 +95,7 @@ const StaffNote: React.FC<StaffNoteProps> = ({
   staffType,
 }) => {
   const accidental = isSharpOrFlat(note)
+  const notationSystem = useSettingsStore((state) => state.notationSystem)
 
   /**
    * Calculate pixel offset relative to the staff container
@@ -193,7 +202,7 @@ const StaffNote: React.FC<StaffNoteProps> = ({
           isActive ? 'text-primary' : 'text-slate-500 dark:text-slate-400'
         )}
       >
-        {getNoteDisplayName(note)}
+        {getLocalizedNoteDisplayName(note, notationSystem)}
       </span>
     </div>
   )

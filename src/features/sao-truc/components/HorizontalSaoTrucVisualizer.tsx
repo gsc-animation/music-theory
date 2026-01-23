@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useAudioStore } from '../../../stores/useAudioStore'
+import { useSettingsStore } from '../../../stores/useSettingsStore'
 import { getFingering } from '../logic/fingering-engine'
+import { getNoteLabel } from '../../../utils/note-labels'
 import HorizontalFingeringChart from './HorizontalFingeringChart'
 import type { FluteType, HoleState } from '../types'
 
 const HorizontalSaoTrucVisualizer: React.FC = () => {
   const activeNotes = useAudioStore((state) => state.activeNotes)
+  const notationSystem = useSettingsStore((state) => state.notationSystem)
   const [fluteType, setFluteType] = useState<FluteType>('6-hole')
   const [currentFingering, setCurrentFingering] = useState<HoleState[]>([])
   const [currentNote, setCurrentNote] = useState<string>('-')
@@ -63,7 +66,7 @@ const HorizontalSaoTrucVisualizer: React.FC = () => {
 
       {/* Note Display */}
       <span className="text-sm font-mono text-stone-500 min-w-[60px]">
-        {currentNote === '-' ? 'Ready' : currentNote}
+        {currentNote === '-' ? 'Ready' : getNoteLabel(currentNote, notationSystem)}
       </span>
 
       {/* Horizontal Flute */}

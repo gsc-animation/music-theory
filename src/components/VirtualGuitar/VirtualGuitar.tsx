@@ -6,6 +6,8 @@ import {
   transposeGuitarToWritten,
   transposeWrittenToGuitar,
 } from '../../utils/guitar-logic'
+import { getNoteLabel } from '../../utils/note-labels'
+import { useSettingsStore } from '../../stores/useSettingsStore'
 
 interface VirtualGuitarProps {
   /** Notes currently active/playing (e.g., ['C4', 'E4', 'G4']) - in WRITTEN pitch */
@@ -33,6 +35,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
   onPlayNote,
   showLabels = true,
 }) => {
+  const notationSystem = useSettingsStore((state) => state.notationSystem)
   // Pre-calculate active positions for fast lookup
   // activeNotes are in WRITTEN pitch (from staff/piano)
   // Need to transpose DOWN to find sounding pitch on guitar
@@ -185,7 +188,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
                         pointerEvents="none"
                         fontWeight="bold"
                       >
-                        {note?.replace(/[0-9]/g, '')}
+                        {getNoteLabel(note?.replace(/[0-9]/g, '') || '', notationSystem)}
                       </text>
                     )}
                   </g>

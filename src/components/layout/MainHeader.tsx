@@ -1,6 +1,7 @@
 import React from 'react'
 import { useModuleStore } from '../../stores/useModuleStore'
 import { useAudioStore } from '../../stores/useAudioStore'
+import { useSettingsStore } from '../../stores/useSettingsStore'
 
 interface MainHeaderProps {
   className?: string
@@ -14,6 +15,8 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
   const currentModuleId = useModuleStore((state) => state.currentModuleId)
   const currentModule = modules.find((m) => m.id === currentModuleId)
   const replayRecordedNotes = useAudioStore((state) => state.replayRecordedNotes)
+  const notationSystem = useSettingsStore((state) => state.notationSystem)
+  const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
 
   return (
     <header
@@ -81,7 +84,12 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
           <span className="text-xs font-bold text-slate-700 dark:text-slate-300">120 BPM</span>
         </div>
         <label className="inline-flex items-center cursor-pointer group">
-          <input className="sr-only peer" type="checkbox" />
+          <input
+            className="sr-only peer"
+            type="checkbox"
+            checked={notationSystem === 'solfege'}
+            onChange={toggleNotationSystem}
+          />
           <div className="relative w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#30e8e8] shadow-inner" />
           <span className="ms-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-[#136363] transition-colors">
             VN Mode

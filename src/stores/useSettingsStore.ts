@@ -6,10 +6,13 @@ export type Theme = 'light' | 'dark' | 'system';
 interface SettingsState {
   notationSystem: 'latin' | 'solfege';
   theme: Theme;
+  vnMode: boolean;
   setNotationSystem: (system: 'latin' | 'solfege') => void;
   toggleNotationSystem: () => void;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  setVnMode: (vnMode: boolean) => void;
+  toggleVnMode: () => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -17,6 +20,7 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       notationSystem: 'latin',
       theme: 'system',
+      vnMode: false,
       setNotationSystem: (system) => set({ notationSystem: system }),
       toggleNotationSystem: () =>
         set((state) => ({
@@ -26,6 +30,11 @@ export const useSettingsStore = create<SettingsState>()(
       toggleTheme: () =>
         set((state) => ({
           theme: state.theme === 'light' ? 'dark' : 'light',
+        })),
+      setVnMode: (vnMode) => set({ vnMode }),
+      toggleVnMode: () =>
+        set((state) => ({
+          vnMode: !state.vnMode,
         })),
     }),
     {

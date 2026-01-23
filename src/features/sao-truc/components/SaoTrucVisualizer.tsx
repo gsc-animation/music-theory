@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAudioStore } from '../../../stores/useAudioStore';
+import { useSettingsStore } from '../../../stores/useSettingsStore';
 import { getFingering } from '../logic/fingering-engine';
+import { getNoteLabel } from '../../../utils/note-labels';
 import FingeringChart from './FingeringChart';
 import type { FluteType, HoleState } from '../types';
 
 const SaoTrucVisualizer: React.FC = () => {
   const activeNotes = useAudioStore((state) => state.activeNotes);
+  const notationSystem = useSettingsStore((state) => state.notationSystem);
   const [fluteType, setFluteType] = useState<FluteType>('6-hole');
   const [currentFingering, setCurrentFingering] = useState<HoleState[]>([]);
   const [currentNote, setCurrentNote] = useState<string>('-');
@@ -37,8 +40,9 @@ const SaoTrucVisualizer: React.FC = () => {
 
   const getStatusText = () => {
       if (currentNote === '-') return 'Ready';
-      if (currentFingering.length === 0) return `Note: ${currentNote} (Out of Range)`;
-      return `Note: ${currentNote}`;
+      const displayNote = getNoteLabel(currentNote, notationSystem);
+      if (currentFingering.length === 0) return `Note: ${displayNote} (Out of Range)`;
+      return `Note: ${displayNote}`;
   };
 
   return (

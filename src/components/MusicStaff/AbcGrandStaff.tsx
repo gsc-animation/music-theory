@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useMemo, useCallback } from 'react'
 import abcjs from 'abcjs'
 import { useAudioStore } from '../../stores/useAudioStore'
+import { useSettingsStore } from '../../stores/useSettingsStore'
+import { getNoteLabel } from '../../utils/note-labels'
 
 /**
  * Convert note format (e.g., "C4", "F#5") to ABC notation
  */
-const noteToAbc = (note: string, showNoteNames: boolean = false): string => {
+const noteToAbc = (note: string, showNoteNames: boolean = false, notationSystem: 'latin' | 'solfege' = 'latin'): string => {
   const match = note.match(/^([A-G])([#b]?)(\d)$/)
   if (!match) return ''
 
@@ -33,7 +35,8 @@ const noteToAbc = (note: string, showNoteNames: boolean = false): string => {
 
   // Add annotation for note name if enabled
   if (showNoteNames) {
-    const displayName = letter + (accidental || '')
+    const latinName = letter + (accidental || '')
+    const displayName = getNoteLabel(latinName, notationSystem)
     return `"^${displayName}"${abcAccidental}${abcNote}`
   }
 
@@ -58,6 +61,7 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const activeNotes = useAudioStore((state) => state.activeNotes)
   const recordedNotes = useAudioStore((state) => state.recordedNotes)
+  const notationSystem = useSettingsStore((state) => state.notationSystem)
 
   const displayNotes = useMemo(() => {
     // Get last 32 recorded notes for 2 rows x 4 measures x 4 notes = 32 notes max
@@ -79,7 +83,7 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
           const match = note.match(/^([A-G])([#b]?)(\d)$/)
           if (match) {
             const octave = parseInt(match[3], 10)
-            const abc = noteToAbc(note, showNoteNames)
+            const abc = noteToAbc(note, showNoteNames, notationSystem)
             if (octave >= 4) {
               trebleParts.push(abc)
               bassParts.push('z') // Rest in bass when treble has note
@@ -157,7 +161,7 @@ V:2 clef=bass
     }
 
     const abcNotes = displayNotes
-      .map((n: string) => noteToAbc(n, showNoteNames))
+      .map((n: string) => noteToAbc(n, showNoteNames, notationSystem))
       .filter((n: string) => n.length > 0)
       .join(' ')
 
@@ -166,7 +170,7 @@ M:4/4
 L:1/4
 K:C
 ${abcNotes} |`
-  }, [displayNotes, showTwoStaves, showNoteNames])
+  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem])
 
   useEffect(() => {
     if (!containerRef.current) return
