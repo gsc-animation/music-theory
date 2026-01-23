@@ -231,6 +231,8 @@ interface AbcGrandStaffProps {
   showTwoStaves?: boolean
   showNoteNames?: boolean
   className?: string
+  /** Override ABC notation for lesson-specific content */
+  overrideAbc?: string
 }
 
 /**
@@ -241,6 +243,7 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
   showTwoStaves = true,
   showNoteNames = false,
   className = '',
+  overrideAbc,
 }) => {
   // Generate stable ID for this instance
   const [instanceId] = useState(() => `abc-staff-${Math.random().toString(36).slice(2, 9)}`)
@@ -275,6 +278,11 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
   }, [recordedNotes])
 
   const generateAbc = useCallback(() => {
+    // If overrideAbc is provided, use it directly (for lesson-specific content)
+    if (overrideAbc) {
+      return overrideAbc
+    }
+
     // Helper to create synchronized grand staff measures
     // Each note position has treble and bass staves aligned
     const createSyncedMeasures = (notes: string[], count: number) => {
@@ -430,7 +438,7 @@ L:1/4
 Q:120
 K:C
 ${abcNotes} |`
-  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem, bpm])
+  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem, bpm, overrideAbc])
 
   // Track controller loaded state
   const [isControllerReady, setControllerReady] = useState(false)
