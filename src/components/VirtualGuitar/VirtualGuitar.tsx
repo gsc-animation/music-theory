@@ -1,10 +1,16 @@
 import React, { useMemo } from 'react'
-import { getNoteAtPosition, getPositionsForNote, GUITAR_TUNING } from '../../utils/guitar-logic'
+import {
+  getNoteAtPosition,
+  getPositionsForNote,
+  GUITAR_TUNING,
+  transposeGuitarToWritten,
+  transposeWrittenToGuitar,
+} from '../../utils/guitar-logic'
 
 interface VirtualGuitarProps {
-  /** Notes currently active/playing (e.g., ['C4', 'E4', 'G4']) */
+  /** Notes currently active/playing (e.g., ['C4', 'E4', 'G4']) - in WRITTEN pitch */
   activeNotes?: string[]
-  /** Callback when a note is clicked */
+  /** Callback when a note is clicked - sends WRITTEN pitch (transposed up) */
   onPlayNote: (note: string) => void
   /** Whether to show note labels on the fretboard */
   showLabels?: boolean
@@ -28,24 +34,37 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
   showLabels = true,
 }) => {
   // Pre-calculate active positions for fast lookup
+  // activeNotes are in WRITTEN pitch (from staff/piano)
+  // Need to transpose DOWN to find sounding pitch on guitar
+  // E.g., E5 on staff → E4 on guitar (high E string open)
   const activePositions = useMemo(() => {
     const map = new Map<string, boolean>()
-    activeNotes.forEach(note => {
-      const positions = getPositionsForNote(note)
-      positions.forEach(pos => {
-        // Only show positions for first 8 frets
-        if (pos.fret <= TOTAL_FRETS) {
-          map.set(`${pos.stringIndex}-${pos.fret}`, true)
-        }
-      })
+    activeNotes.forEach(writtenNote => {
+      // Transpose written pitch down to guitar sounding pitch
+      const soundingNote = transposeWrittenToGuitar(writtenNote)
+      if (soundingNote) {
+        const positions = getPositionsForNote(soundingNote)
+        positions.forEach(pos => {
+          // Only show positions for first 8 frets
+          if (pos.fret <= TOTAL_FRETS) {
+            map.set(`${pos.stringIndex}-${pos.fret}`, true)
+          }
+        })
+      }
     })
     return map
   }, [activeNotes])
 
   const handleFretClick = (stringIndex: number, fret: number) => {
-    const note = getNoteAtPosition(stringIndex, fret)
-    if (note) {
-      onPlayNote(note)
+    // Get the sounding pitch at this position
+    const soundingNote = getNoteAtPosition(stringIndex, fret)
+    if (soundingNote) {
+      // Transpose UP to written pitch for staff display
+      // E.g., E4 (sounding, high E string) → E5 (written on staff)
+      const writtenNote = transposeGuitarToWritten(soundingNote)
+      if (writtenNote) {
+        onPlayNote(writtenNote)
+      }
     }
   }
 

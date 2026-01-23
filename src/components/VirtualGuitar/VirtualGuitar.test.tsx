@@ -29,8 +29,10 @@ describe('VirtualGuitar', () => {
   })
 
   it('highlights active notes', () => {
-    render(<VirtualGuitar onPlayNote={() => {}} activeNotes={['C3']} />)
-    // C3 is A string, Fret 3. Labels now show 'C' without octave.
+    // activeNotes are in WRITTEN pitch (from staff)
+    // C4 written → C3 sounding on guitar (A string, fret 3)
+    render(<VirtualGuitar onPlayNote={() => {}} activeNotes={['C4']} />)
+    // Labels now show 'C' without octave.
     // Active notes should display their label.
     const cLabels = screen.getAllByText('C')
     expect(cLabels.length).toBeGreaterThan(0)

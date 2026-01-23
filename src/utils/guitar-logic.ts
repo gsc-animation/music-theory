@@ -45,6 +45,50 @@ export const getNoteAtPosition = (stringIndex: number, fret: number): string => 
  * Finds all positions (string, fret) for a given note.
  * Limited to first 15 frets.
  */
+/**
+ * Transposes a guitar sounding pitch UP one octave to get the written pitch.
+ * Guitar is a transposing instrument - written music is ONE OCTAVE HIGHER than it sounds.
+ * 
+ * When guitar plays E4 (sounding pitch, high E string open) → display E5 on staff (written pitch)
+ * When guitar plays E3 (sounding pitch, D string fret 2) → display E4 on staff (first line of treble)
+ * When guitar plays E2 (sounding pitch, low E string open) → display E3 on staff
+ * 
+ * @param soundingNote The sounding pitch from guitar (e.g., 'E4' from high E string)
+ * @returns The written pitch for staff display (e.g., 'E5')
+ */
+export const transposeGuitarToWritten = (soundingNote: string): string | null => {
+  const parsed = parseNote(soundingNote)
+  if (!parsed) return null
+  
+  // Transpose UP one octave (guitar sounds one octave lower than written)
+  const writtenOctave = parsed.octave + 1
+  
+  return `${parsed.noteName}${writtenOctave}`
+}
+
+/**
+ * Transposes a written pitch DOWN one octave to get guitar sounding pitch.
+ * Used when receiving notes from staff/piano to find guitar fretboard positions.
+ * 
+ * When staff shows E5 (written) → find E4 on guitar (sounding, high E string open)
+ * When staff shows E4 (written, first line) → find E3 on guitar (sounding, D string fret 2)
+ * 
+ * @param writtenNote The written pitch from staff (e.g., 'E5')
+ * @returns The sounding pitch on guitar (e.g., 'E4')
+ */
+export const transposeWrittenToGuitar = (writtenNote: string): string | null => {
+  const parsed = parseNote(writtenNote)
+  if (!parsed) return null
+  
+  // Transpose DOWN one octave (written pitch is one octave higher than guitar sounds)
+  const soundingOctave = parsed.octave - 1
+  
+  // Check if the transposed note is within guitar range (E2-E5)
+  if (soundingOctave < 2) return null
+  
+  return `${parsed.noteName}${soundingOctave}`
+}
+
 export const getPositionsForNote = (targetNote: string): Array<{ stringIndex: number, fret: number }> => {
   const positions: Array<{ stringIndex: number, fret: number }> = [];
 
