@@ -1,0 +1,15 @@
+X:1
+T:God Save the King (Modulation Example)
+C:Traditional
+M:3/4
+L:1/4
+Q:60
+K:G
+%% Demonstrates modulation from G major to D major
+%% Original Key: G major
+G | G2 A | ^F2 G | A3 | B2 B |
+c2 B | A2 G | ^F2 E | D2 ||
+%% Modulation to D major (new key center)
+K:D
+A | d2 e | ^c2 d | e3 | ^f2 ^f |
+g2 ^f | e2 d | ^c2 B | A2 |]

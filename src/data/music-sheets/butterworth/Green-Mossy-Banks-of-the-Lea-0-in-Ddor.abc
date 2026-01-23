@@ -1,0 +1,48 @@
+X:4
+T:Green Mossy Banks of the Lea-0
+%%VWML:GB-7a-4B-0
+F:http://www.vwml.org/record/GB/7a/4B
+T:Version 3 of 4
+C:Mr James Landamore (c. 70) Wroxham, Norfolk IV. 10 
+P:FW J(ekyll) & GSK B(utterworth)
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/4
+M:3/4
+I:linebreak $
+K:Ddor
+D | F A A | G F D | C !fermata!D D | F A A |$ G F E | D2 :| D | F G A | c A A |$ d !fermata!d D | F G A | c A c | d2 d | c A A |$ G F D | C !fermata!D D/E/ | F D E | A, D3/2 C/ | D2 |]
+T:Green Mossy Banks of the Lea T:Version 4 of 4
+C:Mr George Locke (c. 70) Rollesby, Norfolk X. 10 
+P:R V(aughan) W(illiams) & GSK B(utterworth)
+L:1/4
+M:3/4
+I:linebreak $
+K:Ddor
+D/E/ |"^(a)" F G A | c A c | d D2- | D2 D/E/ | F G A/>B/ |"^(b)" c/B/ A/B/ c |$ d2 d |
+"^(c)" c B A | F G A | C D D/>E/ | A A/B/ c | F G/F/ E | D2 |]$"^(a) var. 1" F E D | c/B/ A/B/ c || "^(a) var. 2" F/E/ D A/B/ ||"^(b) var." c/B/ A c | d2 d/>B/ ||$"^(c) var. 1" d B A/G/ | G A G/E/ || "^(c) var. 2" d B A | G A G/E/ ||"^(c) var. 3" c B A/G/ | F A G/E/ ||
+T:The Bold Fisherman Version 1 of 3
+T:Mr. Spooner c. 70), Midhurst Workhouse XII. 08
+T:F.W. J(ekyll) & G.S.K. B(utterworth)
+L:1/4
+M:5/4
+I:linebreak $
+K:G
+D | G G E F G | A A D2 D | G G A G A |[M:3/4] B2 B/c/ |$[M:5/4] d B A G A | B B E F G |
+A A D F A | G2- G2 D | G G A G A |$[M:3/4] B2 B/c/ |[M:5/4] d B A G A | B B E F G | A A D F A | G2- G2 |]
+T:The Bold Fisherman Version 2 of 3 
+C:Mr. Locke (c. 70) Rollesby, Norfolk, IV. 10 
+P:F.W. (Jekyll) & G.S.K. B(utterworth)
+L:1/8
+M:5/4
+I:linebreak $
+K:G
+D2 | B2 B2 (3BcB A2 G2 | E2 E2 E4 D2 |[M:4/4]"^(a)" G3 A BABc |[M:3/4] d4 d2 |$
+[M:5/4] e2 d2 (3BcB A2 G2 | d2 c2 E3 F G2 | c2 B2 D3 E F2 | G4- G4 |]$"^(a) var." G3 A BG Bd |
+T:The Bold Fisherman Version 3 of 3 
+C:Workhouse, Minster, Kent, IX. 10
+L:1/4
+M:5/4
+I:linebreak $
+K:G
+D |"^(a)" G G E F G | A A D2 D | G G A G A |[M:3/4] B2 B/c/ |[M:5/4] d B A G A |$
+B/A/ G E !fermata!D G | A/B/ c D F A |[M:3/4] G2 D |[M:5/4] G G A G A |[M:3/4] B2 B/c/ |$ [M:5/4] d B A G A | B/A/G/F/ E !fermata!D G | A/B/ c D F A | G2- G2 |]$"^(a) var." G G/F/ E F G |]

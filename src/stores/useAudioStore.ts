@@ -11,10 +11,10 @@ interface AudioState {
   recordedNotes: string[]
   timeSignature: string
   initializeAudio: () => Promise<void>
-  startNote: (note: string) => void
+  startNote: (note: string) => Promise<void>
   stopNote: (note: string) => void
   // Play note without recording (for preview/click playback)
-  playNote: (note: string) => void
+  playNote: (note: string) => Promise<void>
   releaseNote: (note: string) => void
   // Highlight note for visual feedback only (no audio)
   highlightNote: (note: string) => void
@@ -43,7 +43,14 @@ export const useAudioStore = create<AudioState>((set) => ({
     }
   },
 
-  startNote: (note: string) => {
+  startNote: async (note: string) => {
+    // Auto-initialize on first interaction
+    const { isReady } = useAudioStore.getState()
+    if (!isReady) {
+      await audioEngine.initialize()
+      set({ isReady: true })
+    }
+    
     audioEngine.startNote(note)
     set((state) => ({
       activeNotes: [...state.activeNotes, note],
@@ -65,7 +72,14 @@ export const useAudioStore = create<AudioState>((set) => ({
 
   // Play note without recording - for preview/click playback
   // This highlights instruments but doesn't add to recordedNotes
-  playNote: (note: string) => {
+  playNote: async (note: string) => {
+    // Auto-initialize on first interaction
+    const { isReady } = useAudioStore.getState()
+    if (!isReady) {
+      await audioEngine.initialize()
+      set({ isReady: true })
+    }
+    
     audioEngine.startNote(note)
     set((state) => ({
       activeNotes: state.activeNotes.includes(note)

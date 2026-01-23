@@ -1,0 +1,12 @@
+X:1
+T:Amazing Grace (Pentatonic Version)
+C:Traditional
+M:3/4
+L:1/4
+Q:80
+K:C
+%% Uses only pentatonic scale notes (C, D, E, G, A) - no F or B
+G, | C2 E | C E C | G2 E | D2 G, |
+C2 E | C E G | A3 | G2 E |
+C2 E | C E C | G2 E | D2 G, |
+C2 E | D E D | C3 |]

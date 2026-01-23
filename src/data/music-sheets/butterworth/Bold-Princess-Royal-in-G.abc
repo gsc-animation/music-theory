@@ -1,0 +1,22 @@
+X:15
+T:Bold Princess Royal Version 1 of 2 
+%%VWML:GB-7c-15-0
+F:http://www.vwml.org/record/GB/7c/15
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/4
+M:3/4
+I:linebreak $
+K:G
+D |"^(a)" G B A/G/ | F !fermata!G G/B/ |"^(b)" d c B | A2 B/A/ | G G G | G D E | =F G/F/ E | D2 B/c/ | d/B/ G d |$"^(c)" c/B/ !fermata!A B/c/ | B A G | D G G/F/ | E/D/ C A |
+"^(d)" A/F/ !fermata!D D | G B B/A/ | G2 ||$ D |"^(a) var." G G A/G/ | F !fermata!G G/B/ | "^(b) var." B G B | A2 B/A/ | G G G | G D E | =F G/F/ E | D2 B/c/ | d/B/ G d |$
+"^(c) var." c/B/ !fermata!A d | c B A | D G G/F/ | E/D/ C A |"^(d) var." A/F/ !fermata!D A |
+B c/B/ A | G2 |]
+T:Bold Princess Royal Version 2 of 2 
+C:Mr. Robert Hurr (c. 50), Southwold, X. 10
+P:R. V(aughan) W(illiams) & G.S.K. B(utterworth)
+L:1/8
+M:3/4
+I:linebreak $
+K:G
+G>A | Bc d2 g2 |"^(a)" e2 d2 G>B | c>B G2 G2 | G4 B>G | A2 A2 d2 |$"^(b)" c2 B2 A>G | d2 f2 e2 | d4 B>c | d2 A2 d2 | ef !fermata!g2 a>g | g2 d>B G2 |$ D2 G2 G>A |"^(c)" Bc d2 g>f | ed B2 (3GAB | A>B G2 G2 | G4 ||$ G>A | Bc d2 g2 |"^(a) var." e2 d>B G>B | c2 G2 G2 | G4 B>G | A2 A2 d2 |$ "^(b) var." B>A B2 A>G | d2 f>d e>f | d4 B>c | d2 A2 d2 | ef !fermata!g2 a>g | g2 d>B G2 |$
+D2 G2 G>A |"^(c) var." Bc d2 f>g | e>d cB GB | A2 G2 G2 | G4 |]

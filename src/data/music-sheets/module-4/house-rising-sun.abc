@@ -1,0 +1,10 @@
+X:1
+T:House of the Rising Sun
+C:Traditional
+M:6/8
+L:1/8
+Q:80
+K:Am
+%% Circle of fifths: Am-C-D-F-Am-C-E-E7
+"Am"A3 c3 | "C"e3 e2 d | "D"d3 f3 | "F"a3 a2 g |
+"Am"e3 e3 | "C"e2 d c2 A | "E7"B3 ^G2 B | "Am"A6 |]

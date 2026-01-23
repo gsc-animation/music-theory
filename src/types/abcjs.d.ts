@@ -126,3 +126,9 @@ declare module 'abcjs' {
 }
 
 declare module 'abcjs/abcjs-audio.css'
+
+// ABC notation file imports (using Vite's ?raw query)
+declare module '*.abc?raw' {
+  const content: string
+  export default content
+}

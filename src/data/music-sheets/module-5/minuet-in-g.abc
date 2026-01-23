@@ -1,0 +1,13 @@
+X:1
+T:Minuet in G
+C:Christian Petzold (often attributed to Bach)
+M:3/4
+L:1/8
+Q:100
+K:G
+%% Perfect, Authentic, and Half Cadences demonstrated
+%% Section A (ends with authentic cadence V-I)
+d2 GABc | d2 G2 G2 | e2 cdef | g2 G2 G2 |
+c2 dcBA | B2 cBAG | ^F2 GABG | A6 |
+d2 GABc | d2 G2 G2 | e2 cdef | g2 G2 G2 |
+c2 dcBA | B2 cBAG | A2 B2 AG | G6 |]

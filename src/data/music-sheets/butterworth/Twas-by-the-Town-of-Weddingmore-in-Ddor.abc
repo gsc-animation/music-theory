@@ -1,0 +1,45 @@
+X:103
+T:'Twas by the Town of Weddingmore
+%%VWML:GB-6a-103-0
+F:http://www.vwml.org/record/GB/6a/103
+T:Version 1 of 4
+C:Sung by Mr Thomas Gibbs, of Brill, Bucks, V. 07
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/8
+Q:1/4=112
+M:4/4
+I:linebreak $
+K:Ddor
+"^Moderato" D2 | F2 G2 A2 B2 | A4 FE D2 | EF G2 E2 FE | D6 :| D2 | F2 G2 AB c2 |$ B2 A4 AB | c2 d2 G3 F | E6 A2 | A3 G A2 B2 | A4 FE D2 | EF G2 E2 FE | D6 |]
+T:'Twas by the Town of Weddingmore
+T:Version 2 of 4
+C:Sung by Mr Nixie, Oakley, Oxon, V. 07
+L:1/4
+M:4/4
+I:linebreak $
+K:Ddor
+D | F G A B | A G F D | E/F/ G E F | D3 :| D | F G A/B/ c |$ B A2 A/B/ | c c G3/2 F/ | E3 A | A3/2 G/ A/B/ c | A G E C | E/F/ G E F | D3 |]
+T:'Twas by the Town of Weddingmore
+T:Version 3 of 4
+C:Sung by Nappin, Stanton St. John, Oxon, V. 07
+L:1/4
+M:4/4
+I:linebreak $
+K:Ddor
+D | F G A/B/ c | B A2 A/B/ | c d G3/2 F/ | E3 A |$ A3/2 G/ A/B/ c | A G E D | G G E F | D3 |]
+T:'Twas by the Town of Weddingmore
+T:Version 4 of 4
+C:Sung at Brill, Bucks, VII. 08
+L:1/8
+M:4/4
+I:linebreak $
+K:Ddor
+DE | F2 G2 A2 B2 | A3 G FE D2 | EF G2 E2 C2 | D6 :| DE | F2 G2 AB c2 |$ B2 A4 AB | c2 d2 G3 F | E8 | A3 A G2 B2 | A3 G FE D2 | EF G2 E2 C2 | D6 |]
+T:In the Famous Town of Nottingham 
+C:Sung by Mr Cranstone VII. 09
+L:1/4
+M:3/2
+I:linebreak $
+K:Eaeo
+G A |"^(a)" B2 G2 B d | A2 G2 F G | E2 B2 A G | E4 :| G A | B2 G A B d | A2 !fermata!G2 F G |$ A !fermata!e2 !fermata!A2 G | A4 G A | B2 G A B d | A2 G2 F G | E2 B2 A G | E4 |]
+"^(a) var." B2 G A B d |

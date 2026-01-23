@@ -1,0 +1,29 @@
+X:9
+T:William Taylor Version 1 of 3
+%%VWML:GB-7b-9-0
+F:http://www.vwml.org/record/GB/7b/9
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/4
+M:4/4
+I:linebreak $
+K:Dmix
+D | F F/E/ F G/A/ | B3/2 A/ F D | A3/2 F/ G A | d d A3/2 A/ |$ d d F B | A A F/E/D/E/ | F F G A | B A D |]
+T:William Taylor Version 2 of 3
+C:Mr. Jim Bull (c. 50), Bishop's Frome, Herefordshire IX. 07
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/4
+M:none
+I:linebreak $
+K:Dmix
+D | G F E F/G/ | B A F !fermata!D | G F G A/B/ | c B !fermata!A (3A/B/c/ | d d G"^(a)" B/d/ |$ c A F D/D/ | G3/2 F/ E/F/G/A/ | B A !fermata!D || D | G F E F/G/ | B A F !fermata!D |
+G F G A/B/ |$ c B !fermata!A (3A/B/c/ | d d G"^(a) var." A/B/ | c A F D/D/ | G3/2 F/ E/F/G/A/ | B A !fermata!D |]
+T:William Taylor Version 3 of 3 
+C:Ipswich VI. 12
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/4
+M:4/4
+I:linebreak $
+K:C
+C | E E F G | A G"^(a)" E !fermata!C | G3/2 E/ G3/2 A/ | B G !fermata!c G | c c F G/A/ |$ _B A G/E/ !fermata!C | E3/2 E/ D F | A G !fermata!C || C | E E F G |
+A G"^(a) var." E/D/ !fermata!C | G3/2 E/ G3/2 A/ |$ B G !fermata!c G | c c F G/A/ |
+_B A G/E/ !fermata!C | E3/2 E/ D F | A G !fermata!C |]

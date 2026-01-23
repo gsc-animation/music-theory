@@ -1,0 +1,11 @@
+X:6
+T:GB/6a/6 As I Roamed Out Version 2 of 2
+%%VWML:GB-6a-6-0
+F:http://www.vwml.org/record/GB/6a/6
+W:Butterworth has a semibreve as his last note; this has been changed to a dotted minim.
+L:1/4
+M:4/4
+I:linebreak $
+K:Daeo
+"^Slower (i.e. than GB/6a/5)" D | D3/2 C/ D E | F G E D | G3/2 F/ G B | A2 !fermata!D D |
+D3/2 C/ D E |$ F G E D | G3/2 F/ G B | A3 A | d2 c A | G2 F A | c e d/c/A/G/ |$ F A !fermata!C C | D3/2 C/ D E | F A c d | A G F E | D3 |]

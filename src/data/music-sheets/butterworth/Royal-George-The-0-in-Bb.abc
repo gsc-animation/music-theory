@@ -1,0 +1,28 @@
+X:22
+T:Royal George, The-0
+%%VWML:GB-7c-22-0
+F:http://www.vwml.org/record/GB/7c/22
+T:Version 1 of 2
+C:Mr. Robert Hurr, c. 50, Southwold, X. 10
+P:R. V(aughan) W(illiams) & G.S.K. B(utterworth)
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/8
+M:4/4
+I:linebreak $
+K:Bb
+Bc | d2 d2 d2 c>d | e>d c>B{/B} A2 G2- |[M:2/4] G2"^(a)" z"^(""^)" d |[M:4/4] e3 d/e/ f3 B |$
+B>A B2 c3 F | B>A B>c B>A GF | B>A B2 c f2 d |"^(b)" e2 fg f3 e |$ d2 c2 B>AG>F | B>A B>c B>A GF |
+B>A B2 c f2 d | e2 fg f3 e | d2 c2 B2 ||$ Bc | d2 d2 d2 c>d | e>d c>B{/B} A2 G2- |
+[M:2/4] G2"^(a) var." z2 |[M:4/4] e3 d/e/ f3 B |$ B>A B2 c3 F | B>A B>c B>A GF | B>A B2 c f2 d | "^(b) var. 1" ef g2 f3 e |$ d2 c2 B>AG>F | B>A B>c B>A GF | B>A B2 c f2 d | e2 fg f3 e |
+d2 c2 B2 ||$ Bc | d2 d2 d2 c>d | e>d c>B{/B} A2 G2- |[M:2/4] G2 z d |[M:4/4] e3 d/e/ f3 B |$
+B>A B2 c3 F | B>A B>c B>A GF | B>A B2 c f2 d |"^(b) var. 2" e2- (3efg f3 e |$ d2 c2 B>AG>F | B>A B>c B>A GF | B>A B2 c f2 d | e2 fg f3 e | d2 c2 B2 |]
+T:Royal George, The
+T:Version 2 of 2
+C:Mr. Verrall, 1911
+L:1/8
+M:4/4
+I:linebreak $
+K:Bb
+Bc | d2 d2 d2 cB | Bc"^(a)" d2 cB !fermata!G2 | e2"^(b)" e2 d2 c2 | B2 d2 !fermata!c2 z F |$
+B>A Bc BAGF | B2 B2 cd e2 | f2 f2 e2 dB | c2 c2 B2 ||$ Bc | d2 d2 d2 cB |
+Bc"^(a) var." dc cB !fermata!G2 | e2"^(b) var." ee d2 c2 | B2 d2 !fermata!c2 z F |$ B>A Bc BAGF | B2 B2 cd e2 | f3 d e2 dB | c2 c2 B2 |]

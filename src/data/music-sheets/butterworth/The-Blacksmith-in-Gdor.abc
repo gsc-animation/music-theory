@@ -1,0 +1,13 @@
+X:16
+T:GB/7b/16 The Blacksmith
+%%VWML:GB-7b-16-0
+F:http://www.vwml.org/record/GB/7b/16
+C:Transcribed by Simon Furey and Lewis Jones
+L:1/4
+M:4/4
+I:linebreak $
+K:Gdor
+"^(a)" d3/2 c/ | B G c c | F2 G3/2 A/ | d d/c/ A G |[M:2/4] z d/c/ |[M:4/4] B G c c | F2 G3/2 A/ | d d/c/ A G |$[M:2/4] z F |[M:4/4]"^(b)" G G f g | d3 G/A/ | B c f d/c/ | B c2"^(c)" f/=e/ |
+d3/2 c/ d G | F2 G3/2 A/ |"^(d)" d3/2 c/ A !fermata!G ||$"^(a) var." z d/c/ | B G c c |
+F2 G3/2 A/ | d d/c/ A G |[M:2/4] z d/c/ |[M:4/4] B G c c | F2 G3/2 A/ | d d/c/ A G |$[M:2/4] z F | [M:4/4]"^(b) var." G/F/ G f g | d3 G/A/ | B c f d/c/ | B c2"^(c) var." f | d3/2 c/ d G |
+F2 G3/2 A/ |"^(d) var." d d/c/ A !fermata!G |]

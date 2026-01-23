@@ -1,0 +1,31 @@
+X:62
+T:Dabbling in the Dew Version 1 of 3 
+%%VWML:GB-6a-62-0
+F:http://www.vwml.org/record/GB/6a/62
+C:Transcribed by Simon Furey and Lewis Jones
+W:Transcribers' note: A sharp has been taken from the key signature to remove the
+W:natural from the C. The tune (which is in the Mixolydian mode) is unaltered.
+L:1/8
+Q:1/4=132
+M:4/4
+I:linebreak $
+K:Dmix
+"^Quick" D2 D>E F>E D2 | G2 A>G F>E D2 | G2 G>G A2 A2 | d2 d2 A4 |$ A2 A>B c2 c2 | d2 A>G F>ED>D |
+E>FG>G A2 A>G | F2 E2 D4 |]
+T:Dabbling in the Dew Version 2 of 3 
+C:Sung by Mrs. Verrall A, Horsham, XII. 07
+L:1/8
+M:4/4
+I:linebreak $
+K:D
+A2 | D2 F>G A2 d2 |[M:5/4] A2 A>G GE D2 A>A |[M:4/4] D>EF>G A2 d>d | c2 A2 A3 A |$ d2 d>e d>c A2 |
+G2 G>B A>FG>E | D>E F>G A2"^(a)" =c>B | AG E2 D2 |]$"^(a) var." B>A | A2 D2 D2 |]
+T:Dabbling in the Dew Version 3 of 3 
+C:Sung by Mrs. Verrall B, noted at Ticehurst by F.W.J.
+W:Transcribers' note: the grace notes are transposed as acciacciaturas; in the MS they are appoggiaturas.
+L:1/4
+M:none
+I:linebreak $
+K:Gmix
+G G{/A} F{/E} D | G A{/c} B G | c{/d} B{/c} d g |{/f} d d d z |$ g g{/g} f{/c} d |
+{/d} G{/G} B{/c} d d |{/c} F{/G} A{/_B} c f |{/e} d{/c} A G2 |]

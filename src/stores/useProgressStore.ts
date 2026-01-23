@@ -81,9 +81,20 @@ const indexedDBStorage: StateStorage = {
 /**
  * User progress state interface
  */
+
+export interface LevelCompletion {
+  percentage: number
+  stars: number
+  passed: boolean
+  bestTime?: number
+}
+
 export interface UserProgress {
   // Completed submodules (e.g., ["1.1", "1.2", "2.1"])
   completedSubmodules: string[]
+  
+  // Game level completions (key format: "levelId-gameType", e.g. "1-note-id")
+  completedLevels: Record<string, LevelCompletion>
   
   // Current position in the course
   currentModuleId: number
@@ -110,6 +121,7 @@ interface ProgressState extends UserProgress {
   updateStreak: () => void
   recordPracticeSession: (minutes: number) => void
   setSubmoduleScore: (submoduleId: string, score: number) => void
+  setLevelScore: (levelKey: string, percentage: number, requiredScore: number, xpReward: number) => void
   isSubmoduleCompleted: (submoduleId: string) => boolean
   getModuleProgress: (moduleId: number) => number
   resetProgress: () => void
@@ -117,6 +129,7 @@ interface ProgressState extends UserProgress {
 
 const initialState: UserProgress = {
   completedSubmodules: [],
+  completedLevels: {},
   currentModuleId: 1,
   currentSubmoduleId: '1.1',
   totalXP: 0,
@@ -220,7 +233,26 @@ export const useProgressStore = create<ProgressState>()(
         
         return Math.round((completed / moduleSubmodules.length) * 100)
       },
-      
+
+      setLevelScore: (levelKey, percentage, requiredScore, xpReward) => set((state) => {
+        const existing = state.completedLevels[levelKey]
+        const passed = percentage >= requiredScore
+        const stars = percentage >= 100 ? 3 : percentage >= 80 ? 2 : percentage >= 60 ? 1 : 0
+        const isNewPass = passed && !existing?.passed
+
+        return {
+          completedLevels: {
+            ...state.completedLevels,
+            [levelKey]: {
+              percentage: Math.max(percentage, existing?.percentage || 0),
+              stars: Math.max(stars, existing?.stars || 0),
+              passed: passed || existing?.passed || false,
+            },
+          },
+          totalXP: state.totalXP + (isNewPass ? xpReward : 0),
+        }
+      }),
+
       resetProgress: () => set(initialState)
     }),
     {
@@ -228,6 +260,7 @@ export const useProgressStore = create<ProgressState>()(
       storage: createJSONStorage(() => indexedDBStorage),
       partialize: (state) => ({
         completedSubmodules: state.completedSubmodules,
+        completedLevels: state.completedLevels,
         currentModuleId: state.currentModuleId,
         currentSubmoduleId: state.currentSubmoduleId,
         totalXP: state.totalXP,

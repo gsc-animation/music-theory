@@ -1,0 +1,12 @@
+X:1
+T:Greensleeves
+C:Traditional English (16th century)
+M:6/8
+L:1/8
+Q:120
+K:Am
+%% Perfect example of compound meter (6/8 time)
+A | c2 d e2 f | e2 d c2 A | A2 B c2 d | B3 ^G2 A |
+c2 d e2 f | e2 d c2 B | A2 ^G A2 B | A3 A3 |
+g3 g2 f | e2 d c2 A | A2 B c2 d | B3 ^G2 A |
+g3 g2 f | e2 d c2 B | A2 ^G A2 B | A3 A3 |]

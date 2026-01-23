@@ -1,0 +1,24 @@
+X:20
+T:Jack and the Game Version 1 of 3 
+%%VWML:GB-7b-20-0
+F:http://www.vwml.org/record/GB/7b/20
+L:1/8
+M:6/8
+I:linebreak $
+K:D
+d | dcB AFE | DA>G F!fermata!D D | DEF GFE | DA>A A2 A |$ FED d2 f | f>ed e!fermata!d d | AGF B>AG | A2 A D2 |]
+T:Jack and the Game Version 2 of 3 
+C:Mr. Lockly (c. 80), High Ercall, Salop., IV. 08
+L:1/8
+M:6/8
+I:linebreak $
+K:Ddor
+d | dcB AGE | GGF E!fermata!D D | DDE FGA | BAG A2 D |$ FGA cBA | d>ed c!fermata!d A | FED FGA |
+GFD D2 |]
+T:Jack and the Game Version 3 of 3 
+C:Mr. Golds (c. 80), Washington, Sussex, XII. 07
+L:1/8
+M:6/8
+I:linebreak $
+K:Dmix
+A | dBA FED | BAG F!fermata!D D | GFG A2 B | cdB A2 D |$ DFA d2 e | [M:9/8] fed e!fermata!d z d2 F |[M:6/8] GFE B2 B | A>AA D2 |]

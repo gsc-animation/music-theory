@@ -11,6 +11,9 @@ const SubmodulePage = lazy(() => import('./pages/SubmodulePage'))
 const PracticePage = lazy(() => import('./pages/PracticePage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
 
+// Lazy load floating instruments container
+const FloatingInstrumentsContainer = lazy(() => import('./components/ui/FloatingInstrumentsContainer'))
+
 function App() {
   const theme = useSettingsStore((state) => state.theme)
   const updateStreak = useProgressStore((state) => state.updateStreak)
@@ -66,6 +69,11 @@ function App() {
           </Routes>
         </Suspense>
       </MainLayout>
+      
+      {/* Floating instruments - always available on all pages */}
+      <Suspense fallback={null}>
+        <FloatingInstrumentsContainer />
+      </Suspense>
     </BrowserRouter>
   )
 }

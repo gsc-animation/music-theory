@@ -277,10 +277,58 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
     return recordedNotes.slice(-32)
   }, [recordedNotes])
 
+  /**
+   * Inject note name annotations into ABC notation
+   * Parses ABC and adds "^NoteName" annotations above each note when showNoteNames is true
+   */
+  const injectNoteAnnotations = useCallback(
+    (abc: string): string => {
+      if (!showNoteNames) return abc
+
+      // Split into header and body (lines starting with letters vs music content)
+      const lines = abc.split('\n')
+      const processedLines = lines.map((line) => {
+        // Skip header lines (X:, T:, M:, L:, Q:, K:, %%, V:, [V:])
+        if (/^[A-Z]:/.test(line) || /^%%/.test(line) || /^\[V:/.test(line)) {
+          return line
+        }
+
+        // Process music content - match ABC notes
+        // ABC note pattern: optional accidental (^ _ =), note letter (A-Ga-g), optional octave modifiers (, ')
+        return line.replace(
+          /(\^{1,2}|_{1,2}|=)?([A-Ga-g])([,']*)/g,
+          (match, accidental = '', letter) => {
+            // Skip if it's a rest
+            if (letter.toLowerCase() === 'z' || letter.toLowerCase() === 'x') {
+              return match
+            }
+
+            // Convert ABC note to standard format for label lookup
+            const upperLetter = letter.toUpperCase()
+            let accidentalDisplay = ''
+            if (accidental === '^') accidentalDisplay = '#'
+            else if (accidental === '^^') accidentalDisplay = '##'
+            else if (accidental === '_') accidentalDisplay = 'b'
+            else if (accidental === '__') accidentalDisplay = 'bb'
+
+            const latinName = upperLetter + accidentalDisplay
+            const displayName = getNoteLabel(latinName, notationSystem)
+
+            // Return with annotation prefix
+            return `"^${displayName}"${match}`
+          }
+        )
+      })
+
+      return processedLines.join('\n')
+    },
+    [showNoteNames, notationSystem]
+  )
+
   const generateAbc = useCallback(() => {
-    // If overrideAbc is provided, use it directly (for lesson-specific content)
+    // If overrideAbc is provided, process it for note annotations if needed
     if (overrideAbc) {
-      return overrideAbc
+      return injectNoteAnnotations(overrideAbc)
     }
 
     // Helper to create synchronized grand staff measures
@@ -438,7 +486,7 @@ L:1/4
 Q:120
 K:C
 ${abcNotes} |`
-  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem, bpm, overrideAbc])
+  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem, bpm, overrideAbc, injectNoteAnnotations])
 
   // Track controller loaded state
   const [isControllerReady, setControllerReady] = useState(false)
@@ -613,7 +661,7 @@ ${abcNotes} |`
         }
         .abc-grand-staff text.abcjs-annotation {
           fill: #30e8e8;
-          font-size: 10px;
+          font-size: 7px;
           font-weight: bold;
         }
         .abc-grand-staff .abcjs-note.abcjs-highlight path {

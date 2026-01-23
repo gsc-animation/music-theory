@@ -57,18 +57,27 @@ export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = ({
   return (
     <details
       className={`
-        group rounded-xl border border-slate-200 dark:border-slate-700
-        bg-white dark:bg-slate-800 shadow-soft overflow-hidden
-        transition-all duration-200 open:shadow-md
+        group rounded-2xl border border-slate-200/80 dark:border-slate-700/80
+        bg-white dark:bg-slate-800/95 shadow-lg shadow-slate-900/5 dark:shadow-black/20
+        overflow-hidden transition-all duration-300 ease-out
+        open:shadow-xl open:shadow-slate-900/10 dark:open:shadow-black/30
+        hover:border-slate-300 dark:hover:border-slate-600
         ${className}
       `}
       open={isOpen}
       onToggle={handleToggle}
     >
-      <summary className="flex cursor-pointer items-center justify-between gap-3 p-2 list-none select-none hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-        <div className="flex items-center gap-2">
-          {icon && <span className="material-symbols-outlined text-[#30e8e8] text-lg">{icon}</span>}
-          <span className="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+      {/* Gradient accent bar at top */}
+      <div className="h-1 bg-gradient-to-r from-[#30e8e8] via-[#26d4d4] to-[#1f9d9d] opacity-80 group-open:opacity-100 transition-opacity" />
+      
+      <summary className="flex cursor-pointer items-center justify-between gap-3 px-4 py-3 list-none select-none hover:bg-slate-50/80 dark:hover:bg-slate-700/30 transition-all duration-200">
+        <div className="flex items-center gap-3">
+          {icon && (
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#30e8e8]/10 dark:bg-[#30e8e8]/20">
+              <span className="material-symbols-outlined text-[#30e8e8] text-xl">{icon}</span>
+            </div>
+          )}
+          <span className="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
             {title}
           </span>
           {headerExtra && (
@@ -77,11 +86,13 @@ export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = ({
             </div>
           )}
         </div>
-        <span className="material-symbols-outlined text-slate-400 text-base transition-transform duration-200 group-open:rotate-180">
-          expand_more
-        </span>
+        <div className="flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-700/50 group-hover:bg-slate-200 dark:group-hover:bg-slate-600/50 transition-colors">
+          <span className="material-symbols-outlined text-slate-500 dark:text-slate-400 text-lg transition-transform duration-300 ease-out group-open:rotate-180">
+            expand_more
+          </span>
+        </div>
       </summary>
-      <div className="p-4 pt-0">{children}</div>
+      <div className="px-4 pb-4 pt-2">{children}</div>
     </details>
   )
 }

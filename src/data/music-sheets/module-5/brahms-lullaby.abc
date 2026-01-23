@@ -1,0 +1,12 @@
+X:1
+T:Brahms' Lullaby
+C:Johannes Brahms
+M:3/4
+L:1/4
+Q:60
+K:Eb
+%% Demonstrates dynamics with soft, gentle melody (pp to mf)
+!pp!E/2E/2 | G3/2 E/2 G | B3/2 B/2 B | !mp!c B A | G2 E/2E/2 |
+G3/2 E/2 G | B3/2 B/2 B | !mf!c B A | G2 B/2B/2 |
+!mp!c3/2 A/2 c | e3/2 e/2 d | !p!c B A | G2 E/2E/2 |
+!pp!G3/2 E/2 G | B3/2 G/2 E | !ppp!F A, D | E3 |]

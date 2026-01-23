@@ -1,0 +1,15 @@
+X:1
+T:Ode to Joy (With Inversions)
+C:Ludwig van Beethoven
+M:4/4
+L:1/4
+Q:100
+K:C
+%%staves {1 2}
+V:1 clef=treble
+V:2 clef=bass
+%% Shows chord inversions: root position, 1st, 2nd inversions
+[V:1] E E F G | G F E D | C C D E | E3/2 D/2 D2 |
+[V:2] [C,E,G,]4 | [G,,B,,D,]4 | [C,E,G,]4 | [G,,B,,D,]4 |
+[V:1] E E F G | G F E D | C C D E | D3/2 C/2 C2 |
+[V:2] [E,G,C]4 | [D,G,B,]4 | [C,F,A,]4 | [C,E,G,]4 |]
