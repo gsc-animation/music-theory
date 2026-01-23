@@ -259,6 +259,7 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
   // Use highlightNote/unhighlightNote for playback sync (no audio, just visual)
   const highlightNote = useAudioStore((state) => state.highlightNote)
   const unhighlightNote = useAudioStore((state) => state.unhighlightNote)
+  const clearHighlights = useAudioStore((state) => state.clearHighlights)
   const recordedNotes = useAudioStore((state) => state.recordedNotes)
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   const bpm = useSettingsStore((state) => state.bpm)
@@ -448,6 +449,12 @@ ${abcNotes} |`
     },
     [unhighlightNote]
   )
+
+  // Clear any stale highlights when component mounts
+  // This prevents ghost notes from appearing on instruments
+  useEffect(() => {
+    clearHighlights()
+  }, [clearHighlights])
 
   // Initialize synth objects and load controller UI
   useEffect(() => {
