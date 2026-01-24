@@ -9,6 +9,10 @@ interface VirtualPianoProps {
   onStopNote: (note: string) => void
   /** Optional: Show hint dots on these note letters (for progressive difficulty) */
   allowedNotes?: string[]
+  /** Optional: Notes to highlight as success (green) */
+  successNotes?: string[]
+  /** Optional: Notes to highlight as error (red) */
+  errorNotes?: string[]
 }
 
 const NOTES = [
@@ -33,6 +37,8 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
   onStartNote,
   onStopNote,
   allowedNotes,
+  successNotes = [],
+  errorNotes = [],
 }) => {
   const renderOctave = (octaveIndex: number) => {
     const currentOctave = startOctave + octaveIndex
@@ -63,6 +69,8 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
                 onStopNote={onStopNote}
                 label={noteLetter}
                 isHighlighted={activeNotes.includes(note)}
+                isSuccess={successNotes.includes(note)}
+                isError={errorNotes.includes(note)}
               />
               {/* Hint dot for allowed notes */}
               {isHinted && !activeNotes.includes(note) && (
@@ -95,6 +103,8 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
                 onStartNote={onStartNote}
                 onStopNote={onStopNote}
                 isHighlighted={activeNotes.includes(note)}
+                isSuccess={successNotes.includes(note)}
+                isError={errorNotes.includes(note)}
               />
             </div>
           )

@@ -22,6 +22,7 @@ const HorizontalSaoTrucVisualizer = React.lazy(
 )
 const AbcDemoSection = React.lazy(() => import('../components/modules/AbcDemoSection'))
 const GameQuiz = React.lazy(() => import('../components/modules/GameQuiz'))
+const Module12GameQuiz = React.lazy(() => import('../components/modules/Module12GameQuiz'))
 const TheoryContent = React.lazy(() => import('../components/modules/TheoryContent'))
 
 /**
@@ -316,14 +317,19 @@ export const SubmodulePage: React.FC = () => {
                   </div>
                 }
               >
-                {submodule.exercises.map((exercise, idx) => {
-                  if (exercise.type === 'note-id' && exercise.notes) {
-                    return (
-                      <GameQuiz key={`${submodule.id}-quiz-${idx}`} submoduleId={submodule.id} />
-                    )
-                  }
-                  return null
-                })}
+                {/* Use Module12GameQuiz for submodule 1.2 (octave-focused games) */}
+                {submodule.id === '1.2' ? (
+                  <Module12GameQuiz submoduleId={submodule.id} />
+                ) : (
+                  submodule.exercises.map((exercise, idx) => {
+                    if (exercise.type === 'note-id' && exercise.notes) {
+                      return (
+                        <GameQuiz key={`${submodule.id}-quiz-${idx}`} submoduleId={submodule.id} />
+                      )
+                    }
+                    return null
+                  })
+                )}
               </React.Suspense>
             </CollapsiblePanel>
           )}

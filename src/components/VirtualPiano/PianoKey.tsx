@@ -8,7 +8,9 @@ interface PianoKeyProps {
   note: string
   type: KeyType
   label?: string
-  isHighlighted?: boolean // For cross-instrument highlighting
+  isHighlighted?: boolean // For cross-instrument highlighting (cyan)
+  isSuccess?: boolean // For correct answer highlighting (green)
+  isError?: boolean // For wrong answer highlighting (red)
   onStartNote: (note: string) => void
   onStopNote: (note: string) => void
 }
@@ -18,6 +20,8 @@ const PianoKey: React.FC<PianoKeyProps> = ({
   type,
   label: _label,
   isHighlighted = false,
+  isSuccess = false,
+  isError = false,
   onStartNote,
   onStopNote,
 }) => {
@@ -80,11 +84,20 @@ const PianoKey: React.FC<PianoKeyProps> = ({
   const baseClasses =
     'relative flex items-end justify-center pb-2 rounded-b-lg shadow-sm transition-colors duration-75 select-none touch-none cursor-pointer h-full'
 
-  // Module 5 colors: white keys white bg, black keys #111818, active cyan #30e8e8
+  // Determine highlight color
+  const getHighlightColor = () => {
+    if (isSuccess) return 'bg-emerald-400'
+    if (isError) return 'bg-rose-400 animate-pulse'
+    if (showActive) return 'bg-[#30e8e8]'
+    return type === 'white' ? 'bg-white' : 'bg-[#111818]'
+  }
+
+  const highlightColor = getHighlightColor()
+
   const typeClasses =
     type === 'white'
-      ? `h-[120px] w-full z-0 border border-slate-200 ${showActive ? 'bg-[#30e8e8]' : 'bg-white'}`
-      : `h-[75px] w-full z-10 ${showActive ? 'bg-[#30e8e8]' : 'bg-[#111818]'} text-white rounded-b`
+      ? `h-[120px] w-full z-0 border border-slate-200 ${highlightColor}`
+      : `h-[75px] w-full z-10 ${highlightColor} text-white rounded-b`
 
   const activeClasses = showActive ? 'shadow-[inset_0_-5px_0_rgba(0,0,0,0.1)]' : ''
 

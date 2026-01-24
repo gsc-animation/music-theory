@@ -18,7 +18,7 @@ export const SUBMODULE_1_2: Submodule = {
   id: '1.2',
   title: 'Tên nốt & Cao độ',
   description: 'Nhận biết 7 nốt nhạc (A-G) trên bàn phím và khuông nhạc, khái niệm Quãng tám',
-  sections: ['theory', 'grandStaff', 'piano', 'guitar', 'abcDemo', 'practice'],
+  sections: ['theory', 'grandStaff', 'abcDemo', 'practice'],
   theoryContent: `
 ## 1. Bảng chữ cái Âm nhạc (The Musical Alphabet)
 
@@ -104,16 +104,6 @@ Guitar có **6 dây**, đếm từ dây nhỏ nhất (mỏng, ở dưới) đế
 
 > 📝 **Câu nhớ tiếng Anh**: "**E**very **B**oy **G**ets **D**inner **A**t **E**ight"
 
-
-### So sánh với Piano
-
-- Dây E **cao** (dây 1) tương đương với **E4** trên Piano
-- Dây E **thấp** (dây 6) tương đương với **E2** trên Piano
-
-{{piano:6 dây Guitar trên Piano|E2,A2,D3,G3,B3,E4}}
-
-> 💡 Cùng tên nốt nhưng cách nhau **2 quãng tám**!
-
 ---
 
 ## 4. Quãng tám (Octave) & Middle C
@@ -183,7 +173,8 @@ C,, D,, E,, F,, | G,, A,, B,, C, | D, E, F, G, | A, B, C D |`,
     {
       id: '1.2.1',
       title: 'Bảng chữ cái Âm nhạc',
-      description: 'Vòng tròn 7 nốt: A → B → C → D → E → F → G → A...',
+      description:
+        'Vòng tròn 7 nốt: A → B → C → D → E → F → G → A... Trên khuông nhạc, các nốt đi từ thấp lên cao theo bậc thang. Sau G, nốt A cao hơn xuất hiện - đây chính là sự lặp lại của quãng tám!',
       abc: `X:1
 M:4/4
 L:1/4
@@ -195,7 +186,8 @@ A B c d | e f g a|]`,
     {
       id: '1.2.2',
       title: 'Tìm nốt C trên Piano',
-      description: 'C nằm bên trái nhóm 2 phím đen',
+      description:
+        'Trên khuông nhạc hiển thị 4 nốt C ở các quãng tám khác nhau (C3, C4, C5, C6). Nốt thấp nhất nằm dưới khuông cần dòng kẻ phụ, C4 (Middle C) nằm trên 1 dòng kẻ phụ dưới khuông treble, C5 nằm trong khuông, C6 nằm trên khuông. Piano có 88 phím nhưng chỉ 7 tên nốt - quãng tám giúp phân biệt các nốt cùng tên ở độ cao khác nhau!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -207,7 +199,8 @@ C, C | c c'|]`,
     {
       id: '1.2.3',
       title: 'Tìm nốt F trên Piano',
-      description: 'F nằm bên trái nhóm 3 phím đen',
+      description:
+        'Trên khuông nhạc hiển thị 4 nốt F ở các quãng tám khác nhau (F3, F4, F5, F6). F4 luôn nằm trên dòng kẻ thứ 1 của khuông treble - đây là "mỏ neo" quan trọng để định vị các nốt khác. Từ F3 → F4 → F5 → F6, mỗi bước nhảy là 1 octave và tần số âm thanh gấp đôi mỗi khi lên 1 quãng tám!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -219,7 +212,8 @@ F, F | f f'|]`,
     {
       id: '1.2.4',
       title: 'Ký hiệu 6 dây Guitar trên khuông nhạc',
-      description: 'Cách viết E-B-G-D-A-E trên khuông (dùng Guitar Fretboard bên dưới để thực hành!)',
+      description:
+        '6 nốt đại diện cho 6 dây buông Guitar (E5-B3-G3-D3-A2-E2). Guitar acoustic phủ gần 4 quãng tám từ E2 đến E5-E6! Dây 1 (E5) cao nhất, dây 6 (E2) thấp nhất. Lưu ý: Guitar viết trên khóa Sol nhưng âm thực tế thấp hơn 1 quãng tám so với viết - đây là quy ước đặc biệt!',
       abc: `X:1
 M:6/4
 L:1/2
@@ -231,7 +225,8 @@ e B G | D, A,, E,,|]`,
     {
       id: '1.2.5',
       title: 'So sánh Quãng tám',
-      description: 'Cùng nốt C ở 3 quãng tám: C3, C4, C5',
+      description:
+        '3 nốt C ở 3 quãng tám liên tiếp: C3 (trầm, cần nhiều dòng kẻ phụ), C4 = Middle C (nốt "trung tâm" của bàn phím!), C5 (trong khuông treble). Khi lên 1 quãng tám, tần số sóng âm nhân đôi: C4 = 261.63 Hz → C5 = 523.25 Hz. Dù khác cao độ, các nốt C vẫn mang "màu sắc" âm thanh giống nhau - gọi là octave equivalence!',
       abc: `X:1
 M:3/4
 L:1/2
@@ -243,7 +238,8 @@ C, C c|]`,
     {
       id: '1.2.6',
       title: 'Thang âm C đầy đủ',
-      description: 'C D E F G A B C - Một quãng tám hoàn chỉnh',
+      description:
+        '8 nốt tạo thành thang âm C trưởng (C Major Scale) - thang âm cơ bản nhất, chỉ dùng phím trắng trên piano! Bắt đầu từ C4 (Middle C), qua D-E-F-G-A-B, kết thúc ở C5. Lưu ý: khoảng cách giữa các nốt không đều - có 5 cặp cách 1 cung (whole step) và 2 cặp cách nửa cung (half step: E-F và B-C)!',
       abc: `X:1
 M:4/4
 L:1/4
