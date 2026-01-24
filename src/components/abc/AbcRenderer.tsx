@@ -101,9 +101,10 @@ function injectNoteAnnotations(abc: string, notationSystem: 'latin' | 'solfege')
 }
 
 // Consistent render options for all ABC notation
+// Staff width set to fill content area
 const RENDER_OPTIONS = {
   responsive: 'resize' as const,
-  staffwidth: 400,
+  staffwidth: 700,
   paddingtop: 0,
   paddingbottom: 5,
   paddingleft: 0,
@@ -256,7 +257,7 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
   }
 
   return (
-    <div className="abc-renderer my-4 mx-auto max-w-lg bg-white dark:bg-slate-900/80 rounded-xl border border-[#30e8e8]/30 shadow-sm overflow-hidden">
+    <div className="abc-renderer my-4 bg-white dark:bg-slate-900/80 rounded-xl border border-[#30e8e8]/30 shadow-sm overflow-hidden">
       {/* Header - unified design */}
       <div className="flex items-center justify-between px-4 py-2 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-700">
         <div>

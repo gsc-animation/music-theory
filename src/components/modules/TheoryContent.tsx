@@ -112,11 +112,9 @@ export const TheoryContent: React.FC<TheoryContentProps> = ({ content }) => {
       {blocks.map((block, index) => {
         if (block.type === 'abc') {
           return (
-            <AbcRenderer
-              key={`abc-${index}`}
-              abc={block.content}
-              title={block.title}
-            />
+            <div key={`abc-${index}`} className="abc-renderer-wrapper">
+              <AbcRenderer abc={block.content} title={block.title} />
+            </div>
           )
         }
         return (

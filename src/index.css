@@ -106,6 +106,23 @@ details summary::-webkit-details-marker {
    Enhanced typography and visual hierarchy
    ========================================= */
 
+/* Container for theory content - left align text */
+.theory-content {
+  text-align: left;
+}
+
+/* ABC notation blocks - full width, with vertical spacing */
+.theory-content > div:has(.abc-renderer),
+.theory-content > .abc-renderer-wrapper {
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.theory-content .abc-renderer {
+  max-width: 100%;
+}
+
 .theory-formatted {
   font-size: 0.95rem;
   line-height: 1.75;
@@ -149,10 +166,10 @@ details summary::-webkit-details-marker {
   background: linear-gradient(135deg, rgba(48, 232, 232, 0.15) 0%, rgba(48, 232, 232, 0.05) 100%);
 }
 
-/* Paragraphs */
+/* Paragraphs - justified text for readability */
 .theory-formatted p {
   margin-bottom: 1rem;
-  text-align: left;
+  text-align: justify;
 }
 
 /* Strong/bold text */

@@ -308,7 +308,7 @@ export const SubmodulePage: React.FC = () => {
 
           {/* Practice Quiz Section */}
           {submodule.exercises && submodule.exercises.length > 0 && (
-            <CollapsiblePanel title="Practice Quiz" icon="quiz" defaultOpen>
+            <CollapsiblePanel title="Note Training Game" icon="sports_esports" defaultOpen>
               <React.Suspense
                 fallback={
                   <div className="w-full h-32 flex items-center justify-center text-slate-400">
