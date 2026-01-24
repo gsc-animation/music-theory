@@ -18,14 +18,34 @@ The treble clef curls around the **G line** (second line from bottom). It's used
 
 **Line notes (bottom to top):** E - G - B - D - F ("Every Good Boy Does Fine")
 
+{{abc:Treble Clef Line Notes|X:1
+L:1/2
+K:C clef=treble
+E G B d f|]}}
+
 **Space notes (bottom to top):** F - A - C - E ("FACE")
+
+{{abc:Treble Clef Space Notes|X:1
+L:1/2
+K:C clef=treble
+F A c e|]}}
 
 ### Bass Clef (F Clef)
 The bass clef has two dots surrounding the **F line** (fourth line from bottom). It's used for lower-pitched instruments and the left hand of piano.
 
 **Line notes (bottom to top):** G - B - D - F - A ("Good Boys Do Fine Always")
 
+{{abc:Bass Clef Line Notes|X:1
+L:1/2
+K:C clef=bass
+G,, B,, D, F, A,|]}}
+
 **Space notes (bottom to top):** A - C - E - G ("All Cows Eat Grass")
+
+{{abc:Bass Clef Space Notes|X:1
+L:1/2
+K:C clef=bass
+A,, C, E, G,|]}}
 
 ### The Grand Staff
 When treble and bass clefs are joined by a brace, they form the **Grand Staff** - used for piano music. Middle C sits on a ledger line between the two staves.
@@ -54,7 +74,7 @@ L:1/2
 K:C clef=treble
 E G B d f|]`,
       interactive: true,
-      playable: true
+      playable: true,
     },
     {
       id: '1.1.2',
@@ -65,7 +85,7 @@ L:1/2
 K:C clef=treble
 F A c e|]`,
       interactive: true,
-      playable: true
+      playable: true,
     },
     {
       id: '1.1.3',
@@ -76,7 +96,7 @@ L:1/2
 K:C clef=bass
 G,, B,, D, F, A,|]`,
       interactive: true,
-      playable: true
+      playable: true,
     },
     {
       id: '1.1.4',
@@ -87,14 +107,14 @@ L:1/2
 K:C clef=bass
 A,, C, E, G,|]`,
       interactive: true,
-      playable: true
-    }
+      playable: true,
+    },
   ],
   exercises: [
     {
       type: 'note-id',
       notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
-      questionCount: 5
-    }
-  ]
+      questionCount: 5,
+    },
+  ],
 }

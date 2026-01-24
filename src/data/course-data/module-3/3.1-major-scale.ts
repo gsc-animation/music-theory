@@ -36,7 +36,7 @@ M:4/4
 L:1/4
 K:C
 C D E F | G A B c | B A G F | E D C2 |]`,
-      playable: true
+      playable: true,
     },
     {
       id: '3.1.2',
@@ -47,7 +47,7 @@ M:4/4
 L:1/4
 K:G
 G A B c | d e ^f g | ^f e d c | B A G2 |]`,
-      playable: true
-    }
-  ]
+      playable: true,
+    },
+  ],
 }

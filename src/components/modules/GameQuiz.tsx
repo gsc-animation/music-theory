@@ -145,7 +145,9 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
           <span className="text-xs text-slate-400">
             Level {selectedGame.level.id} • {gameInfo?.icon} {gameInfo?.label}
           </span>
-          <h3 className="font-bold text-slate-800 dark:text-white text-sm">{selectedGame.level.name}</h3>
+          <h3 className="font-bold text-slate-800 dark:text-white text-sm">
+            {selectedGame.level.name}
+          </h3>
         </div>
       </div>
 
@@ -170,7 +172,11 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
             </span>
           </p>
           <p className="text-slate-600 dark:text-slate-300 mb-6">
-            {lastPercentage >= 80 ? 'Excellent!' : lastPercentage >= 60 ? 'Good job!' : 'Keep practicing!'}
+            {lastPercentage >= 80
+              ? 'Excellent!'
+              : lastPercentage >= 60
+                ? 'Good job!'
+                : 'Keep practicing!'}
           </p>
 
           {/* Action buttons */}
@@ -180,7 +186,9 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
                 onClick={handleNextGame}
                 className="px-6 py-2.5 bg-[#30e8e8] text-[#111818] rounded-lg font-bold hover:bg-[#26d4d4] transition-colors flex items-center gap-2"
               >
-                <span>Next Game: {getNextGame.icon} {getNextGame.label}</span>
+                <span>
+                  Next Game: {getNextGame.icon} {getNextGame.label}
+                </span>
                 <span className="material-symbols-outlined text-lg">arrow_forward</span>
               </button>
             )}

@@ -24,7 +24,7 @@ export const PracticePage: React.FC = () => {
   const stopNote = useAudioStore((state) => state.stopNote)
   const activeNotes = useAudioStore((state) => state.activeNotes)
   const appendNote = useNotationStore((state) => state.appendNote)
-  
+
   const isPlaying = useGameStore((state) => state.isPlaying)
   const streak = useGameStore((state) => state.streak)
 
@@ -61,7 +61,8 @@ export const PracticePage: React.FC = () => {
               Free Practice Mode
             </h1>
             <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
-              Practice freely with all instruments. Use the "Start Practice" button in the sidebar for guided exercises.
+              Practice freely with all instruments. Use the "Start Practice" button in the sidebar
+              for guided exercises.
             </p>
           </div>
 

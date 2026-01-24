@@ -27,5 +27,5 @@ A **cadence** is a harmonic arrival point - like punctuation in a sentence.
 - Plagal: F → C  
 - Half: Am → G
 - Deceptive: G → Am
-  `
+  `,
 }

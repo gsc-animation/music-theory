@@ -32,5 +32,5 @@ In any major key: **I - ii - iii - IV - V - vi - vii°**
 Major chords: I, IV, V
 Minor chords: ii, iii, vi
 Diminished: vii°
-  `
+  `,
 }

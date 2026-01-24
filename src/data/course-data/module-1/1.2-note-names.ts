@@ -34,7 +34,7 @@ M:4/4
 L:1/4
 K:C
 C D E F | G A B c |]`,
-      playable: true
+      playable: true,
     },
     {
       id: '1.2.2',
@@ -45,14 +45,14 @@ M:4/4
 L:1/2
 K:C
 C c | D d | E e | F f |]`,
-      playable: true
-    }
+      playable: true,
+    },
   ],
   exercises: [
     {
       type: 'note-id',
       notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'],
-      questionCount: 7
-    }
-  ]
+      questionCount: 7,
+    },
+  ],
 }

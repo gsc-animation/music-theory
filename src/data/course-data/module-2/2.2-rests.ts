@@ -22,5 +22,5 @@ Every note value has a corresponding **rest** symbol indicating silence for that
 | Sixteenth rest | ¼ beat | Two flags |
 
 Rests are just as important as notes - they create space and rhythm.
-  `
+  `,
 }

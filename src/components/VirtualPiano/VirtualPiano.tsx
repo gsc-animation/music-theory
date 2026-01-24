@@ -1,12 +1,12 @@
-import React from 'react';
-import PianoKey from './PianoKey';
+import React from 'react'
+import PianoKey from './PianoKey'
 
 interface VirtualPianoProps {
-  startOctave?: number;
-  octaves?: number;
-  activeNotes?: string[];
-  onStartNote: (note: string) => void;
-  onStopNote: (note: string) => void;
+  startOctave?: number
+  octaves?: number
+  activeNotes?: string[]
+  onStartNote: (note: string) => void
+  onStopNote: (note: string) => void
 }
 
 const NOTES = [
@@ -22,60 +22,81 @@ const NOTES = [
   { note: 'A', type: 'white' },
   { note: 'A#', type: 'black' },
   { note: 'B', type: 'white' },
-] as const;
+] as const
 
 export const VirtualPiano: React.FC<VirtualPianoProps> = ({
   startOctave = 4,
   octaves = 1,
   activeNotes = [],
   onStartNote,
-  onStopNote
+  onStopNote,
 }) => {
   const renderOctave = (octaveIndex: number) => {
-    const currentOctave = startOctave + octaveIndex;
+    const currentOctave = startOctave + octaveIndex
 
-    const whiteKeys = NOTES.filter(n => n.type === 'white').map(n => `${n.note}${currentOctave}`);
-    const blackKeys = NOTES.filter(n => n.type === 'black').map(n => `${n.note}${currentOctave}`);
+    const whiteKeys = NOTES.filter((n) => n.type === 'white').map(
+      (n) => `${n.note}${currentOctave}`
+    )
+    const blackKeys = NOTES.filter((n) => n.type === 'black').map(
+      (n) => `${n.note}${currentOctave}`
+    )
 
     return (
-      <div key={octaveIndex} className="relative flex h-48 w-full max-w-md select-none touch-none" style={{ touchAction: 'none' }}>
+      <div
+        key={octaveIndex}
+        className="relative flex h-48 w-full max-w-md select-none touch-none"
+        style={{ touchAction: 'none' }}
+      >
         {/* White Keys Layer */}
         {whiteKeys.map((note) => (
           <div key={note} className="flex-1 h-full">
-            <PianoKey note={note} type="white" onStartNote={onStartNote} onStopNote={onStopNote} label={note.replace(/[0-9]/g, '')} isHighlighted={activeNotes.includes(note)} />
+            <PianoKey
+              note={note}
+              type="white"
+              onStartNote={onStartNote}
+              onStopNote={onStopNote}
+              label={note.replace(/[0-9]/g, '')}
+              isHighlighted={activeNotes.includes(note)}
+            />
           </div>
         ))}
 
         {/* Black Keys Layer */}
         {blackKeys.map((note) => {
-             const noteName = note.replace(/[0-9]/g, '');
+          const noteName = note.replace(/[0-9]/g, '')
 
-             let left = 0;
-             if (noteName === 'C#') left = 9.2857;
-             if (noteName === 'D#') left = 23.5714;
-             if (noteName === 'F#') left = 52.1429;
-             if (noteName === 'G#') left = 66.4286;
-             if (noteName === 'A#') left = 80.7143;
+          let left = 0
+          if (noteName === 'C#') left = 9.2857
+          if (noteName === 'D#') left = 23.5714
+          if (noteName === 'F#') left = 52.1429
+          if (noteName === 'G#') left = 66.4286
+          if (noteName === 'A#') left = 80.7143
 
-             return (
-               <div
-                 key={note}
-                 className="absolute top-0 w-[10%] h-32 pointer-events-auto z-10"
-                 style={{ left: `${left}%` }}
-               >
-                 <PianoKey note={note} type="black" onStartNote={onStartNote} onStopNote={onStopNote} isHighlighted={activeNotes.includes(note)} />
-               </div>
-             );
+          return (
+            <div
+              key={note}
+              className="absolute top-0 w-[10%] h-32 pointer-events-auto z-10"
+              style={{ left: `${left}%` }}
+            >
+              <PianoKey
+                note={note}
+                type="black"
+                onStartNote={onStartNote}
+                onStopNote={onStopNote}
+                isHighlighted={activeNotes.includes(note)}
+              />
+            </div>
+          )
         })}
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div className="flex justify-center w-full px-4" style={{ touchAction: 'none' }}>
       {Array.from({ length: octaves }).map((_, i) => renderOctave(i))}
     </div>
-  );
-};
+  )
+}
 
-export default VirtualPiano;
+export default VirtualPiano

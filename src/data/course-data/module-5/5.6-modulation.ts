@@ -33,5 +33,5 @@ export const SUBMODULE_5_6: Submodule = {
 
 ### The "Truck Driver's Modulation"
 Suddenly shifting up a half step for the final chorus - dramatic but sometimes clichéd!
-  `
+  `,
 }

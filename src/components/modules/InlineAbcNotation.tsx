@@ -33,10 +33,7 @@ export const InlineAbcNotation: React.FC<InlineAbcNotationProps> = ({ abc, title
           {title}
         </div>
       )}
-      <div 
-        ref={containerRef} 
-        className="inline-abc-container [&_svg]:max-w-full [&_svg]:h-auto"
-      />
+      <div ref={containerRef} className="inline-abc-container [&_svg]:max-w-full [&_svg]:h-auto" />
     </div>
   )
 }

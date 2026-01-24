@@ -28,7 +28,7 @@ interface ModuleState {
   currentModuleId: number
   currentLessonIndex: number
   totalXP: number
-  
+
   // Actions
   setCurrentModule: (id: number) => void
   setCurrentLesson: (index: number) => void
@@ -46,22 +46,22 @@ export const useModuleStore = create<ModuleState>()(
       totalXP: 450,
 
       setCurrentModule: (id) => set({ currentModuleId: id }),
-      
+
       setCurrentLesson: (index) => set({ currentLessonIndex: index }),
-      
-      updateProgress: (moduleId, progress) => set((state) => ({
-        modules: state.modules.map((m) =>
-          m.id === moduleId ? { ...m, progress: Math.min(100, Math.max(0, progress)) } : m
-        ),
-      })),
-      
+
+      updateProgress: (moduleId, progress) =>
+        set((state) => ({
+          modules: state.modules.map((m) =>
+            m.id === moduleId ? { ...m, progress: Math.min(100, Math.max(0, progress)) } : m
+          ),
+        })),
+
       addXP: (amount) => set((state) => ({ totalXP: state.totalXP + amount })),
-      
-      unlockModule: (moduleId) => set((state) => ({
-        modules: state.modules.map((m) =>
-          m.id === moduleId ? { ...m, locked: false } : m
-        ),
-      })),
+
+      unlockModule: (moduleId) =>
+        set((state) => ({
+          modules: state.modules.map((m) => (m.id === moduleId ? { ...m, locked: false } : m)),
+        })),
     }),
     { name: 'music-theory-modules' }
   )

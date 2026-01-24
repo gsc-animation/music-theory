@@ -24,14 +24,14 @@ interface HarmonicTimelineProps {
  */
 export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className }) => {
   const appendChord = useNotationStore((state) => state.appendChord)
-  
+
   const [chords, setChords] = useState<ChordBlock[]>([
     { id: '1', name: 'C', numeral: 'I', function: 'tonic', notes: ['C4', 'E4', 'G4'] },
     { id: '2', name: 'F', numeral: 'IV', function: 'subdominant', notes: ['F4', 'A4', 'C5'] },
     { id: '3', name: 'G7', numeral: 'V7', function: 'dominant', notes: ['G4', 'B4', 'D5', 'F5'] },
     { id: '4', name: 'Am', numeral: 'vi', function: 'tonic', notes: ['A4', 'C5', 'E5'] },
   ])
-  
+
   const [draggedId, setDraggedId] = useState<string | null>(null)
   const [playheadPosition, setPlayheadPosition] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -52,11 +52,11 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
 
     const draggedIndex = chords.findIndex((c) => c.id === draggedId)
     const targetIndex = chords.findIndex((c) => c.id === targetId)
-    
+
     const newChords = [...chords]
     const [removed] = newChords.splice(draggedIndex, 1)
     newChords.splice(targetIndex, 0, removed)
-    
+
     setChords(newChords)
     setDraggedId(null)
   }
@@ -74,9 +74,12 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
     setChords([...chords, newChord])
   }
 
-  const handleChordClick = useCallback((chord: ChordBlock) => {
-    appendChord(chord.notes)
-  }, [appendChord])
+  const handleChordClick = useCallback(
+    (chord: ChordBlock) => {
+      appendChord(chord.notes)
+    },
+    [appendChord]
+  )
 
   const handleRemoveChord = (id: string) => {
     setChords(chords.filter((c) => c.id !== id))
@@ -87,28 +90,28 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
       setIsPlaying(false)
       return
     }
-    
+
     setIsPlaying(true)
     setPlayheadPosition(0)
-    
+
     // Animate playhead
     const totalDuration = chords.length * 1000 // 1 second per chord
     const startTime = Date.now()
-    
+
     const animate = () => {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / totalDuration, 1)
       setPlayheadPosition(progress * 100)
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate)
       } else {
         setIsPlaying(false)
       }
     }
-    
+
     requestAnimationFrame(animate)
-    
+
     // Play chords sequentially
     chords.forEach((chord, index) => {
       setTimeout(() => {
@@ -141,7 +144,7 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
             >
               <span className={`text-sm font-bold ${colors.text}`}>{chord.name}</span>
               <span className="text-[9px] font-semibold text-slate-500">{chord.numeral}</span>
-              
+
               {/* Remove button */}
               <button
                 onClick={(e) => {
@@ -155,7 +158,7 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
             </div>
           )
         })}
-        
+
         {/* Drop zone */}
         <div
           onDragOver={handleDragOver}
@@ -166,7 +169,7 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
           <span className="text-[9px] font-bold text-slate-400 uppercase">Drop</span>
         </div>
       </div>
-      
+
       {/* Progress bar */}
       <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden relative">
         <div
@@ -174,7 +177,7 @@ export const HarmonicTimeline: React.FC<HarmonicTimelineProps> = ({ className })
           style={{ width: `${playheadPosition}%` }}
         />
       </div>
-      
+
       {/* Controls */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">

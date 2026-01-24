@@ -30,5 +30,5 @@ C - **D** - C or C - **B** - C
 - Stepwise motion is smooth
 - Leaps add energy (follow with step in opposite direction)
 - Avoid augmented intervals
-  `
+  `,
 }

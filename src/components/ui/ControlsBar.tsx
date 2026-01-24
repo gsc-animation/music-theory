@@ -13,7 +13,9 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({ className }) => {
   const setNotationSystem = useSettingsStore((state) => state.setNotationSystem)
 
   return (
-    <div className={`flex items-center justify-center gap-4 p-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm ${className}`}>
+    <div
+      className={`flex items-center justify-center gap-4 p-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm ${className}`}
+    >
       {/* Note Notation Toggle */}
       <div className="flex items-center bg-white rounded-full shadow-inner border border-gray-200 overflow-hidden">
         <button
@@ -44,8 +46,18 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({ className }) => {
         className="p-2 bg-white rounded-full shadow hover:bg-gray-50 transition-colors"
         aria-label="Metronome"
       >
-        <svg className="w-6 h-6 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3L4 21h16L12 3z" />
+        <svg
+          className="w-6 h-6 text-gray-600"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M12 3L4 21h16L12 3z"
+          />
           <line x1="12" y1="8" x2="8" y2="18" strokeWidth={1.5} />
         </svg>
       </button>
@@ -62,7 +74,12 @@ export const ControlsBar: React.FC<ControlsBarProps> = ({ className }) => {
           <option value="6/8">6/8</option>
         </select>
         <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
-          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            className="w-4 h-4 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>

@@ -6,8 +6,12 @@ import { FloatingInstrumentsToolbar } from './FloatingInstrumentsToolbar'
 
 // Lazy load instrument components
 const VirtualPiano = React.lazy(() => import('../VirtualPiano/VirtualPiano'))
-const VirtualGuitar = React.lazy(() => import('../VirtualGuitar/VirtualGuitar').then(m => ({ default: m.VirtualGuitar })))
-const HorizontalSaoTrucVisualizer = React.lazy(() => import('../../features/sao-truc/components/HorizontalSaoTrucVisualizer'))
+const VirtualGuitar = React.lazy(() =>
+  import('../VirtualGuitar/VirtualGuitar').then((m) => ({ default: m.VirtualGuitar }))
+)
+const HorizontalSaoTrucVisualizer = React.lazy(
+  () => import('../../features/sao-truc/components/HorizontalSaoTrucVisualizer')
+)
 
 const LoadingFallback = () => (
   <div className="w-full h-24 flex items-center justify-center text-slate-400 text-sm">
@@ -24,19 +28,28 @@ export const FloatingInstrumentsContainer: React.FC = () => {
   const { activeNotes, startNote, stopNote, playNote, releaseNote } = useAudioStore()
 
   // Handler for Piano (uses start/stop)
-  const handleStartNote = useCallback((note: string) => {
-    startNote(note)
-  }, [startNote])
+  const handleStartNote = useCallback(
+    (note: string) => {
+      startNote(note)
+    },
+    [startNote]
+  )
 
-  const handleStopNote = useCallback((note: string) => {
-    stopNote(note)
-  }, [stopNote])
+  const handleStopNote = useCallback(
+    (note: string) => {
+      stopNote(note)
+    },
+    [stopNote]
+  )
 
   // Handler for Guitar (uses playNote)
-  const handlePlayNote = useCallback((note: string) => {
-    playNote(note)
-    setTimeout(() => releaseNote(note), 200)
-  }, [playNote, releaseNote])
+  const handlePlayNote = useCallback(
+    (note: string) => {
+      playNote(note)
+      setTimeout(() => releaseNote(note), 200)
+    },
+    [playNote, releaseNote]
+  )
 
   return (
     <>
@@ -59,10 +72,7 @@ export const FloatingInstrumentsContainer: React.FC = () => {
       {instruments.guitar.isVisible && (
         <FloatingInstrumentPanel type="guitar" title="Guitar" icon="music_note">
           <Suspense fallback={<LoadingFallback />}>
-            <VirtualGuitar
-              activeNotes={activeNotes}
-              onPlayNote={handlePlayNote}
-            />
+            <VirtualGuitar activeNotes={activeNotes} onPlayNote={handlePlayNote} />
           </Suspense>
         </FloatingInstrumentPanel>
       )}

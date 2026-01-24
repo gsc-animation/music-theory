@@ -7,8 +7,16 @@ import { HarmonicTimeline } from '../harmony/HarmonicTimeline'
 
 // Module 1 topics
 const MODULE_1_TOPICS = [
-  { title: 'Staff & Clefs', description: 'Learn the grand staff, treble, and bass clefs', completed: true },
-  { title: 'Musical Alphabet', description: 'A B C D E F G - the building blocks', completed: true },
+  {
+    title: 'Staff & Clefs',
+    description: 'Learn the grand staff, treble, and bass clefs',
+    completed: true,
+  },
+  {
+    title: 'Musical Alphabet',
+    description: 'A B C D E F G - the building blocks',
+    completed: true,
+  },
   { title: 'Accidentals', description: 'Sharps, flats, and naturals', completed: false },
   { title: 'Intervals', description: 'Distance between pitches', completed: false },
   { title: 'Enharmonics', description: 'Same pitch, different names', completed: false },

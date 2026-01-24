@@ -15,9 +15,12 @@ const HorizontalSaoTrucVisualizer: React.FC = () => {
 
   useEffect(() => {
     // Strategy: Take the last played note, or persist the current note if silence
-    const effectiveNote = (activeNotes.length > 0)
-      ? activeNotes[activeNotes.length - 1]
-      : (currentNote !== '-' ? currentNote : null)
+    const effectiveNote =
+      activeNotes.length > 0
+        ? activeNotes[activeNotes.length - 1]
+        : currentNote !== '-'
+          ? currentNote
+          : null
 
     if (effectiveNote) {
       // Only update current note reference if it's a new active note

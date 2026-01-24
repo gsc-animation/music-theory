@@ -34,5 +34,5 @@ A **key signature** tells us which notes are sharp or flat throughout a piece.
 | 2 (Bb, Eb) | Bb Major |
 | 3 | Eb Major |
 | 4 | Ab Major |
-  `
+  `,
 }

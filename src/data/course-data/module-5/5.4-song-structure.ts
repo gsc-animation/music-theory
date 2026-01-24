@@ -32,5 +32,5 @@ A (8) - A (8) - B (8) - A (8)
 
 **12-Bar Blues:**
 I-I-I-I | IV-IV-I-I | V-IV-I-V
-  `
+  `,
 }

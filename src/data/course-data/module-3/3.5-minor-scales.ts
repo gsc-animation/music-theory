@@ -30,5 +30,5 @@ A Harmonic Minor: A - B - C - D - E - F - **G#** - A
 Every major key has a **relative minor** starting 3 half steps lower:
 - C major → A minor
 - G major → E minor
-  `
+  `,
 }

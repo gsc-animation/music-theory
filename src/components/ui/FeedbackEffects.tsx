@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Check, X } from 'lucide-react'
 
 interface FeedbackEffectsProps {
-  lastResult: 'success' | 'failure' | null;
-  timestamp: number;
+  lastResult: 'success' | 'failure' | null
+  timestamp: number
 }
 
 export const FeedbackEffects: React.FC<FeedbackEffectsProps> = ({ lastResult, timestamp }) => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     if (lastResult) {
-      setVisible(true);
-      const timer = setTimeout(() => setVisible(false), 500);
-      return () => clearTimeout(timer);
+      setVisible(true)
+      const timer = setTimeout(() => setVisible(false), 500)
+      return () => clearTimeout(timer)
     }
-  }, [lastResult, timestamp]);
+  }, [lastResult, timestamp])
 
   return (
     <AnimatePresence>
@@ -40,15 +40,15 @@ export const FeedbackEffects: React.FC<FeedbackEffectsProps> = ({ lastResult, ti
 
       {visible && lastResult === 'failure' && (
         <motion.div
-           key="shake"
-           initial={{ x: 0 }}
-           animate={{ x: [-10, 10, -10, 10, 0] }}
-           transition={{ duration: 0.4 }}
-           className="fixed inset-0 pointer-events-none border-4 border-red-500 z-50 flex items-center justify-center"
+          key="shake"
+          initial={{ x: 0 }}
+          animate={{ x: [-10, 10, -10, 10, 0] }}
+          transition={{ duration: 0.4 }}
+          className="fixed inset-0 pointer-events-none border-4 border-red-500 z-50 flex items-center justify-center"
         >
           <X className="text-red-500 w-32 h-32 opacity-80" />
         </motion.div>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}

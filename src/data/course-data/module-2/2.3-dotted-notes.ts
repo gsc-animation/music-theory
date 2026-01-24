@@ -22,5 +22,5 @@ A **dot** after a note adds **half its value**.
 
 ### Ties
 A **tie** connects two notes of the same pitch, combining their durations. Used when a note crosses a bar line or to create unusual rhythms.
-  `
+  `,
 }

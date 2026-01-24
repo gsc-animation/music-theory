@@ -27,5 +27,5 @@ export const SUBMODULE_2_6: Submodule = {
 
 ### Metronome
 A metronome clicks at a set BPM to help musicians keep steady time.
-  `
+  `,
 }

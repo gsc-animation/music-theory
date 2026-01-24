@@ -25,5 +25,5 @@ Note values tell us **how long** to hold a note. Each value is half the duration
 - Quarter notes: 1, 2, 3, 4
 - Eighth notes: 1 & 2 & 3 & 4 &
 - Sixteenth notes: 1 e & a 2 e & a 3 e & a 4 e & a
-  `
+  `,
 }

@@ -23,4 +23,4 @@ export const APP_STRINGS = {
     TOGGLE_LABEL_SUFFIX: 'notation',
     TOGGLE_TITLE: 'Toggle Notation System',
   },
-};
+}

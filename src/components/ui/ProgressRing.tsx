@@ -23,7 +23,10 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
   const offset = circumference - (progress / 100) * circumference
 
   return (
-    <div className={`relative flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+    <div
+      className={`relative flex items-center justify-center ${className}`}
+      style={{ width: size, height: size }}
+    >
       <svg className="w-full h-full -rotate-90" viewBox={`0 0 ${size} ${size}`}>
         {/* Background circle */}
         <circle
@@ -50,9 +53,7 @@ export const ProgressRing: React.FC<ProgressRingProps> = ({
         />
       </svg>
       {children && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          {children}
-        </div>
+        <div className="absolute inset-0 flex items-center justify-center">{children}</div>
       )}
     </div>
   )

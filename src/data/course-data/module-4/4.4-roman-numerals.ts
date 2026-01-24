@@ -27,5 +27,5 @@ Professional musicians often use Arabic numerals:
 - Transpose songs instantly
 - Understand harmonic relationships
 - Communicate with any musician
-  `
+  `,
 }

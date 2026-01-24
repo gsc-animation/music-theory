@@ -1,97 +1,97 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { requestPersistentStorage, getStorageEstimate } from './storage-manager';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { requestPersistentStorage, getStorageEstimate } from './storage-manager'
 
 describe('Storage Manager', () => {
-  const originalNavigator = global.navigator;
-  const originalWindow = global.window;
+  const originalNavigator = global.navigator
+  const originalWindow = global.window
 
   beforeEach(() => {
     // Mock window.isSecureContext
     Object.defineProperty(global.window, 'isSecureContext', {
       value: true,
-      writable: true
-    });
+      writable: true,
+    })
 
     // Mock navigator.storage
     Object.defineProperty(global.navigator, 'storage', {
       value: {
         persist: vi.fn(),
         estimate: vi.fn(),
-        persisted: vi.fn()
+        persisted: vi.fn(),
       },
-      writable: true
-    });
-  });
+      writable: true,
+    })
+  })
 
   afterEach(() => {
-    vi.restoreAllMocks();
-    Object.defineProperty(global, 'navigator', { value: originalNavigator });
-    Object.defineProperty(global, 'window', { value: originalWindow });
-  });
+    vi.restoreAllMocks()
+    Object.defineProperty(global, 'navigator', { value: originalNavigator })
+    Object.defineProperty(global, 'window', { value: originalWindow })
+  })
 
   describe('requestPersistentStorage', () => {
     it('returns false if not in secure context', async () => {
-      Object.defineProperty(global.window, 'isSecureContext', { value: false });
-      const result = await requestPersistentStorage();
-      expect(result).toBe(false);
-    });
+      Object.defineProperty(global.window, 'isSecureContext', { value: false })
+      const result = await requestPersistentStorage()
+      expect(result).toBe(false)
+    })
 
     it('returns false if navigator.storage is missing', async () => {
-      Object.defineProperty(global.navigator, 'storage', { value: undefined });
-      const result = await requestPersistentStorage();
-      expect(result).toBe(false);
-    });
+      Object.defineProperty(global.navigator, 'storage', { value: undefined })
+      const result = await requestPersistentStorage()
+      expect(result).toBe(false)
+    })
 
     it('calls navigator.storage.persist and returns result', async () => {
-      const mockPersist = vi.fn().mockResolvedValue(true);
-      global.navigator.storage.persist = mockPersist;
+      const mockPersist = vi.fn().mockResolvedValue(true)
+      global.navigator.storage.persist = mockPersist
 
-      const result = await requestPersistentStorage();
-      expect(mockPersist).toHaveBeenCalled();
-      expect(result).toBe(true);
-    });
+      const result = await requestPersistentStorage()
+      expect(mockPersist).toHaveBeenCalled()
+      expect(result).toBe(true)
+    })
 
     it('handles errors gracefully', async () => {
-      const mockPersist = vi.fn().mockRejectedValue(new Error('Failed'));
-      global.navigator.storage.persist = mockPersist;
+      const mockPersist = vi.fn().mockRejectedValue(new Error('Failed'))
+      global.navigator.storage.persist = mockPersist
 
       // Mock console.warn to suppress output
-      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
-      const result = await requestPersistentStorage();
-      expect(result).toBe(false);
+      const result = await requestPersistentStorage()
+      expect(result).toBe(false)
 
-      consoleSpy.mockRestore();
-    });
-  });
+      consoleSpy.mockRestore()
+    })
+  })
 
   describe('getStorageEstimate', () => {
     it('returns estimate from navigator.storage', async () => {
-      const mockEstimate = vi.fn().mockResolvedValue({ usage: 100, quota: 1000 });
-      global.navigator.storage.estimate = mockEstimate;
+      const mockEstimate = vi.fn().mockResolvedValue({ usage: 100, quota: 1000 })
+      global.navigator.storage.estimate = mockEstimate
 
-      const result = await getStorageEstimate();
-      expect(mockEstimate).toHaveBeenCalled();
-      expect(result).toEqual({ usage: 100, quota: 1000 });
-    });
+      const result = await getStorageEstimate()
+      expect(mockEstimate).toHaveBeenCalled()
+      expect(result).toEqual({ usage: 100, quota: 1000 })
+    })
 
     it('returns undefined if not supported', async () => {
-      Object.defineProperty(global.navigator, 'storage', { value: undefined });
-      const result = await getStorageEstimate();
-      expect(result).toBeUndefined();
-    });
+      Object.defineProperty(global.navigator, 'storage', { value: undefined })
+      const result = await getStorageEstimate()
+      expect(result).toBeUndefined()
+    })
 
     it('handles errors gracefully', async () => {
-      const mockEstimate = vi.fn().mockRejectedValue(new Error('Failed'));
-      global.navigator.storage.estimate = mockEstimate;
+      const mockEstimate = vi.fn().mockRejectedValue(new Error('Failed'))
+      global.navigator.storage.estimate = mockEstimate
 
       // Mock console.warn to suppress output
-      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
-      const result = await getStorageEstimate();
-      expect(result).toBeUndefined();
+      const result = await getStorageEstimate()
+      expect(result).toBeUndefined()
 
-      consoleSpy.mockRestore();
-    });
-  });
-});
+      consoleSpy.mockRestore()
+    })
+  })
+})

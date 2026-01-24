@@ -1,6 +1,11 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { findSubmodule, findModule, getNextSubmodule, getPreviousSubmodule } from '../data/course-data'
+import {
+  findSubmodule,
+  findModule,
+  getNextSubmodule,
+  getPreviousSubmodule,
+} from '../data/course-data'
 import { useProgressStore } from '../stores/useProgressStore'
 import { useAudioStore } from '../stores/useAudioStore'
 import { useNotationStore } from '../stores/useNotationStore'
@@ -25,7 +30,7 @@ const TheoryContent = React.lazy(() => import('../components/modules/TheoryConte
 export const SubmodulePage: React.FC = () => {
   const { moduleId, submoduleId } = useParams<{ moduleId: string; submoduleId: string }>()
   const navigate = useNavigate()
-  
+
   const { setCurrentPosition, completeSubmodule, isSubmoduleCompleted } = useProgressStore()
   const startNote = useAudioStore((state) => state.startNote)
   const stopNote = useAudioStore((state) => state.stopNote)
@@ -105,7 +110,7 @@ export const SubmodulePage: React.FC = () => {
           <div className="relative bg-white dark:bg-slate-800/95 rounded-2xl overflow-hidden shadow-lg shadow-slate-900/5 dark:shadow-black/20 border border-slate-200/80 dark:border-slate-700/80">
             {/* Gradient accent */}
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#30e8e8] via-[#26d4d4] to-[#1f9d9d]" />
-            
+
             <div className="p-5 pb-6">
               {/* Header Section */}
               <div className="flex items-start justify-between gap-4 mb-6">
@@ -117,24 +122,26 @@ export const SubmodulePage: React.FC = () => {
                       Module {module.id}: {module.name}
                     </span>
                     <span className="text-slate-300 dark:text-slate-600">›</span>
-                    <span className="text-slate-500 dark:text-slate-400">Lesson {submodule.id}</span>
+                    <span className="text-slate-500 dark:text-slate-400">
+                      Lesson {submodule.id}
+                    </span>
                   </div>
-                  
+
                   {/* Title */}
                   <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                     {submodule.title}
                   </h1>
-                  
+
                   {/* Description */}
                   <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     {submodule.description}
                   </p>
                 </div>
-                
+
                 {/* Completion badge */}
                 {isCompleted && (
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
-                    <span 
+                    <span
                       className="material-symbols-outlined text-emerald-500 text-lg"
                       style={{ fontVariationSettings: "'FILL' 1" }}
                     >
@@ -156,13 +163,15 @@ export const SubmodulePage: React.FC = () => {
               {hasSection('theory') && submodule.theoryContent && (
                 <React.Suspense fallback={<div className="text-slate-400">Loading content...</div>}>
                   <TheoryContent content={submodule.theoryContent} />
-                  
+
                   {/* Inline Grand Staff - embedded within theory card */}
                   {hasSection('grandStaff') && (
                     <div className="mt-8 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700">
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-[#30e8e8]">music_note</span>
+                          <span className="material-symbols-outlined text-[#30e8e8]">
+                            music_note
+                          </span>
                           <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
                             Grand Staff View
                           </span>
@@ -184,7 +193,7 @@ export const SubmodulePage: React.FC = () => {
                           </div>
                         }
                       >
-                        <AbcGrandStaff 
+                        <AbcGrandStaff
                           showNoteNames={showNoteNames}
                           overrideAbc={submodule.staffAbc}
                         />
@@ -196,7 +205,9 @@ export const SubmodulePage: React.FC = () => {
                   {hasSection('abcDemo') && submodule.abcDemos && submodule.abcDemos.length > 0 && (
                     <div className="mt-6">
                       <div className="flex items-center gap-2 mb-4">
-                        <span className="material-symbols-outlined text-[#30e8e8]">play_circle</span>
+                        <span className="material-symbols-outlined text-[#30e8e8]">
+                          play_circle
+                        </span>
                         <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
                           Interactive Examples
                         </span>
@@ -242,10 +253,7 @@ export const SubmodulePage: React.FC = () => {
                       </div>
                     }
                   >
-                    <AbcGrandStaff 
-                      showNoteNames={showNoteNames}
-                      overrideAbc={submodule.staffAbc}
-                    />
+                    <AbcGrandStaff showNoteNames={showNoteNames} overrideAbc={submodule.staffAbc} />
                   </React.Suspense>
                 </div>
               )}
@@ -308,13 +316,10 @@ export const SubmodulePage: React.FC = () => {
                   </div>
                 }
               >
-              {submodule.exercises.map((exercise, idx) => {
+                {submodule.exercises.map((exercise, idx) => {
                   if (exercise.type === 'note-id' && exercise.notes) {
                     return (
-                      <GameQuiz
-                        key={`${submodule.id}-quiz-${idx}`}
-                        submoduleId={submodule.id}
-                      />
+                      <GameQuiz key={`${submodule.id}-quiz-${idx}`} submoduleId={submodule.id} />
                     )
                   }
                   return null
@@ -337,9 +342,10 @@ export const SubmodulePage: React.FC = () => {
                 disabled={!prevSubmodule}
                 className={`
                   flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors
-                  ${prevSubmodule
-                    ? 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
-                    : 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
+                  ${
+                    prevSubmodule
+                      ? 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      : 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
                   }
                 `}
               >
@@ -382,4 +388,3 @@ export const SubmodulePage: React.FC = () => {
 }
 
 export default SubmodulePage
-

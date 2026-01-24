@@ -50,7 +50,7 @@ export const useAudioStore = create<AudioState>((set) => ({
       await audioEngine.initialize()
       set({ isReady: true })
     }
-    
+
     audioEngine.startNote(note)
     set((state) => ({
       activeNotes: [...state.activeNotes, note],
@@ -79,7 +79,7 @@ export const useAudioStore = create<AudioState>((set) => ({
       await audioEngine.initialize()
       set({ isReady: true })
     }
-    
+
     audioEngine.startNote(note)
     set((state) => ({
       activeNotes: state.activeNotes.includes(note)

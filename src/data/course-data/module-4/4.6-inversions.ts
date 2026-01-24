@@ -28,5 +28,5 @@ Inversions create smoother bass lines:
 
 ### Slash Chord Notation
 C/E means "C chord with E in the bass"
-  `
+  `,
 }

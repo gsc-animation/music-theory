@@ -5,11 +5,11 @@ import { persist } from 'zustand/middleware'
  * ABC Notation Header structure
  */
 interface ABCHeader {
-  title: string      // T: field
-  meter: string      // M: field (e.g., "4/4")
+  title: string // T: field
+  meter: string // M: field (e.g., "4/4")
   unitLength: string // L: field (e.g., "1/4")
-  key: string        // K: field (e.g., "C")
-  tempo: number      // Q: field (BPM)
+  key: string // K: field (e.g., "C")
+  tempo: number // Q: field (BPM)
 }
 
 /**
@@ -26,8 +26,8 @@ interface HistoryEntry {
 interface NotationState {
   // State
   header: ABCHeader
-  notes: string              // Just the notes portion
-  history: HistoryEntry[]    // For undo
+  notes: string // Just the notes portion
+  history: HistoryEntry[] // For undo
   historyIndex: number
 
   // Computed
@@ -114,7 +114,7 @@ function buildNotation(header: ABCHeader, notes: string): string {
     `L:${header.unitLength}`,
     `Q:${header.tempo}`,
     `K:${header.key}`,
-    notes || ''
+    notes || '',
   ]
   return lines.join('\n')
 }
@@ -141,7 +141,10 @@ export const useNotationStore = create<NotationState>()(
           const newNotes = state.notes + abcNote
           return {
             notes: newNotes,
-            history: [...state.history.slice(0, state.historyIndex + 1), { notes: newNotes, timestamp: Date.now() }].slice(-MAX_HISTORY),
+            history: [
+              ...state.history.slice(0, state.historyIndex + 1),
+              { notes: newNotes, timestamp: Date.now() },
+            ].slice(-MAX_HISTORY),
             historyIndex: Math.min(state.historyIndex + 1, MAX_HISTORY - 1),
           }
         })
@@ -149,13 +152,16 @@ export const useNotationStore = create<NotationState>()(
 
       // Append a chord [CEG]
       appendChord: (notes: string[]) => {
-        const abcNotes = notes.map(n => noteToABC(n)).join('')
+        const abcNotes = notes.map((n) => noteToABC(n)).join('')
         const chord = `[${abcNotes}]`
         set((state) => {
           const newNotes = state.notes + chord
           return {
             notes: newNotes,
-            history: [...state.history.slice(0, state.historyIndex + 1), { notes: newNotes, timestamp: Date.now() }].slice(-MAX_HISTORY),
+            history: [
+              ...state.history.slice(0, state.historyIndex + 1),
+              { notes: newNotes, timestamp: Date.now() },
+            ].slice(-MAX_HISTORY),
             historyIndex: Math.min(state.historyIndex + 1, MAX_HISTORY - 1),
           }
         })
@@ -168,7 +174,10 @@ export const useNotationStore = create<NotationState>()(
           const newNotes = state.notes + rest
           return {
             notes: newNotes,
-            history: [...state.history.slice(0, state.historyIndex + 1), { notes: newNotes, timestamp: Date.now() }].slice(-MAX_HISTORY),
+            history: [
+              ...state.history.slice(0, state.historyIndex + 1),
+              { notes: newNotes, timestamp: Date.now() },
+            ].slice(-MAX_HISTORY),
             historyIndex: Math.min(state.historyIndex + 1, MAX_HISTORY - 1),
           }
         })
@@ -194,31 +203,39 @@ export const useNotationStore = create<NotationState>()(
       },
 
       // Header setters
-      setTitle: (title: string) => set((state) => ({
-        header: { ...state.header, title },
-      })),
+      setTitle: (title: string) =>
+        set((state) => ({
+          header: { ...state.header, title },
+        })),
 
-      setKey: (key: string) => set((state) => ({
-        header: { ...state.header, key },
-      })),
+      setKey: (key: string) =>
+        set((state) => ({
+          header: { ...state.header, key },
+        })),
 
-      setMeter: (meter: string) => set((state) => ({
-        header: { ...state.header, meter },
-      })),
+      setMeter: (meter: string) =>
+        set((state) => ({
+          header: { ...state.header, meter },
+        })),
 
-      setTempo: (bpm: number) => set((state) => ({
-        header: { ...state.header, tempo: bpm },
-      })),
+      setTempo: (bpm: number) =>
+        set((state) => ({
+          header: { ...state.header, tempo: bpm },
+        })),
 
-      setUnitLength: (length: string) => set((state) => ({
-        header: { ...state.header, unitLength: length },
-      })),
+      setUnitLength: (length: string) =>
+        set((state) => ({
+          header: { ...state.header, unitLength: length },
+        })),
 
       // Set entire notation (for loading/pasting)
       setNotation: (notes: string) => {
         set((state) => ({
           notes,
-          history: [...state.history.slice(0, state.historyIndex + 1), { notes, timestamp: Date.now() }].slice(-MAX_HISTORY),
+          history: [
+            ...state.history.slice(0, state.historyIndex + 1),
+            { notes, timestamp: Date.now() },
+          ].slice(-MAX_HISTORY),
           historyIndex: Math.min(state.historyIndex + 1, MAX_HISTORY - 1),
         }))
       },

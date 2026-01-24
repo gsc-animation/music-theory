@@ -92,8 +92,7 @@ const FluteSimple: React.FC<{ activeNotes: string[] }> = ({ activeNotes }) => {
     { id: 6, notes: ['B4', 'B5'] },
   ]
 
-  const isHoleActive = (hole: typeof holes[0]) =>
-    hole.notes.some((n) => activeNotes.includes(n))
+  const isHoleActive = (hole: (typeof holes)[0]) => hole.notes.some((n) => activeNotes.includes(n))
 
   return (
     <div className="flex-1 flex items-center justify-center bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800">
@@ -108,13 +107,16 @@ const FluteSimple: React.FC<{ activeNotes: string[] }> = ({ activeNotes }) => {
               className={`
                 w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center
                 transition-all duration-150
-                ${isHoleActive(hole)
-                  ? 'bg-[#30e8e8] border-[#136363] shadow-[0_0_8px_rgba(48,232,232,0.6)]'
-                  : 'bg-slate-300 dark:bg-slate-600 border-slate-400 dark:border-slate-500'
+                ${
+                  isHoleActive(hole)
+                    ? 'bg-[#30e8e8] border-[#136363] shadow-[0_0_8px_rgba(48,232,232,0.6)]'
+                    : 'bg-slate-300 dark:bg-slate-600 border-slate-400 dark:border-slate-500'
                 }
               `}
             >
-              <span className={`text-[6px] font-bold ${isHoleActive(hole) ? 'text-[#111818]' : 'text-slate-500'}`}>
+              <span
+                className={`text-[6px] font-bold ${isHoleActive(hole) ? 'text-[#111818]' : 'text-slate-500'}`}
+              >
                 {hole.id}
               </span>
             </div>

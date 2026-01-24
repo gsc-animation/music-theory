@@ -25,5 +25,5 @@ Add a 7th above the root for richer harmony.
 
 ### The Dominant 7
 The V7 chord strongly wants to resolve to I - this is the most important progression in tonal music.
-  `
+  `,
 }

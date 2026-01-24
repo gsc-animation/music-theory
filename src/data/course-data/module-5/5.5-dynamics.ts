@@ -37,5 +37,5 @@ export const SUBMODULE_5_5: Submodule = {
 | > | Accent | Emphasis |
 | ∧ | Marcato | Strong accent |
 | ⌢ | Slur | Smooth, connected |
-  `
+  `,
 }

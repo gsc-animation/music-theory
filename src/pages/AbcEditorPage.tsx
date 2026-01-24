@@ -53,7 +53,7 @@ E, F, ^F, G, | ^G, A, ^A, B, | C ^C D ^D | E F ^F G | ^G A ^A B | c ^c d ^d | e 
 
 /**
  * AbcEditorPage - Split-pane ABC notation editor with live preview
- * 
+ *
  * Features:
  * - Monaco editor on left for ABC input
  * - Live abcjs rendering on right
@@ -81,7 +81,7 @@ export const AbcEditorPage: React.FC = () => {
     setText(value)
     // Parse and update store (simplified - just update notes portion)
     const lines = value.split('\n')
-    const notesStart = lines.findIndex(line => line.startsWith('K:'))
+    const notesStart = lines.findIndex((line) => line.startsWith('K:'))
     if (notesStart >= 0) {
       const notes = lines.slice(notesStart + 1).join('\n')
       setNotation(notes)
@@ -89,16 +89,14 @@ export const AbcEditorPage: React.FC = () => {
   }
 
   return (
-    <div className={`abc-editor-page h-screen flex flex-col ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div
+      className={`abc-editor-page h-screen flex flex-col ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}
+    >
       {/* Header */}
       <header className="flex items-center justify-between px-4 py-2 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="flex items-center gap-4">
-          <h1 className="text-lg font-bold text-gray-800 dark:text-white">
-            ABC Notation Editor
-          </h1>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {header.title}
-          </span>
+          <h1 className="text-lg font-bold text-gray-800 dark:text-white">ABC Notation Editor</h1>
+          <span className="text-sm text-gray-500 dark:text-gray-400">{header.title}</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -160,21 +158,12 @@ export const AbcEditorPage: React.FC = () => {
       >
         {/* Editor Pane */}
         <div className="h-full overflow-hidden">
-          <AbcEditor
-            value={text}
-            onChange={handleEditorChange}
-            darkMode={darkMode}
-            height="100%"
-          />
+          <AbcEditor value={text} onChange={handleEditorChange} darkMode={darkMode} height="100%" />
         </div>
 
         {/* Preview Pane */}
         <div className={`h-full overflow-auto p-4 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <AbcScore
-            notation={debouncedText}
-            darkMode={darkMode}
-            showControls={true}
-          />
+          <AbcScore notation={debouncedText} darkMode={darkMode} showControls={true} />
         </div>
       </Split>
     </div>

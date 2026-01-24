@@ -30,5 +30,5 @@ Count both the starting and ending notes:
 | 6th | 5 |
 | 7th | 6 |
 | Octave | 7 |
-  `
+  `,
 }

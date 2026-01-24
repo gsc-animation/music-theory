@@ -40,11 +40,11 @@ export default defineConfig({
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
               },
               cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
       manifest: {
         name: 'Music Theory',
@@ -61,26 +61,26 @@ export default defineConfig({
             src: 'icons/manifest-icon-192.maskable.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'any'
+            purpose: 'any',
           },
           {
             src: 'icons/manifest-icon-192.maskable.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'maskable'
+            purpose: 'maskable',
           },
           {
             src: 'icons/manifest-icon-512.maskable.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any'
+            purpose: 'any',
           },
           {
             src: 'icons/manifest-icon-512.maskable.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'maskable'
-          }
+            purpose: 'maskable',
+          },
         ],
         screenshots: [
           {
@@ -88,26 +88,28 @@ export default defineConfig({
             sizes: '1080x1920',
             type: 'image/svg+xml',
             form_factor: 'narrow',
-            label: 'Interactive Music Staff'
+            label: 'Interactive Music Staff',
           },
           {
             src: 'screenshots/desktop-1.svg',
             sizes: '1920x1080',
             type: 'image/svg+xml',
             form_factor: 'wide',
-            label: 'Desktop Practice Mode'
-          }
+            label: 'Desktop Practice Mode',
+          },
         ],
         shortcuts: [
           {
-            name: "Practice",
-            short_name: "Practice",
-            description: "Start practicing immediately",
-            url: "/practice",
-            icons: [{ src: "icons/manifest-icon-192.maskable.png", sizes: "192x192", type: "image/png" }]
-          }
-        ]
-      }
+            name: 'Practice',
+            short_name: 'Practice',
+            description: 'Start practicing immediately',
+            url: '/practice',
+            icons: [
+              { src: 'icons/manifest-icon-192.maskable.png', sizes: '192x192', type: 'image/png' },
+            ],
+          },
+        ],
+      },
     }),
     visualizer({
       open: false,

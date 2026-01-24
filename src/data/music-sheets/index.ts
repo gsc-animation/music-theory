@@ -178,7 +178,7 @@ export const MUSIC_SHEETS: Record<string, MusicSheet> = {
     module: 2,
     submodule: '2.4',
   },
-  'greensleeves': {
+  greensleeves: {
     id: 'greensleeves',
     title: 'Greensleeves',
     description: 'Excellent example of compound meter 6/8',

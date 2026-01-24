@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSettingsStore } from '../../stores/useSettingsStore';
-import { APP_STRINGS } from '../../constants/app-strings';
+import React from 'react'
+import { useSettingsStore } from '../../stores/useSettingsStore'
+import { APP_STRINGS } from '../../constants/app-strings'
 
 export const NotationToggle: React.FC = () => {
-  const { notationSystem, toggleNotationSystem } = useSettingsStore();
+  const { notationSystem, toggleNotationSystem } = useSettingsStore()
 
   return (
     <button
@@ -20,5 +20,5 @@ export const NotationToggle: React.FC = () => {
         {APP_STRINGS.NOTATION.SOLFEGE_LABEL}
       </span>
     </button>
-  );
-};
+  )
+}

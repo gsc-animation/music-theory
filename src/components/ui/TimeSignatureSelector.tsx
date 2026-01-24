@@ -1,11 +1,11 @@
-import React from 'react';
-import { useAudioStore } from '../../stores/useAudioStore';
+import React from 'react'
+import { useAudioStore } from '../../stores/useAudioStore'
 
 export const TimeSignatureSelector: React.FC = () => {
-  const timeSignature = useAudioStore((state) => state.timeSignature);
-  const setTimeSignature = useAudioStore((state) => state.setTimeSignature);
+  const timeSignature = useAudioStore((state) => state.timeSignature)
+  const setTimeSignature = useAudioStore((state) => state.setTimeSignature)
 
-  const signatures = ['4/4', '3/4'];
+  const signatures = ['4/4', '3/4']
 
   return (
     <div className="flex gap-2 items-center bg-white/50 p-1 rounded-lg border border-warmWood/20">
@@ -24,5 +24,5 @@ export const TimeSignatureSelector: React.FC = () => {
         </button>
       ))}
     </div>
-  );
-};
+  )
+}

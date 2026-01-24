@@ -26,5 +26,5 @@ The **time signature** appears at the beginning of a piece and tells us:
 
 ### 4/4 = Common Time
 4/4 is so common it's sometimes written as **C** (common time).
-  `
+  `,
 }

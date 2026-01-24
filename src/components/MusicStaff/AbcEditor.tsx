@@ -22,7 +22,31 @@ const abcLanguage = {
   tokenPostfix: '.abc',
 
   // ABC notation keywords
-  keywords: ['X', 'T', 'C', 'M', 'L', 'K', 'Q', 'P', 'Z', 'N', 'G', 'H', 'B', 'D', 'S', 'F', 'O', 'R', 'r', 'I', 'V', 'W', 'w'],
+  keywords: [
+    'X',
+    'T',
+    'C',
+    'M',
+    'L',
+    'K',
+    'Q',
+    'P',
+    'Z',
+    'N',
+    'G',
+    'H',
+    'B',
+    'D',
+    'S',
+    'F',
+    'O',
+    'R',
+    'r',
+    'I',
+    'V',
+    'W',
+    'w',
+  ],
 
   // Note letters
   notes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'z', 'Z', 'x', 'X'],
@@ -31,7 +55,7 @@ const abcLanguage = {
     root: [
       // Header fields (X:, T:, M:, etc.)
       [/^[A-Za-z]:.*$/, 'keyword'],
-      
+
       // Comments
       [/%.*$/, 'comment'],
 
@@ -77,7 +101,7 @@ const abcLanguage = {
 
 /**
  * AbcEditor - Monaco editor wrapper for ABC notation
- * 
+ *
  * Features:
  * - Custom ABC syntax highlighting
  * - Dark/light mode support
@@ -93,7 +117,10 @@ export const AbcEditor: React.FC<AbcEditorProps> = ({
   const handleEditorMount = (_editor: unknown, monaco: typeof import('monaco-editor')) => {
     // Register ABC language
     monaco.languages.register({ id: 'abc' })
-    monaco.languages.setMonarchTokensProvider('abc', abcLanguage as Parameters<typeof monaco.languages.setMonarchTokensProvider>[1])
+    monaco.languages.setMonarchTokensProvider(
+      'abc',
+      abcLanguage as Parameters<typeof monaco.languages.setMonarchTokensProvider>[1]
+    )
 
     // Define ABC theme colors
     monaco.editor.defineTheme('abc-light', {

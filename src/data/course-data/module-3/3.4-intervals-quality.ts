@@ -29,5 +29,5 @@ Unison, 4th, 5th, and Octave can be **Perfect**.
 ### Augmented & Diminished
 - **Augmented**: One half step larger than perfect/major
 - **Diminished**: One half step smaller than perfect/minor
-  `
+  `,
 }

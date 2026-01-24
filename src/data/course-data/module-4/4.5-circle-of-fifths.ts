@@ -26,5 +26,5 @@ C → F → Bb → Eb → Ab → Db → Gb → Cb
 - Identify closely related keys
 - Plan modulations
 - Understand chord progressions (V-I movement)
-  `
+  `,
 }

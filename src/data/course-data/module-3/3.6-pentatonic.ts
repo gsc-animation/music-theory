@@ -27,5 +27,5 @@ A Minor Pentatonic: A - C - D - E - G
 - No half steps = no "wrong" notes
 - Works over many chord progressions
 - Easy to play on guitar (box patterns)
-  `
+  `,
 }

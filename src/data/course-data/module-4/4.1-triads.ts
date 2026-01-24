@@ -24,5 +24,5 @@ C (root) + E (3rd) + G (5th) = C Major chord
 ### Chord Spelling
 All triads are spelled using "every other" letter:
 - C-E-G, D-F-A, E-G-B, etc.
-  `
+  `,
 }

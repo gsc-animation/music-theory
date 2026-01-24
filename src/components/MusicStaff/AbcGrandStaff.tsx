@@ -486,7 +486,15 @@ L:1/4
 Q:120
 K:C
 ${abcNotes} |`
-  }, [displayNotes, showTwoStaves, showNoteNames, notationSystem, bpm, overrideAbc, injectNoteAnnotations])
+  }, [
+    displayNotes,
+    showTwoStaves,
+    showNoteNames,
+    notationSystem,
+    bpm,
+    overrideAbc,
+    injectNoteAnnotations,
+  ])
 
   // Track controller loaded state
   const [isControllerReady, setControllerReady] = useState(false)

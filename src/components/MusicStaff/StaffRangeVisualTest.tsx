@@ -91,7 +91,7 @@ ${measures.join(' | ')} |]`
 
 /**
  * Visual test page for Music Staff rendering with ABCJS
- * 
+ *
  * This component renders both piano and guitar ranges
  * for visual verification of correct staff display.
  */
@@ -117,7 +117,7 @@ E, F, G, A, | B, C D E | F G A B | c d e f | g a b c' | d' e' |]`
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-8">
       <h1 className="text-2xl font-bold mb-6">Music Staff Rendering Test</h1>
-      
+
       <div className="space-y-2">
         <h2 className="text-xl font-semibold text-blue-600">1. Piano Staff Range</h2>
         <p className="text-gray-600 text-sm">
@@ -128,7 +128,9 @@ E, F, G, A, | B, C D E | F G A B | c d e f | g a b c' | d' e' |]`
         </div>
         <details className="text-sm">
           <summary className="cursor-pointer text-gray-500">View ABC Notation</summary>
-          <pre className="bg-gray-100 p-2 rounded mt-2 text-xs overflow-x-auto">{pianoNotation}</pre>
+          <pre className="bg-gray-100 p-2 rounded mt-2 text-xs overflow-x-auto">
+            {pianoNotation}
+          </pre>
         </details>
       </div>
 
@@ -152,7 +154,9 @@ E, F, G, A, | B, C D E | F G A B | c d e f | g a b c' | d' e' |]`
         </div>
         <details className="text-sm">
           <summary className="cursor-pointer text-gray-500">View ABC Notation</summary>
-          <pre className="bg-gray-100 p-2 rounded mt-2 text-xs overflow-x-auto">{guitarNotation}</pre>
+          <pre className="bg-gray-100 p-2 rounded mt-2 text-xs overflow-x-auto">
+            {guitarNotation}
+          </pre>
         </details>
       </div>
 
@@ -169,12 +173,27 @@ E, F, G, A, | B, C D E | F G A B | c d e f | g a b c' | d' e' |]`
       <div className="mt-8 p-4 bg-gray-50 rounded-lg">
         <h3 className="font-semibold mb-2">Visual Verification Checklist:</h3>
         <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
-          <li><strong>Piano Range:</strong> Should display C3 (first ledger line below treble) through B5 (above staff)</li>
-          <li><strong>Guitar Range:</strong> Should display E2 (well below bass clef) through E5 (above treble staff)</li>
-          <li><strong>Ledger Lines:</strong> Notes outside the staff should have proper ledger lines</li>
-          <li><strong>Accidentals:</strong> Sharps (^) should appear before notes in chromatic versions</li>
-          <li><strong>Bar Lines:</strong> Notes should be grouped into measures of 4</li>
-          <li><strong>Playback:</strong> Audio controls should work and play the notes in sequence</li>
+          <li>
+            <strong>Piano Range:</strong> Should display C3 (first ledger line below treble) through
+            B5 (above staff)
+          </li>
+          <li>
+            <strong>Guitar Range:</strong> Should display E2 (well below bass clef) through E5
+            (above treble staff)
+          </li>
+          <li>
+            <strong>Ledger Lines:</strong> Notes outside the staff should have proper ledger lines
+          </li>
+          <li>
+            <strong>Accidentals:</strong> Sharps (^) should appear before notes in chromatic
+            versions
+          </li>
+          <li>
+            <strong>Bar Lines:</strong> Notes should be grouped into measures of 4
+          </li>
+          <li>
+            <strong>Playback:</strong> Audio controls should work and play the notes in sequence
+          </li>
         </ul>
       </div>
 

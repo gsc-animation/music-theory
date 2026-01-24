@@ -15,17 +15,17 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
   icon,
   children,
 }) => {
-  const { 
-    instruments, 
+  const {
+    instruments,
     activeInstrument,
-    hideInstrument, 
+    hideInstrument,
     minimizeInstrument,
     restoreInstrument,
     setPosition,
     setSize,
     bringToFront,
   } = useFloatingInstrumentsStore()
-  
+
   const state = instruments[type]
   const panelRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -34,30 +34,36 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0 })
 
   // Handle drag start
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('.panel-controls')) return
-    if ((e.target as HTMLElement).closest('.resize-handle')) return
-    bringToFront(type)
-    setIsDragging(true)
-    setDragOffset({
-      x: e.clientX - state.position.x,
-      y: e.clientY - state.position.y,
-    })
-  }, [state.position, type, bringToFront])
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if ((e.target as HTMLElement).closest('.panel-controls')) return
+      if ((e.target as HTMLElement).closest('.resize-handle')) return
+      bringToFront(type)
+      setIsDragging(true)
+      setDragOffset({
+        x: e.clientX - state.position.x,
+        y: e.clientY - state.position.y,
+      })
+    },
+    [state.position, type, bringToFront]
+  )
 
   // Handle resize start
-  const handleResizeStart = useCallback((e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    bringToFront(type)
-    setIsResizing(true)
-    setResizeStart({
-      x: e.clientX,
-      y: e.clientY,
-      width: state.size.width,
-      height: state.size.height,
-    })
-  }, [state.size, type, bringToFront])
+  const handleResizeStart = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      bringToFront(type)
+      setIsResizing(true)
+      setResizeStart({
+        x: e.clientX,
+        y: e.clientY,
+        width: state.size.width,
+        height: state.size.height,
+      })
+    },
+    [state.size, type, bringToFront]
+  )
 
   // Handle drag
   useEffect(() => {
@@ -117,7 +123,9 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
         <div className="flex items-center gap-2 px-3 py-2">
           <span className="material-symbols-outlined text-[#30e8e8] text-sm">{icon}</span>
           <span className="text-xs font-medium text-white">{title}</span>
-          <span className="material-symbols-outlined text-slate-400 text-sm ml-2">open_in_full</span>
+          <span className="material-symbols-outlined text-slate-400 text-sm ml-2">
+            open_in_full
+          </span>
         </div>
       </div>
     )
@@ -149,7 +157,7 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
           <span className="material-symbols-outlined text-[#30e8e8] text-lg">{icon}</span>
           <span className="text-sm font-bold text-white uppercase tracking-wide">{title}</span>
         </div>
-        
+
         <div className="panel-controls flex items-center gap-1">
           <button
             onClick={() => minimizeInstrument(type)}
@@ -176,8 +184,16 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
         className="resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize group"
         onMouseDown={handleResizeStart}
       >
-        <svg viewBox="0 0 16 16" className="w-full h-full text-slate-500 group-hover:text-[#30e8e8]">
-          <path d="M14 14H10M14 14V10M14 10L10 14" stroke="currentColor" strokeWidth="2" fill="none" />
+        <svg
+          viewBox="0 0 16 16"
+          className="w-full h-full text-slate-500 group-hover:text-[#30e8e8]"
+        >
+          <path
+            d="M14 14H10M14 14V10M14 10L10 14"
+            stroke="currentColor"
+            strokeWidth="2"
+            fill="none"
+          />
         </svg>
       </div>
     </div>

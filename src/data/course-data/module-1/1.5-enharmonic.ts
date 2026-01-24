@@ -46,7 +46,7 @@ M:4/4
 L:1/2
 K:C
 ^C _D | ^D _E | ^F _G | ^G _A |]`,
-      playable: true
-    }
-  ]
+      playable: true,
+    },
+  ],
 }

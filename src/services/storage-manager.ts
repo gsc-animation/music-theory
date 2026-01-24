@@ -3,8 +3,8 @@
  */
 
 export interface StorageStats {
-  usage: number;
-  quota: number;
+  usage: number
+  quota: number
 }
 
 /**
@@ -15,18 +15,18 @@ export interface StorageStats {
 export async function requestPersistentStorage(): Promise<boolean> {
   // Check for secure context and API availability
   if (!window.isSecureContext || !navigator.storage || !navigator.storage.persist) {
-    return false;
+    return false
   }
 
   try {
-    const isPersisted = await navigator.storage.persist();
+    const isPersisted = await navigator.storage.persist()
     if (import.meta.env.DEV) {
-      console.log(`Storage Persistence Granted: ${isPersisted}`);
+      console.log(`Storage Persistence Granted: ${isPersisted}`)
     }
-    return isPersisted;
+    return isPersisted
   } catch (error) {
-    console.warn('Error requesting persistent storage:', error);
-    return false;
+    console.warn('Error requesting persistent storage:', error)
+    return false
   }
 }
 
@@ -36,17 +36,17 @@ export async function requestPersistentStorage(): Promise<boolean> {
  */
 export async function getStorageEstimate(): Promise<StorageStats | undefined> {
   if (!navigator.storage || !navigator.storage.estimate) {
-    return undefined;
+    return undefined
   }
 
   try {
-    const estimate = await navigator.storage.estimate();
+    const estimate = await navigator.storage.estimate()
     return {
       usage: estimate.usage || 0,
-      quota: estimate.quota || 0
-    };
+      quota: estimate.quota || 0,
+    }
   } catch (error) {
-    console.warn('Error getting storage estimate:', error);
-    return undefined;
+    console.warn('Error getting storage estimate:', error)
+    return undefined
   }
 }

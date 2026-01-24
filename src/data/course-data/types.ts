@@ -3,13 +3,13 @@
  */
 
 // Section types that can be shown/hidden in SubmodulePage
-export type SectionType = 
-  | 'theory' 
-  | 'grandStaff' 
-  | 'piano' 
-  | 'guitar' 
-  | 'flute' 
-  | 'abcDemo' 
+export type SectionType =
+  | 'theory'
+  | 'grandStaff'
+  | 'piano'
+  | 'guitar'
+  | 'flute'
+  | 'abcDemo'
   | 'practice'
 
 export interface AbcDemo {
@@ -23,19 +23,19 @@ export interface AbcDemo {
 
 export interface Exercise {
   type: 'note-id' | 'interval' | 'chord' | 'rhythm'
-  notes?: string[]       // For note-id: notes to quiz on
+  notes?: string[] // For note-id: notes to quiz on
   questionCount?: number // Number of questions
 }
 
 export interface Submodule {
-  id: string              // e.g., "1.1", "1.2"
+  id: string // e.g., "1.1", "1.2"
   title: string
   description: string
   sections: SectionType[]
-  theoryContent?: string  // Markdown content for theory section
-  staffAbc?: string       // ABC notation for Grand Staff
+  theoryContent?: string // Markdown content for theory section
+  staffAbc?: string // ABC notation for Grand Staff
   abcDemos?: AbcDemo[]
-  exercises?: Exercise[]  // Interactive quizzes/exercises
+  exercises?: Exercise[] // Interactive quizzes/exercises
 }
 
 export interface Module {

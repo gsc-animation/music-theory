@@ -25,5 +25,5 @@ Both have 6 eighth notes per measure, but:
 
 ### Triplets
 In simple meter, **triplets** divide a beat into 3 equal parts instead of 2.
-  `
+  `,
 }

@@ -65,7 +65,10 @@ export const LevelSelector: React.FC<LevelSelectorProps> = ({ onSelectLevel, onB
           const totalStars = getLevelTotalStars(level.id)
 
           return (
-            <div key={level.id} className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+            <div
+              key={level.id}
+              className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"
+            >
               {/* Level Header */}
               <button
                 onClick={() => isUnlocked && setExpandedLevel(isExpanded ? null : level.id)}
@@ -80,14 +83,20 @@ export const LevelSelector: React.FC<LevelSelectorProps> = ({ onSelectLevel, onB
                   {/* Level badge */}
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                      isUnlocked ? 'bg-[#30e8e8] text-[#111818]' : 'bg-slate-300 dark:bg-slate-700 text-slate-500'
+                      isUnlocked
+                        ? 'bg-[#30e8e8] text-[#111818]'
+                        : 'bg-slate-300 dark:bg-slate-700 text-slate-500'
                     }`}
                   >
                     {isUnlocked ? level.id : '🔒'}
                   </div>
                   <div className="text-left">
-                    <h4 className="font-bold text-slate-800 dark:text-white text-sm">{level.name}</h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">{level.description}</p>
+                    <h4 className="font-bold text-slate-800 dark:text-white text-sm">
+                      {level.name}
+                    </h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      {level.description}
+                    </p>
                   </div>
                 </div>
 
@@ -95,7 +104,9 @@ export const LevelSelector: React.FC<LevelSelectorProps> = ({ onSelectLevel, onB
                   {/* Stars earned */}
                   <span className="text-xs text-yellow-500 font-bold">
                     {'★'.repeat(totalStars)}
-                    <span className="text-slate-300 dark:text-slate-600">{'★'.repeat(9 - totalStars)}</span>
+                    <span className="text-slate-300 dark:text-slate-600">
+                      {'★'.repeat(9 - totalStars)}
+                    </span>
                   </span>
                   {/* Expand icon */}
                   {isUnlocked && (
@@ -121,7 +132,9 @@ export const LevelSelector: React.FC<LevelSelectorProps> = ({ onSelectLevel, onB
                           className="p-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-[#30e8e8] transition-colors text-center"
                         >
                           <span className="text-2xl">{subGame.icon}</span>
-                          <p className="text-xs font-bold text-slate-700 dark:text-slate-200 mt-1">{subGame.label}</p>
+                          <p className="text-xs font-bold text-slate-700 dark:text-slate-200 mt-1">
+                            {subGame.label}
+                          </p>
                           <div className="flex justify-center gap-0.5 mt-1">
                             {[1, 2, 3].map((s) => (
                               <span

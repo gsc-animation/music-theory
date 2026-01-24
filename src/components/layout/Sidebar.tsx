@@ -27,16 +27,16 @@ const NAV_ITEMS = [
 export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   const navigate = useNavigate()
   const location = useLocation()
-  
-  const { 
-    currentModuleId, 
+
+  const {
+    currentModuleId,
     currentSubmoduleId,
     setCurrentPosition,
     completedSubmodules,
     getModuleProgress,
-    totalXP 
+    totalXP,
   } = useProgressStore()
-  
+
   const startGame = useGameStore((state) => state.startGame)
   const stopGame = useGameStore((state) => state.stopGame)
   const isPlaying = useGameStore((state) => state.isPlaying)
@@ -53,10 +53,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   }
 
   const toggleModuleExpansion = (moduleId: number) => {
-    setExpandedModules(prev => 
-      prev.includes(moduleId) 
-        ? prev.filter(id => id !== moduleId)
-        : [...prev, moduleId]
+    setExpandedModules((prev) =>
+      prev.includes(moduleId) ? prev.filter((id) => id !== moduleId) : [...prev, moduleId]
     )
   }
 
@@ -66,8 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   }
 
   const isSubmoduleActive = (submoduleId: string) => {
-    return currentSubmoduleId === submoduleId && 
-           location.pathname.includes(`/module/`)
+    return currentSubmoduleId === submoduleId && location.pathname.includes(`/module/`)
   }
 
   const isSubmoduleCompleted = (submoduleId: string) => {
@@ -109,9 +106,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               onClick={() => navigate(item.path)}
               className={`
                 flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors
-                ${isNavItemActive(item.path)
-                  ? 'bg-[#30e8e8]/10 text-[#111818] dark:text-white'
-                  : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400'
+                ${
+                  isNavItemActive(item.path)
+                    ? 'bg-[#30e8e8]/10 text-[#111818] dark:text-white'
+                    : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400'
                 }
               `}
             >
@@ -121,7 +119,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               >
                 {item.icon}
               </span>
-              <p className={`text-sm ${isNavItemActive(item.path) ? 'font-semibold' : 'font-medium'}`}>
+              <p
+                className={`text-sm ${isNavItemActive(item.path) ? 'font-semibold' : 'font-medium'}`}
+              >
                 {item.label}
               </p>
             </div>
@@ -134,9 +134,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             onClick={isPlaying ? stopGame : startGame}
             className={`
               w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-sm
-              ${isPlaying 
-                ? 'bg-rose-100 text-rose-700 hover:bg-rose-200 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50 dark:border-rose-800' 
-                : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50 dark:border-emerald-800'
+              ${
+                isPlaying
+                  ? 'bg-rose-100 text-rose-700 hover:bg-rose-200 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50 dark:border-rose-800'
+                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50 dark:border-emerald-800'
               }
             `}
           >
@@ -159,15 +160,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             const isExpanded = expandedModules.includes(module.id)
             const moduleProgress = getModuleProgress(module.id)
             const isCurrentModule = module.id === currentModuleId
-            
+
             return (
               <div
                 key={module.id}
                 className={`
                   rounded-xl border transition-all duration-200
-                  ${isCurrentModule
-                    ? 'border-[#30e8e8]/30 bg-[#30e8e8]/5 dark:bg-[#30e8e8]/10'
-                    : 'border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800'
+                  ${
+                    isCurrentModule
+                      ? 'border-[#30e8e8]/30 bg-[#30e8e8]/5 dark:bg-[#30e8e8]/10'
+                      : 'border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800'
                   }
                 `}
               >
@@ -180,7 +182,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
                     <ProgressRing progress={moduleProgress} size={28}>
                       <span
                         className={`text-[9px] font-bold ${
-                          isCurrentModule ? 'text-[#136363] dark:text-[#30e8e8]' : 'text-slate-500 dark:text-slate-400'
+                          isCurrentModule
+                            ? 'text-[#136363] dark:text-[#30e8e8]'
+                            : 'text-slate-500 dark:text-slate-400'
                         }`}
                       >
                         {module.id}
@@ -189,7 +193,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
                     <div className="text-left">
                       <span
                         className={`text-sm block ${
-                          isCurrentModule ? 'font-bold text-[#136363] dark:text-[#30e8e8]' : 'font-medium text-slate-700 dark:text-slate-200'
+                          isCurrentModule
+                            ? 'font-bold text-[#136363] dark:text-[#30e8e8]'
+                            : 'font-medium text-slate-700 dark:text-slate-200'
                         }`}
                       >
                         {module.name}
@@ -216,40 +222,49 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
                     {module.submodules.map((submodule) => {
                       const isActive = isSubmoduleActive(submodule.id)
                       const isCompleted = isSubmoduleCompleted(submodule.id)
-                      
+
                       return (
                         <button
                           key={submodule.id}
                           onClick={() => handleSubmoduleClick(module.id, submodule.id)}
                           className={`
                             w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-colors
-                            ${isActive
-                              ? 'bg-[#30e8e8]/20 text-[#136363] dark:text-[#30e8e8]'
-                              : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300'
+                            ${
+                              isActive
+                                ? 'bg-[#30e8e8]/20 text-[#136363] dark:text-[#30e8e8]'
+                                : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300'
                             }
                           `}
                         >
                           {/* Status Icon */}
-                          <span className={`
+                          <span
+                            className={`
                             material-symbols-outlined text-[16px]
-                            ${isCompleted 
-                              ? 'text-emerald-500' 
-                              : isActive 
-                                ? 'text-[#30e8e8]' 
-                                : 'text-slate-300 dark:text-slate-600'
+                            ${
+                              isCompleted
+                                ? 'text-emerald-500'
+                                : isActive
+                                  ? 'text-[#30e8e8]'
+                                  : 'text-slate-300 dark:text-slate-600'
                             }
                           `}
                             style={isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}}
                           >
-                            {isCompleted ? 'check_circle' : isActive ? 'radio_button_checked' : 'radio_button_unchecked'}
+                            {isCompleted
+                              ? 'check_circle'
+                              : isActive
+                                ? 'radio_button_checked'
+                                : 'radio_button_unchecked'}
                           </span>
-                          
+
                           {/* Submodule Title */}
                           <div className="flex-1 min-w-0">
-                            <span className={`
+                            <span
+                              className={`
                               text-xs block truncate
                               ${isActive ? 'font-semibold' : 'font-medium'}
-                            `}>
+                            `}
+                            >
                               {submodule.id} {submodule.title}
                             </span>
                           </div>
@@ -268,15 +283,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       <div className="p-4 border-t border-slate-200 dark:border-slate-700 mt-auto">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-amber-500 text-[18px]">
-              star
-            </span>
+            <span className="material-symbols-outlined text-amber-500 text-[18px]">star</span>
             <span className="text-sm font-bold text-slate-700 dark:text-slate-200">
               {totalXP} XP
             </span>
           </div>
           <div className="flex items-center gap-1">
-            <button 
+            <button
               className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               onClick={() => toggleTheme()}
               title={`Theme: ${theme}`}
@@ -286,9 +299,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
               </span>
             </button>
             <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              <span className="material-symbols-outlined text-slate-400 text-[20px]">
-                help
-              </span>
+              <span className="material-symbols-outlined text-slate-400 text-[20px]">help</span>
             </button>
           </div>
         </div>

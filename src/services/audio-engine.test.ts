@@ -72,5 +72,3 @@ describe('AudioEngine', () => {
     expect(mockSynthInstance.triggerRelease).toHaveBeenCalledWith('E4')
   })
 })
-
-

@@ -93,7 +93,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
   const [showResult, setShowResult] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
   const [countdown, setCountdown] = useState(AUTO_ADVANCE_DELAY)
-  
+
   // Game type states - lock if initialGameType provided
   const [gameType, setGameType] = useState<GameType>(initialGameType || 'note-id')
   const [instrument, setInstrument] = useState<InstrumentType>('piano')
@@ -114,7 +114,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
 
   // Move to next question - use ref to prevent infinite loops
   const hasCompletedRef = React.useRef(false)
-  
+
   const handleNext = useCallback(() => {
     if (currentQuestion >= questionCount - 1) {
       if (!hasCompletedRef.current) {
@@ -298,7 +298,9 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
           <button
             onClick={() => setGameType('note-id')}
             className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-              gameType === 'note-id' ? 'bg-[#30e8e8] text-[#111818]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
+              gameType === 'note-id'
+                ? 'bg-[#30e8e8] text-[#111818]'
+                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
             }`}
           >
             🎵 Name the Note
@@ -306,7 +308,9 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
           <button
             onClick={() => setGameType('instrument-match')}
             className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-              gameType === 'instrument-match' ? 'bg-[#30e8e8] text-[#111818]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
+              gameType === 'instrument-match'
+                ? 'bg-[#30e8e8] text-[#111818]'
+                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
             }`}
           >
             🎹 Play the Note
@@ -314,7 +318,9 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
           <button
             onClick={() => setGameType('staff-placement')}
             className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-              gameType === 'staff-placement' ? 'bg-[#30e8e8] text-[#111818]' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
+              gameType === 'staff-placement'
+                ? 'bg-[#30e8e8] text-[#111818]'
+                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600'
             }`}
           >
             📍 Place on Staff
@@ -327,7 +333,11 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
         {gameType === 'staff-placement' ? (
           <>
             <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2">
-              Where is <span className="text-[#30e8e8] text-2xl font-bold">{getNoteDisplayLabel(correctAnswer)}</span> on the staff?
+              Where is{' '}
+              <span className="text-[#30e8e8] text-2xl font-bold">
+                {getNoteDisplayLabel(correctAnswer)}
+              </span>{' '}
+              on the staff?
             </h3>
             <p className="text-xs text-slate-400 mb-4">Click the correct line or space</p>
           </>
@@ -354,7 +364,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
       </div>
 
       {/* Game Type Specific Content */}
-      
+
       {/* GAME TYPE 1: Note Identification */}
       {gameType === 'note-id' && (
         <div className="mb-4">
@@ -399,7 +409,9 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
             <button
               onClick={() => setInstrument('piano')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                instrument === 'piano' ? 'bg-[#30e8e8] text-[#111818]' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                instrument === 'piano'
+                  ? 'bg-[#30e8e8] text-[#111818]'
+                  : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
               }`}
             >
               🎹 Piano
@@ -407,7 +419,9 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
             <button
               onClick={() => setInstrument('guitar')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                instrument === 'guitar' ? 'bg-[#30e8e8] text-[#111818]' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                instrument === 'guitar'
+                  ? 'bg-[#30e8e8] text-[#111818]'
+                  : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
               }`}
             >
               🎸 Guitar
@@ -441,10 +455,16 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
       {gameType === 'staff-placement' && (
         <div className="mb-4">
           <div className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-            <svg viewBox="0 0 220 100" className="w-full max-w-md mx-auto" style={{ height: '140px' }}>
+            <svg
+              viewBox="0 0 220 100"
+              className="w-full max-w-md mx-auto"
+              style={{ height: '140px' }}
+            >
               {/* Treble Clef Symbol */}
-              <text x="12" y="58" fontSize="42" fill="#64748b">𝄞</text>
-              
+              <text x="12" y="58" fontSize="42" fill="#64748b">
+                𝄞
+              </text>
+
               {/* Staff Lines - y positions: 20, 35, 50, 65, 80 (spacing of 15) */}
               {[0, 1, 2, 3, 4].map((i) => (
                 <line
@@ -462,15 +482,15 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
               {/* Line notes: F5(y=20), D5(y=35), B4(y=50), G4(y=65), E4(y=80) */}
               {/* Space notes: E5(y=27.5), C5(y=42.5), A4(y=57.5), F4(y=72.5) */}
               {[
-                { note: 'F', y: 20, type: 'line' },     // Top line (F5)
-                { note: 'E', y: 27.5, type: 'space' },  // Space below top (E5)
-                { note: 'D', y: 35, type: 'line' },    // 4th line (D5)
+                { note: 'F', y: 20, type: 'line' }, // Top line (F5)
+                { note: 'E', y: 27.5, type: 'space' }, // Space below top (E5)
+                { note: 'D', y: 35, type: 'line' }, // 4th line (D5)
                 { note: 'C', y: 42.5, type: 'space' }, // Space (C5)
-                { note: 'B', y: 50, type: 'line' },    // 3rd line (B4)
+                { note: 'B', y: 50, type: 'line' }, // 3rd line (B4)
                 { note: 'A', y: 57.5, type: 'space' }, // Space (A4)
-                { note: 'G', y: 65, type: 'line' },    // 2nd line (G4)
+                { note: 'G', y: 65, type: 'line' }, // 2nd line (G4)
                 { note: 'F', y: 72.5, type: 'space' }, // Space (F4) - different octave
-                { note: 'E', y: 80, type: 'line' },    // 1st line (E4)
+                { note: 'E', y: 80, type: 'line' }, // 1st line (E4)
               ].map((pos, idx) => {
                 const isSelected = selectedAnswer === pos.note
                 const isCorrect = pos.note === correctAnswer
@@ -492,10 +512,12 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
                             ? 'rgba(244, 63, 94, 0.3)'
                             : 'transparent'
                       }
-                      className={showResult ? '' : 'hover:fill-[rgba(48,232,232,0.25)] cursor-pointer'}
+                      className={
+                        showResult ? '' : 'hover:fill-[rgba(48,232,232,0.25)] cursor-pointer'
+                      }
                       onClick={() => !showResult && handleStaffClick(pos.note)}
                     />
-                    
+
                     {/* Note head ellipse - placed exactly on line/space */}
                     {(showCorrect || isSelected) && (
                       <ellipse
@@ -506,19 +528,26 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
                         fill={showCorrect ? '#10b981' : showWrong ? '#f43f5e' : '#30e8e8'}
                         stroke={showCorrect ? '#047857' : showWrong ? '#be123c' : '#111818'}
                         strokeWidth="1"
-                        style={{ 
-                          filter: showCorrect 
-                            ? 'drop-shadow(0 0 4px rgba(16, 185, 129, 0.6))' 
-                            : showWrong 
+                        style={{
+                          filter: showCorrect
+                            ? 'drop-shadow(0 0 4px rgba(16, 185, 129, 0.6))'
+                            : showWrong
                               ? 'drop-shadow(0 0 4px rgba(244, 63, 94, 0.6))'
-                              : 'drop-shadow(0 0 4px rgba(48, 232, 232, 0.6))'
+                              : 'drop-shadow(0 0 4px rgba(48, 232, 232, 0.6))',
                         }}
                       />
                     )}
-                    
+
                     {/* Show ledger line if needed for notes outside staff */}
                     {(showCorrect || isSelected) && pos.y > 80 && (
-                      <line x1="118" y1={pos.y} x2="142" y2={pos.y} stroke="#64748b" strokeWidth="1" />
+                      <line
+                        x1="118"
+                        y1={pos.y}
+                        x2="142"
+                        y2={pos.y}
+                        stroke="#64748b"
+                        strokeWidth="1"
+                      />
                     )}
                   </g>
                 )

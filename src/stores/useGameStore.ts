@@ -1,24 +1,24 @@
-import { create } from 'zustand';
-import { devtools, persist, createJSONStorage } from 'zustand/middleware';
-import { generateRandomNote } from '../features/game/logic/note-generator';
-import { POINTS_PER_CORRECT_ANSWER, STORAGE_KEY } from '../features/game/constants';
-import { ScoringEngine } from '../services/ScoringEngine';
-import type { ScoreFeedback } from '../services/ScoringEngine';
+import { create } from 'zustand'
+import { devtools, persist, createJSONStorage } from 'zustand/middleware'
+import { generateRandomNote } from '../features/game/logic/note-generator'
+import { POINTS_PER_CORRECT_ANSWER, STORAGE_KEY } from '../features/game/constants'
+import { ScoringEngine } from '../services/ScoringEngine'
+import type { ScoreFeedback } from '../services/ScoringEngine'
 
 interface GameState {
-  isPlaying: boolean;
-  targetNote: string | null;
-  targetTime: number | null;
-  lastFeedback: ScoreFeedback | null;
-  score: number;
-  streak: number;
-  bestStreak: number;
-  totalScore: number;
+  isPlaying: boolean
+  targetNote: string | null
+  targetTime: number | null
+  lastFeedback: ScoreFeedback | null
+  score: number
+  streak: number
+  bestStreak: number
+  totalScore: number
 
-  startGame: () => void;
-  stopGame: () => void;
-  setTargetTime: (time: number) => void;
-  checkAnswer: (note: string, timestamp?: number) => boolean;
+  startGame: () => void
+  stopGame: () => void
+  setTargetTime: (time: number) => void
+  checkAnswer: (note: string, timestamp?: number) => boolean
 }
 
 export const useGameStore = create<GameState>()(
@@ -41,8 +41,8 @@ export const useGameStore = create<GameState>()(
             streak: 0,
             targetNote: generateRandomNote(),
             targetTime: null,
-            lastFeedback: null
-          });
+            lastFeedback: null,
+          })
         },
 
         stopGame: () => {
@@ -50,49 +50,49 @@ export const useGameStore = create<GameState>()(
             isPlaying: false,
             targetNote: null,
             targetTime: null,
-            lastFeedback: null
-          });
+            lastFeedback: null,
+          })
         },
 
         setTargetTime: (time: number) => {
-          set({ targetTime: time });
+          set({ targetTime: time })
         },
 
         checkAnswer: (note: string, timestamp?: number) => {
-          const { targetNote, score, streak, bestStreak, totalScore, targetTime } = get();
+          const { targetNote, score, streak, bestStreak, totalScore, targetTime } = get()
 
-          if (!targetNote) return false;
+          if (!targetNote) return false
 
-          const isCorrectNote = note.toUpperCase() === targetNote.toUpperCase();
+          const isCorrectNote = note.toUpperCase() === targetNote.toUpperCase()
 
-          let feedback: ScoreFeedback | null = null;
-          let points = 0;
-          let isStreakKept = false;
+          let feedback: ScoreFeedback | null = null
+          let points = 0
+          let isStreakKept = false
 
           if (isCorrectNote) {
             if (targetTime && timestamp) {
               // Rhythm mode logic
-              feedback = ScoringEngine.compare(targetTime, timestamp);
-              points = feedback.scoreDelta;
+              feedback = ScoringEngine.compare(targetTime, timestamp)
+              points = feedback.scoreDelta
               // Only keep streak if it's not a miss (Perfect or Good/Early/Late)
-              isStreakKept = feedback.rating !== 'MISS';
+              isStreakKept = feedback.rating !== 'MISS'
             } else {
               // Classic mode logic (no timing)
-              points = POINTS_PER_CORRECT_ANSWER;
-              isStreakKept = true;
+              points = POINTS_PER_CORRECT_ANSWER
+              isStreakKept = true
               feedback = {
                 rating: 'PERFECT',
                 scoreDelta: points,
                 timeDelta: 0,
-                label: 'Correct!'
-              };
+                label: 'Correct!',
+              }
             }
 
-            const newScore = score + points;
-            const newStreak = isStreakKept ? streak + 1 : 0;
-            const newTarget = generateRandomNote(targetNote);
-            const newBestStreak = Math.max(newStreak, bestStreak);
-            const newTotalScore = totalScore + points;
+            const newScore = score + points
+            const newStreak = isStreakKept ? streak + 1 : 0
+            const newTarget = generateRandomNote(targetNote)
+            const newBestStreak = Math.max(newStreak, bestStreak)
+            const newTotalScore = totalScore + points
 
             set({
               score: newScore,
@@ -101,10 +101,10 @@ export const useGameStore = create<GameState>()(
               bestStreak: newBestStreak,
               totalScore: newTotalScore,
               lastFeedback: feedback,
-              targetTime: null // Reset target time after answer
-            });
+              targetTime: null, // Reset target time after answer
+            })
 
-            return true;
+            return true
           } else {
             // Wrong note
             set({
@@ -113,12 +113,12 @@ export const useGameStore = create<GameState>()(
                 rating: 'MISS',
                 scoreDelta: 0,
                 timeDelta: 0,
-                label: 'Wrong Note'
-              }
-            });
-            return false;
+                label: 'Wrong Note',
+              },
+            })
+            return false
           }
-        }
+        },
       }),
       {
         name: STORAGE_KEY,
@@ -126,10 +126,10 @@ export const useGameStore = create<GameState>()(
         storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
           bestStreak: state.bestStreak,
-          totalScore: state.totalScore
-        })
+          totalScore: state.totalScore,
+        }),
       }
     ),
     { name: 'GameStore' }
   )
-);
+)

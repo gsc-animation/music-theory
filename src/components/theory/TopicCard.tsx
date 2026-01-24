@@ -26,11 +26,12 @@ export const TopicCard: React.FC<TopicCardProps> = ({
       className={`
         relative flex items-start gap-4 p-4 w-full text-left rounded-xl
         border transition-all duration-200
-        ${active
-          ? 'bg-[#30e8e8]/10 border-[#30e8e8]/30 shadow-sm'
-          : completed
-            ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
-            : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-[#30e8e8]/50'
+        ${
+          active
+            ? 'bg-[#30e8e8]/10 border-[#30e8e8]/30 shadow-sm'
+            : completed
+              ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
+              : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-[#30e8e8]/50'
         }
       `}
     >
@@ -38,19 +39,16 @@ export const TopicCard: React.FC<TopicCardProps> = ({
       <div
         className={`
           flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-          ${completed
-            ? 'bg-green-500 text-white'
-            : active
-              ? 'bg-[#30e8e8] text-[#111818]'
-              : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
+          ${
+            completed
+              ? 'bg-green-500 text-white'
+              : active
+                ? 'bg-[#30e8e8] text-[#111818]'
+                : 'bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
           }
         `}
       >
-        {completed ? (
-          <span className="material-symbols-outlined text-sm">check</span>
-        ) : (
-          number
-        )}
+        {completed ? <span className="material-symbols-outlined text-sm">check</span> : number}
       </div>
 
       {/* Content */}

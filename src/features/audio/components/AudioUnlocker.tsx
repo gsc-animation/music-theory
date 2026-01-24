@@ -1,12 +1,12 @@
-import React from 'react';
-import { useAudioStore } from '../../../stores/useAudioStore';
-import { AUDIO_STRINGS } from '../constants';
+import React from 'react'
+import { useAudioStore } from '../../../stores/useAudioStore'
+import { AUDIO_STRINGS } from '../constants'
 
 const AudioUnlocker: React.FC = () => {
-  const isReady = useAudioStore((state) => state.isReady);
-  const initializeAudio = useAudioStore((state) => state.initializeAudio);
+  const isReady = useAudioStore((state) => state.isReady)
+  const initializeAudio = useAudioStore((state) => state.initializeAudio)
 
-  if (isReady) return null;
+  if (isReady) return null
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
@@ -23,7 +23,7 @@ const AudioUnlocker: React.FC = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AudioUnlocker;
+export default AudioUnlocker

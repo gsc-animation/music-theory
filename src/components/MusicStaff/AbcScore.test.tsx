@@ -223,7 +223,7 @@ describe('AbcScore Music Staff Rendering', () => {
       expect(pianoAbcNotation).toMatch(/\bC\b/)
     })
 
-    it("contains the ending note B5 (lowercase b with apostrophe)", () => {
+    it('contains the ending note B5 (lowercase b with apostrophe)', () => {
       // B5 in ABC is b'
       expect(pianoAbcNotation).toContain("b'")
     })
@@ -269,7 +269,7 @@ describe('AbcScore Music Staff Rendering', () => {
       expect(guitarAbcNotation).toContain('E,')
     })
 
-    it("contains the ending note E5 (lowercase e with apostrophe)", () => {
+    it('contains the ending note E5 (lowercase e with apostrophe)', () => {
       // E5 in ABC is e'
       expect(guitarAbcNotation).toContain("e'")
     })

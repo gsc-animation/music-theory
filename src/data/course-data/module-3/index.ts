@@ -20,8 +20,8 @@ export const MODULE_3: Module = {
     SUBMODULE_3_3,
     SUBMODULE_3_4,
     SUBMODULE_3_5,
-    SUBMODULE_3_6
-  ]
+    SUBMODULE_3_6,
+  ],
 }
 
 // Re-export submodules for direct access if needed

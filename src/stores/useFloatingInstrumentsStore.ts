@@ -13,7 +13,7 @@ interface InstrumentState {
 interface FloatingInstrumentsState {
   instruments: Record<InstrumentType, InstrumentState>
   activeInstrument: InstrumentType | null
-  
+
   // Actions
   showInstrument: (type: InstrumentType) => void
   hideInstrument: (type: InstrumentType) => void
@@ -69,7 +69,11 @@ export const useFloatingInstrumentsStore = create<FloatingInstrumentsState>()(
               ...state.instruments,
               [type]: { ...state.instruments[type], isVisible, isMinimized: false },
             },
-            activeInstrument: isVisible ? type : state.activeInstrument === type ? null : state.activeInstrument,
+            activeInstrument: isVisible
+              ? type
+              : state.activeInstrument === type
+                ? null
+                : state.activeInstrument,
           }
         }),
 
@@ -106,8 +110,7 @@ export const useFloatingInstrumentsStore = create<FloatingInstrumentsState>()(
           },
         })),
 
-      bringToFront: (type) =>
-        set({ activeInstrument: type }),
+      bringToFront: (type) => set({ activeInstrument: type }),
 
       hideAll: () =>
         set((state) => ({

@@ -9,7 +9,7 @@ export interface GameLevel {
   id: number
   name: string
   description: string
-  notes: string[]           // Notes included (without octave)
+  notes: string[] // Notes included (without octave)
   timerSeconds: number | null
   questionCount: number
   requiredScore: number

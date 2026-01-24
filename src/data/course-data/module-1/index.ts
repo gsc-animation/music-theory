@@ -13,13 +13,7 @@ export const MODULE_1: Module = {
   name: 'Fundamentals',
   subtitle: 'Pitch & Notation',
   icon: 'music_note',
-  submodules: [
-    SUBMODULE_1_1,
-    SUBMODULE_1_2,
-    SUBMODULE_1_3,
-    SUBMODULE_1_4,
-    SUBMODULE_1_5
-  ]
+  submodules: [SUBMODULE_1_1, SUBMODULE_1_2, SUBMODULE_1_3, SUBMODULE_1_4, SUBMODULE_1_5],
 }
 
 // Re-export submodules for direct access if needed

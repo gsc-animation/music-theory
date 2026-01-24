@@ -45,14 +45,10 @@ export const ProfilePage: React.FC = () => {
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-[#30e8e8] to-[#1f9d9d] rounded-full flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-3xl">
-                  person
-                </span>
+                <span className="material-symbols-outlined text-white text-3xl">person</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-                  Your Profile
-                </h1>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Your Profile</h1>
                 <p className="text-slate-600 dark:text-slate-300">
                   Track your music theory learning journey
                 </p>
@@ -93,7 +89,7 @@ export const ProfilePage: React.FC = () => {
             <h2 className="font-bold text-lg text-slate-800 dark:text-white mb-4">
               Course Progress
             </h2>
-            
+
             {/* Overall Progress Bar */}
             <div className="mb-6">
               <div className="flex justify-between text-sm mb-2">
@@ -111,7 +107,7 @@ export const ProfilePage: React.FC = () => {
             {/* Module Progress */}
             <div className="space-y-4">
               {COURSE_MODULES.map((module) => {
-                const moduleCompleted = module.submodules.filter(s => 
+                const moduleCompleted = module.submodules.filter((s) =>
                   completedSubmodules.includes(s.id)
                 ).length
                 const moduleTotal = module.submodules.length
@@ -130,9 +126,7 @@ export const ProfilePage: React.FC = () => {
                     <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all duration-300 ${
-                          modulePercent === 100 
-                            ? 'bg-emerald-500' 
-                            : 'bg-[#30e8e8]/60'
+                          modulePercent === 100 ? 'bg-emerald-500' : 'bg-[#30e8e8]/60'
                         }`}
                         style={{ width: `${modulePercent}%` }}
                       />
@@ -151,18 +145,22 @@ export const ProfilePage: React.FC = () => {
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {Object.entries(submoduleScores).map(([id, score]) => (
-                  <div 
+                  <div
                     key={id}
                     className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg"
                   >
-                    <span className="text-sm text-slate-600 dark:text-slate-300">
-                      Lesson {id}
-                    </span>
-                    <span className={`font-bold ${
-                      score === 100 ? 'text-emerald-500' : 
-                      score >= 80 ? 'text-blue-500' : 
-                      score >= 60 ? 'text-amber-500' : 'text-slate-500'
-                    }`}>
+                    <span className="text-sm text-slate-600 dark:text-slate-300">Lesson {id}</span>
+                    <span
+                      className={`font-bold ${
+                        score === 100
+                          ? 'text-emerald-500'
+                          : score >= 80
+                            ? 'text-blue-500'
+                            : score >= 60
+                              ? 'text-amber-500'
+                              : 'text-slate-500'
+                      }`}
+                    >
                       {score}%
                     </span>
                   </div>
@@ -173,9 +171,7 @@ export const ProfilePage: React.FC = () => {
 
           {/* Reset Progress */}
           <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
-            <h2 className="font-bold text-lg text-slate-800 dark:text-white mb-2">
-              Danger Zone
-            </h2>
+            <h2 className="font-bold text-lg text-slate-800 dark:text-white mb-2">Danger Zone</h2>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
               Reset all progress and start fresh. This action cannot be undone.
             </p>
@@ -201,9 +197,7 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ icon, iconColor, label, value }) => (
   <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-700">
-    <span className={`material-symbols-outlined ${iconColor} text-2xl`}>
-      {icon}
-    </span>
+    <span className={`material-symbols-outlined ${iconColor} text-2xl`}>{icon}</span>
     <div className="mt-2">
       <p className="text-2xl font-bold text-slate-800 dark:text-white">{value}</p>
       <p className="text-xs text-slate-500 dark:text-slate-400">{label}</p>

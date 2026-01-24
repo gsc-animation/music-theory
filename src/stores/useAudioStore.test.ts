@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useAudioStore } from './useAudioStore';
-import { audioEngine } from '../services/audio-engine';
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { renderHook, act } from '@testing-library/react'
+import { useAudioStore } from './useAudioStore'
+import { audioEngine } from '../services/audio-engine'
 
 // Mock audio engine
 vi.mock('../services/audio-engine', () => ({
@@ -12,89 +12,94 @@ vi.mock('../services/audio-engine', () => ({
     stopNote: vi.fn(),
     getState: vi.fn().mockReturnValue('suspended'),
   },
-}));
+}))
 
 describe('useAudioStore', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.clearAllMocks()
     // Reset store state
-    const { result } = renderHook(() => useAudioStore());
+    const { result } = renderHook(() => useAudioStore())
     act(() => {
-      useAudioStore.setState({ isReady: false, isPlaying: false, activeNotes: [], recordedNotes: [] });
-    });
-  });
+      useAudioStore.setState({
+        isReady: false,
+        isPlaying: false,
+        activeNotes: [],
+        recordedNotes: [],
+      })
+    })
+  })
 
   it('should have initial state', () => {
-    const { result } = renderHook(() => useAudioStore());
-    expect(result.current.isReady).toBe(false);
-    expect(result.current.isPlaying).toBe(false);
-    expect(result.current.activeNotes).toEqual([]);
-  });
+    const { result } = renderHook(() => useAudioStore())
+    expect(result.current.isReady).toBe(false)
+    expect(result.current.isPlaying).toBe(false)
+    expect(result.current.activeNotes).toEqual([])
+  })
 
   it('should initialize audio', async () => {
-    const { result } = renderHook(() => useAudioStore());
+    const { result } = renderHook(() => useAudioStore())
 
     await act(async () => {
-      await result.current.initializeAudio();
-    });
+      await result.current.initializeAudio()
+    })
 
-    expect(audioEngine.initialize).toHaveBeenCalled();
-    expect(result.current.isReady).toBe(true);
-  });
+    expect(audioEngine.initialize).toHaveBeenCalled()
+    expect(result.current.isReady).toBe(true)
+  })
 
   it('should start and track a note', () => {
-    const { result } = renderHook(() => useAudioStore());
+    const { result } = renderHook(() => useAudioStore())
 
     act(() => {
-      result.current.startNote('F4');
-    });
+      result.current.startNote('F4')
+    })
 
-    expect(audioEngine.startNote).toHaveBeenCalledWith('F4');
-    expect(result.current.activeNotes).toContain('F4');
-    expect(result.current.isPlaying).toBe(true);
-  });
+    expect(audioEngine.startNote).toHaveBeenCalledWith('F4')
+    expect(result.current.activeNotes).toContain('F4')
+    expect(result.current.isPlaying).toBe(true)
+  })
 
   it('should stop and untrack a note', () => {
-    const { result } = renderHook(() => useAudioStore());
+    const { result } = renderHook(() => useAudioStore())
 
     act(() => {
-      result.current.startNote('G4');
-    });
-    expect(result.current.activeNotes).toContain('G4');
+      result.current.startNote('G4')
+    })
+    expect(result.current.activeNotes).toContain('G4')
 
     act(() => {
-      result.current.stopNote('G4');
-    });
+      result.current.stopNote('G4')
+    })
 
-    expect(audioEngine.stopNote).toHaveBeenCalledWith('G4');
-    expect(result.current.activeNotes).not.toContain('G4');
-  });
+    expect(audioEngine.stopNote).toHaveBeenCalledWith('G4')
+    expect(result.current.activeNotes).not.toContain('G4')
+  })
 
   it('should record notes history', () => {
-    const { result } = renderHook(() => useAudioStore());
+    const { result } = renderHook(() => useAudioStore())
 
     act(() => {
-      result.current.startNote('C4');
-      result.current.startNote('E4');
-    });
+      result.current.startNote('C4')
+      result.current.startNote('E4')
+    })
 
-    expect(result.current.recordedNotes).toEqual(['C4', 'E4']);
+    expect(result.current.recordedNotes).toEqual(['C4', 'E4'])
 
     act(() => {
-      result.current.clearRecordedNotes();
-    });
+      result.current.clearRecordedNotes()
+    })
 
-    expect(result.current.recordedNotes).toEqual([]);
-  });
+    expect(result.current.recordedNotes).toEqual([])
+  })
 
   it('should manage time signature', () => {
-    const { result } = renderHook(() => useAudioStore());
-    expect(result.current.timeSignature).toBe('4/4');
+    const { result } = renderHook(() => useAudioStore())
+    expect(result.current.timeSignature).toBe('4/4')
 
     act(() => {
-      result.current.setTimeSignature('3/4');
-    });
+      result.current.setTimeSignature('3/4')
+    })
 
-    expect(result.current.timeSignature).toBe('3/4');
-  });
-});
+    expect(result.current.timeSignature).toBe('3/4')
+  })
+})

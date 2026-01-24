@@ -69,7 +69,7 @@ export const CollapsiblePanel: React.FC<CollapsiblePanelProps> = ({
     >
       {/* Gradient accent bar at top */}
       <div className="h-1 bg-gradient-to-r from-[#30e8e8] via-[#26d4d4] to-[#1f9d9d] opacity-80 group-open:opacity-100 transition-opacity" />
-      
+
       <summary className="flex cursor-pointer items-center justify-between gap-3 px-4 py-3 list-none select-none hover:bg-slate-50/80 dark:hover:bg-slate-700/30 transition-all duration-200">
         <div className="flex items-center gap-3">
           {icon && (

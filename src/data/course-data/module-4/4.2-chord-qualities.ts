@@ -27,5 +27,5 @@ The **quality** of a triad depends on the intervals between notes.
 - Minor: 3 + 4 = 7 half steps (C-Eb-G)
 - Diminished: 3 + 3 = 6 half steps (C-Eb-Gb)
 - Augmented: 4 + 4 = 8 half steps (C-E-G#)
-  `
+  `,
 }

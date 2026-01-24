@@ -120,7 +120,7 @@ describe('guitar-logic', () => {
       const writtenNote = 'E5'
       const soundingNote = transposeWrittenToGuitar(writtenNote)
       expect(soundingNote).toBe('E4')
-      
+
       // E4 sounding is on high E string (string 0) open
       const positions = getPositionsForNote(soundingNote!)
       expect(positions).toContainEqual({ stringIndex: 0, fret: 0 })

@@ -1,20 +1,20 @@
-import * as Tone from 'tone';
+import * as Tone from 'tone'
 
 /**
  * Service to manage the Tone.js AudioContext.
  * Handles initialization and "unlocking" the audio context on user interaction.
  */
 class AudioContextManager {
-  private static instance: AudioContextManager;
-  private isInitialized: boolean = false;
+  private static instance: AudioContextManager
+  private isInitialized: boolean = false
 
   private constructor() {}
 
   public static getInstance(): AudioContextManager {
     if (!AudioContextManager.instance) {
-      AudioContextManager.instance = new AudioContextManager();
+      AudioContextManager.instance = new AudioContextManager()
     }
-    return AudioContextManager.instance;
+    return AudioContextManager.instance
   }
 
   /**
@@ -25,16 +25,16 @@ class AudioContextManager {
   public async initialize(): Promise<void> {
     // If already running, no need to do anything
     if (this.isInitialized && Tone.context.state === 'running') {
-      return;
+      return
     }
 
     try {
-      await Tone.start();
-      console.log('Audio Context started via AudioContextManager');
-      this.isInitialized = true;
+      await Tone.start()
+      console.log('Audio Context started via AudioContextManager')
+      this.isInitialized = true
     } catch (error) {
-      console.error('Failed to start Audio Context:', error);
-      throw error;
+      console.error('Failed to start Audio Context:', error)
+      throw error
     }
   }
 
@@ -43,17 +43,17 @@ class AudioContextManager {
    */
   public async resume(): Promise<void> {
     if (Tone.context.state === 'suspended') {
-      await Tone.context.resume();
+      await Tone.context.resume()
     }
   }
 
   public get state(): Tone.BaseContext['state'] {
-    return Tone.context.state;
+    return Tone.context.state
   }
 
   public get context(): Tone.BaseContext {
-    return Tone.context;
+    return Tone.context
   }
 }
 
-export const audioContextManager = AudioContextManager.getInstance();
+export const audioContextManager = AudioContextManager.getInstance()

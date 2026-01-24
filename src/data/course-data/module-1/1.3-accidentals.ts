@@ -40,7 +40,7 @@ M:4/4
 L:1/4
 K:C
 C ^C D ^D | E F ^F G | ^G A ^A B |]`,
-      playable: true
+      playable: true,
     },
     {
       id: '1.3.2',
@@ -51,7 +51,7 @@ M:4/4
 L:1/4
 K:C
 D _D E _E | G _G A _A | B _B c |]`,
-      playable: true
-    }
-  ]
+      playable: true,
+    },
+  ],
 }

@@ -32,5 +32,5 @@ The most important jazz progression
 
 **I - vi - ii - V** ("Rhythm Changes")
 Common turnaround progression
-  `
+  `,
 }

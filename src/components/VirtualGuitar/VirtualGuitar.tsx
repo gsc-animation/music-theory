@@ -42,12 +42,12 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
   // E.g., E5 on staff → E4 on guitar (high E string open)
   const activePositions = useMemo(() => {
     const map = new Map<string, boolean>()
-    activeNotes.forEach(writtenNote => {
+    activeNotes.forEach((writtenNote) => {
       // Transpose written pitch down to guitar sounding pitch
       const soundingNote = transposeWrittenToGuitar(writtenNote)
       if (soundingNote) {
         const positions = getPositionsForNote(soundingNote)
-        positions.forEach(pos => {
+        positions.forEach((pos) => {
           // Only show positions for first 8 frets
           if (pos.fret <= TOTAL_FRETS) {
             map.set(`${pos.stringIndex}-${pos.fret}`, true)
@@ -78,9 +78,11 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
     <div className="w-full overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
       {/* Header with key label */}
       <div className="flex justify-end px-3 py-1 bg-slate-50 dark:bg-slate-800/50">
-        <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">C Major</span>
+        <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">
+          C Major
+        </span>
       </div>
-      
+
       <div className="p-3">
         {/* Fretboard */}
         <div className="relative">
@@ -113,7 +115,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
             ))}
 
             {/* Fret Markers (Dots at 3, 5, 7) */}
-            {singleDots.map(fret => (
+            {singleDots.map((fret) => (
               <circle
                 key={`dot-${fret}`}
                 cx={PADDING_X + (fret - 0.5) * FRET_SPACING}
@@ -133,15 +135,16 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
                 x2={WIDTH - PADDING_X}
                 y2={PADDING_Y + stringIndex * STRING_SPACING}
                 stroke="#94a3b8"
-                strokeWidth={1 + (stringIndex * 0.3)}
+                strokeWidth={1 + stringIndex * 0.3}
               />
             ))}
 
             {/* Click Areas & Active Notes */}
-            {GUITAR_TUNING.map((_, stringIndex) => (
+            {GUITAR_TUNING.map((_, stringIndex) =>
               Array.from({ length: TOTAL_FRETS + 1 }).map((_, fret) => {
                 const isActive = activePositions.has(`${stringIndex}-${fret}`)
-                const renderX = fret === 0 ? PADDING_X - 10 : PADDING_X + (fret - 0.5) * FRET_SPACING
+                const renderX =
+                  fret === 0 ? PADDING_X - 10 : PADDING_X + (fret - 0.5) * FRET_SPACING
                 const note = getNoteAtPosition(stringIndex, fret)
                 const y = PADDING_Y + stringIndex * STRING_SPACING
 
@@ -194,7 +197,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
                   </g>
                 )
               })
-            ))}
+            )}
           </svg>
         </div>
       </div>
