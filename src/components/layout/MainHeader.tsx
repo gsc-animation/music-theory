@@ -1,6 +1,5 @@
 import React from 'react'
 import { useModuleStore } from '../../stores/useModuleStore'
-import { useAudioStore } from '../../stores/useAudioStore'
 import { useSettingsStore } from '../../stores/useSettingsStore'
 
 interface MainHeaderProps {
@@ -8,13 +7,12 @@ interface MainHeaderProps {
 }
 
 /**
- * MainHeader with module title, playback controls, and VN Mode toggle
+ * MainHeader with module title, BPM control, and VN Mode toggle
  */
 export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
   const modules = useModuleStore((state) => state.modules)
   const currentModuleId = useModuleStore((state) => state.currentModuleId)
   const currentModule = modules.find((m) => m.id === currentModuleId)
-  const replayRecordedNotes = useAudioStore((state) => state.replayRecordedNotes)
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
   const bpm = useSettingsStore((state) => state.bpm)
@@ -40,46 +38,6 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
           <span>•</span>
           <span>{currentModule?.progress}% complete</span>
         </div>
-      </div>
-
-      {/* Center - Playback controls */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center bg-slate-100 dark:bg-slate-800 rounded-full p-1 shadow-inner border border-slate-200 dark:border-slate-700">
-        <button
-          className="w-10 h-10 flex items-center justify-center rounded-full text-red-500 hover:bg-white dark:hover:bg-slate-700 shadow-sm transition-all"
-          title="Record"
-        >
-          <span
-            className="material-symbols-outlined text-[20px]"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-          >
-            fiber_manual_record
-          </span>
-        </button>
-        <button
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all"
-          title="Previous"
-        >
-          <span className="material-symbols-outlined">skip_previous</span>
-        </button>
-        <button
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-slate-900 text-white hover:bg-slate-800 shadow-lg transition-all"
-          title="Play"
-        >
-          <span className="material-symbols-outlined text-[24px]">play_arrow</span>
-        </button>
-        <button
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all"
-          title="Next"
-        >
-          <span className="material-symbols-outlined">skip_next</span>
-        </button>
-        <button
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700 hover:shadow-sm transition-all"
-          title="Replay"
-          onClick={replayRecordedNotes}
-        >
-          <span className="material-symbols-outlined">replay</span>
-        </button>
       </div>
 
       {/* Right - BPM & VN Mode */}

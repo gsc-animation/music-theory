@@ -149,46 +149,66 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
         </div>
       </div>
 
-      {/* Quiz with specific game type */}
-      <NoteIdentificationQuiz
-        key={`${submoduleId}-${selectedGame.level.id}-${selectedGame.gameType}-${showingResults}`}
-        submoduleId={`${submoduleId}-${selectedGame.level.id}-${selectedGame.gameType}`}
-        notes={notes}
-        questionCount={selectedGame.level.questionCount}
-        initialGameType={selectedGame.gameType}
-        onComplete={handleQuizComplete}
-      />
+      {/* Show result OR quiz - not both */}
+      {showingResults ? (
+        <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 text-center">
+          <span className="material-symbols-outlined text-5xl text-amber-500 mb-3">
+            {lastPercentage >= 80 ? 'emoji_events' : lastPercentage >= 60 ? 'thumb_up' : 'refresh'}
+          </span>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Quiz Complete!</h3>
+          <p className="text-4xl font-bold mb-2">
+            <span
+              className={
+                lastPercentage >= 80
+                  ? 'text-emerald-500'
+                  : lastPercentage >= 60
+                    ? 'text-amber-500'
+                    : 'text-rose-500'
+              }
+            >
+              {lastPercentage}%
+            </span>
+          </p>
+          <p className="text-slate-600 dark:text-slate-300 mb-6">
+            {lastPercentage >= 80 ? 'Excellent!' : lastPercentage >= 60 ? 'Good job!' : 'Keep practicing!'}
+          </p>
 
-      {/* Action buttons after completion */}
-      {showingResults && (
-        <div className="mt-4 flex flex-col items-center gap-3">
-          {/* Primary action: Next Game (if available) */}
-          {getNextGame && (
-            <button
-              onClick={handleNextGame}
-              className="px-6 py-2.5 bg-[#30e8e8] text-[#111818] rounded-lg font-bold hover:bg-[#26d4d4] transition-colors flex items-center gap-2"
-            >
-              <span>Next Game: {getNextGame.icon} {getNextGame.label}</span>
-              <span className="material-symbols-outlined text-lg">arrow_forward</span>
-            </button>
-          )}
-
-          {/* Secondary actions */}
-          <div className="flex gap-3">
-            <button
-              onClick={handleBack}
-              className="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-600"
-            >
-              Choose Level
-            </button>
-            <button
-              onClick={handlePlayAgain}
-              className="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-600"
-            >
-              Try Again
-            </button>
+          {/* Action buttons */}
+          <div className="flex flex-col items-center gap-3">
+            {getNextGame && (
+              <button
+                onClick={handleNextGame}
+                className="px-6 py-2.5 bg-[#30e8e8] text-[#111818] rounded-lg font-bold hover:bg-[#26d4d4] transition-colors flex items-center gap-2"
+              >
+                <span>Next Game: {getNextGame.icon} {getNextGame.label}</span>
+                <span className="material-symbols-outlined text-lg">arrow_forward</span>
+              </button>
+            )}
+            <div className="flex gap-3">
+              <button
+                onClick={handleBack}
+                className="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-600"
+              >
+                Choose Level
+              </button>
+              <button
+                onClick={handlePlayAgain}
+                className="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-600"
+              >
+                Try Again
+              </button>
+            </div>
           </div>
         </div>
+      ) : (
+        <NoteIdentificationQuiz
+          key={`${submoduleId}-${selectedGame.level.id}-${selectedGame.gameType}`}
+          submoduleId={`${submoduleId}-${selectedGame.level.id}-${selectedGame.gameType}`}
+          notes={notes}
+          questionCount={selectedGame.level.questionCount}
+          initialGameType={selectedGame.gameType}
+          onComplete={handleQuizComplete}
+        />
       )}
     </div>
   )
