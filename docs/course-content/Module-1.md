@@ -101,47 +101,68 @@
 ### 1.2 Tên nốt & Cao độ (Note Names & Pitch)
 
 > ✅ **Đã triển khai**: Xem [`1.2-note-names.ts`](file:///Users/steve/INFCAP/gsc-animation/music-theory/src/data/course-data/module-1/1.2-note-names.ts)
->
-> **UX Journey**: Passive (A-G loop) → Guided (Find C/F) → Interactive (Guitar strings) → Milestone (All C's)
+
+**UX Journey Pattern (4 bước):**
+
+1. **Passive**: Animation vòng lặp A-G-A
+2. **Guided**: Tìm nốt C (nhóm 2 phím đen) và F (nhóm 3 phím đen)
+3. **Interactive**: 6 dây Guitar buông với audio feedback
+4. **Milestone**: Chơi tất cả nốt C trên Grand Staff
 
 **Mục tiêu học tập (Learning Objectives):**
 
 - Nhận biết 7 tên nốt nhạc (A-B-C-D-E-F-G).
-- Xác định vị trí nốt trên bàn phím Piano và cần đàn Guitar.
+- Xác định vị trí nốt trên bàn phím Piano, cần đàn Guitar, và Sáo Trúc.
 - Hiểu khái niệm Quãng tám (Octave) và hệ thống ký hiệu khoa học (C3, C4, C5).
 - Phân biệt cao độ Thấp (Low) và Cao (High).
 
-**Cấu trúc bài học chi tiết:**
+**Cấu trúc nội dung (`theoryContent`):**
 
-#### Bước 1: 7 Nốt nhạc & Bàn phím Piano
+#### Section 1: Bảng chữ cái Âm nhạc
 
-| Nội dung giảng dạy                                                            | Minh họa cần thực hiện                                                 |
-| :---------------------------------------------------------------------------- | :--------------------------------------------------------------------- |
-| **Bảng chữ cái âm nhạc**: Chỉ dùng 7 chữ cái A-B-C-D-E-F-G, sau G quay lại A. | Animation vòng tròn: A → B → C → D → E → F → G → A...                  |
-| **Tìm nốt C (Đô)**: Tìm nhóm **2 phím đen**, nốt C nằm ngay bên trái.         | Piano ảo highlight tất cả nhóm 2 phím đen, sau đó highlight các nốt C. |
-| **Tìm nốt F (Fa)**: Tìm nhóm **3 phím đen**, nốt F nằm ngay bên trái.         | Piano ảo highlight tất cả nhóm 3 phím đen, sau đó highlight các nốt F. |
-| **Các nốt còn lại**: Từ C đếm lên D, E. Từ F đếm lên G, A, B.                 | Piano tương tác: Click từng phím trắng hiện tên nốt.                   |
+| Nội dung giảng dạy                                           | Cách triển khai                         |
+| :----------------------------------------------------------- | :-------------------------------------- |
+| 7 chữ cái: A-B-C-D-E-F-G, sau G quay lại A                   | `{{abc:...}}` animation vòng tròn 7 nốt |
+| "Vòng tròn bất tận": ...E → F → G → **A** → B → C → D → E... | Blockquote giải thích với emoji 🔄      |
 
-#### Bước 2: Nốt trên dây đàn Guitar (Dây buông)
+#### Section 2: Tìm nốt trên Bàn phím Piano
 
-| Nội dung giảng dạy                                              | Minh họa cần thực hiện                                 |
-| :-------------------------------------------------------------- | :----------------------------------------------------- |
-| **6 Dây đàn**: Đếm từ dây nhỏ nhất (1) đến to nhất (6).         | Hình ảnh Guitar với số thứ tự dây 1-6.                 |
-| **Tên dây buông**: E - B - G - D - A - E (Em Bỏ Gấu Đi Ăn Eis). | Audio phát từng dây, Animation rung dây tương ứng.     |
-| **Liên hệ Piano**: Dây E thấp (E2) vs Dây E cao (E4).           | Show vị trí 2 nốt E này trên Piano để thấy tương quan. |
+| Nội dung giảng dạy                                           | Cách triển khai (Multi-instrument) |
+| :----------------------------------------------------------- | :--------------------------------- | -------------------------- | --------------------------- | -------- |
+| **Tìm C**: Nhóm 2 phím đen → C ở bên trái                    | `{{piano:Tìm nốt C                 | C3,C4}}`+`{{guitar:...     | C2,C3,C4,C5}}`+`{{flute:... | C4,C5}}` |
+| **Tìm F**: Nhóm 3 phím đen → F ở bên trái                    | `{{piano:...                       | F3,F4}}`+`{{guitar:...     | F2,F3,F4,F5}}`+`{{flute:... | F4,F5}}` |
+| **Mẹo nhớ**: "2 phím đen = Đô", "3 phím đen = Fa"            | Blockquote với emoji 💡            |
+| **Các nốt còn lại**: Từ C đếm lên D, E; từ F đếm lên G, A, B | `{{piano:7 nốt                     | C3,D3,E3,F3,G3,A3,B3,C4}}` |
 
-#### Bước 3: Quãng tám (Octave) & Middle C
+#### Section 3: Nốt trên dây đàn Guitar
 
-| Nội dung giảng dạy                                                             | Minh họa cần thực hiện                                        |
-| :----------------------------------------------------------------------------- | :------------------------------------------------------------ |
-| **Khái niệm Octave**: Khoảng cách giữa 2 nốt cùng tên gần nhau nhất (C tới C). | `{{abc:C c c'}}` phát C3, C4, C5. Piano highlight 3 phím này. |
-| **Ký hiệu khoa học**: C4 = Middle C (Đô giữa đàn). Số càng lớn nốt càng cao.   | Hình ảnh bàn phím Piano đầy đủ (88 phím) có đánh số C1...C8.  |
-| **Lưu ý**: Guitar thực tế nghe thấp hơn ghi nhạc 1 quãng tám (sẽ học kỹ sau).  | (Optional) Info box nhỏ về Guitar transposition.              |
+| Nội dung giảng dạy                                | Cách triển khai                        |
+| :------------------------------------------------ | :------------------------------------- | -------------------- |
+| 6 dây Guitar: Đếm từ dây mỏng (1) đến dây dày (6) | `{{guitar:6 Dây buông - Click để nghe! | E4,B3,G3,D3,A2,E2}}` |
+| Tên dây buông: E-B-G-D-A-E                        | Danh sách dọc với âm thanh tương ứng   |
+| **Câu nhớ VN**: "Em Bỏ Gấu Đi Ăn Eis" (EBGDAE)    | Blockquote với emoji 📝                |
+| **Câu nhớ EN**: "Every Boy Gets Dinner At Eight"  | Blockquote với emoji 📝                |
 
-> ⚠️ **Lưu ý quan trọng**: Trong app này, chúng ta dùng chuẩn **Scientific Pitch Notation**.
->
-> - **C4**: Middle C (Đô giữa).
-> - **A4**: Chuẩn chỉnh dây (440Hz).
+#### Section 4: Quãng tám (Octave) & Middle C
+
+| Nội dung giảng dạy                                                 | Cách triển khai                      |
+| :----------------------------------------------------------------- | :----------------------------------- | ------------------------- | ----------- |
+| **Khái niệm Octave**: Khoảng cách từ nốt đến nốt cùng tên gần nhất | `{{piano:Một quãng tám: C3 → C4      | C3,C4}}`+`{{guitar:...    | C3,C4}}`    |
+| **Ký hiệu khoa học (Scientific Pitch Notation)**                   | Giải thích C2, C3, C4 = Middle C, C5 |
+| **Quy ước quan trọng**: C4 = Middle C, A4 = 440 Hz                 | Blockquote ⚠️ với các bullet points  |
+| **So sánh quãng tám**: Nốt E qua các octave                        | `{{piano:...                         | E3,E4,E5}}`+`{{guitar:... | E2,E3,E4}}` |
+| **Quy tắc số tăng**: Số càng lớn = nốt càng cao                    | D3 < D4; G2 < G5                     |
+
+**ABC Demos (Interactive Examples):**
+
+| ID    | Title                | Mô tả nội dung                                                   |
+| :---- | :------------------- | :--------------------------------------------------------------- |
+| 1.2.1 | Bảng chữ cái Âm nhạc | Vòng tròn 7 nốt, giải thích sự lặp lại quãng tám                 |
+| 1.2.2 | Tìm nốt C trên Piano | 4 nốt C (C3-C6) trên khuông, giải thích octave equivalence       |
+| 1.2.3 | Tìm nốt F trên Piano | 4 nốt F (F3-F6), F4 là "mỏ neo" trên dòng kẻ thứ 1               |
+| 1.2.4 | Ký hiệu 6 dây Guitar | 6 nốt E5-B3-G3-D3-A2-E2, giải thích Guitar viết cao hơn 1 octave |
+| 1.2.5 | So sánh Quãng tám    | C3-C4-C5, giải thích tần số nhân đôi (261.63 Hz → 523.25 Hz)     |
+| 1.2.6 | Thang âm C đầy đủ    | C Major Scale, giải thích whole step vs half step (E-F, B-C)     |
 
 **Thiết kế Game (3-Tier Progression):**
 
@@ -155,44 +176,101 @@
 
 ### 1.3 Dấu hóa (Accidentals)
 
-**Mục tiêu học tập:**
+> ✅ **Đã triển khai**: Xem [`1.3-accidentals.ts`](file:///Users/steve/INFCAP/gsc-animation/music-theory/src/data/course-data/module-1/1.3-accidentals.ts)
 
-- Hiểu chức năng của Dấu thăng (#), Dấu giáng (b), Dấu bình (♮).
-- Nhận biết các phím đen trên Piano.
-- Hiểu quy tắc "Dấu hóa có hiệu lực trong 1 ô nhịp".
+**UX Journey Pattern (4 bước):**
 
-**Cấu trúc bài học chi tiết:**
+1. **Passive**: Animation nốt "half-stepping" lên (Sharp) hoặc xuống (Flat)
+2. **Guided**: Multi-instrument visualization (Piano, Guitar, Flute)
+3. **Interactive**: Toggle giữa Sharp/Flat naming cho cùng một phím đen
+4. **Milestone**: Chơi melody với accidental thay đổi "mood"
 
-#### Bước 1: Dấu Thăng (Sharp - #)
+**Mục tiêu học tập (Learning Objectives):**
 
-| Nội dung giảng dạy                                                                   | Minh họa cần thực hiện                                    |
-| :----------------------------------------------------------------------------------- | :-------------------------------------------------------- |
-| **Định nghĩa**: Tăng nốt lên nửa cung (phím ngay bên phải).                          | `{{abc:C ^C}}` (C -> C#). Piano highlight C rồi C#.       |
-| **Vị trí**: C# là phím đen bên phải C.                                               | Animation: Mũi tên từ C di chuyển sang phải lên phím đen. |
-| **Ký hiệu**: Viết # _trước_ nốt nhạc trên khuông, nhưng đọc _sau_ tên nốt (C Sharp). | Text animation: Viết "C#" nhưng audio đọc "C Sharp".      |
+- Hiểu chức năng của Dấu thăng (♯), Dấu giáng (♭), Dấu bình (♮).
+- Nhận biết các phím đen trên Piano và vị trí tương ứng trên Guitar/Flute.
+- Hiểu quy tắc "Dấu hóa có hiệu lực trong 1 ô nhịp" (Bar Rule).
+- Hiểu khái niệm Hóa biểu (Key Signature) và cách dùng dấu bình để hủy tạm thời.
 
-#### Bước 2: Dấu Giáng (Flat - b)
+**Cấu trúc nội dung (`theoryContent`) - 8 Sections:**
 
-| Nội dung giảng dạy                                                          | Minh họa cần thực hiện                                      |
-| :-------------------------------------------------------------------------- | :---------------------------------------------------------- |
-| **Định nghĩa**: Hạ nốt xuống nửa cung (phím ngay bên trái).                 | `{{abc:D _D}}` (D -> Db). Piano highlight D rồi Db.         |
-| **Vị trí**: Db là phím đen bên trái D.                                      | Animation: Mũi tên từ D di chuyển sang trái xuống phím đen. |
-| **Lưu ý**: Phím đen có thể là Thăng của nốt này nhưng là Giáng của nốt kia. | Teaser cho bài Enharmonic.                                  |
+#### Section 1: Dấu hóa là gì?
 
-#### Bước 3: Dấu Bình (Natural - ♮)
+| Nội dung giảng dạy                                               | Cách triển khai                         |
+| :--------------------------------------------------------------- | :-------------------------------------- |
+| 3 loại dấu hóa: Thăng (♯), Giáng (♭), Bình (♮)                   | Bảng 3 cột: Ký hiệu, Tên gọi, Chức năng |
+| **Nửa cung (Semitone)**: Khoảng cách nhỏ nhất giữa 2 nốt liền kề | Blockquote giải thích với emoji 💡      |
 
-| Nội dung giảng dạy                                                           | Minh họa cần thực hiện             |
-| :--------------------------------------------------------------------------- | :--------------------------------- | ----------------------------------------------------- |
-| **Định nghĩa**: Hủy bỏ dấu thăng/giáng trước đó, về nốt tự nhiên.            | `{{abc:^C =C}}` (C# -> C Natural). |
-| **Luật ô nhịp**: Dấu hóa chỉ có tác dụng trong ô nhịp đó. Sang ô mới tự hết. | `{{abc:C ^C G                      | C}}` (Ô 1 C# -> Ô 2 C thường). Highlight sự thay đổi. |
+#### Section 2: Dấu Thăng (Sharp - ♯)
+
+| Nội dung giảng dạy                                              | Cách triển khai (Multi-instrument) |
+| :-------------------------------------------------------------- | :--------------------------------- | ----------------------- | ----------------------------- | --------- |
+| Nâng nốt lên **nửa cung** → phím bên phải                       | `{{abc:C ^C}}` + `{{piano:...      | C4,C#4}}`+`{{guitar:... | C3,C#3,C4,C#4}}`+`{{flute:... | C5,C#5}}` |
+| **Quy tắc viết**: ♯ viết trước nốt trên khuông, đọc sau tên nốt | Blockquote 📝 với giải thích       |
+| **Ví dụ F → F♯**                                                | `{{abc:F ^F}}` + `{{piano:...      | F4,F#4}}`+`{{guitar:... | F3,F#3,F4,F#4}}`              |
+
+#### Section 3: Dấu Giáng (Flat - ♭)
+
+| Nội dung giảng dạy                        | Cách triển khai (Multi-instrument) |
+| :---------------------------------------- | :--------------------------------- | ------------------------------ | ----------------------------- | --------- |
+| Hạ nốt xuống **nửa cung** → phím bên trái | `{{abc:D _D}}` + `{{piano:...      | D4,Db4}}`+`{{guitar:...        | D3,Db3,D4,Db4}}`+`{{flute:... | D5,Db5}}` |
+| **Ví dụ B → B♭**                          | `{{abc:B _B}}` + `{{piano:...      | B3,Bb3,B4,Bb4}}`+`{{guitar:... | B2,Bb2,B3,Bb3}}`              |
+
+#### Section 4: Dấu Bình (Natural - ♮)
+
+| Nội dung giảng dạy                                 | Cách triển khai (Multi-instrument) |
+| :------------------------------------------------- | :--------------------------------- | ----------------------- | ----------------------------- | --------- |
+| Hủy bỏ dấu thăng/giáng, về trạng thái **tự nhiên** | `{{abc:^C =C}}` + `{{piano:...     | C#4,C4}}`+`{{guitar:... | C#3,C3,C#4,C4}}`+`{{flute:... | C#5,C5}}` |
+
+#### Section 5: Phím Đen = 2 Tên Gọi!
+
+| Nội dung giảng dạy                                        | Cách triển khai                                      |
+| :-------------------------------------------------------- | :--------------------------------------------------- | ------------------------------------ | ------ |
+| 5 phím đen trong 1 octave có 2 tên gọi mỗi phím           | `{{piano:5 Phím đen                                  | C#4,D#4,F#4,G#4,A#4}}`+`{{guitar:... | ...}}` |
+| **Bảng ánh xạ**: C♯=D♭, D♯=E♭, F♯=G♭, G♯=A♭, A♯=B♭        | Bảng 4 cột: Phím đen #, Tên Sharp, Tên Flat, Ghi chú |
+| **Nốt đồng âm (Enharmonic)**: Cùng âm thanh, khác tên gọi | Blockquote 🔔 teaser cho bài 1.5                     |
+
+#### Section 6: Trường hợp đặc biệt E-F và B-C
+
+| Nội dung giảng dạy                        | Cách triển khai                     |
+| :---------------------------------------- | :---------------------------------- | -------------- |
+| 2 cặp nốt tự nhiên không có phím đen giữa | `{{piano:E-F và B-C                 | E4,F4,B4,C5}}` |
+| **Hệ quả**: E♯=F, F♭=E, B♯=C, C♭=B        | Bảng + `{{abc:^E F}}` để chứng minh |
+
+#### Section 7: Quy tắc về Ô nhịp (Bar Rule)
+
+| Nội dung giảng dạy                                        | Cách triển khai            |
+| :-------------------------------------------------------- | :------------------------- | ---------- |
+| Dấu hóa chỉ có hiệu lực trong **ô nhịp hiện tại**         | Blockquote ⚠️ "Quan trọng" |
+| Ví dụ: C thứ 2 trong ô 1 là C♯, C đầu ô 2 trở về tự nhiên | `{{abc:C ^C G C            | C G A B}}` |
+
+#### Section 8: Hóa Biểu - Key Signature 🎼
+
+| Nội dung giảng dạy                                              | Cách triển khai                                    |
+| :-------------------------------------------------------------- | :------------------------------------------------- |
+| **Định nghĩa**: Dấu ♯/♭ ở đầu khuông, sau khóa Sol/Fa           | `{{abc:...}}` với `K:G` để show hóa biểu G Major   |
+| **Ý nghĩa**: Tất cả nốt trên dòng/khe đó → thăng/giáng toàn bài | Giải thích với example F → F♯ suốt bài             |
+| **So sánh**: Có và không có hóa biểu                            | 2 `{{abc:...}}` cùng giai điệu, 1 có K:G, 1 có K:C |
+| **Dấu Bình quan trọng**: Hủy tạm thời hóa biểu trong 1 ô nhịp   | `{{abc:...}}` với `=F` để hủy F♯ tạm thời          |
+
+**ABC Demos (Interactive Examples):**
+
+| ID    | Title                     | Mô tả nội dung                                                    |
+| :---- | :------------------------ | :---------------------------------------------------------------- |
+| 1.3.1 | Dãy nốt Thăng (Sharps)    | Tất cả nốt cơ bản + phiên bản thăng; giải thích phím đen bên phải |
+| 1.3.2 | Dãy nốt Giáng (Flats)     | Tất cả nốt cơ bản + phiên bản giáng; giải thích phím đen bên trái |
+| 1.3.3 | Dấu Bình (Naturals)       | C♯ → C tự nhiên, B♭ → B tự nhiên                                  |
+| 1.3.4 | 5 Phím đen trong 1 Octave | C♯-D♯-F♯-G♯-A♯; giải thích mỗi phím có 2 tên (enharmonic)         |
+| 1.3.5 | Quy tắc Ô nhịp            | Demo dấu hóa chỉ hiệu lực trong ô nhịp                            |
+| 1.3.6 | Enharmonic: E♯ = F        | Trường hợp đặc biệt E♯=F, B♯=C                                    |
 
 **Thiết kế Game (3-Tier Progression):**
 
-| Cấp độ | Tên Game                              | Mô tả Gameplay                                                                                                                                                                     |
-| :----- | :------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⭐     | **Accidental Spotting** (Soi dấu hóa) | **Mục tiêu**: Nhận diện ký hiệu. <br> **Luật**: Flashcard hiện nốt có dấu. Hỏi "Đây là nốt gì?". Đáp án: "F#", "Gb", "F Natural".                                                  |
-| ⭐⭐   | **Black Key Ninja** (Ninja Phím Đen)  | **Mục tiêu**: Phản xạ phím đen. <br> **Luật**: Game tốc độ cao. "Play F#!" "Play Bb!" "Play G#!" → Học viên phải bấm nhanh trên Piano ảo.                                          |
-| ⭐⭐⭐ | **The Editor** (Biên tập viên)        | **Mục tiêu**: Viết nhạc đúng. <br> **Luật**: Cho một đoạn nhạc mẫu nghe bằng tai (có nốt thăng). Trên khuông nhạc đang thiếu dấu. Kéo thả dấu # vào đúng nốt để khớp với âm thanh. |
+| Cấp độ | Tên Game                             | Mô tả Gameplay                                                                                                                                 |
+| :----- | :----------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| ⭐     | **Accidental Spotter** (Soi dấu hóa) | **Mục tiêu**: Nhận diện ký hiệu. <br> **Luật**: Flashcard hiện nốt có dấu. Hỏi "Đây là nốt gì?". Đáp án: "F#", "Gb", "F Natural".              |
+| ⭐⭐   | **Black Key Ninja** (Ninja Phím Đen) | **Mục tiêu**: Phản xạ phím đen. <br> **Luật**: Game tốc độ cao trên Piano + Guitar. "Play F#!" "Play Bb!" → Bấm nhanh trên nhạc cụ ảo.         |
+| ⭐⭐⭐ | **The Editor** (Biên tập viên)       | **Mục tiêu**: Viết nhạc đúng. <br> **Luật**: Nghe đoạn nhạc mẫu (có nốt thăng). Kéo thả dấu ♯/♭ vào đúng nốt trên khuông để khớp với âm thanh. |
 
 ---
 

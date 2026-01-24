@@ -1,357 +1,415 @@
-## Module 5: Sáng tác & Cấu trúc (Composition & Form)
+# 📚 Module 5: Sáng tác & Cấu trúc (Composition & Form)
 
-### 5.1 Tiến trình hợp âm phổ biến (Common Chord Progressions)
-
-**Mục tiêu học tập:**
-
-- Nhận biết các tiến trình Pop/Rock thông dụng
-- Áp dụng tiến trình ii-V-I
-
-**Cấu trúc bài học chi tiết:**
-
-#### Bước 1: I-V-vi-IV (Pop progression)
-
-| Nội dung giảng dạy                      | Minh họa cần thực hiện                      |
-| --------------------------------------- | ------------------------------------------- |
-| Tiến trình phổ biến nhất trong nhạc Pop | Audio: "Four chords song" medley            |
-| Cảm xúc: Tích cực, phấn khích, dễ nhớ   | Loop progression C - G - Am - F             |
-| Mẹo nhớ: "Axis of Awesome"              | Video clip ngắn minh họa (hoặc infographic) |
-
-#### Bước 2: I-IV-V-I (Blues/Rock/Folk)
-
-| Nội dung giảng dạy                      | Minh họa cần thực hiện |
-| --------------------------------------- | ---------------------- |
-| Tiến trình 3 hợp âm cơ bản              | C - F - G - C          |
-| Âm hưởng: Mộc mạc, mạnh mẽ, rock n roll | Demo Rock beat         |
-| 12-bar Blues structure                  | Visual grid 12 ô       |
-
-#### Bước 3: ii-V-I (Jazz)
-
-| Nội dung giảng dạy                    | Minh họa cần thực hiện      |
-| ------------------------------------- | --------------------------- |
-| Tiến trình quan trọng nhất trong Jazz | Dm7 - G7 - Cmaj7            |
-| Circle of Fifths movement (D → G → C) | Highlight trên vòng quãng 5 |
-| Tạo sức hút mạnh mẽ về chủ âm         | Audio stress voice leading  |
-
-#### Bước 4: vi-IV-I-V (Axis progression)
-
-| Nội dung giảng dạy                            | Minh họa cần thực hiện   |
-| --------------------------------------------- | ------------------------ |
-| Biến thể bắt đầu bằng giọng thứ (Sad version) | Am - F - C - G           |
-| Cảm xúc: Sâu lắng, epic, tráng lệ             | Demo "Hans Zimmer style" |
-| Phổ biến trong nhạc phim, nhạc ballad         | List bài hát ví dụ       |
-
-#### Bước 5: Phân tích bài hát thực tế
-
-| Nội dung giảng dạy                  | Minh họa cần thực hiện        |
-| ----------------------------------- | ----------------------------- |
-| Nghe bài hát → Phân tích tiến trình | Interactive Song Analyzer     |
-| Tự tạo tiến trình của riêng bạn     | Chord Sequencer Tool đơn giản |
-
-**Bài tập:**
-
-| Loại                 | Mô tả                                 | Độ khó |
-| -------------------- | ------------------------------------- | ------ |
-| `progression-ear-id` | Nghe và đoán tiến trình nào đang chơi | ⭐⭐   |
-| `progression-play`   | Đệm theo hợp âm của bài hát           | ⭐⭐⭐ |
+> Tài liệu này mô tả chi tiết nội dung các bài học về sáng tác và cấu trúc bài hát, áp dụng mô hình **UX Journey Pattern** đã được chứng minh hiệu quả từ Module 1.
 
 ---
 
-### 5.2 Chỗ ngắt (Cadences)
+## 5.1 Tiến trình hợp âm phổ biến (Common Chord Progressions)
 
-**Mục tiêu học tập:**
+> 📋 **Chưa triển khai**: Sẽ được implement tại `src/data/course-data/module-5/5.1-chord-progressions.ts`
 
-- Hiểu các loại cadence: Perfect, Plagal, Half, Deceptive
+**UX Journey Pattern (4 bước):**
 
-**Cấu trúc bài học chi tiết:**
+1. **Passive**: Animation "4 Chords Song" - cùng tiến trình I-V-vi-IV cho nhiều bài hit
+2. **Guided**: Loop từng progression với highlighting Roman numerals
+3. **Interactive**: Chord Sequencer - kéo thả hợp âm tạo progression riêng
+4. **Milestone**: Đệm được bài hát yêu thích với đúng tiến trình
 
-#### Bước 1: Perfect Cadence (V → I): kết thúc hoàn toàn
+**Mục tiêu học tập (Learning Objectives):**
 
-| Nội dung giảng dạy                         | Minh họa cần thực hiện |
-| ------------------------------------------ | ---------------------- |
-| Authentic Cadence (PAC): V7 về I           | G7 → C                 |
-| Cảm giác: "Về nhà", trọn vẹn, dấu chấm hết | Animation cửa đóng lại |
-| Dùng ở cuối bài hoặc cuối đoạn lớn         | Audio demo kết bài     |
+- Nhận biết các tiến trình Pop/Rock phổ biến nhất
+- Hiểu tiến trình ii-V-I trong Jazz
+- Phân tích tiến trình hợp âm từ bài hát thực tế
 
-#### Bước 2: Plagal Cadence (IV → I): kết Amen
+**Cấu trúc nội dung (`theoryContent`):**
 
-| Nội dung giảng dạy                     | Minh họa cần thực hiện |
-| -------------------------------------- | ---------------------- |
-| "Amen Cadence": F về C                 | F → C (nhà thờ)        |
-| Cảm giác: Bình yên, nhẹ nhàng          | Audio demo thánh ca    |
-| Dùng phổ biến trong Rock/Pop (Oh yeah) | Audio demo "Let It Be" |
+#### Section 1: I-V-vi-IV (The Pop Progression)
 
-#### Bước 3: Half Cadence (? → V): dừng giữa câu
+| Nội dung giảng dạy            | Cách triển khai             |
+| :---------------------------- | :-------------------------- | ----------- |
+| Tiến trình phổ biến nhất!     | "4 Chords Song" medley      |
+| Trong C: **C → G → Am → F**   | `{{piano:...                | ...}}` loop |
+| Cảm xúc: Tích cực, phấn khích | "Axis of Awesome" reference |
 
-| Nội dung giảng dạy                    | Minh họa cần thực hiện |
-| ------------------------------------- | ---------------------- |
-| Kết thúc ở V (chưa giải quyết)        | C - F - G... (ngưng)   |
-| Cảm giác: Dấu phẩy, còn tiếp, chờ đợi | Animation dấu hỏi chấm |
-| Muốn nghe tiếp câu sau                | Audio demo câu hỏi     |
+#### Section 2: I-IV-V-I (Blues/Rock/Folk)
 
-#### Bước 4: Deceptive Cadence (V → vi): bất ngờ
+| Nội dung giảng dạy                     | Cách triển khai  |
+| :------------------------------------- | :--------------- |
+| "Three Chord Wonder" - 3 hợp âm cơ bản | C → F → G → C    |
+| 12-bar Blues structure                 | Visual grid 12 ô |
+| Âm hưởng: Mộc mạc, rock n roll         | Audio demo       |
 
-| Nội dung giảng dạy                      | Minh họa cần thực hiện   |
-| --------------------------------------- | ------------------------ |
-| Đáng lẽ về I nhưng lại "lừa" sang vi    | G7 → Am                  |
-| Cảm giác: Bất ngờ, thất vọng, kéo dài   | Animation mặt ngạc nhiên |
-| Dùng để kéo dài bài hát (chưa muốn kết) | Audio demo               |
+#### Section 3: ii-V-I (Jazz Essential)
 
-#### Bước 5: Nhận diện trong bài hát
+| Nội dung giảng dạy        | Cách triển khai           |
+| :------------------------ | :------------------------ |
+| **Dm7 → G7 → Cmaj7**      | Jazz progression demo     |
+| Circle of Fifths movement | Highlight D→G→C trên vòng |
+| Sức hút mạnh về chủ âm    | Voice leading animation   |
 
-| Nội dung giảng dạy                   | Minh họa cần thực hiện     |
-| ------------------------------------ | -------------------------- |
-| Nghe đoạn nhạc → Xác định điểm ngắt  | Interactive wave inspector |
-| Cảm nhận sự căng thẳng và giải quyết | Visual tension meter       |
+#### Section 4: vi-IV-I-V (Sad/Epic Version)
 
-**Bài tập:**
+| Nội dung giảng dạy                | Cách triển khai     |
+| :-------------------------------- | :------------------ |
+| Bắt đầu bằng giọng thứ (vi)       | Am → F → C → G      |
+| Cảm xúc: Sâu lắng, epic, tráng lệ | "Hans Zimmer style" |
+| Phổ biến trong nhạc phim, ballad  | Audio demo          |
 
-| Loại               | Mô tả                                  | Độ khó |
-| ------------------ | -------------------------------------- | ------ |
-| `cadence-id`       | Nghe 2 hợp âm cuối → Chọn loại cadence | ⭐⭐   |
-| `cadence-complete` | Chọn hợp âm cuối để tạo đúng cadence   | ⭐⭐   |
+**ABC Demos (Interactive Examples):**
 
----
+| ID    | Title           | Mô tả nội dung           |
+| :---- | :-------------- | :----------------------- |
+| 5.1.1 | I-V-vi-IV Loop  | The 4 Chords progression |
+| 5.1.2 | 12-Bar Blues    | Classic blues structure  |
+| 5.1.3 | ii-V-I Jazz     | Smooth Jazz resolution   |
+| 5.1.4 | Axis Comparison | Pop vs Sad versions      |
 
-### 5.3 Đường nét giai điệu (Melodic Contour)
+**Thiết kế Game (3-Tier Progression):**
 
-**Mục tiêu học tập:**
-
-- Hiểu passing tone và neighbor tone
-- Tạo giai điệu mượt mà
-
-**Cấu trúc bài học chi tiết:**
-
-#### Bước 1: Nốt lướt (Passing Tone)
-
-| Nội dung giảng dạy                 | Minh họa cần thực hiện                      |
-| ---------------------------------- | ------------------------------------------- |
-| Nốt nằm giữa 2 nốt chính (bước đi) | C (nốt chính) - D (passing) - E (nốt chính) |
-| Nối 2 nốt cách nhau quãng 3        | Animation cầu nối                           |
-| Giúp giai điệu liền mạch           | So sánh C-E (rời) vs C-D-E (liền)           |
-
-#### Bước 2: Nốt láng giềng (Neighbor Tone)
-
-| Nội dung giảng dạy                | Minh họa cần thực hiện     |
-| --------------------------------- | -------------------------- |
-| Đi sang nốt bên cạnh rồi quay lại | C - D - C (Upper neighbor) |
-| Trang trí cho nốt chính           | C - B - C (Lower neighbor) |
-| Tạo sự chuyển động tại chỗ        | Animation xoay quanh trục  |
-
-#### Bước 3: Nốt trễ (Suspension)
-
-| Nội dung giảng dạy               | Minh họa cần thực hiện     |
-| -------------------------------- | -------------------------- |
-| Giữ lại nốt của hợp âm trước     | Sus4 (giữ nốt 4 thay vì 3) |
-| Tạo cảm giác mong chờ giải quyết | Csus4 → C major            |
-| Rất cảm xúc                      | Audio demo                 |
-
-#### Bước 4: Quy tắc "bước nhỏ sau nhảy lớn"
-
-| Nội dung giảng dạy                       | Minh họa cần thực hiện   |
-| ---------------------------------------- | ------------------------ |
-| Sau một bước nhảy quãng rộng (leap)      | C nhảy lên A (quãng 6)   |
-| Giai điệu nên đi ngược lại từng bước nhỏ | Sau đó đi xuống G-F-E... |
-| Tạo cân bằng (Balance)                   | Visual biểu đồ hình sóng |
-
-#### Bước 5: Thực hành viết giai điệu
-
-| Nội dung giảng dạy                                 | Minh họa cần thực hiện |
-| -------------------------------------------------- | ---------------------- |
-| Hợp âm nền → Viết giai điệu                        | Melody Maker Tool      |
-| Sử dụng nốt trong hợp âm (Chord Tones) làm trụ cột | Highlight Chord Tones  |
-
-**Bài tập:**
-
-| Loại                | Mô tả                                | Độ khó |
-| ------------------- | ------------------------------------ | ------ |
-| `non-chord-tone-id` | Xác định nốt nào là Passing/Neighbor | ⭐⭐⭐ |
-| `melody-compose`    | Kéo thả nốt để tạo giai điệu hay     | ⭐⭐⭐ |
+| Cấp độ | Tên Game                | Mô tả Gameplay                    |
+| :----- | :---------------------- | :-------------------------------- |
+| ⭐     | **Progression Pattern** | Nghe → I-V-vi-IV hay I-IV-V-I?    |
+| ⭐⭐   | **Progression Ear ID**  | Nghe bài hát → đoán tiến trình    |
+| ⭐⭐⭐ | **Progression Play**    | Đệm theo hợp âm của backing track |
 
 ---
 
-### 5.4 Cấu trúc bài hát (Song Structure)
+## 5.2 Chỗ ngắt (Cadences)
 
-**Mục tiêu học tập:**
+> 📋 **Chưa triển khai**: Sẽ được implement tại `src/data/course-data/module-5/5.2-cadences.ts`
 
-- Nhận biết các phần: Verse, Chorus, Bridge, Intro, Outro
+**UX Journey Pattern (4 bước):**
 
-**Cấu trúc bài học chi tiết:**
+1. **Passive**: Animation "dấu câu âm nhạc" - cadence như dấu chấm, dấu phẩy, dấu hỏi
+2. **Guided**: Nghe 4 loại cadence với visual feedback tension/release
+3. **Interactive**: "Cadence Matcher" - nghe ending → chọn loại đúng
+4. **Milestone**: Nhận diện đúng cadence trong bản nhạc thực tế
 
-#### Bước 1: Intro (Mở đầu)
+**Mục tiêu học tập (Learning Objectives):**
 
-| Nội dung giảng dạy                | Minh họa cần thực hiện          |
-| --------------------------------- | ------------------------------- |
-| Thiết lập Tone, Tempo, Mood       | Audio intro các bài hit         |
-| Thường là Instrumental (khí nhạc) | Waveform visualization phần đầu |
-| Gây ấn tượng đầu tiên             | Visual: Cánh cửa mở ra          |
+- Phân biệt 4 loại cadence: Perfect, Plagal, Half, Deceptive
+- Hiểu cảm xúc của mỗi loại (kết thúc vs chờ đợi vs bất ngờ)
+- Nhận biết cadence trong ngữ cảnh bản nhạc
 
-#### Bước 2: Verse (Đoạn thân/Lời)
+**Cấu trúc nội dung (`theoryContent`):**
 
-| Nội dung giảng dạy                             | Minh họa cần thực hiện |
-| ---------------------------------------------- | ---------------------- |
-| Kể câu chuyện, lời nhạc thay đổi qua các verse | Text lyric chạy        |
-| Năng lượng thấp hơn Chorus                     | Tension Level: 3/10    |
-| Melody lặp lại cấu trúc                        | Visual: Khối A         |
+#### Section 1: Perfect Cadence (V → I) 🏠
 
-#### Bước 3: Pre-Chorus (Tiền điệp khúc)
+| Nội dung giảng dạy                             | Cách triển khai    |
+| :--------------------------------------------- | :----------------- |
+| Authentic Cadence: **V → I** (hoặc V7 → I)     | G7 → C             |
+| Cảm giác: "Về nhà", trọn vẹn, **dấu chấm hết** | Animation cửa đóng |
+| Dùng ở cuối bài hoặc cuối đoạn lớn             | Audio demo         |
 
-| Nội dung giảng dạy             | Minh họa cần thực hiện       |
-| ------------------------------ | ---------------------------- |
-| Xây dựng năng lượng (Build-up) | Tension Level: tăng từ 3 → 7 |
-| Dẫn dắt vào Chorus             | Audio drum roll/riser        |
-| "Sắp tới đoạn hay rồi!"        | Visual: Cầu thang đi lên     |
+#### Section 2: Plagal Cadence (IV → I) 🙏
 
-#### Bước 4: Chorus (Điệp khúc)
+| Nội dung giảng dạy               | Cách triển khai       |
+| :------------------------------- | :-------------------- |
+| "Amen Cadence": **IV → I**       | F → C                 |
+| Cảm giác: Bình yên, trang nghiêm | Audio thánh ca        |
+| Phổ biến trong Rock/Pop ending   | "Let It Be" reference |
 
-| Nội dung giảng dạy                             | Minh họa cần thực hiện    |
-| ---------------------------------------------- | ------------------------- |
-| Phần hay nhất, cao trào, lặp lại y hệt chô lời | Tension Level: 10/10      |
-| Chứa thông điệp chính (Hook)                   | Highlight Hook            |
-| Hát theo được ngay                             | Visual: Khối B (to, sáng) |
+#### Section 3: Half Cadence (? → V) ❓
 
-#### Bước 5: Bridge (Đoạn nối/Giang tấu)
+| Nội dung giảng dạy              | Cách triển khai         |
+| :------------------------------ | :---------------------- |
+| Kết thúc ở V (chưa giải quyết)  | ... → G (ngưng)         |
+| Cảm giác: **Dấu phẩy**, chờ đợi | Animation dấu hỏi       |
+| Muốn nghe tiếp câu sau          | Audio "question" phrase |
 
-| Nội dung giảng dạy                   | Minh họa cần thực hiện    |
-| ------------------------------------ | ------------------------- |
-| Thay đổi không khí, giai điệu mới lạ | Visual: Khối C (khác màu) |
-| Thường ở sau Chorus 2                | Timeline structure        |
-| Đưa bài hát lên cao trào cuối cùng   | Audio demo                |
+#### Section 4: Deceptive Cadence (V → vi) 😮
 
-#### Bước 6: Outro (Kết thúc)
+| Nội dung giảng dạy               | Cách triển khai          |
+| :------------------------------- | :----------------------- |
+| Đáng lẽ về I nhưng "lừa" sang vi | G7 → Am (thay vì C)      |
+| Cảm giác: Bất ngờ, thất vọng     | Animation mặt ngạc nhiên |
+| Dùng để kéo dài bài hát          | Audio demo               |
 
-| Nội dung giảng dạy                  | Minh họa cần thực hiện          |
-| ----------------------------------- | ------------------------------- |
-| Dần kết thúc, fade out hoặc kết hẳn | Audio fade out                  |
-| Thư giãn, dư âm                     | Animation cửa đóng/ánh sáng tắt |
+**ABC Demos (Interactive Examples):**
 
-#### Bước 7: Phân tích toàn bài
+| ID    | Title              | Mô tả nội dung             |
+| :---- | :----------------- | :------------------------- |
+| 5.2.1 | Perfect Cadence    | V → I = "The End"          |
+| 5.2.2 | Plagal "Amen"      | IV → I = peaceful          |
+| 5.2.3 | Half Cadence       | → V = "To be continued..." |
+| 5.2.4 | Deceptive Surprise | V → vi = "Plot twist!"     |
 
-| Nội dung giảng dạy                                | Minh họa cần thực hiện       |
-| ------------------------------------------------- | ---------------------------- |
-| Verse - Chorus - Verse - Chorus - Bridge - Chorus | Sơ đồ khối (Block Diagram)   |
-| Nghe bài mẫu và đánh dấu các phần                 | Interactive arrangement view |
+**Thiết kế Game (3-Tier Progression):**
 
-**Bài tập:**
-
-| Loại                 | Mô tả                                     | Độ khó |
-| -------------------- | ----------------------------------------- | ------ |
-| `structure-analysis` | Nghe bài hát → Bấm nút khi chuyển đoạn    | ⭐⭐   |
-| `structure-order`    | Sắp xếp các khối hộp thành bài hoàn chỉnh | ⭐     |
-
----
-
-### 5.5 Cường độ & Kỹ thuật diễn tấu (Dynamics & Articulation)
-
-**Mục tiêu học tập:**
-
-- Hiểu các ký hiệu cường độ: p, mp, mf, f, ff
-- Hiểu các ký hiệu diễn tấu: staccato, legato, accent
-
-**Cấu trúc bài học chi tiết:**
-
-#### Bước 1: Pianissimo (pp) → Fortissimo (ff)
-
-| Nội dung giảng dạy                          | Minh họa cần thực hiện           |
-| ------------------------------------------- | -------------------------------- |
-| pp (rất nhỏ) - p (nhỏ) - mp (hơi nhỏ)       | Audio volume tăng dần            |
-| mf (hơi to) - f (to) - ff (rất to)          | Visual: Loa rung/sóng âm lớn dần |
-| Cường độ tạo cảm xúc (gào thét vs thì thầm) | Demo giọng hát/nhạc cụ           |
-
-#### Bước 2: Crescendo & Decrescendo
-
-| Nội dung giảng dạy          | Minh họa cần thực hiện                    |
-| --------------------------- | ----------------------------------------- |
-| Crescendo (<): To dần lên   | Animation dấu < mở rộng, âm thanh to dần  |
-| Decrescendo (>): Nhỏ dần đi | Animation dấu > thu hẹp, âm thanh nhỏ dần |
-| "Hairpin" dynamics          | Visual ký hiệu trên khuông nhạc           |
-
-#### Bước 3: Staccato (ngắt tiếng)
-
-| Nội dung giảng dạy           | Minh họa cần thực hiện                     |
-| ---------------------------- | ------------------------------------------ |
-| Dấu chấm trên đầu nốt        | Ký hiệu visual                             |
-| Ngắt gọn, nảy, ngắn          | Audio: tiếng pizzicato hoặc piano staccato |
-| Cảm giác: Vui nhộn, nhảy múa | Animation bóng nảy                         |
-
-#### Bước 4: Legato (liền tiếng)
-
-| Nội dung giảng dạy                 | Minh họa cần thực hiện                |
-| ---------------------------------- | ------------------------------------- |
-| Dấu vòng cung nối nhiều nốt (Slur) | Ký hiệu visual                        |
-| Mượt mà, không ngắt quãng          | Audio: tiếng violin hoặc piano legato |
-| Cảm giác: Dòng suối chảy, tình cảm | Animation dòng nước                   |
-
-#### Bước 5: Accent (nhấn mạnh)
-
-| Nội dung giảng dạy                     | Minh họa cần thực hiện |
-| -------------------------------------- | ---------------------- |
-| Dấu > trên đầu nốt                     | Ký hiệu visual         |
-| Nhấn mạnh vào nốt đó (to hơn, gắt hơn) | Audio demo             |
-| Tạo điểm nhấn cho tiết tấu             | Drum accent demo       |
-
-**Bài tập:**
-
-| Loại                | Mô tả                                            | Độ khó |
-| ------------------- | ------------------------------------------------ | ------ |
-| `dynamics-id`       | Nghe đoạn nhạc → Chọn mức cường độ (p, f, hay <) | ⭐⭐   |
-| `articulation-play` | Chọn cách chơi đúng (ngắt hay liền)              | ⭐⭐   |
+| Cấp độ | Tên Game             | Mô tả Gameplay                               |
+| :----- | :------------------- | :------------------------------------------- |
+| ⭐     | **Cadence Pattern**  | Nhìn chord symbols → loại cadence nào?       |
+| ⭐⭐   | **Cadence Ear ID**   | Nghe 2 hợp âm cuối → chọn loại               |
+| ⭐⭐⭐ | **Cadence Complete** | Chọn hợp âm cuối để tạo đúng cadence yêu cầu |
 
 ---
 
-### 5.6 Chuyển giọng (Modulation)
+## 5.3 Đường nét giai điệu (Melodic Contour)
 
-**Mục tiêu học tập:**
+> 📋 **Chưa triển khai**: Sẽ được implement tại `src/data/course-data/module-5/5.3-melodic-contour.ts`
 
-- Hiểu khái niệm chuyển giọng trong bài hát
-- Nhận biết các kỹ thuật chuyển giọng phổ biến
+**UX Journey Pattern (4 bước):**
 
-**Cấu trúc bài học chi tiết:**
+1. **Passive**: Animation sóng giai điệu - lên xuống như đồ thị
+2. **Guided**: Nhận biết Passing Tone, Neighbor Tone, Suspension
+3. **Interactive**: Melody Maker - vẽ đường contour, system tạo nốt
+4. **Milestone**: Viết giai điệu 8 ô nhịp theo chord progression
 
-#### Bước 1: Chuyển giọng trực tiếp (Direct Modulation)
+**Mục tiêu học tập (Learning Objectives):**
 
-| Nội dung giảng dạy                                               | Minh họa cần thực hiện                     |
-| ---------------------------------------------------------------- | ------------------------------------------ |
-| "Truck Driver's Gear Change"                                     | Audio: Bài pop đang hát, đột ngột lên tone |
-| Không cần chuẩn bị, nhảy thẳng lên (thường là +1/2 hoặc +1 cung) | Visual: Bậc thang nhảy lên                 |
-| Hiệu quả: Tăng năng lượng tức thì                                | Cảm giác "Wow"                             |
+- Hiểu các loại non-chord tones: Passing, Neighbor, Suspension
+- Áp dụng quy tắc "bước nhỏ sau nhảy lớn"
+- Viết giai điệu mượt mà theo harmonic framework
 
-#### Bước 2: Chuyển giọng bằng hợp âm chung (Pivot Chord)
+**Cấu trúc nội dung (`theoryContent`):**
 
-| Nội dung giảng dạy                              | Minh họa cần thực hiện                     |
-| ----------------------------------------------- | ------------------------------------------ |
-| Dùng một hợp âm có mặt ở cả 2 giọng làm cầu nối | Diagram: Giao thoa giữa C Major và G Major |
-| Am là vi của C, nhưng là ii của G               | Pivot chord: Am                            |
-| Mượt mà, khó nhận ra (tinh tế)                  | Audio demo                                 |
+#### Section 1: Passing Tone (Nốt lướt)
 
-#### Bước 3: Chuyển lên nửa cung (nâng cảm xúc)
+| Nội dung giảng dạy          | Cách triển khai                         |
+| :-------------------------- | :-------------------------------------- |
+| Nốt nằm giữa 2 chord tones  | C (chord) → **D** (passing) → E (chord) |
+| Nối 2 nốt cách nhau quãng 3 | Animation cầu nối                       |
+| Giúp giai điệu liền mạch    | So sánh có/không có passing             |
 
-| Nội dung giảng dạy        | Minh họa cần thực hiện                            |
-| ------------------------- | ------------------------------------------------- |
-| Thường dùng ở Chorus cuối | So sánh Chorus 1 (thấp) vs Chorus cuối (cao)      |
-| Tạo cao trào kết thúc     | Audio: "I Will Always Love You" (Whitney Houston) |
+#### Section 2: Neighbor Tone (Nốt láng giếng)
 
-#### Bước 4: Chuyển sang giọng song song
+| Nội dung giảng dạy                    | Cách triển khai           |
+| :------------------------------------ | :------------------------ |
+| Đi sang nốt bên cạnh rồi **quay lại** | C → **D** → C (upper)     |
+| Trang trí cho nốt chính               | C → **B** → C (lower)     |
+| Tạo chuyển động tại chỗ               | Animation xoay quanh trục |
 
-| Nội dung giảng dạy                   | Minh họa cần thực hiện                |
-| ------------------------------------ | ------------------------------------- |
-| Từ C Major sang C Minor (Parallel)   | Thay đổi màu sắc: Vui → Buồn đột ngột |
-| Hoặc C Major sang A Minor (Relative) | Thay đổi trọng tâm                    |
-| Tạo sự tương phản thú vị             | Audio demo                            |
+#### Section 3: Suspension (Nốt trễ)
 
-#### Bước 5: Phân tích ví dụ thực tế
+| Nội dung giảng dạy           | Cách triển khai           |
+| :--------------------------- | :------------------------ |
+| Giữ lại nốt của hợp âm trước | Sus4: giữ nốt 4 thay vì 3 |
+| Tạo cảm giác mong chờ        | Csus4 → C resolution      |
+| Rất cảm xúc!                 | Audio demo ballad         |
 
-| Nội dung giảng dạy                         | Minh họa cần thực hiện              |
-| ------------------------------------------ | ----------------------------------- |
-| Nghe và phát hiện khoảnh khắc chuyển giọng | Bấm nút "Modulation!" khi nghe thấy |
-| Phân tích xem đó là kiểu chuyển gì         | Quiz trắc nghiệm                    |
+#### Section 4: Quy tắc "Leap & Step"
 
-**Bài tập:**
+| Nội dung giảng dạy                               | Cách triển khai               |
+| :----------------------------------------------- | :---------------------------- |
+| Sau nhảy lớn (leap) → đi ngược lại bằng bước nhỏ | C nhảy lên A → đi xuống G-F-E |
+| Tạo cân bằng (Balance)                           | Visual biểu đồ sóng           |
+| Quy tắc từ counterpoint cổ điển                  | Historical context            |
 
-| Loại                | Mô tả                              | Độ khó |
-| ------------------- | ---------------------------------- | ------ |
-| `modulation-detect` | Bắt khoảnh khắc đổi tone           | ⭐⭐⭐ |
-| `new-key-id`        | Đang tone C, lên 1 tone là gì? (D) | ⭐⭐   |
+**ABC Demos (Interactive Examples):**
+
+| ID    | Title                 | Mô tả nội dung        |
+| :---- | :-------------------- | :-------------------- |
+| 5.3.1 | Passing Tone Demo     | Fill the gap          |
+| 5.3.2 | Neighbor Tone Demo    | Orbit around          |
+| 5.3.3 | Suspension Resolution | Tension → Release     |
+| 5.3.4 | Leap & Step Rule      | Balance demonstration |
+
+**Thiết kế Game (3-Tier Progression):**
+
+| Cấp độ | Tên Game              | Mô tả Gameplay                            |
+| :----- | :-------------------- | :---------------------------------------- |
+| ⭐     | **Non-Chord Tone ID** | Xác định nốt nào là Passing/Neighbor      |
+| ⭐⭐   | **Contour Draw**      | Vẽ contour line → system generates melody |
+| ⭐⭐⭐ | **Melody Compose**    | Viết giai điệu theo chord progression     |
 
 ---
 
+## 5.4 Cấu trúc bài hát (Song Structure)
+
+> 📋 **Chưa triển khai**: Sẽ được implement tại `src/data/course-data/module-5/5.4-song-structure.ts`
+
+**UX Journey Pattern (4 bước):**
+
+1. **Passive**: Animation block diagram của bài hát phổ biến
+2. **Guided**: Nghe bài hát mẫu, hệ thống highlight từng phần
+3. **Interactive**: Arrangement Builder - kéo thả blocks (Verse, Chorus, Bridge)
+4. **Milestone**: Phân tích đúng cấu trúc bài hát bất kỳ
+
+**Mục tiêu học tập (Learning Objectives):**
+
+- Nhận biết các phần: Intro, Verse, Pre-Chorus, Chorus, Bridge, Outro
+- Hiểu vai trò và đặc điểm của từng phần
+- Phân tích cấu trúc bài hát thực tế
+
+**Cấu trúc nội dung (`theoryContent`):**
+
+#### Section 1: Intro & Verse
+
+| Phần      | Vai trò                     | Đặc điểm                              |
+| :-------- | :-------------------------- | :------------------------------------ |
+| **Intro** | Thiết lập Tone, Tempo, Mood | Thường instrumental, gây ấn tượng đầu |
+| **Verse** | Kể câu chuyện               | Lời thay đổi, melody lặp, energy thấp |
+
+#### Section 2: Pre-Chorus & Chorus
+
+| Phần           | Vai trò           | Đặc điểm                                 |
+| :------------- | :---------------- | :--------------------------------------- |
+| **Pre-Chorus** | Build-up, dẫn dắt | Tension tăng từ 3→7, "sắp bùng nổ!"      |
+| **Chorus**     | Cao trào, Hook    | Energy 10/10, lời lặp lại, hát theo được |
+
+#### Section 3: Bridge & Outro
+
+| Phần       | Vai trò            | Đặc điểm                       |
+| :--------- | :----------------- | :----------------------------- |
+| **Bridge** | Thay đổi không khí | Giai điệu mới lạ, sau Chorus 2 |
+| **Outro**  | Kết thúc           | Fade out hoặc kết hẳn, dư âm   |
+
+#### Section 4: Typical Structure
+
+| Nội dung giảng dạy                                                    | Cách triển khai              |
+| :-------------------------------------------------------------------- | :--------------------------- |
+| Intro → Verse 1 → Chorus → Verse 2 → Chorus → Bridge → Chorus → Outro | Block Diagram                |
+| Variation: ABABCB form                                                | Interactive arrangement view |
+
+**ABC Demos (Interactive Examples):**
+
+| ID    | Title                 | Mô tả nội dung              |
+| :---- | :-------------------- | :-------------------------- |
+| 5.4.1 | Song Structure Blocks | Visual block diagram        |
+| 5.4.2 | Energy Curve          | Verse (low) → Chorus (high) |
+| 5.4.3 | Song Analysis         | Real song breakdown         |
+
+**Thiết kế Game (3-Tier Progression):**
+
+| Cấp độ | Tên Game               | Mô tả Gameplay                         |
+| :----- | :--------------------- | :------------------------------------- |
+| ⭐     | **Section ID**         | Nghe đoạn → Verse, Chorus, hay Bridge? |
+| ⭐⭐   | **Structure Analysis** | Nghe bài → bấm nút khi chuyển đoạn     |
+| ⭐⭐⭐ | **Structure Order**    | Sắp xếp blocks thành bài hoàn chỉnh    |
+
+---
+
+## 5.5 Cường độ & Kỹ thuật diễn tấu (Dynamics & Articulation)
+
+> 📋 **Chưa triển khai**: Sẽ được implement tại `src/data/course-data/module-5/5.5-dynamics-articulation.ts`
+
+**UX Journey Pattern (4 bước):**
+
+1. **Passive**: Animation volume từ pp (rất nhỏ) đến ff (rất to)
+2. **Guided**: Nghe cùng giai điệu với staccato vs legato
+3. **Interactive**: Expression Slider - điều chỉnh dynamics real-time
+4. **Milestone**: Chơi đoạn nhạc với dynamic markings đúng
+
+**Mục tiêu học tập (Learning Objectives):**
+
+- Đọc ký hiệu dynamics: pp, p, mp, mf, f, ff
+- Hiểu crescendo (<) và decrescendo (>)
+- Phân biệt staccato (ngắt) vs legato (liền)
+
+**Cấu trúc nội dung (`theoryContent`):**
+
+#### Section 1: Dynamic Levels
+
+| Ký hiệu | Tên         | Mức độ  |
+| :------ | :---------- | :------ |
+| **pp**  | pianissimo  | Rất nhỏ |
+| **p**   | piano       | Nhỏ     |
+| **mp**  | mezzo-piano | Hơi nhỏ |
+| **mf**  | mezzo-forte | Hơi to  |
+| **f**   | forte       | To      |
+| **ff**  | fortissimo  | Rất to  |
+
+#### Section 2: Crescendo & Decrescendo
+
+| Nội dung giảng dạy              | Cách triển khai                |
+| :------------------------------ | :----------------------------- |
+| **Crescendo (<)**: To dần lên   | Animation mở rộng, volume tăng |
+| **Decrescendo (>)**: Nhỏ dần đi | Animation thu hẹp, volume giảm |
+| "Hairpin" dynamics              | Ký hiệu trên khuông nhạc       |
+
+#### Section 3: Articulation
+
+| Ký hiệu             | Tên        | Kỹ thuật         |
+| :------------------ | :--------- | :--------------- |
+| **Staccato** (chấm) | Ngắt tiếng | Nảy, gọn, ngắn   |
+| **Legato** (slur)   | Liền tiếng | Mượt, không ngắt |
+| **Accent** (>)      | Nhấn mạnh  | To hơn, gắt hơn  |
+
+**ABC Demos (Interactive Examples):**
+
+| ID    | Title              | Mô tả nội dung              |
+| :---- | :----------------- | :-------------------------- |
+| 5.5.1 | Volume Slider      | pp → ff interactive         |
+| 5.5.2 | Crescendo Wave     | < animation with audio      |
+| 5.5.3 | Staccato vs Legato | Same melody, different feel |
+
+**Thiết kế Game (3-Tier Progression):**
+
+| Cấp độ | Tên Game            | Mô tả Gameplay                      |
+| :----- | :------------------ | :---------------------------------- |
+| ⭐     | **Dynamics ID**     | Nghe → chọn p, f, hay crescendo?    |
+| ⭐⭐   | **Articulation ID** | Nghe → staccato hay legato?         |
+| ⭐⭐⭐ | **Expression Play** | Chơi đoạn nhạc với dynamic markings |
+
+---
+
+## 5.6 Chuyển giọng (Modulation)
+
+> 📋 **Chưa triển khai**: Sẽ được implement tại `src/data/course-data/module-5/5.6-modulation.ts`
+
+**UX Journey Pattern (4 bước):**
+
+1. **Passive**: Animation "Truck Driver's Gear Change" - bài hát đột ngột lên tone
+2. **Guided**: So sánh Direct vs Pivot Chord modulation
+3. **Interactive**: "Modulation Detector" - nghe bài → bấm khi đổi key
+4. **Milestone**: Transpose bài hát từ C → D với pivot chord
+
+**Mục tiêu học tập (Learning Objectives):**
+
+- Nhận biết khoảnh khắc chuyển giọng trong bài hát
+- Phân biệt Direct Modulation vs Pivot Chord Modulation
+- Hiểu tại sao chuyển giọng tạo hiệu ứng mạnh
+
+**Cấu trúc nội dung (`theoryContent`):**
+
+#### Section 1: Direct Modulation 🚛
+
+| Nội dung giảng dạy                             | Cách triển khai                  |
+| :--------------------------------------------- | :------------------------------- |
+| "Truck Driver's Gear Change"                   | Audio: bài pop lên tone đột ngột |
+| Không chuẩn bị, nhảy thẳng (+1/2 hoặc +1 cung) | Visual bậc thang nhảy            |
+| Hiệu quả: Tăng năng lượng tức thì              | Chorus cuối lên tone             |
+
+#### Section 2: Pivot Chord Modulation
+
+| Nội dung giảng dạy                              | Cách triển khai                |
+| :---------------------------------------------- | :----------------------------- |
+| Dùng hợp âm có mặt ở **cả 2 giọng** làm cầu nối | Venn diagram C Major ∩ G Major |
+| Am = vi của C, nhưng = ii của G                 | Pivot chord demo               |
+| Mượt mà, tinh tế, khó nhận ra                   | Audio comparison               |
+
+#### Section 3: Common Modulation Types
+
+| Loại          | Khoảng cách   | Ví dụ     | Effect        |
+| :------------ | :------------ | :-------- | :------------ |
+| Up Half Step  | +1 semitone   | C → C#/Db | Dramatic lift |
+| Up Whole Step | +2 semitones  | C → D     | Bright energy |
+| To Relative   | Major ↔ minor | C → Am    | Mood change   |
+| To Parallel   | Major → minor | C → Cm    | Color shift   |
+
+#### Section 4: Real Song Analysis
+
+| Nội dung giảng dạy                    | Cách triển khai            |
+| :------------------------------------ | :------------------------- |
+| "I Will Always Love You" final chorus | Whitney Houston modulation |
+| "Love Story" Taylor Swift             | Key changes                |
+| Bấm nút khi nghe modulation           | Interactive detector       |
+
+**ABC Demos (Interactive Examples):**
+
+| ID    | Title              | Mô tả nội dung            |
+| :---- | :----------------- | :------------------------ |
+| 5.6.1 | Gear Change Demo   | Direct +1 step modulation |
+| 5.6.2 | Pivot Chord        | Smooth transition         |
+| 5.6.3 | Relative Key Shift | Major ↔ minor             |
+| 5.6.4 | Famous Modulations | Real song examples        |
+
+**Thiết kế Game (3-Tier Progression):**
+
+| Cấp độ | Tên Game              | Mô tả Gameplay                        |
+| :----- | :-------------------- | :------------------------------------ |
+| ⭐     | **New Key ID**        | Đang C, lên 1 cung là gì? (D)         |
+| ⭐⭐   | **Modulation Detect** | Nghe bài → bấm khi đổi key            |
+| ⭐⭐⭐ | **Modulation Type**   | Xác định Direct, Pivot, hay Relative? |
+
+---
