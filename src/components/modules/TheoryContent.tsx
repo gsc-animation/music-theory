@@ -1,30 +1,40 @@
 import React, { useMemo } from 'react'
 import { AbcRenderer } from '../abc/AbcRenderer'
+import { InlineGuitar } from '../VirtualGuitar/InlineGuitar'
+import { InlinePiano } from '../VirtualPiano/InlinePiano'
+import { InlineFlute } from '../../features/sao-truc/components/InlineFlute'
 
 interface TheoryContentProps {
   content: string
 }
 
 interface ContentBlock {
-  type: 'html' | 'abc'
+  type: 'html' | 'abc' | 'guitar' | 'piano' | 'flute'
   content: string
   title?: string
+  notes?: string[] // For guitar/piano/flute blocks: notes to highlight
 }
 
 /**
- * Parse theory content and split into HTML blocks and ABC notation blocks
+ * Parse theory content and split into HTML blocks, ABC notation, guitar, piano, and flute blocks
+ *
+ * Supported syntaxes:
+ * - {{abc:Title|ABC notation}} - Music staff notation
+ * - {{guitar:Title|E4,B3,G3}} - Guitar fretboard with highlighted notes
+ * - {{piano:Title|C4,E4,G4}} - Piano keyboard with highlighted notes
+ * - {{flute:Title|C4,D4,E4}} - Flute fingering chart
  */
 function parseTheoryContent(content: string): ContentBlock[] {
   const blocks: ContentBlock[] = []
 
-  // Pattern to match {{abc:Title|ABC content}}
-  const abcPattern = /\{\{abc:([^|]+)\|([^}]+)\}\}/g
+  // Combined pattern to match all block types
+  const combinedPattern = /\{\{(abc|guitar|piano|flute):([^|]+)\|([^}]+)\}\}/g
 
   let lastIndex = 0
   let match
 
-  while ((match = abcPattern.exec(content)) !== null) {
-    // Add HTML content before this ABC block
+  while ((match = combinedPattern.exec(content)) !== null) {
+    // Add HTML content before this block
     if (match.index > lastIndex) {
       const htmlContent = content.slice(lastIndex, match.index)
       if (htmlContent.trim()) {
@@ -35,12 +45,27 @@ function parseTheoryContent(content: string): ContentBlock[] {
       }
     }
 
-    // Add ABC block
-    blocks.push({
-      type: 'abc',
-      title: match[1].trim(),
-      content: match[2].trim(),
-    })
+    const blockType = match[1] as 'abc' | 'guitar' | 'piano' | 'flute'
+    const title = match[2].trim()
+    const blockContent = match[3].trim()
+
+    if (blockType === 'guitar' || blockType === 'piano' || blockType === 'flute') {
+      // Parse comma-separated notes
+      const notes = blockContent.split(',').map((n) => n.trim())
+      blocks.push({
+        type: blockType,
+        title,
+        content: blockContent,
+        notes,
+      })
+    } else {
+      // ABC block
+      blocks.push({
+        type: 'abc',
+        title,
+        content: blockContent,
+      })
+    }
 
     lastIndex = match.index + match[0].length
   }
@@ -101,8 +126,8 @@ function formatHtmlContent(content: string): string {
 }
 
 /**
- * TheoryContent component - renders theory text with inline ABC notation demos
- * Uses the unified AbcRenderer component for all ABC notation rendering
+ * TheoryContent component - renders theory text with inline demos
+ * Supports: {{abc:}}, {{guitar:}}, {{piano:}}, {{flute:}}
  */
 export const TheoryContent: React.FC<TheoryContentProps> = ({ content }) => {
   const blocks = useMemo(() => parseTheoryContent(content), [content])
@@ -117,6 +142,31 @@ export const TheoryContent: React.FC<TheoryContentProps> = ({ content }) => {
             </div>
           )
         }
+
+        if (block.type === 'guitar') {
+          return (
+            <div key={`guitar-${index}`} className="guitar-renderer-wrapper">
+              <InlineGuitar title={block.title} highlightNotes={block.notes} />
+            </div>
+          )
+        }
+
+        if (block.type === 'piano') {
+          return (
+            <div key={`piano-${index}`} className="piano-renderer-wrapper">
+              <InlinePiano title={block.title} highlightNotes={block.notes} />
+            </div>
+          )
+        }
+
+        if (block.type === 'flute') {
+          return (
+            <div key={`flute-${index}`} className="flute-renderer-wrapper">
+              <InlineFlute title={block.title} highlightNotes={block.notes} />
+            </div>
+          )
+        }
+
         return (
           <div
             key={`html-${index}`}
