@@ -171,8 +171,8 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
         </div>
       </div>
 
-      {/* Progress bar for games */}
-      <div className="mb-4 flex items-center gap-2">
+      {/* Game type selector - large clickable buttons */}
+      <div className="mb-4 flex items-center gap-3">
         {SUB_GAMES.map((game, idx) => {
           const result = levelResults.find((r) => r.gameType === game.type)
           const isCurrent = idx === selectedGame.gameIndex
@@ -180,9 +180,40 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
             idx < selectedGame.gameIndex || (showingResults && idx === selectedGame.gameIndex)
 
           return (
-            <div key={game.type} className="flex-1 flex flex-col items-center gap-1">
+            <button
+              key={game.type}
+              onClick={() => {
+                // Allow jumping to any game in the sequence
+                if (!showingResults) {
+                  setSelectedGame({
+                    level: selectedGame.level,
+                    gameType: game.type,
+                    gameIndex: idx,
+                  })
+                }
+              }}
+              disabled={showingResults}
+              className={`flex-1 flex flex-col items-center gap-2 py-3 px-4 rounded-xl transition-all border-2 ${
+                isCurrent
+                  ? 'bg-[#30e8e8]/20 border-[#30e8e8] scale-105'
+                  : isCompleted
+                    ? result && result.percentage >= 60
+                      ? 'bg-emerald-500/10 border-emerald-500/50'
+                      : 'bg-amber-500/10 border-amber-500/50'
+                    : 'bg-slate-800 border-slate-700 hover:border-slate-500'
+              } ${showingResults ? 'cursor-default opacity-70' : 'cursor-pointer hover:scale-102'}`}
+            >
+              <span className={`text-2xl ${isCurrent ? 'animate-pulse' : ''}`}>{game.icon}</span>
+              <span
+                className={`text-sm font-bold ${
+                  isCurrent ? 'text-[#30e8e8]' : isCompleted ? 'text-slate-300' : 'text-slate-400'
+                }`}
+              >
+                {game.label}
+              </span>
+              {/* Progress indicator */}
               <div
-                className={`w-full h-1.5 rounded-full transition-colors ${
+                className={`w-full h-1 rounded-full ${
                   isCompleted
                     ? result && result.percentage >= 60
                       ? 'bg-emerald-500'
@@ -194,10 +225,7 @@ export const GameQuiz: React.FC<GameQuizProps> = ({ submoduleId }) => {
                       : 'bg-slate-700'
                 }`}
               />
-              <span className={`text-[10px] ${isCurrent ? 'text-[#30e8e8]' : 'text-slate-500'}`}>
-                {game.icon} {game.label}
-              </span>
-            </div>
+            </button>
           )
         })}
       </div>

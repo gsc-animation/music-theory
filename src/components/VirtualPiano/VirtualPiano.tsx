@@ -7,6 +7,8 @@ interface VirtualPianoProps {
   activeNotes?: string[]
   onStartNote: (note: string) => void
   onStopNote: (note: string) => void
+  /** Optional: Show hint dots on these note letters (for progressive difficulty) */
+  allowedNotes?: string[]
 }
 
 const NOTES = [
@@ -30,6 +32,7 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
   activeNotes = [],
   onStartNote,
   onStopNote,
+  allowedNotes,
 }) => {
   const renderOctave = (octaveIndex: number) => {
     const currentOctave = startOctave + octaveIndex
@@ -48,18 +51,26 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
         style={{ touchAction: 'none' }}
       >
         {/* White Keys Layer */}
-        {whiteKeys.map((note) => (
-          <div key={note} className="flex-1 h-full">
-            <PianoKey
-              note={note}
-              type="white"
-              onStartNote={onStartNote}
-              onStopNote={onStopNote}
-              label={note.replace(/[0-9]/g, '')}
-              isHighlighted={activeNotes.includes(note)}
-            />
-          </div>
-        ))}
+        {whiteKeys.map((note) => {
+          const noteLetter = note.replace(/[0-9]/g, '')
+          const isHinted = allowedNotes && allowedNotes.includes(noteLetter)
+          return (
+            <div key={note} className="flex-1 h-full relative">
+              <PianoKey
+                note={note}
+                type="white"
+                onStartNote={onStartNote}
+                onStopNote={onStopNote}
+                label={noteLetter}
+                isHighlighted={activeNotes.includes(note)}
+              />
+              {/* Hint dot for allowed notes */}
+              {isHinted && !activeNotes.includes(note) && (
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-[#30e8e8] animate-pulse shadow-lg shadow-[#30e8e8]/50 pointer-events-none" />
+              )}
+            </div>
+          )
+        })}
 
         {/* Black Keys Layer */}
         {blackKeys.map((note) => {

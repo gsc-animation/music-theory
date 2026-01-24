@@ -16,6 +16,8 @@ interface VirtualGuitarProps {
   onPlayNote: (note: string) => void
   /** Whether to show note labels on the fretboard */
   showLabels?: boolean
+  /** Optional: Only allow these note letters (for progressive difficulty) */
+  allowedNotes?: string[]
 }
 
 // Module 5 design: show first 8 frets only
@@ -34,6 +36,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
   activeNotes = [],
   onPlayNote,
   showLabels = true,
+  allowedNotes,
 }) => {
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   // Pre-calculate active positions for fast lookup

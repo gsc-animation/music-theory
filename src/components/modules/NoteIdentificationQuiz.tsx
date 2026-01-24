@@ -20,8 +20,8 @@ interface NoteIdentificationQuizProps {
   onComplete?: (score: number, total: number) => void
 }
 
-// Note name to solfège mapping
-const NOTE_OPTIONS = [
+// All possible note options
+const ALL_NOTE_OPTIONS = [
   { note: 'C', label: 'C (Do)' },
   { note: 'D', label: 'D (Re)' },
   { note: 'E', label: 'E (Mi)' },
@@ -71,6 +71,7 @@ const noteToAbc = (note: string): string => {
 
 /**
  * NoteIdentificationQuiz - Interactive quiz with multiple game types
+ * Features progressive difficulty: only shows level-specific notes as options
  */
 export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
   submoduleId,
@@ -86,6 +87,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
   const notationSystem = useSettingsStore((state) => state.notationSystem)
 
   const staffRef = useRef<HTMLDivElement>(null)
+  const abcStaffRef = useRef<HTMLDivElement>(null)
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
@@ -99,15 +101,32 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
   const [instrument, setInstrument] = useState<InstrumentType>('piano')
   const isGameTypeLocked = !!initialGameType
 
-  // Generate random questions from available notes
+  // Extract unique note letters from the level's notes for progressive difficulty
+  const allowedNotes = useMemo(() => {
+    const noteLetters = notes.map((n) => n.replace(/\d/, ''))
+    return [...new Set(noteLetters)]
+  }, [notes])
+
+  // Filter NOTE_OPTIONS to only show level's notes (progressive difficulty)
+  const availableNoteOptions = useMemo(() => {
+    return ALL_NOTE_OPTIONS.filter((opt) => allowedNotes.includes(opt.note))
+  }, [allowedNotes])
+
+  // Generate questions from available notes (deterministic order based on submoduleId)
   const questions = useMemo(() => {
-    const shuffled = [...notes].sort(() => Math.random() - 0.5)
+    // Use submoduleId hash for pseudo-random but stable order
+    const seed = submoduleId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    const shuffled = [...notes].sort((a, b) => {
+      const hashA = (a.charCodeAt(0) * seed) % 100
+      const hashB = (b.charCodeAt(0) * seed) % 100
+      return hashA - hashB
+    })
     const selected: string[] = []
     for (let i = 0; i < questionCount; i++) {
       selected.push(shuffled[i % shuffled.length])
     }
     return selected
-  }, [notes, questionCount])
+  }, [notes, questionCount, submoduleId])
 
   const currentNote = questions[currentQuestion]
   const correctAnswer = currentNote?.replace(/\d/, '')
@@ -137,7 +156,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
       setShowResult(false)
       setCountdown(AUTO_ADVANCE_DELAY)
     }
-  }, [currentQuestion, questionCount, score, submoduleId, addXP, onComplete])
+  }, [currentQuestion, questionCount, score, submoduleId, setSubmoduleScore, addXP, onComplete])
 
   // Auto-advance countdown
   useEffect(() => {
@@ -184,6 +203,64 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
     })
   }, [currentNote, gameType])
 
+  // Render ABC notation for staff-placement with CLICKABLE notes
+  useEffect(() => {
+    if (!abcStaffRef.current || gameType !== 'staff-placement') return
+    if (showResult) return // Don't re-render when showing result
+
+    // Create ABC notation showing ONE note per unique letter (e.g., E4 and G4 only)
+    const abcNotes = allowedNotes
+      .map((noteLetter) => {
+        // Use octave 4 for all notes (middle of staff range)
+        const noteWithOctave = `${noteLetter}4`
+        return noteToAbc(noteWithOctave)
+      })
+      .join(' ')
+
+    const abc = `X:1\nL:1\nK:C\n${abcNotes}|]`
+
+    abcjs.renderAbc(abcStaffRef.current, abc, {
+      responsive: 'resize',
+      staffwidth: 400,
+      paddingtop: 15,
+      paddingbottom: 15,
+      paddingleft: 15,
+      paddingright: 15,
+      add_classes: true,
+      clickListener: (abcElem: { pitches?: Array<{ name: string }> }) => {
+        // Extract note name from clicked element
+        if (abcElem.pitches && abcElem.pitches.length > 0) {
+          const noteName = abcElem.pitches[0].name
+          // Convert abcjs format (e.g., "E,", "G", "e") to simple letter
+          const letter = noteName.replace(/[,']/g, '').toUpperCase()
+          // Directly submit answer if game conditions met
+          if (!showResult && gameType === 'staff-placement') {
+            setSelectedAnswer(letter)
+            if (letter === correctAnswer) {
+              setScore((prev) => prev + 1)
+            }
+            setShowResult(true)
+            setCountdown(AUTO_ADVANCE_DELAY)
+          }
+        }
+      },
+    })
+
+    // Add hover styling to make notes look clickable (no transform to avoid jumping)
+    const noteElements = abcStaffRef.current.querySelectorAll('.abcjs-note')
+    noteElements.forEach((el) => {
+      const element = el as HTMLElement
+      element.style.cursor = 'pointer'
+      element.style.transition = 'filter 0.15s ease'
+      element.addEventListener('mouseenter', () => {
+        element.style.filter = 'drop-shadow(0 0 10px rgba(48, 232, 232, 0.9)) brightness(1.2)'
+      })
+      element.addEventListener('mouseleave', () => {
+        element.style.filter = 'none'
+      })
+    })
+  }, [gameType, allowedNotes, showResult, correctAnswer])
+
   // Submit answer and show result
   const submitAnswer = useCallback(
     (noteName: string) => {
@@ -198,48 +275,32 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
     [showResult, correctAnswer]
   )
 
-  // Keyboard handler for note-id game
+  // Keyboard handler for note-id game (only for allowed notes)
   useEffect(() => {
     if (gameType !== 'note-id' || showResult || isComplete) return
     const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toUpperCase()
-      if (['A', 'B', 'C', 'D', 'E', 'F', 'G'].includes(key)) {
+      if (allowedNotes.includes(key)) {
         event.preventDefault()
         submitAnswer(key)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [gameType, showResult, isComplete, submitAnswer])
+  }, [gameType, showResult, isComplete, submitAnswer, allowedNotes])
 
-  // Handle instrument answer (piano/guitar)
+  // Handle instrument answer (piano/guitar) - only accept allowed notes
   const handleInstrumentAnswer = useCallback(
     (note: string) => {
       if (showResult) return
       const noteLetter = note.replace(/\d/, '')
-      submitAnswer(noteLetter)
+      // Only accept if it's an allowed note for this level
+      if (allowedNotes.includes(noteLetter)) {
+        submitAnswer(noteLetter)
+      }
     },
-    [showResult, submitAnswer]
+    [showResult, submitAnswer, allowedNotes]
   )
-
-  // Handle staff click for staff-placement game
-  const handleStaffClick = useCallback(
-    (clickedNote: string) => {
-      if (showResult || gameType !== 'staff-placement') return
-      submitAnswer(clickedNote)
-    },
-    [showResult, gameType, submitAnswer]
-  )
-
-  // Restart quiz
-  const handleRestart = () => {
-    setCurrentQuestion(0)
-    setScore(0)
-    setSelectedAnswer(null)
-    setShowResult(false)
-    setIsComplete(false)
-    setCountdown(AUTO_ADVANCE_DELAY)
-  }
 
   // Get display label for current note (VN mode support)
   const getNoteDisplayLabel = (noteLetter: string) => {
@@ -292,6 +353,12 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
         />
       </div>
 
+      {/* Level notes indicator */}
+      <div className="flex justify-center gap-1 mb-3">
+        <span className="text-xs text-slate-400">Notes in this level:</span>
+        <span className="text-xs font-bold text-[#30e8e8]">{allowedNotes.join(', ')}</span>
+      </div>
+
       {/* Game Type Selector - only show if not locked */}
       {!isGameTypeLocked && (
         <div className="flex justify-center gap-1 mb-4 p-1 bg-slate-200 dark:bg-slate-700 rounded-lg">
@@ -333,13 +400,15 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
         {gameType === 'staff-placement' ? (
           <>
             <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2">
-              Where is{' '}
+              Click on{' '}
               <span className="text-[#30e8e8] text-2xl font-bold">
                 {getNoteDisplayLabel(correctAnswer)}
               </span>{' '}
-              on the staff?
+              on the staff
             </h3>
-            <p className="text-xs text-slate-400 mb-4">Click the correct line or space</p>
+            <p className="text-xs text-slate-400 mb-2">
+              Only notes: {allowedNotes.join(', ')} are shown
+            </p>
           </>
         ) : (
           <>
@@ -365,14 +434,14 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
 
       {/* Game Type Specific Content */}
 
-      {/* GAME TYPE 1: Note Identification */}
+      {/* GAME TYPE 1: Note Identification - Only show allowed notes */}
       {gameType === 'note-id' && (
         <div className="mb-4">
           <p className="text-xs text-slate-400 text-center mb-3">
-            Press A-G keys or click a button
+            Press {allowedNotes.join(', ')} keys or click a button
           </p>
           <div className="flex flex-wrap justify-center gap-2">
-            {NOTE_OPTIONS.map((option) => {
+            {availableNoteOptions.map((option) => {
               const isSelected = selectedAnswer === option.note
               const isCorrect = option.note === correctAnswer
               const showCorrect = showResult && isCorrect
@@ -383,7 +452,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
                   key={option.note}
                   onClick={() => submitAnswer(option.note)}
                   disabled={showResult}
-                  className={`py-2 px-3 rounded-lg font-bold transition-all border-2 min-w-[70px] text-sm ${
+                  className={`py-2 px-4 rounded-lg font-bold transition-all border-2 min-w-[80px] text-sm ${
                     showCorrect
                       ? 'bg-emerald-100 border-emerald-500 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
                       : showWrong
@@ -401,7 +470,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
         </div>
       )}
 
-      {/* GAME TYPE 2: Instrument Match */}
+      {/* GAME TYPE 2: Instrument Match - Pass allowed notes to instruments */}
       {gameType === 'instrument-match' && (
         <div className="mb-4">
           {/* Instrument Toggle */}
@@ -428,6 +497,10 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
             </button>
           </div>
 
+          <p className="text-xs text-slate-400 text-center mb-2">
+            Only notes {allowedNotes.join(', ')} are active
+          </p>
+
           {/* Piano */}
           {instrument === 'piano' && (
             <div className="bg-white dark:bg-slate-900 rounded-lg p-3 border border-slate-200 dark:border-slate-700">
@@ -437,6 +510,7 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
                 onStartNote={handleInstrumentAnswer}
                 onStopNote={() => {}}
                 activeNotes={selectedAnswer ? [`${selectedAnswer}4`] : []}
+                allowedNotes={allowedNotes}
               />
             </div>
           )}
@@ -446,113 +520,38 @@ export const NoteIdentificationQuiz: React.FC<NoteIdentificationQuizProps> = ({
             <VirtualGuitar
               onPlayNote={handleInstrumentAnswer}
               activeNotes={selectedAnswer ? [`${selectedAnswer}4`] : []}
+              allowedNotes={allowedNotes}
             />
           )}
         </div>
       )}
 
-      {/* GAME TYPE 3: Staff Placement */}
+      {/* GAME TYPE 3: Staff Placement - Click on ABC rendered notes */}
       {gameType === 'staff-placement' && (
         <div className="mb-4">
           <div className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-            <svg
-              viewBox="0 0 220 100"
-              className="w-full max-w-md mx-auto"
-              style={{ height: '140px' }}
-            >
-              {/* Treble Clef Symbol */}
-              <text x="12" y="58" fontSize="42" fill="#64748b">
-                𝄞
-              </text>
+            {/* ABC rendered staff with clickable notes */}
+            <div ref={abcStaffRef} className="flex justify-center [&_.abcjs-note]:cursor-pointer" />
 
-              {/* Staff Lines - y positions: 20, 35, 50, 65, 80 (spacing of 15) */}
-              {[0, 1, 2, 3, 4].map((i) => (
-                <line
-                  key={`line-${i}`}
-                  x1="50"
-                  y1={20 + i * 15}
-                  x2="210"
-                  y2={20 + i * 15}
-                  stroke="#94a3b8"
-                  strokeWidth="1.5"
-                />
-              ))}
+            {/* Instructions */}
+            <p className="text-xs text-center text-slate-400 mt-3">
+              Click on the note to select your answer
+            </p>
 
-              {/* Clickable Regions - each staff position maps to a note */}
-              {/* Line notes: F5(y=20), D5(y=35), B4(y=50), G4(y=65), E4(y=80) */}
-              {/* Space notes: E5(y=27.5), C5(y=42.5), A4(y=57.5), F4(y=72.5) */}
-              {[
-                { note: 'F', y: 20, type: 'line' }, // Top line (F5)
-                { note: 'E', y: 27.5, type: 'space' }, // Space below top (E5)
-                { note: 'D', y: 35, type: 'line' }, // 4th line (D5)
-                { note: 'C', y: 42.5, type: 'space' }, // Space (C5)
-                { note: 'B', y: 50, type: 'line' }, // 3rd line (B4)
-                { note: 'A', y: 57.5, type: 'space' }, // Space (A4)
-                { note: 'G', y: 65, type: 'line' }, // 2nd line (G4)
-                { note: 'F', y: 72.5, type: 'space' }, // Space (F4) - different octave
-                { note: 'E', y: 80, type: 'line' }, // 1st line (E4)
-              ].map((pos, idx) => {
-                const isSelected = selectedAnswer === pos.note
-                const isCorrect = pos.note === correctAnswer
-                const showCorrect = showResult && isCorrect
-                const showWrong = showResult && isSelected && !isCorrect
-
-                return (
-                  <g key={`pos-${idx}`}>
-                    {/* Clickable area - covers the line or space region */}
-                    <rect
-                      x="50"
-                      y={pos.y - 4}
-                      width="160"
-                      height="8"
-                      fill={
-                        showCorrect
-                          ? 'rgba(16, 185, 129, 0.3)'
-                          : showWrong
-                            ? 'rgba(244, 63, 94, 0.3)'
-                            : 'transparent'
-                      }
-                      className={
-                        showResult ? '' : 'hover:fill-[rgba(48,232,232,0.25)] cursor-pointer'
-                      }
-                      onClick={() => !showResult && handleStaffClick(pos.note)}
-                    />
-
-                    {/* Note head ellipse - placed exactly on line/space */}
-                    {(showCorrect || isSelected) && (
-                      <ellipse
-                        cx="130"
-                        cy={pos.y}
-                        rx="7"
-                        ry="5"
-                        fill={showCorrect ? '#10b981' : showWrong ? '#f43f5e' : '#30e8e8'}
-                        stroke={showCorrect ? '#047857' : showWrong ? '#be123c' : '#111818'}
-                        strokeWidth="1"
-                        style={{
-                          filter: showCorrect
-                            ? 'drop-shadow(0 0 4px rgba(16, 185, 129, 0.6))'
-                            : showWrong
-                              ? 'drop-shadow(0 0 4px rgba(244, 63, 94, 0.6))'
-                              : 'drop-shadow(0 0 4px rgba(48, 232, 232, 0.6))',
-                        }}
-                      />
-                    )}
-
-                    {/* Show ledger line if needed for notes outside staff */}
-                    {(showCorrect || isSelected) && pos.y > 80 && (
-                      <line
-                        x1="118"
-                        y1={pos.y}
-                        x2="142"
-                        y2={pos.y}
-                        stroke="#64748b"
-                        strokeWidth="1"
-                      />
-                    )}
-                  </g>
-                )
-              })}
-            </svg>
+            {/* Feedback overlay when answer is shown */}
+            {showResult && (
+              <div
+                className={`mt-3 p-3 rounded-lg text-center text-sm font-bold ${
+                  selectedAnswer === correctAnswer
+                    ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300'
+                }`}
+              >
+                {selectedAnswer === correctAnswer
+                  ? `✓ Correct! You clicked ${selectedAnswer}`
+                  : `✗ Wrong! You clicked ${selectedAnswer}, the answer was ${correctAnswer}`}
+              </div>
+            )}
           </div>
         </div>
       )}
