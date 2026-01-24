@@ -14,8 +14,6 @@ import {
   GUITAR_TUNING,
   transposeGuitarToWritten,
 } from '../../utils/guitar-logic'
-import { getNoteLabel } from '../../utils/note-labels'
-import { useSettingsStore } from '../../stores/useSettingsStore'
 import { useAudioStore } from '../../stores/useAudioStore'
 
 interface InlineGuitarProps {
@@ -25,19 +23,34 @@ interface InlineGuitarProps {
   highlightNotes?: string[]
 }
 
-// Color map for each note letter
+// Color map for each note letter (naturals and accidentals)
 const NOTE_COLORS: Record<string, string> = {
   C: '#9ca3af', // gray
+  'C#': '#30e8e8', // cyan for sharps
+  Db: '#a78bfa', // purple for flats
   D: '#a855f7', // purple
+  'D#': '#30e8e8', // cyan
+  Eb: '#a78bfa', // purple
   E: '#facc15', // yellow
   F: '#fb923c', // orange
+  'F#': '#30e8e8', // cyan
+  Gb: '#a78bfa', // purple
   G: '#22c55e', // green
+  'G#': '#30e8e8', // cyan
+  Ab: '#a78bfa', // purple
   A: '#ef4444', // red
+  'A#': '#30e8e8', // cyan
+  Bb: '#a78bfa', // purple
   B: '#3b82f6', // blue
 }
 
 // Get note color based on letter
 const getNoteColor = (noteLetter: string): string => {
+  // Try exact match first
+  if (NOTE_COLORS[noteLetter]) {
+    return NOTE_COLORS[noteLetter]
+  }
+  // Fallback to base letter
   const letter = noteLetter.replace('#', '').replace('b', '')
   return NOTE_COLORS[letter] || '#30e8e8'
 }
@@ -54,11 +67,7 @@ const FRETBOARD_HEIGHT = HEIGHT - PADDING_Y * 2
 const STRING_SPACING = FRETBOARD_HEIGHT / 5
 const FRET_SPACING = FRETBOARD_WIDTH / TOTAL_FRETS
 
-export const InlineGuitar: React.FC<InlineGuitarProps> = ({
-  title,
-  highlightNotes = [],
-}) => {
-  const notationSystem = useSettingsStore((state) => state.notationSystem)
+export const InlineGuitar: React.FC<InlineGuitarProps> = ({ title, highlightNotes = [] }) => {
   const startNote = useAudioStore((state) => state.startNote)
   const stopNote = useAudioStore((state) => state.stopNote)
 
@@ -145,8 +154,18 @@ export const InlineGuitar: React.FC<InlineGuitarProps> = ({
           {/* Double Fret Markers */}
           {doubleDots.map((fret) => (
             <g key={`double-dot-${fret}`}>
-              <circle cx={PADDING_X + (fret - 0.5) * FRET_SPACING} cy={HEIGHT / 2 - 10} r={3} fill="#475569" />
-              <circle cx={PADDING_X + (fret - 0.5) * FRET_SPACING} cy={HEIGHT / 2 + 10} r={3} fill="#475569" />
+              <circle
+                cx={PADDING_X + (fret - 0.5) * FRET_SPACING}
+                cy={HEIGHT / 2 - 10}
+                r={3}
+                fill="#475569"
+              />
+              <circle
+                cx={PADDING_X + (fret - 0.5) * FRET_SPACING}
+                cy={HEIGHT / 2 + 10}
+                r={3}
+                fill="#475569"
+              />
             </g>
           ))}
 
@@ -172,11 +191,14 @@ export const InlineGuitar: React.FC<InlineGuitarProps> = ({
               const noteLetter = soundingNote.replace(/[0-9]/g, '')
               const isNatural = !noteLetter.includes('#') && !noteLetter.includes('b')
 
-              // Only show natural notes (no sharps/flats)
-              if (!isNatural) return null
+              // Check if this specific note (including accidentals) should be displayed
+              const isHighlightedAccidental = highlightLetters.has(noteLetter)
 
-              // Check if this note should be displayed
-              const shouldShow = showAllNotes || highlightLetters.has(noteLetter)
+              // For natural notes: show if showAllNotes OR if specifically highlighted
+              // For accidentals: only show if specifically highlighted
+              const shouldShow = isNatural
+                ? showAllNotes || highlightLetters.has(noteLetter)
+                : isHighlightedAccidental
               if (!shouldShow) return null
 
               const renderX = fret === 0 ? PADDING_X - 8 : PADDING_X + (fret - 0.5) * FRET_SPACING

@@ -22,9 +22,10 @@ export interface AbcDemo {
 }
 
 export interface Exercise {
-  type: 'note-id' | 'interval' | 'chord' | 'rhythm'
+  type: 'note-id' | 'interval' | 'chord' | 'rhythm' | 'accidental-game'
   notes?: string[] // For note-id: notes to quiz on
   questionCount?: number // Number of questions
+  gameType?: string // For accidental-game: specifies which module's game (e.g., 'module-1.3')
 }
 
 export interface Submodule {

@@ -202,21 +202,70 @@ details summary::-webkit-details-marker {
   color: #30e8e8;
 }
 
-/* Tables */
+/* Tables - Enhanced styling with proper thead/th support */
 .theory-formatted table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   border-radius: 0.75rem;
   overflow: hidden;
-  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+  table-layout: auto;
 }
 
 .dark .theory-formatted table {
-  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
 }
 
+/* Table header - thead th */
+.theory-formatted table thead th {
+  background: linear-gradient(135deg, #30e8e8 0%, #26d4d4 100%);
+  color: #0f172a;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.875rem 1.25rem;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+.dark .theory-formatted table thead th {
+  background: linear-gradient(135deg, #30e8e8 0%, #1f9d9d 100%);
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Table body cells - td */
+.theory-formatted table td {
+  padding: 0.875rem 1.25rem;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  background: #fff;
+  vertical-align: middle;
+}
+
+/* Last row - no bottom border */
+.theory-formatted table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dark .theory-formatted table td {
+  border-color: #334155;
+  background: #1e293b;
+}
+
+/* Row hover effect */
+.theory-formatted table tbody tr:hover td {
+  background: linear-gradient(135deg, rgba(48, 232, 232, 0.05) 0%, rgba(48, 232, 232, 0.02) 100%);
+}
+
+.dark .theory-formatted table tbody tr:hover td {
+  background: linear-gradient(135deg, rgba(48, 232, 232, 0.15) 0%, rgba(48, 232, 232, 0.05) 100%);
+}
+
+/* Legacy support for tr:first-child td (old tables) */
 .theory-formatted table tr:first-child td {
   background: linear-gradient(135deg, #30e8e8 0%, #26d4d4 100%);
   color: #0f172a;
@@ -226,28 +275,8 @@ details summary::-webkit-details-marker {
   letter-spacing: 0.05em;
 }
 
-.theory-formatted table td {
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  background: #fff;
-}
-
-.dark .theory-formatted table td {
-  border-color: #334155;
-  background: #1e293b;
-}
-
 .dark .theory-formatted table tr:first-child td {
   background: linear-gradient(135deg, #30e8e8 0%, #1f9d9d 100%);
-  border-color: transparent;
-}
-
-.theory-formatted table tr:hover td {
-  background: #f8fafc;
-}
-
-.dark .theory-formatted table tr:hover td {
-  background: #334155;
 }
 
 .theory-formatted table tr:first-child:hover td {
@@ -256,6 +285,29 @@ details summary::-webkit-details-marker {
 
 .dark .theory-formatted table tr:first-child:hover td {
   background: linear-gradient(135deg, #30e8e8 0%, #1f9d9d 100%);
+}
+
+/* Override for tables with proper thead - first-child styling should be normal */
+.theory-formatted table:has(thead) tbody tr:first-child td {
+  background: #fff;
+  color: inherit;
+  font-weight: inherit;
+  text-transform: none;
+  font-size: inherit;
+  letter-spacing: normal;
+}
+
+.dark .theory-formatted table:has(thead) tbody tr:first-child td {
+  background: #1e293b;
+}
+
+/* Hover override for tables with thead */
+.theory-formatted table:has(thead) tbody tr:first-child:hover td {
+  background: linear-gradient(135deg, rgba(48, 232, 232, 0.05) 0%, rgba(48, 232, 232, 0.02) 100%);
+}
+
+.dark .theory-formatted table:has(thead) tbody tr:first-child:hover td {
+  background: linear-gradient(135deg, rgba(48, 232, 232, 0.15) 0%, rgba(48, 232, 232, 0.05) 100%);
 }
 
 /* Line break spacing */

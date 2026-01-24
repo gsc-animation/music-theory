@@ -23,6 +23,7 @@ const HorizontalSaoTrucVisualizer = React.lazy(
 const AbcDemoSection = React.lazy(() => import('../components/modules/AbcDemoSection'))
 const GameQuiz = React.lazy(() => import('../components/modules/GameQuiz'))
 const Module12GameQuiz = React.lazy(() => import('../components/modules/Module12GameQuiz'))
+const Module13GameQuiz = React.lazy(() => import('../components/modules/Module13GameQuiz'))
 const TheoryContent = React.lazy(() => import('../components/modules/TheoryContent'))
 
 /**
@@ -318,8 +319,11 @@ export const SubmodulePage: React.FC = () => {
                 }
               >
                 {/* Use Module12GameQuiz for submodule 1.2 (octave-focused games) */}
+                {/* Use Module13GameQuiz for submodule 1.3 (accidentals games) */}
                 {submodule.id === '1.2' ? (
                   <Module12GameQuiz submoduleId={submodule.id} />
+                ) : submodule.id === '1.3' || submodule.exercises.some(e => e.type === 'accidental-game') ? (
+                  <Module13GameQuiz submoduleId={submodule.id} />
                 ) : (
                   submodule.exercises.map((exercise, idx) => {
                     if (exercise.type === 'note-id' && exercise.notes) {

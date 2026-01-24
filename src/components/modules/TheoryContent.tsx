@@ -85,22 +85,84 @@ function parseTheoryContent(content: string): ContentBlock[] {
 }
 
 /**
+ * Parse markdown table to proper HTML with thead/th and tbody/td
+ */
+function parseMarkdownTable(tableText: string): string {
+  const lines = tableText.trim().split('\n')
+  if (lines.length < 2) return tableText
+
+  const headerLine = lines[0]
+  const separatorLine = lines[1]
+  const dataLines = lines.slice(2)
+
+  // Check if this is a valid markdown table (has separator with dashes)
+  if (!separatorLine.includes('---')) return tableText
+
+  // Parse header cells
+  const headerCells = headerLine
+    .split('|')
+    .filter((c) => c.trim())
+    .map((c) => c.trim())
+
+  // Parse separator to detect alignment (for future use)
+  const separatorCells = separatorLine
+    .split('|')
+    .filter((c) => c.trim())
+    .map((c) => {
+      const cell = c.trim()
+      if (cell.startsWith(':') && cell.endsWith(':')) return 'center'
+      if (cell.endsWith(':')) return 'right'
+      return 'left'
+    })
+
+  // Build header row with proper th elements
+  const theadHtml = `<thead><tr>${headerCells
+    .map((c, i) => {
+      const align = separatorCells[i] || 'left'
+      return `<th style="text-align: ${align}">${c}</th>`
+    })
+    .join('')}</tr></thead>`
+
+  // Build body rows with td elements
+  const tbodyRows = dataLines
+    .map((line) => {
+      const cells = line
+        .split('|')
+        .filter((c) => c.trim())
+        .map((c, i) => {
+          const align = separatorCells[i] || 'left'
+          return `<td style="text-align: ${align}">${c.trim()}</td>`
+        })
+      return `<tr>${cells.join('')}</tr>`
+    })
+    .join('')
+
+  const tbodyHtml = `<tbody>${tbodyRows}</tbody>`
+
+  return `<table>${theadHtml}${tbodyHtml}</table>`
+}
+
+/**
  * Format HTML content (markdown-like to HTML)
  */
 function formatHtmlContent(content: string): string {
-  let result = content
+  // First, handle markdown tables specially
+  // Match markdown tables (consecutive lines with | that include a separator line with ---)
+  const tablePattern = /((?:^\|.+\|\s*$\n?)+)/gm
+  let result = content.replace(tablePattern, (match) => {
+    // Check if this block has a separator line (valid table)
+    if (match.includes('---')) {
+      return parseMarkdownTable(match)
+    }
+    return match
+  })
+
+  // Then handle other markdown elements
+  result = result
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/\|(.+)\|/g, (match) => {
-      const cells = match.split('|').filter((c) => c.trim())
-      const isHeader = cells.some((c) => c.includes('---'))
-      if (isHeader) return ''
-      const cellHtml = cells.map((c) => `<td>${c.trim()}</td>`).join('')
-      return `<tr>${cellHtml}</tr>`
-    })
-    .replace(/(<tr>[\s\S]*?<\/tr>)+/g, '<table><tbody>$&</tbody></table>')
     .replace(/(<li>[\s\S]*?<\/li>)+/g, '<ul>$&</ul>')
 
   const blocks = result.split(/\n\n+/)

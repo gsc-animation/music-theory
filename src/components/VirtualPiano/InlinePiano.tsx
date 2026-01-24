@@ -7,8 +7,6 @@
  * - Automatic note labels
  */
 import React from 'react'
-import { getNoteLabel } from '../../utils/note-labels'
-import { useSettingsStore } from '../../stores/useSettingsStore'
 import { useAudioStore } from '../../stores/useAudioStore'
 
 interface InlinePianoProps {
@@ -49,7 +47,6 @@ export const InlinePiano: React.FC<InlinePianoProps> = ({
   startOctave = 3,
   octaves = 3,
 }) => {
-  const notationSystem = useSettingsStore((state) => state.notationSystem)
   const startNote = useAudioStore((state) => state.startNote)
   const stopNote = useAudioStore((state) => state.stopNote)
 
@@ -113,9 +110,7 @@ export const InlinePiano: React.FC<InlinePianoProps> = ({
       {title && (
         <div className="flex items-center gap-2 mb-2">
           <span className="material-symbols-outlined text-blue-500 text-sm">piano</span>
-          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
-            {title}
-          </span>
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">{title}</span>
           <span className="text-[9px] text-slate-400">(click to play)</span>
         </div>
       )}
@@ -190,6 +185,19 @@ export const InlinePiano: React.FC<InlinePianoProps> = ({
                       : undefined
                   }
                 />
+                {/* Note label for highlighted black keys */}
+                {isHighlighted && (
+                  <text
+                    x={key.x + BLACK_KEY_WIDTH / 2}
+                    y={BLACK_KEY_HEIGHT - 5}
+                    textAnchor="middle"
+                    fontSize="8"
+                    fontWeight="bold"
+                    fill="#111818"
+                  >
+                    {key.note}
+                  </text>
+                )}
               </g>
             )
           })}
