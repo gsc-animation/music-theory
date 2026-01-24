@@ -218,68 +218,9 @@ Bằng cách giải quyết triệt để các vấn đề về độ trễ âm 
 
 ## **7. Nội dung Khóa học (Course Content)**
 
-### **Module 1: The Fundamentals (Pitch & Notation)**
-
-| Topic                      | Description                                                             |
-| :------------------------- | :---------------------------------------------------------------------- |
-| **The Staff & Clefs**      | Understanding the 5 lines, Treble Clef (G Clef), and Bass Clef (F Clef) |
-| **Note Names & Pitch**     | Identifying notes (A-B-C-D-E-F-G) on the keyboard and staff             |
-| **Accidentals**            | Sharps (#), Flats (b), and Naturals (♮)                                 |
-| **Tones & Semitones**      | Understanding Whole Steps and Half Steps                                |
-| **Enharmonic Equivalents** | Notes that sound the same but are spelled differently (e.g., C# and Db) |
-
----
-
-### **Module 2: Rhythm & Meter**
-
-| Topic                        | Description                                                           |
-| :--------------------------- | :-------------------------------------------------------------------- |
-| **Note Values**              | Whole, Half, Quarter, Eighth, and Sixteenth notes                     |
-| **Rests**                    | Silence values corresponding to note durations                        |
-| **Dotted Notes & Ties**      | Extending duration (adding half value)                                |
-| **Time Signatures (Simple)** | Understanding top/bottom numbers (4/4, 3/4, 2/4)                      |
-| **Compound Meter**           | Introduction to 6/8 and triplet feel                                  |
-| **Tempo & BPM**              | Beats Per Minute and Italian tempo markings (Largo, Andante, Allegro) |
-
----
-
-### **Module 3: Scales & Melody**
-
-| Topic                    | Description                                               |
-| :----------------------- | :-------------------------------------------------------- |
-| **The Major Scale**      | Construction formula (W-W-H-W-W-W-H)                      |
-| **Key Signatures**       | Order of Sharps and Flats; identifying keys on the staff  |
-| **Intervals (Quantity)** | Distance between notes (2nd, 3rd, 4th, 5th...)            |
-| **Intervals (Quality)**  | Major, Minor, Perfect, Augmented, and Diminished          |
-| **The Minor Scales**     | Natural Minor, Harmonic Minor, and Melodic Minor          |
-| **The Pentatonic Scale** | Major and Minor pentatonic patterns (crucial for soloing) |
-
----
-
-### **Module 4: Harmony (The Core)**
-
-| Topic                      | Description                                               |
-| :------------------------- | :-------------------------------------------------------- |
-| **Triads (Chords)**        | Building 3-note chords (Root, 3rd, 5th)                   |
-| **Chord Qualities**        | Major, Minor, Diminished, and Augmented triads            |
-| **Diatonic Chords**        | Chords built strictly from the notes of a specific key    |
-| **Roman Numeral Analysis** | The Nashville Number System (I, ii, iii, IV, V, vi, vii°) |
-| **The Circle of Fifths**   | Visualizing key relationships and accidentals             |
-| **Chord Inversions**       | Slash chords (e.g., C/E, G/B) and voice leading basics    |
-| **Seventh Chords**         | Major 7 (Maj7), Minor 7 (min7), Dominant 7 (dom7)         |
-
----
-
-### **Module 5: Composition & Form**
-
-| Topic                         | Description                                                 |
-| :---------------------------- | :---------------------------------------------------------- |
-| **Common Chord Progressions** | Pop/Rock formulas (I-V-vi-IV, ii-V-I)                       |
-| **Cadences**                  | Musical punctuation (Perfect, Plagal, Half, Deceptive)      |
-| **Melodic Contour**           | Passing tones and neighbor tones (making melodies smooth)   |
-| **Song Structure**            | Verse, Chorus, Bridge, Pre-Chorus, Intro/Outro              |
-| **Dynamics & Articulation**   | Markings for volume (p, f, mf) and touch (staccato, legato) |
-| **Modulation**                | Briefly changing keys within a song                         |
+> 📚 **Xem chi tiết tại:** [COURSE_CONTENT.md](./COURSE_CONTENT.md)
+>
+> Tài liệu nội dung khóa học đã được tách ra thành file riêng, bao gồm 5 module với 30 bài học chi tiết, được viết bằng tiếng Việt.
 
 ---
 
