@@ -24,7 +24,9 @@ const AbcDemoSection = React.lazy(() => import('../components/modules/AbcDemoSec
 const GameQuiz = React.lazy(() => import('../components/modules/GameQuiz'))
 const Module12GameQuiz = React.lazy(() => import('../components/modules/Module12GameQuiz'))
 const Module13GameQuiz = React.lazy(() => import('../components/modules/Module13GameQuiz'))
-const TheoryContent = React.lazy(() => import('../components/modules/TheoryContent'))
+const ProgressiveTheoryContent = React.lazy(
+  () => import('../components/modules/ProgressiveTheoryContent')
+)
 
 /**
  * SubmodulePage - Dynamic lesson page that shows/hides sections based on submodule config
@@ -40,6 +42,8 @@ export const SubmodulePage: React.FC = () => {
   const appendNote = useNotationStore((state) => state.appendNote)
 
   const [showNoteNames, setShowNoteNames] = React.useState(false)
+  const [theoryComplete, setTheoryComplete] = React.useState(false)
+  const interactiveRef = React.useRef<HTMLDivElement>(null)
 
   // Get current submodule data
   const submodule = submoduleId ? findSubmodule(submoduleId) : undefined
@@ -161,10 +165,19 @@ export const SubmodulePage: React.FC = () => {
                 <div className="border-t border-slate-200 dark:border-slate-700 mb-6" />
               )}
 
-              {/* Theory Content with Inline Demos */}
+              {/* Theory Content with Inline Demos - Progressive Reveal */}
               {hasSection('theory') && submodule.theoryContent && (
                 <React.Suspense fallback={<div className="text-slate-400">Loading content...</div>}>
-                  <TheoryContent content={submodule.theoryContent} />
+                  <ProgressiveTheoryContent
+                    content={submodule.theoryContent}
+                    onAllSectionsComplete={() => {
+                      setTheoryComplete(true)
+                      // Auto-scroll to interactive section after delay
+                      setTimeout(() => {
+                        interactiveRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      }, 300)
+                    }}
+                  />
 
                   {/* Inline Grand Staff - embedded within theory card */}
                   {hasSection('grandStaff') && (
@@ -203,15 +216,22 @@ export const SubmodulePage: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Inline ABC Demos - embedded within theory card */}
-                  {hasSection('abcDemo') && submodule.abcDemos && submodule.abcDemos.length > 0 && (
-                    <div className="mt-6">
+                  {/* Inline ABC Demos - revealed after theory complete */}
+                  {theoryComplete && hasSection('abcDemo') && submodule.abcDemos && submodule.abcDemos.length > 0 && (
+                    <div
+                      ref={interactiveRef}
+                      className="mt-6"
+                      style={{ animation: 'fadeIn 0.5s ease-out' }}
+                    >
                       <div className="flex items-center gap-2 mb-4">
                         <span className="material-symbols-outlined text-[#30e8e8]">
                           play_circle
                         </span>
                         <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
                           Interactive Examples
+                        </span>
+                        <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-xs font-medium rounded-full">
+                          🎉 Mở khóa!
                         </span>
                       </div>
                       <React.Suspense
@@ -308,34 +328,37 @@ export const SubmodulePage: React.FC = () => {
             </CollapsiblePanel>
           )}
 
-          {/* Practice Quiz Section */}
-          {submodule.exercises && submodule.exercises.length > 0 && (
-            <CollapsiblePanel title="Note Training Game" icon="sports_esports" defaultOpen>
-              <React.Suspense
-                fallback={
-                  <div className="w-full h-32 flex items-center justify-center text-slate-400">
-                    Loading quiz...
-                  </div>
-                }
-              >
-                {/* Use Module12GameQuiz for submodule 1.2 (octave-focused games) */}
-                {/* Use Module13GameQuiz for submodule 1.3 (accidentals games) */}
-                {submodule.id === '1.2' ? (
-                  <Module12GameQuiz submoduleId={submodule.id} />
-                ) : submodule.id === '1.3' || submodule.exercises.some(e => e.type === 'accidental-game') ? (
-                  <Module13GameQuiz submoduleId={submodule.id} />
-                ) : (
-                  submodule.exercises.map((exercise, idx) => {
-                    if (exercise.type === 'note-id' && exercise.notes) {
-                      return (
-                        <GameQuiz key={`${submodule.id}-quiz-${idx}`} submoduleId={submodule.id} />
-                      )
-                    }
-                    return null
-                  })
-                )}
-              </React.Suspense>
-            </CollapsiblePanel>
+          {/* Practice Quiz Section - revealed after theory complete */}
+          {theoryComplete && submodule.exercises && submodule.exercises.length > 0 && (
+            <div style={{ animation: 'fadeIn 0.5s ease-out' }}>
+              <CollapsiblePanel title="Note Training Game" icon="sports_esports" defaultOpen>
+                <React.Suspense
+                  fallback={
+                    <div className="w-full h-32 flex items-center justify-center text-slate-400">
+                      Loading quiz...
+                    </div>
+                  }
+                >
+                  {/* Use Module12GameQuiz for submodule 1.2 (octave-focused games) */}
+                  {/* Use Module13GameQuiz for submodule 1.3 (accidentals games) */}
+                  {submodule.id === '1.2' ? (
+                    <Module12GameQuiz submoduleId={submodule.id} />
+                  ) : submodule.id === '1.3' ||
+                    submodule.exercises.some((e) => e.type === 'accidental-game') ? (
+                    <Module13GameQuiz submoduleId={submodule.id} />
+                  ) : (
+                    submodule.exercises.map((exercise, idx) => {
+                      if (exercise.type === 'note-id' && exercise.notes) {
+                        return (
+                          <GameQuiz key={`${submodule.id}-quiz-${idx}`} submoduleId={submodule.id} />
+                        )
+                      }
+                      return null
+                    })
+                  )}
+                </React.Suspense>
+              </CollapsiblePanel>
+            </div>
           )}
 
           {/* Navigation and Complete Button */}

@@ -3,40 +3,110 @@ import { AbcRenderer } from '../abc/AbcRenderer'
 import { InlineGuitar } from '../VirtualGuitar/InlineGuitar'
 import { InlinePiano } from '../VirtualPiano/InlinePiano'
 import { InlineFlute } from '../../features/sao-truc/components/InlineFlute'
+import { InlineQuiz } from './InlineQuiz'
 
 interface TheoryContentProps {
   content: string
 }
 
 interface ContentBlock {
-  type: 'html' | 'abc' | 'guitar' | 'piano' | 'flute'
+  type: 'html' | 'abc' | 'guitar' | 'piano' | 'flute' | 'quiz'
   content: string
   title?: string
   notes?: string[] // For guitar/piano/flute blocks: notes to highlight
+  // Quiz-specific fields
+  question?: string
+  options?: string[]
+  correctIndex?: number
+  explanation?: string
 }
 
 /**
- * Parse theory content and split into HTML blocks, ABC notation, guitar, piano, and flute blocks
+ * Parse theory content and split into HTML blocks, ABC notation, guitar, piano, flute, and quiz blocks
  *
  * Supported syntaxes:
  * - {{abc:Title|ABC notation}} - Music staff notation
  * - {{guitar:Title|E4,B3,G3}} - Guitar fretboard with highlighted notes
  * - {{piano:Title|C4,E4,G4}} - Piano keyboard with highlighted notes
  * - {{flute:Title|C4,D4,E4}} - Flute fingering chart
+ * - {{quiz:Question|opt1;opt2;*correct|Explanation}} - Inline quiz (correct option prefixed with *)
  */
 function parseTheoryContent(content: string): ContentBlock[] {
   const blocks: ContentBlock[] = []
 
-  // Combined pattern to match all block types
+  // Combined pattern to match all block types (abc, guitar, piano, flute)
   const combinedPattern = /\{\{(abc|guitar|piano|flute):([^|]+)\|([^}]+)\}\}/g
+  
+  // Quiz pattern: {{quiz:Question|opt1;opt2;*correct|explanation}}
+  const quizPattern = /\{\{quiz:([^|]+)\|([^|]+)(?:\|([^}]+))?\}\}/g
 
-  let lastIndex = 0
+  // Collect all matches with their positions
+  interface MatchInfo {
+    index: number
+    length: number
+    block: ContentBlock
+  }
+  const allMatches: MatchInfo[] = []
+  
   let match
 
+  // Collect abc/guitar/piano/flute matches
   while ((match = combinedPattern.exec(content)) !== null) {
+    const blockType = match[1] as 'abc' | 'guitar' | 'piano' | 'flute'
+    const title = match[2].trim()
+    const blockContent = match[3].trim()
+
+    let block: ContentBlock
+    if (blockType === 'guitar' || blockType === 'piano' || blockType === 'flute') {
+      const notes = blockContent.split(',').map((n) => n.trim())
+      block = { type: blockType, title, content: blockContent, notes }
+    } else {
+      block = { type: 'abc', title, content: blockContent }
+    }
+    
+    allMatches.push({ index: match.index, length: match[0].length, block })
+  }
+  
+  // Collect quiz matches
+  while ((match = quizPattern.exec(content)) !== null) {
+    const question = match[1].trim()
+    const optionsStr = match[2].trim()
+    const explanation = match[3]?.trim()
+    
+    // Parse options, find correct one (prefixed with *)
+    const rawOptions = optionsStr.split(';').map((o) => o.trim())
+    let correctIndex = 0
+    const options = rawOptions.map((opt, idx) => {
+      if (opt.startsWith('*')) {
+        correctIndex = idx
+        return opt.slice(1)
+      }
+      return opt
+    })
+    
+    allMatches.push({
+      index: match.index,
+      length: match[0].length,
+      block: {
+        type: 'quiz',
+        content: '',
+        question,
+        options,
+        correctIndex,
+        explanation,
+      },
+    })
+  }
+  
+  // Sort all matches by position
+  allMatches.sort((a, b) => a.index - b.index)
+  
+  // Build blocks array with HTML content between matches
+  let lastIndex = 0
+  for (const matchInfo of allMatches) {
     // Add HTML content before this block
-    if (match.index > lastIndex) {
-      const htmlContent = content.slice(lastIndex, match.index)
+    if (matchInfo.index > lastIndex) {
+      const htmlContent = content.slice(lastIndex, matchInfo.index)
       if (htmlContent.trim()) {
         blocks.push({
           type: 'html',
@@ -44,30 +114,9 @@ function parseTheoryContent(content: string): ContentBlock[] {
         })
       }
     }
-
-    const blockType = match[1] as 'abc' | 'guitar' | 'piano' | 'flute'
-    const title = match[2].trim()
-    const blockContent = match[3].trim()
-
-    if (blockType === 'guitar' || blockType === 'piano' || blockType === 'flute') {
-      // Parse comma-separated notes
-      const notes = blockContent.split(',').map((n) => n.trim())
-      blocks.push({
-        type: blockType,
-        title,
-        content: blockContent,
-        notes,
-      })
-    } else {
-      // ABC block
-      blocks.push({
-        type: 'abc',
-        title,
-        content: blockContent,
-      })
-    }
-
-    lastIndex = match.index + match[0].length
+    
+    blocks.push(matchInfo.block)
+    lastIndex = matchInfo.index + matchInfo.length
   }
 
   // Add remaining HTML content
@@ -225,6 +274,19 @@ export const TheoryContent: React.FC<TheoryContentProps> = ({ content }) => {
           return (
             <div key={`flute-${index}`} className="flute-renderer-wrapper">
               <InlineFlute title={block.title} highlightNotes={block.notes} />
+            </div>
+          )
+        }
+
+        if (block.type === 'quiz' && block.question && block.options) {
+          return (
+            <div key={`quiz-${index}`} className="quiz-renderer-wrapper">
+              <InlineQuiz
+                question={block.question}
+                options={block.options}
+                correctIndex={block.correctIndex ?? 0}
+                explanation={block.explanation}
+              />
             </div>
           )
         }

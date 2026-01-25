@@ -1,0 +1,216 @@
+/* InlineQuiz - Dark theme compatible styling */
+
+.inline-quiz {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  transition: all 0.3s ease;
+}
+
+.inline-quiz.correct {
+  border-color: rgba(52, 211, 153, 0.5);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.inline-quiz.incorrect {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.quiz-question {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: #30e8e8;
+  background: rgba(48, 232, 232, 0.1);
+  transform: translateX(3px);
+}
+
+.quiz-option:disabled {
+  cursor: default;
+}
+
+.quiz-option.correct {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.quiz-option.incorrect {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.quiz-option.correct .option-letter {
+  background: #10b981;
+  color: white;
+}
+
+.quiz-option.incorrect .option-letter {
+  background: #ef4444;
+  color: white;
+}
+
+.option-text {
+  flex: 1;
+  color: #e2e8f0;
+}
+
+.option-icon {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.quiz-option.correct .option-icon {
+  color: #10b981;
+}
+
+.quiz-option.incorrect .option-icon {
+  color: #ef4444;
+}
+
+/* Shake animation for incorrect answer */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+}
+
+.quiz-option.shake {
+  animation: shake 0.35s ease-in-out;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border-radius: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-feedback.correct {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+}
+
+.quiz-feedback.incorrect {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.375rem;
+}
+
+.quiz-feedback.correct .feedback-header {
+  color: #34d399;
+}
+
+.quiz-feedback.incorrect .feedback-header {
+  color: #fbbf24;
+}
+
+.feedback-icon {
+  font-size: 1.1rem;
+}
+
+.quiz-explanation {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0.375rem 0 0.75rem;
+}
+
+.retry-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retry-button:hover {
+  border-color: #30e8e8;
+  color: #30e8e8;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .inline-quiz {
+    padding: 1rem;
+    margin: 0.75rem 0;
+  }
+  
+  .quiz-question {
+    font-size: 0.95rem;
+  }
+  
+  .quiz-option {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9rem;
+  }
+  
+  .option-letter {
+    width: 26px;
+    height: 26px;
+    font-size: 0.8rem;
+  }
+}
