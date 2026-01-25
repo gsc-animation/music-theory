@@ -364,19 +364,19 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
   return (
     <div className={`inline-grand-staff my-6 ${className}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-3 p-3 bg-slate-800/80 rounded-t-xl border-b border-slate-700">
+      <div className="flex items-center justify-between mb-0 p-3 bg-slate-100 dark:bg-slate-800/80 rounded-t-xl border-b border-slate-300 dark:border-slate-700">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#30e8e8]">music_note</span>
-          <span className="text-sm font-bold text-slate-200 uppercase tracking-wide">
+          <span className="material-symbols-outlined text-teal-600 dark:text-[#30e8e8]">music_note</span>
+          <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
             {title || 'Grand Staff View'}
           </span>
         </div>
-        <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
+        <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
           <input
             type="checkbox"
             checked={showNoteNames}
             onChange={(e) => setShowNoteNames(e.target.checked)}
-            className="w-3 h-3 accent-[#30e8e8]"
+            className="w-3 h-3 accent-teal-600 dark:accent-[#30e8e8]"
           />
           <span>Notes</span>
         </label>
@@ -386,49 +386,48 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
       <div
         id={paperId}
         ref={containerRef}
-        className="abc-paper bg-slate-800/50 min-h-[150px] overflow-hidden cursor-pointer"
+        className="abc-paper bg-white dark:bg-slate-800/50 min-h-[150px] overflow-hidden cursor-pointer rounded-b-xl border-x border-b border-slate-300 dark:border-transparent"
       />
 
       {/* Audio controls */}
       <div id={audioId} ref={audioContainerRef} className="abc-audio mt-2" />
 
-      {/* Styles */}
+      {/* Styles - Light Mode + Dark Mode */}
       <style>{`
         .inline-grand-staff .abcjs-container svg {
           width: 100%;
           max-width: 100%;
         }
+        
+        /* ===== LIGHT MODE (Default) ===== */
         .inline-grand-staff path.abcjs-notehead,
         .inline-grand-staff path.abcjs-stem,
         .inline-grand-staff path.abcjs-beam {
-          fill: #cbd5e1;
-          stroke: #cbd5e1;
+          fill: #1e293b;
+          stroke: #1e293b;
         }
         .inline-grand-staff path.abcjs-staff,
         .inline-grand-staff path.abcjs-bar {
           stroke: #64748b;
         }
         .inline-grand-staff text {
-          fill: #94a3b8;
+          fill: #334155;
         }
         .inline-grand-staff text.abcjs-annotation {
-          fill: #30e8e8;
+          fill: #0d9488;
           font-size: 7px;
           font-weight: bold;
         }
         .inline-grand-staff .abcjs-note.abcjs-highlight path {
-          fill: #30e8e8 !important;
-          stroke: #30e8e8 !important;
+          fill: #0d9488 !important;
+          stroke: #0d9488 !important;
         }
         .inline-grand-staff .abcjs-note:hover path {
-          fill: #30e8e8 !important;
-          stroke: #30e8e8 !important;
-        }
-        .inline-grand-staff text.abcjs-voice-name {
-          display: none;
+          fill: #0d9488 !important;
+          stroke: #0d9488 !important;
         }
         .inline-grand-staff .abcjs-cursor {
-          stroke: #30e8e8;
+          stroke: #0d9488;
           stroke-width: 2;
           opacity: 0.8;
         }
@@ -436,23 +435,99 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
           background: transparent;
         }
         .inline-grand-staff .abcjs-inline-audio {
-          background-color: rgba(30, 41, 59, 0.8);
+          background-color: #f1f5f9;
           border-radius: 8px;
           padding: 8px 12px;
+          border: 1px solid #e2e8f0;
         }
         .inline-grand-staff .abcjs-inline-audio .abcjs-btn {
-          background-color: #30e8e8;
-          border: none;
-          color: #0f172a;
+          background-color: #0d9488 !important;
+          border: none !important;
+          color: #ffffff !important;
+        }
+        .inline-grand-staff .abcjs-inline-audio .abcjs-btn svg {
+          fill: #ffffff !important;
         }
         .inline-grand-staff .abcjs-inline-audio .abcjs-btn:hover {
-          background-color: #22d3ee;
+          background-color: #0f766e !important;
         }
         .inline-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background {
-          background-color: #334155;
+          background-color: #cbd5e1;
+          height: 8px;
+          border-radius: 4px;
         }
         .inline-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator {
+          background-color: #0d9488;
+          height: 8px;
+          border-radius: 4px;
+        }
+        .inline-grand-staff .abcjs-inline-audio .abcjs-midi-clock {
+          color: #334155;
+          font-weight: 500;
+        }
+        .inline-grand-staff .abcjs-inline-audio .abcjs-tempo-wrapper {
+          color: #334155;
+        }
+        .inline-grand-staff .abcjs-inline-audio .abcjs-tempo-wrapper input {
+          color: #1e293b;
+          background-color: #e2e8f0;
+          border: 1px solid #cbd5e1;
+          border-radius: 4px;
+        }
+        .inline-grand-staff text.abcjs-voice-name {
+          display: none;
+        }
+        
+        /* ===== DARK MODE ===== */
+        :root.dark .inline-grand-staff path.abcjs-notehead,
+        :root.dark .inline-grand-staff path.abcjs-stem,
+        :root.dark .inline-grand-staff path.abcjs-beam {
+          fill: #cbd5e1;
+          stroke: #cbd5e1;
+        }
+        :root.dark .inline-grand-staff path.abcjs-staff,
+        :root.dark .inline-grand-staff path.abcjs-bar {
+          stroke: #64748b;
+        }
+        :root.dark .inline-grand-staff text {
+          fill: #94a3b8;
+        }
+        :root.dark .inline-grand-staff text.abcjs-annotation {
+          fill: #30e8e8;
+        }
+        :root.dark .inline-grand-staff .abcjs-note.abcjs-highlight path {
+          fill: #30e8e8 !important;
+          stroke: #30e8e8 !important;
+        }
+        :root.dark .inline-grand-staff .abcjs-note:hover path {
+          fill: #30e8e8 !important;
+          stroke: #30e8e8 !important;
+        }
+        :root.dark .inline-grand-staff .abcjs-cursor {
+          stroke: #30e8e8;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio {
+          background-color: rgba(30, 41, 59, 0.8);
+          border: none;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio .abcjs-btn {
           background-color: #30e8e8;
+          color: #0f172a;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio .abcjs-btn:hover {
+          background-color: #22d3ee;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background {
+          background-color: #334155;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator {
+          background-color: #30e8e8;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio .abcjs-midi-clock {
+          color: #94a3b8;
+        }
+        :root.dark .inline-grand-staff .abcjs-inline-audio .abcjs-tempo-wrapper {
+          color: #94a3b8;
         }
       `}</style>
     </div>
