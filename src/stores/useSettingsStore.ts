@@ -8,6 +8,7 @@ interface SettingsState {
   theme: Theme
   vnMode: boolean
   bpm: number
+  sidebarCollapsed: boolean
   setNotationSystem: (system: 'latin' | 'solfege') => void
   toggleNotationSystem: () => void
   setTheme: (theme: Theme) => void
@@ -16,6 +17,8 @@ interface SettingsState {
   toggleVnMode: () => void
   setBpm: (bpm: number) => void
   adjustBpm: (delta: number) => void
+  setSidebarCollapsed: (collapsed: boolean) => void
+  toggleSidebar: () => void
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -25,6 +28,7 @@ export const useSettingsStore = create<SettingsState>()(
       theme: 'system',
       vnMode: false,
       bpm: 120,
+      sidebarCollapsed: false,
       setNotationSystem: (system) => set({ notationSystem: system }),
       toggleNotationSystem: () =>
         set((state) => ({
@@ -44,6 +48,11 @@ export const useSettingsStore = create<SettingsState>()(
       adjustBpm: (delta) =>
         set((state) => ({
           bpm: Math.max(40, Math.min(240, state.bpm + delta)),
+        })),
+      setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
+      toggleSidebar: () =>
+        set((state) => ({
+          sidebarCollapsed: !state.sidebarCollapsed,
         })),
     }),
     {
