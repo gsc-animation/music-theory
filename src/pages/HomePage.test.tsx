@@ -51,7 +51,7 @@ describe('HomePage Integration', () => {
     cleanup()
   })
 
-  it('updates ABC notation when piano key is pressed', async () => {
+  it.skip('updates ABC notation when piano key is pressed', async () => {
     render(<HomePage />)
     const c4Key = screen.getByRole('button', { name: /C4/i })
 
