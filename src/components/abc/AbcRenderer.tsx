@@ -194,8 +194,47 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
     return abc
   }, [abc, showNotes, notationSystem])
 
+  // Handle note click - supports chords (multiple notes)
+  // Uses playNoteWithRelease for both audio auto-release and visual feedback
+  const handleNoteClick = useCallback(
+    (abcNotes: string | string[]) => {
+      console.log('🎹 [AbcRenderer] handleNoteClick() - Note clicked!', abcNotes)
+      const notes = Array.isArray(abcNotes) ? abcNotes : [abcNotes]
+      const playableNotes = notes.map((n) => abcToNoteName(n))
+
+      console.log('🎹 [AbcRenderer] Playing notes:', playableNotes)
+      // Play all notes simultaneously with auto-release (audio + visual)
+      playableNotes.forEach((note) => {
+        playNoteWithRelease(note)
+      })
+    },
+    [playNoteWithRelease]
+  )
+
+  // Unified render function with clickListener
+  // This ensures notes remain clickable after playback
+  const renderWithClickListener = useCallback(
+    (container: HTMLDivElement, abcContent: string) => {
+      console.log('📝 [AbcRenderer] Rendering with clickListener')
+      const result = abcjs.renderAbc(container, abcContent, {
+        ...RENDER_OPTIONS,
+        clickListener: (abcelem: unknown) => {
+          const elem = abcelem as { pitches?: Array<{ name: string }> }
+          if (elem.pitches && elem.pitches.length > 0) {
+            const noteNames = elem.pitches.map((p) => p.name)
+            handleNoteClick(noteNames)
+          }
+        },
+      })
+      console.log('✅ [AbcRenderer] Render complete with clickListener')
+      return result
+    },
+    [handleNoteClick]
+  )
+
   // Stop function for this instance
   const stopPlayback = useCallback(() => {
+    console.log('🛑 [AbcRenderer] Stopping playback and re-rendering with clickListener')
     if (synthRef.current) {
       synthRef.current.stop()
       synthRef.current = null
@@ -210,11 +249,11 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
     clearHighlights()
 
     setIsPlaying(false)
-    // Re-render with current options
+    // Re-render with clickListener to restore interactivity
     if (containerRef.current) {
-      abcjs.renderAbc(containerRef.current, processedAbc, RENDER_OPTIONS)
+      renderWithClickListener(containerRef.current, processedAbc)
     }
-  }, [processedAbc, unhighlightNote, clearHighlights])
+  }, [processedAbc, unhighlightNote, clearHighlights, renderWithClickListener])
 
   // Register with global manager
   useEffect(() => {
@@ -225,53 +264,32 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
     }
   }, [stopPlayback])
 
-  // Handle note click - supports chords (multiple notes)
-  // Uses playNoteWithRelease for both audio auto-release and visual feedback
-  const handleNoteClick = useCallback(
-    (abcNotes: string | string[]) => {
-      const notes = Array.isArray(abcNotes) ? abcNotes : [abcNotes]
-      const playableNotes = notes.map((n) => abcToNoteName(n))
-
-      // Play all notes simultaneously with auto-release (audio + visual)
-      playableNotes.forEach((note) => {
-        playNoteWithRelease(note)
-      })
-    },
-    [playNoteWithRelease]
-  )
-
   // Initial render
   useEffect(() => {
     if (containerRef.current) {
-      abcjs.renderAbc(containerRef.current, processedAbc, {
-        ...RENDER_OPTIONS,
-        clickListener: (abcelem: unknown) => {
-          const elem = abcelem as { pitches?: Array<{ name: string }> }
-          if (elem.pitches && elem.pitches.length > 0) {
-            // Play ALL notes in the chord, not just the first one
-            const noteNames = elem.pitches.map((p) => p.name)
-            handleNoteClick(noteNames)
-          }
-        },
-      })
+      renderWithClickListener(containerRef.current, processedAbc)
     }
-  }, [processedAbc, handleNoteClick])
+  }, [processedAbc, renderWithClickListener])
 
   // Handle play button click
   const handlePlay = async () => {
+    console.log('🎵 [AbcRenderer] Play button clicked! isPlaying:', isPlaying)
     if (!containerRef.current || isLoading) return
 
     if (isPlaying) {
+      console.log('🛑 [AbcRenderer] Stopping playback')
       stopPlayback()
       return
     }
 
+    console.log('▶️ [AbcRenderer] Starting playback...')
     // Stop all other players first
     abcPlaybackManager.stopAll()
     setIsLoading(true)
 
     try {
-      const visualObj = abcjs.renderAbc(containerRef.current, processedAbc, RENDER_OPTIONS)[0]
+      // Render with clickListener to maintain interactivity during and after playback
+      const visualObj = renderWithClickListener(containerRef.current, processedAbc)[0]
 
       const synth = new abcjs.synth.CreateSynth()
       synthRef.current = synth
@@ -280,7 +298,16 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
         window.AudioContext ||
         (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
       const audioContext = new AudioContextClass()
+      console.log('🔊 [AbcRenderer] AudioContext created, state:', audioContext.state)
 
+      // Resume AudioContext if suspended (browser policy)
+      if (audioContext.state === 'suspended') {
+        console.log('▶️ [AbcRenderer] Resuming suspended AudioContext...')
+        await audioContext.resume()
+        console.log('✅ [AbcRenderer] AudioContext resumed, state:', audioContext.state)
+      }
+
+      console.log('⏳ [AbcRenderer] Initializing synth...')
       await synth.init({
         visualObj,
         audioContext,
@@ -289,8 +316,11 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
           soundFontUrl: 'https://paulrosen.github.io/midi-js-soundfonts/abcjs/',
         },
       })
+      console.log('✅ [AbcRenderer] Synth init complete')
 
+      console.log('⏳ [AbcRenderer] Priming synth (loading soundfont)...')
       await synth.prime()
+      console.log('✅ [AbcRenderer] Synth initialized and primed')
 
       const timingCallbacks = new abcjs.TimingCallbacks(visualObj, {
         eventCallback: (ev) => {
@@ -321,6 +351,7 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
               .map((p: { pitch: number }) => midiPitchToNoteName(p.pitch))
               .filter((note: string) => note !== '')
             if (notes.length > 0) {
+              console.log('🎵 [AbcRenderer] Playback event - highlighting notes:', notes)
               currentNotesRef.current = notes
               notes.forEach((note: string) => highlightNote(note))
             }
@@ -331,9 +362,13 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
       })
 
       timingRef.current = timingCallbacks
+      console.log('🎼 [AbcRenderer] Starting synth playback...')
       synth.start()
+      console.log('🎼 [AbcRenderer] Synth.start() called')
       timingCallbacks.start()
+      console.log('⏰ [AbcRenderer] Timing callbacks started')
       setIsPlaying(true)
+      console.log('🎵 [AbcRenderer] Playback started!')
     } catch (error) {
       console.error('Error playing ABC:', error)
       stopPlayback()

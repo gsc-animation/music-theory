@@ -38,6 +38,7 @@ class CursorControl {
   }
 
   onStart() {
+    console.log('🎵 [InlineGrandStaff] CursorControl.onStart() - Playback started!')
     this.isPlaybackActive = true
     const svg = document.querySelector(this.rootSelector + ' svg')
     if (!svg) return
@@ -58,6 +59,8 @@ class CursorControl {
       this.onNoteStop(this.currentNotes)
       this.currentNotes = []
     }
+    
+    console.log('🎵 [InlineGrandStaff] CursorControl.onEvent() - Audio playing notes:', ev.midiPitches)
 
     const lastSelection = document.querySelectorAll(this.rootSelector + ' .abcjs-highlight')
     lastSelection.forEach((el) => el.classList.remove('abcjs-highlight'))
@@ -297,9 +300,11 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
   // Click listener for individual notes
   const handleNoteClick = useCallback(
     (abcelem: abcjs.AbcElem) => {
+      console.log('🎹 [InlineGrandStaff] handleNoteClick() - Note clicked!', abcelem)
       if (abcelem.el_type === 'note' && abcelem.pitches && abcelem.pitches.length > 0) {
         abcelem.pitches.forEach((pitch) => {
           const noteName = abcNoteToStandardNote(pitch.name)
+          console.log('🎹 [InlineGrandStaff] Playing note:', noteName)
           if (noteName) {
             playNote(noteName)
             setTimeout(() => releaseNote(noteName), 500)
@@ -316,6 +321,7 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
   useEffect(() => {
     if (!containerRef.current) return
 
+    console.log('📝 [InlineGrandStaff] Initial render - Setting up clickListener')
     try {
       const rendered = abcjs.renderAbc(paperId, processedAbc, {
         responsive: 'resize',
@@ -335,6 +341,7 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
 
       if (rendered[0]) {
         visualObjRef.current = rendered[0]
+        console.log('✅ [InlineGrandStaff] Initial render complete with clickListener')
       }
     } catch (error) {
       console.warn('InlineGrandStaff: Render error:', error)
@@ -353,13 +360,42 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
         await synthControlRef.current!.setTune(visualObjRef.current!, false, {
           chordsOff: false,
         })
+        
+        console.log('🔄 [InlineGrandStaff] Re-rendering ABC after setTune to restore click listeners')
+        // Re-render ABC notation after setTune to restore click listeners
+        // setTune() can interfere with the click handlers set during initial render
+        if (containerRef.current) {
+          try {
+            const rendered = abcjs.renderAbc(paperId, processedAbc, {
+              responsive: 'resize',
+              add_classes: true,
+              staffwidth: 740,
+              paddingtop: 5,
+              paddingbottom: 5,
+              paddingleft: 10,
+              paddingright: 10,
+              clickListener: handleNoteClick,
+              wrap: {
+                minSpacing: 1.8,
+                maxSpacing: 2.7,
+                preferredMeasuresPerLine: 4,
+              },
+            })
+            if (rendered[0]) {
+              visualObjRef.current = rendered[0]
+              console.log('✅ [InlineGrandStaff] Re-render complete - clickListener restored!')
+            }
+          } catch (renderErr) {
+            console.warn('InlineGrandStaff: Re-render error:', renderErr)
+          }
+        }
       } catch (err) {
         console.warn('InlineGrandStaff: Audio setup error:', err)
       }
     }
 
     setupAudio()
-  }, [isControllerReady, processedAbc])
+  }, [isControllerReady, processedAbc, paperId, handleNoteClick])
 
   return (
     <div className={`inline-grand-staff my-6 ${className}`}>
