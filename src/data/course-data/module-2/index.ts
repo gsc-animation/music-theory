@@ -11,8 +11,8 @@ import { SUBMODULE_2_6 } from './2.6-tempo-bpm'
 
 export const MODULE_2: Module = {
   id: 2,
-  name: 'Rhythm & Meter',
-  subtitle: 'Time & Pulse',
+  name: 'Nhịp điệu',
+  subtitle: 'Thời gian & Nhịp',
   icon: 'timer',
   submodules: [
     SUBMODULE_2_1,

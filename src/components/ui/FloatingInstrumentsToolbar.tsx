@@ -32,7 +32,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
     if (nextLesson) {
       navigate(`/module/${nextLesson.moduleId}/${nextLesson.id}`)
     } else {
-      navigate('/syllabus')
+      navigate('/compose')
     }
   }
 

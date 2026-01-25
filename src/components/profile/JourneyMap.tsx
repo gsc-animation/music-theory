@@ -7,18 +7,18 @@ interface JourneyMapProps {
   className?: string
 }
 
-// Module themes for the adventure map
-const MODULE_THEMES: Record<number, { icon: string; color: string; gradient: string; label: string }> = {
-  1: { icon: 'castle', color: '#30e8e8', gradient: 'from-cyan-500 to-teal-600', label: 'Khởi Đầu' },
-  2: { icon: 'sailing', color: '#f59e0b', gradient: 'from-amber-500 to-orange-600', label: 'Khám Phá' },
-  3: { icon: 'landscape', color: '#10b981', gradient: 'from-emerald-500 to-green-600', label: 'Chinh Phục' },
-  4: { icon: 'temple_hindu', color: '#8b5cf6', gradient: 'from-violet-500 to-purple-600', label: 'Nâng Cao' },
-  5: { icon: 'auto_awesome', color: '#ec4899', gradient: 'from-pink-500 to-rose-600', label: 'Thành Thạo' },
+// Module themes
+const MODULE_THEMES: Record<number, { icon: string; color: string }> = {
+  1: { icon: '🏰', color: '#30e8e8' },
+  2: { icon: '⛵', color: '#f59e0b' },
+  3: { icon: '🏔️', color: '#10b981' },
+  4: { icon: '🏯', color: '#8b5cf6' },
+  5: { icon: '✨', color: '#ec4899' },
 }
 
 /**
- * JourneyMap - Vertical snake-path adventure map visualization
- * Displays modules as milestones with submodules as checkpoints along the path
+ * JourneyMap - Vertical Zig-Zag Quest Path
+ * Compact game-like path with larger icons and full module names
  */
 export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
   const navigate = useNavigate()
@@ -26,212 +26,172 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
 
   const isCompleted = (submoduleId: string) => completedSubmodules.includes(submoduleId)
   const isCurrent = (submoduleId: string) => currentSubmoduleId === submoduleId
-  
+
   const isUnlocked = (submoduleId: string, moduleIndex: number, subIndex: number) => {
-    // First submodule of first module is always unlocked
     if (moduleIndex === 0 && subIndex === 0) return true
-    
-    // Check if previous submodule is completed
-    const allSubmodules = COURSE_MODULES.flatMap(m => m.submodules)
-    const currentIdx = allSubmodules.findIndex(s => s.id === submoduleId)
+    const allSubmodules = COURSE_MODULES.flatMap((m) => m.submodules)
+    const currentIdx = allSubmodules.findIndex((s) => s.id === submoduleId)
     if (currentIdx <= 0) return true
-    
     return completedSubmodules.includes(allSubmodules[currentIdx - 1].id)
   }
 
-  const handleSubmoduleClick = (moduleId: number, submoduleId: string, unlocked: boolean) => {
+  const handleClick = (moduleId: number, submoduleId: string, unlocked: boolean) => {
     if (unlocked) {
       navigate(`/module/${moduleId}/${submoduleId}`)
     }
   }
 
-  // Calculate overall progress
-  const totalSubmodules = COURSE_MODULES.reduce((acc, m) => acc + m.submodules.length, 0)
-  const completedCount = completedSubmodules.length
-  const progressPercent = Math.round((completedCount / totalSubmodules) * 100)
-
-  // Find next adventure
-  const allSubmodules = COURSE_MODULES.flatMap((m, mi) => 
-    m.submodules.map((s, si) => ({ ...s, moduleId: m.id, moduleIndex: mi, subIndex: si }))
-  )
-  const nextAdventure = allSubmodules.find((s, idx) => {
-    if (completedSubmodules.includes(s.id)) return false
-    if (idx === 0) return true
-    return completedSubmodules.includes(allSubmodules[idx - 1].id)
-  })
-
   return (
-    <div className={`bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-4 md:p-6 shadow-2xl border border-slate-700/50 ${className}`}>
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30">
-            <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-              route
-            </span>
-          </div>
-          <div>
-            <h2 className="text-lg md:text-xl font-bold text-white tracking-tight">
-              Hành Trình Học Nhạc Lý
-            </h2>
-            <p className="text-xs md:text-sm text-slate-400">
-              {completedCount}/{totalSubmodules} bài học • {progressPercent}% hoàn thành
-            </p>
-          </div>
-        </div>
-        
-        {/* Next Lesson CTA */}
-        {nextAdventure && (
-          <button
-            onClick={() => navigate(`/module/${nextAdventure.moduleId}/${nextAdventure.id}`)}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-105 transition-all text-sm"
-          >
-            <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
-              play_arrow
-            </span>
-            Tiếp tục học
-          </button>
-        )}
-      </div>
-
-      {/* Overall Progress Bar */}
-      <div className="mb-6">
-        <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 rounded-full transition-all duration-700"
-            style={{ width: `${progressPercent}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Vertical Journey Path */}
-      <div className="space-y-4">
+    <div
+      className={`bg-gradient-to-b from-slate-900 via-[#0f1729] to-slate-900 rounded-2xl p-4 shadow-2xl border border-slate-700/50 ${className}`}
+    >
+      {/* Zig-Zag Path Container */}
+      <div className="space-y-3">
         {COURSE_MODULES.map((module, moduleIndex) => {
           const theme = MODULE_THEMES[module.id] || MODULE_THEMES[1]
-          const moduleCompleted = module.submodules.every(s => completedSubmodules.includes(s.id))
-          const moduleStarted = module.submodules.some(s => completedSubmodules.includes(s.id))
-          const isLastModule = moduleIndex === COURSE_MODULES.length - 1
-          
+          const completedInModule = module.submodules.filter((s) =>
+            completedSubmodules.includes(s.id)
+          ).length
+          const moduleCompleted = completedInModule === module.submodules.length
+          const moduleStarted = completedInModule > 0
+          const isEven = moduleIndex % 2 === 0
+          const isLast = moduleIndex === COURSE_MODULES.length - 1
+
           return (
-            <div key={module.id} className="relative">
-              {/* Module Header - Milestone */}
-              <div className={`
-                relative flex items-center gap-3 p-3 rounded-xl border-2 transition-all
-                ${moduleCompleted 
-                  ? 'bg-emerald-900/30 border-emerald-500/50' 
-                  : moduleStarted 
-                    ? 'bg-slate-800/60 border-cyan-500/40' 
-                    : 'bg-slate-800/30 border-slate-600/30'
-                }
-              `}>
-                {/* Module Icon */}
-                <div 
-                  className={`
-                    w-12 h-12 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0
-                    ${moduleCompleted 
-                      ? 'bg-gradient-to-br from-emerald-400 to-emerald-600' 
-                      : `bg-gradient-to-br ${theme.gradient}`
-                    }
-                  `}
-                  style={{ boxShadow: `0 4px 20px ${moduleCompleted ? '#10b98140' : theme.color + '40'}` }}
-                >
-                  <span 
-                    className="material-symbols-outlined text-white text-2xl"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
+            <div key={module.id}>
+              {/* Module Row - Alternating left/right */}
+              <div
+                className={`flex items-start gap-3 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
+              >
+                {/* Module Icon + Name - Larger */}
+                <div className="flex flex-col items-center flex-shrink-0 w-28">
+                  <div
+                    className={`
+                      w-14 h-14 rounded-2xl flex items-center justify-center text-3xl
+                      ${
+                        moduleCompleted
+                          ? 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg shadow-amber-500/40'
+                          : moduleStarted
+                            ? 'bg-gradient-to-br from-cyan-500 to-teal-600 shadow-lg shadow-cyan-500/40'
+                            : 'bg-slate-700/60'
+                      }
+                    `}
                   >
-                    {moduleCompleted ? 'emoji_events' : theme.icon}
-                  </span>
-                </div>
-
-                {/* Module Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className={`font-bold ${moduleCompleted ? 'text-emerald-300' : 'text-white'}`}>
-                      Module {module.id}: {module.name}
-                    </h3>
-                    {moduleCompleted && (
-                      <span className="material-symbols-outlined text-amber-400 text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
-                        verified
-                      </span>
-                    )}
+                    {moduleCompleted ? '👑' : theme.icon}
                   </div>
-                  <p className="text-xs text-slate-400">{module.subtitle} • {theme.label}</p>
+                  {/* Module Number + Name */}
+                  <div className="flex items-center gap-1 mt-1.5">
+                    <span
+                      className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                        moduleCompleted
+                          ? 'bg-amber-500 text-white'
+                          : moduleStarted
+                            ? 'bg-cyan-500 text-white'
+                            : 'bg-slate-600 text-slate-300'
+                      }`}
+                    >
+                      {module.id}
+                    </span>
+                    <p
+                      className={`text-sm font-bold text-center leading-tight ${
+                        moduleCompleted
+                          ? 'text-amber-300'
+                          : moduleStarted
+                            ? 'text-cyan-300'
+                            : 'text-slate-500'
+                      }`}
+                    >
+                      {module.name}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Module Progress Badge */}
-                <div className={`
-                  px-2 py-1 rounded-lg text-xs font-bold
-                  ${moduleCompleted 
-                    ? 'bg-emerald-500/20 text-emerald-300' 
-                    : 'bg-slate-700/50 text-slate-400'
-                  }
-                `}>
-                  {module.submodules.filter(s => completedSubmodules.includes(s.id)).length}/{module.submodules.length}
-                </div>
-              </div>
+                {/* Checkpoint Trail with Submodule Names */}
+                <div className={`flex-1 ${isEven ? '' : 'flex flex-col items-end'}`}>
+                  <div
+                    className={`flex flex-wrap gap-2 ${isEven ? '' : 'justify-end'}`}
+                  >
+                    {module.submodules.map((sub, subIndex) => {
+                      const done = isCompleted(sub.id)
+                      const curr = isCurrent(sub.id)
+                      const unlocked = isUnlocked(sub.id, moduleIndex, subIndex)
 
-              {/* Submodule Checkpoints - Grid Layout */}
-              <div className="mt-3 ml-6 pl-6 border-l-2 border-dashed border-slate-600/50">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                  {module.submodules.map((submodule, subIndex) => {
-                    const completed = isCompleted(submodule.id)
-                    const current = isCurrent(submodule.id)
-                    const unlocked = isUnlocked(submodule.id, moduleIndex, subIndex)
-
-                    return (
-                      <button
-                        key={submodule.id}
-                        onClick={() => handleSubmoduleClick(module.id, submodule.id, unlocked)}
-                        disabled={!unlocked}
-                        className={`
-                          flex items-center gap-2 px-3 py-2.5 rounded-lg text-left transition-all
-                          ${completed 
-                            ? 'bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/30' 
-                            : current 
-                              ? 'bg-cyan-500/20 text-cyan-300 border-2 border-cyan-400/50 shadow-lg shadow-cyan-500/20' 
-                              : unlocked
-                                ? 'bg-slate-700/40 text-slate-300 hover:bg-slate-600/50 border border-slate-600/50 hover:border-cyan-500/30' 
-                                : 'bg-slate-800/30 text-slate-600 cursor-not-allowed border border-slate-700/30'
-                          }
-                        `}
-                      >
-                        {/* Status Icon */}
-                        <span 
-                          className={`material-symbols-outlined text-base flex-shrink-0 ${
-                            completed ? 'text-emerald-400' : current ? 'text-cyan-400' : unlocked ? 'text-slate-400' : 'text-slate-600'
-                          }`}
-                          style={(completed || current) ? { fontVariationSettings: "'FILL' 1" } : {}}
+                      return (
+                        <button
+                          key={sub.id}
+                          onClick={() => handleClick(module.id, sub.id, unlocked)}
+                          disabled={!unlocked}
+                          className={`
+                            flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all min-w-[65px]
+                            ${
+                              done
+                                ? 'bg-emerald-500/20 hover:bg-emerald-500/30'
+                                : curr
+                                  ? 'bg-cyan-500/20 ring-1 ring-cyan-400/50'
+                                  : unlocked
+                                    ? 'bg-slate-700/30 hover:bg-slate-600/40'
+                                    : 'bg-slate-800/30 cursor-not-allowed'
+                            }
+                          `}
+                          title={`${sub.id}: ${sub.title}`}
                         >
-                          {completed ? 'check_circle' : current ? 'play_circle' : unlocked ? 'circle' : 'lock'}
-                        </span>
-                        
-                        {/* Submodule Info */}
-                        <div className="flex-1 min-w-0">
-                          <span className="text-xs font-medium block truncate">
-                            {submodule.id}
+                          {/* Checkpoint Circle */}
+                          <div
+                            className={`
+                              w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold
+                              ${
+                                done
+                                  ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/50'
+                                  : curr
+                                    ? 'bg-cyan-400 text-slate-900 shadow-md shadow-cyan-400/50 animate-pulse'
+                                    : unlocked
+                                      ? 'bg-slate-600 text-slate-300'
+                                      : 'bg-slate-800 text-slate-600'
+                              }
+                            `}
+                          >
+                            {done ? '✓' : subIndex + 1}
+                          </div>
+                          {/* Submodule Title */}
+                          <span
+                            className={`text-[9px] leading-tight text-center w-full ${
+                              done
+                                ? 'text-emerald-400'
+                                : curr
+                                  ? 'text-cyan-300'
+                                  : unlocked
+                                    ? 'text-slate-400'
+                                    : 'text-slate-600'
+                            }`}
+                          >
+                            {sub.title}
                           </span>
-                          <span className="text-[10px] opacity-70 block truncate">
-                            {submodule.title}
-                          </span>
-                        </div>
-
-                        {/* Current indicator */}
-                        {current && (
-                          <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse flex-shrink-0" />
-                        )}
-                      </button>
-                    )
-                  })}
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
 
-              {/* Path Connector to Next Module */}
-              {!isLastModule && (
-                <div className="ml-6 pl-6 py-2 border-l-2 border-dashed border-slate-600/50">
-                  <div className="flex items-center gap-2 text-slate-500">
-                    <span className="material-symbols-outlined text-lg">arrow_downward</span>
-                    <span className="text-xs">tiếp theo</span>
-                  </div>
+              {/* Vertical Connector - Zig-zag curve */}
+              {!isLast && (
+                <div
+                  className={`flex ${isEven ? 'justify-start ml-8' : 'justify-end mr-8'} my-1`}
+                >
+                  <svg width="30" height="16" className="text-slate-600">
+                    <path
+                      d={
+                        isEven
+                          ? 'M 6 0 Q 6 8, 24 8 Q 24 16, 24 16'
+                          : 'M 24 0 Q 24 8, 6 8 Q 6 16, 6 16'
+                      }
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeDasharray="4 2"
+                      fill="none"
+                      className={moduleCompleted ? 'text-amber-500/50' : ''}
+                    />
+                  </svg>
                 </div>
               )}
             </div>
@@ -239,16 +199,21 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
         })}
       </div>
 
-      {/* Completion Badge */}
-      {progressPercent === 100 && (
-        <div className="mt-6 p-4 bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 rounded-xl border border-amber-500/30 text-center">
-          <span className="material-symbols-outlined text-amber-400 text-4xl mb-2" style={{ fontVariationSettings: "'FILL' 1" }}>
-            workspace_premium
-          </span>
-          <h3 className="text-lg font-bold text-amber-300">🎉 Chúc mừng! Bạn đã hoàn thành toàn bộ khóa học!</h3>
-          <p className="text-sm text-slate-400 mt-1">Bạn đã chinh phục tất cả {totalSubmodules} bài học về Nhạc Lý</p>
-        </div>
-      )}
+      {/* Compact Legend */}
+      <div className="flex items-center justify-center gap-3 mt-4 pt-3 border-t border-slate-700/50">
+        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+          <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Xong
+        </span>
+        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+          <span className="w-2 h-2 bg-cyan-400 rounded-full" /> Đang học
+        </span>
+        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+          <span className="w-2 h-2 bg-slate-600 rounded-full" /> Mở
+        </span>
+        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+          <span className="w-2 h-2 bg-slate-800 rounded-full" /> Khoá
+        </span>
+      </div>
     </div>
   )
 }

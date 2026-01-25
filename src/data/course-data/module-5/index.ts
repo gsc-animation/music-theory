@@ -11,8 +11,8 @@ import { SUBMODULE_5_6 } from './5.6-modulation'
 
 export const MODULE_5: Module = {
   id: 5,
-  name: 'Composition & Form',
-  subtitle: 'Structure & Style',
+  name: 'Sáng tác',
+  subtitle: 'Cấu trúc & Phong cách',
   icon: 'edit_note',
   submodules: [
     SUBMODULE_5_1,

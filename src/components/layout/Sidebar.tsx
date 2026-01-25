@@ -12,10 +12,12 @@ interface SidebarProps {
 
 /**
  * Navigation items for the sidebar
+ * Order: Nhạc lý (with modules) / Luyện tập / Soạn nhạc
  */
 const NAV_ITEMS = [
-  { icon: 'menu_book', label: 'Giáo trình', path: '/syllabus' },
+  { icon: 'school', label: 'Nhạc lý', path: '/nhacly', hasModules: true },
   { icon: 'piano', label: 'Luyện tập', path: '/practice' },
+  { icon: 'edit_note', label: 'Soạn nhạc', path: '/compose' },
 ]
 
 /**
@@ -61,11 +63,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   }
 
   const isNavItemActive = (path: string) => {
-    if (path === '/syllabus') {
-      return location.pathname === '/syllabus' || location.pathname.startsWith('/module/')
+    if (path === '/nhacly') {
+      return location.pathname === '/nhacly' || location.pathname.startsWith('/module/')
     }
     return location.pathname === path
   }
+
+  // Check if Nhạc lý section should show modules
+  const isNhaclyActive = location.pathname === '/nhacly' || location.pathname.startsWith('/module/')
 
   return (
     <aside
@@ -93,39 +98,189 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
         {/* Navigation */}
         <div className="space-y-1">
           {NAV_ITEMS.map((item) => (
-            <div
-              key={item.label}
-              onClick={() => navigate(item.path)}
-              className={`
-                flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors
-                ${
-                  isNavItemActive(item.path)
-                    ? 'bg-[#30e8e8]/10 text-[#111818] dark:text-white'
-                    : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400'
-                }
-              `}
-            >
-              <span
-                className="material-symbols-outlined"
-                style={isNavItemActive(item.path) ? { fontVariationSettings: "'FILL' 1" } : {}}
+            <div key={item.label}>
+              <div
+                onClick={() => {
+                  if (item.hasModules) {
+                    // For Nhạc lý, navigate to first module submodule
+                    const firstModule = COURSE_MODULES[0]
+                    if (firstModule?.submodules?.length > 0) {
+                      navigate(`/module/${firstModule.id}/${firstModule.submodules[0].id}`)
+                    }
+                  } else {
+                    navigate(item.path)
+                  }
+                }}
+                className={`
+                  flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-colors
+                  ${
+                    isNavItemActive(item.path)
+                      ? 'bg-[#30e8e8]/10 text-[#111818] dark:text-white'
+                      : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-400'
+                  }
+                `}
               >
-                {item.icon}
-              </span>
-              <p
-                className={`text-sm ${isNavItemActive(item.path) ? 'font-semibold' : 'font-medium'}`}
-              >
-                {item.label}
-              </p>
+                <span
+                  className="material-symbols-outlined"
+                  style={isNavItemActive(item.path) ? { fontVariationSettings: "'FILL' 1" } : {}}
+                >
+                  {item.icon}
+                </span>
+                <p
+                  className={`text-sm ${isNavItemActive(item.path) ? 'font-semibold' : 'font-medium'}`}
+                >
+                  {item.label}
+                </p>
+                {item.hasModules && (
+                  <span
+                    className={`material-symbols-outlined text-lg transition-transform ${isNhaclyActive ? 'rotate-180' : ''}`}
+                  >
+                    expand_more
+                  </span>
+                )}
+              </div>
+
+              {/* Nhạc lý - Inline Module List */}
+              {item.hasModules && isNhaclyActive && (
+                <div className="mt-2 ml-2 space-y-2">
+                  {COURSE_MODULES.map((module) => {
+                    const isExpanded = expandedModules.includes(module.id)
+                    const moduleProgress = getModuleProgress(module.id)
+                    const isCurrentModule = module.id === currentModuleId
+
+                    return (
+                      <div
+                        key={module.id}
+                        className={`
+                          rounded-xl border transition-all duration-200
+                          ${
+                            isCurrentModule
+                              ? 'border-[#30e8e8]/30 bg-[#30e8e8]/5 dark:bg-[#30e8e8]/10'
+                              : 'border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800'
+                          }
+                        `}
+                      >
+                        {/* Module Header */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            toggleModuleExpansion(module.id)
+                          }}
+                          className="w-full flex items-center justify-between gap-3 p-3"
+                        >
+                          <div className="flex items-center gap-3">
+                            <ProgressRing progress={moduleProgress} size={28}>
+                              <span
+                                className={`text-[9px] font-bold ${
+                                  isCurrentModule
+                                    ? 'text-[#136363] dark:text-[#30e8e8]'
+                                    : 'text-slate-500 dark:text-slate-400'
+                                }`}
+                              >
+                                {module.id}
+                              </span>
+                            </ProgressRing>
+                            <div className="text-left">
+                              <span
+                                className={`text-sm block ${
+                                  isCurrentModule
+                                    ? 'font-bold text-[#136363] dark:text-[#30e8e8]'
+                                    : 'font-medium text-slate-700 dark:text-slate-200'
+                                }`}
+                              >
+                                {module.name}
+                              </span>
+                              <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                                {module.subtitle}
+                              </span>
+                            </div>
+                          </div>
+                          <span
+                            className={`
+                              material-symbols-outlined text-lg transition-transform
+                              ${isExpanded ? 'rotate-180' : ''}
+                              ${isCurrentModule ? 'text-[#136363] dark:text-[#30e8e8]' : 'text-slate-400'}
+                            `}
+                          >
+                            expand_more
+                          </span>
+                        </button>
+
+                        {/* Submodule List (Expandable) */}
+                        {isExpanded && (
+                          <div className="px-3 pb-3 space-y-1">
+                            {module.submodules.map((submodule) => {
+                              const isActive = isSubmoduleActive(submodule.id)
+                              const isCompleted = isSubmoduleCompleted(submodule.id)
+
+                              return (
+                                <button
+                                  key={submodule.id}
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    handleSubmoduleClick(module.id, submodule.id)
+                                  }}
+                                  className={`
+                                    w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-colors
+                                    ${
+                                      isActive
+                                        ? 'bg-[#30e8e8]/20 text-[#136363] dark:text-[#30e8e8]'
+                                        : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300'
+                                    }
+                                  `}
+                                >
+                                  {/* Status Icon */}
+                                  <span
+                                    className={`
+                                    material-symbols-outlined text-[16px]
+                                    ${
+                                      isCompleted
+                                        ? 'text-emerald-500'
+                                        : isActive
+                                          ? 'text-[#30e8e8]'
+                                          : 'text-slate-300 dark:text-slate-600'
+                                    }
+                                  `}
+                                    style={isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}}
+                                  >
+                                    {isCompleted
+                                      ? 'check_circle'
+                                      : isActive
+                                        ? 'radio_button_checked'
+                                        : 'radio_button_unchecked'}
+                                  </span>
+
+                                  {/* Submodule Title */}
+                                  <div className="flex-1 min-w-0">
+                                    <span
+                                      className={`
+                                      text-xs block truncate
+                                      ${isActive ? 'font-semibold' : 'font-medium'}
+                                    `}
+                                    >
+                                      {submodule.id} {submodule.title}
+                                    </span>
+                                  </div>
+                                </button>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           ))}
         </div>
 
-        {/* Game Control Button */}
+        {/* Game Control Button - Left Aligned */}
         <div className="mt-4">
           <button
             onClick={isPlaying ? stopGame : startGame}
             className={`
-              w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-sm
+              w-full py-3 px-4 rounded-xl flex items-center justify-start gap-2 font-bold transition-all shadow-sm
               ${
                 isPlaying
                   ? 'bg-rose-100 text-rose-700 hover:bg-rose-200 border border-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50 dark:border-rose-800'
@@ -141,135 +296,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
         </div>
       </div>
 
-      {/* Learning Path - Module List with Submodules */}
-      <div className="flex-1 px-4 py-2">
-        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-2">
-          Learning Path
-        </p>
-
-        <div className="space-y-2">
-          {COURSE_MODULES.map((module) => {
-            const isExpanded = expandedModules.includes(module.id)
-            const moduleProgress = getModuleProgress(module.id)
-            const isCurrentModule = module.id === currentModuleId
-
-            return (
-              <div
-                key={module.id}
-                className={`
-                  rounded-xl border transition-all duration-200
-                  ${
-                    isCurrentModule
-                      ? 'border-[#30e8e8]/30 bg-[#30e8e8]/5 dark:bg-[#30e8e8]/10'
-                      : 'border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800'
-                  }
-                `}
-              >
-                {/* Module Header */}
-                <button
-                  onClick={() => toggleModuleExpansion(module.id)}
-                  className="w-full flex items-center justify-between gap-3 p-3"
-                >
-                  <div className="flex items-center gap-3">
-                    <ProgressRing progress={moduleProgress} size={28}>
-                      <span
-                        className={`text-[9px] font-bold ${
-                          isCurrentModule
-                            ? 'text-[#136363] dark:text-[#30e8e8]'
-                            : 'text-slate-500 dark:text-slate-400'
-                        }`}
-                      >
-                        {module.id}
-                      </span>
-                    </ProgressRing>
-                    <div className="text-left">
-                      <span
-                        className={`text-sm block ${
-                          isCurrentModule
-                            ? 'font-bold text-[#136363] dark:text-[#30e8e8]'
-                            : 'font-medium text-slate-700 dark:text-slate-200'
-                        }`}
-                      >
-                        {module.name}
-                      </span>
-                      <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                        {module.subtitle}
-                      </span>
-                    </div>
-                  </div>
-                  <span
-                    className={`
-                      material-symbols-outlined text-lg transition-transform
-                      ${isExpanded ? 'rotate-180' : ''}
-                      ${isCurrentModule ? 'text-[#136363] dark:text-[#30e8e8]' : 'text-slate-400'}
-                    `}
-                  >
-                    expand_more
-                  </span>
-                </button>
-
-                {/* Submodule List (Expandable) */}
-                {isExpanded && (
-                  <div className="px-3 pb-3 space-y-1">
-                    {module.submodules.map((submodule) => {
-                      const isActive = isSubmoduleActive(submodule.id)
-                      const isCompleted = isSubmoduleCompleted(submodule.id)
-
-                      return (
-                        <button
-                          key={submodule.id}
-                          onClick={() => handleSubmoduleClick(module.id, submodule.id)}
-                          className={`
-                            w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-colors
-                            ${
-                              isActive
-                                ? 'bg-[#30e8e8]/20 text-[#136363] dark:text-[#30e8e8]'
-                                : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300'
-                            }
-                          `}
-                        >
-                          {/* Status Icon */}
-                          <span
-                            className={`
-                            material-symbols-outlined text-[16px]
-                            ${
-                              isCompleted
-                                ? 'text-emerald-500'
-                                : isActive
-                                  ? 'text-[#30e8e8]'
-                                  : 'text-slate-300 dark:text-slate-600'
-                            }
-                          `}
-                            style={isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}}
-                          >
-                            {isCompleted
-                              ? 'check_circle'
-                              : isActive
-                                ? 'radio_button_checked'
-                                : 'radio_button_unchecked'}
-                          </span>
-
-                          {/* Submodule Title */}
-                          <div className="flex-1 min-w-0">
-                            <span
-                              className={`
-                              text-xs block truncate
-                              ${isActive ? 'font-semibold' : 'font-medium'}
-                            `}
-                            >
-                              {submodule.id} {submodule.title}
-                            </span>
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </div>
+      {/* Spacer to push footer down */}
+      <div className="flex-1" />
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-200 dark:border-slate-700 mt-auto">

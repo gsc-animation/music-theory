@@ -12,8 +12,8 @@ import { SUBMODULE_4_7 } from './4.7-seventh-chords'
 
 export const MODULE_4: Module = {
   id: 4,
-  name: 'Harmony',
-  subtitle: 'Chords & Progressions',
+  name: 'Hòa âm',
+  subtitle: 'Hợp âm & Vòng hoà thanh',
   icon: 'auto_awesome',
   submodules: [
     SUBMODULE_4_1,

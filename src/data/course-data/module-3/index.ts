@@ -11,8 +11,8 @@ import { SUBMODULE_3_6 } from './3.6-pentatonic'
 
 export const MODULE_3: Module = {
   id: 3,
-  name: 'Scales & Melody',
-  subtitle: 'Patterns & Motion',
+  name: 'Âm giai',
+  subtitle: 'Giai điệu & Quãng',
   icon: 'trending_up',
   submodules: [
     SUBMODULE_3_1,

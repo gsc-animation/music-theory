@@ -68,7 +68,7 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<ProfilePage />} />
-            <Route path="/syllabus" element={<HomePage />} />
+            <Route path="/compose" element={<HomePage />} />
             <Route path="/module/:moduleId/:submoduleId" element={<SubmodulePage />} />
             <Route path="/practice" element={<PracticePage />} />
           </Routes>

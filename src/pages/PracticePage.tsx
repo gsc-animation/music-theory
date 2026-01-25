@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sidebar } from '../components/layout/Sidebar'
-import { MainHeader } from '../components/layout/MainHeader'
+import { SimpleHeader } from '../components/layout/SimpleHeader'
 import { useGameStore } from '../stores/useGameStore'
 import { CollapsiblePanel } from '../components/ui/CollapsiblePanel'
 import { GameOverlay } from '../features/game/components/GameOverlay'
@@ -33,7 +33,7 @@ export const PracticePage: React.FC = () => {
       <Sidebar className="hidden md:flex" />
 
       <main className="flex-1 flex flex-col min-w-0 relative">
-        <MainHeader />
+        <SimpleHeader />
 
         <GameOverlay />
         <FeedbackOverlay />

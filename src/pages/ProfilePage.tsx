@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sidebar } from '../components/layout/Sidebar'
-import { MainHeader } from '../components/layout/MainHeader'
+import { SimpleHeader } from '../components/layout/SimpleHeader'
 import { useProgressStore } from '../stores/useProgressStore'
 import { COURSE_MODULES, getTotalSubmodules } from '../data/course-data'
 import { JourneyMap } from '../components/profile/JourneyMap'
@@ -46,7 +46,7 @@ export const ProfilePage: React.FC = () => {
       <Sidebar className="hidden md:flex" />
 
       <main className="flex-1 flex flex-col min-w-0 relative">
-        <MainHeader />
+        <SimpleHeader showJourneyProgress />
 
         <div className="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
           {/* Section 1: Journey Map Quest */}

@@ -10,8 +10,8 @@ import { SUBMODULE_1_5 } from './1.5-enharmonic'
 
 export const MODULE_1: Module = {
   id: 1,
-  name: 'Fundamentals',
-  subtitle: 'Pitch & Notation',
+  name: 'Cơ bản',
+  subtitle: 'Cao độ & Ký hiệu',
   icon: 'music_note',
   submodules: [SUBMODULE_1_1, SUBMODULE_1_2, SUBMODULE_1_3, SUBMODULE_1_4, SUBMODULE_1_5],
 }
