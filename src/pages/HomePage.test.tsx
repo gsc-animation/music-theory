@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, act, waitFor, cleanup } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { useAudioStore } from '../stores/useAudioStore'
 import { useNotationStore } from '../stores/useNotationStore'
@@ -51,8 +52,12 @@ describe('HomePage Integration', () => {
     cleanup()
   })
 
-  it.skip('updates ABC notation when piano key is pressed', async () => {
-    render(<HomePage />)
+  it('updates ABC notation when piano key is pressed', async () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    )
     const c4Key = screen.getByRole('button', { name: /C4/i })
 
     // Wait for Suspense to load the lazy component

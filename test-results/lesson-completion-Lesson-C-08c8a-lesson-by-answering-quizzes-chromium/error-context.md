@@ -1,0 +1,202 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - complementary [ref=e5]:
+        - generic [ref=e6]:
+          - generic [ref=e7]:
+            - generic [ref=e9] [cursor=pointer]: music_note
+            - heading "Music Theory Course" [level=1] [ref=e10] [cursor=pointer]
+            - button "Collapse sidebar" [ref=e11]:
+              - generic [ref=e12]: chevron_left
+          - generic [ref=e13]:
+            - generic [ref=e14]:
+              - generic [ref=e15] [cursor=pointer]:
+                - generic [ref=e16]: school
+                - paragraph [ref=e17]: Nhạc lý
+                - generic [ref=e18]: expand_more
+              - generic [ref=e19]:
+                - generic [ref=e20]:
+                  - button "1 Cơ bản Cao độ & Ký hiệu expand_more" [ref=e21]:
+                    - generic [ref=e22]:
+                      - generic [ref=e23]:
+                        - img [ref=e24]
+                        - generic [ref=e28]: "1"
+                      - generic [ref=e29]:
+                        - generic [ref=e30]: Cơ bản
+                        - text: Cao độ & Ký hiệu
+                    - generic [ref=e31]: expand_more
+                  - generic [ref=e32]:
+                    - button "radio_button_checked 1.1 The Staff & Clefs" [ref=e33]:
+                      - generic [ref=e34]: radio_button_checked
+                      - generic [ref=e36]: 1.1 The Staff & Clefs
+                    - button "radio_button_unchecked 1.2 Tên nốt & Cao độ" [ref=e37]:
+                      - generic [ref=e38]: radio_button_unchecked
+                      - generic [ref=e40]: 1.2 Tên nốt & Cao độ
+                    - button "radio_button_unchecked 1.3 Dấu hóa (Accidentals)" [ref=e41]:
+                      - generic [ref=e42]: radio_button_unchecked
+                      - generic [ref=e44]: 1.3 Dấu hóa (Accidentals)
+                    - button "radio_button_unchecked 1.4 Cung và Nửa cung" [ref=e45]:
+                      - generic [ref=e46]: radio_button_unchecked
+                      - generic [ref=e48]: 1.4 Cung và Nửa cung
+                    - button "radio_button_unchecked 1.5 Nốt đồng âm" [ref=e49]:
+                      - generic [ref=e50]: radio_button_unchecked
+                      - generic [ref=e52]: 1.5 Nốt đồng âm
+                - button "2 Nhịp điệu Thời gian & Nhịp expand_more" [ref=e54]:
+                  - generic [ref=e55]:
+                    - generic [ref=e56]:
+                      - img [ref=e57]
+                      - generic [ref=e61]: "2"
+                    - generic [ref=e62]:
+                      - generic [ref=e63]: Nhịp điệu
+                      - text: Thời gian & Nhịp
+                  - generic [ref=e64]: expand_more
+                - button "3 Thang âm & Giai điệu Giai điệu & Quãng expand_more" [ref=e66]:
+                  - generic [ref=e67]:
+                    - generic [ref=e68]:
+                      - img [ref=e69]
+                      - generic [ref=e73]: "3"
+                    - generic [ref=e74]:
+                      - generic [ref=e75]: Thang âm & Giai điệu
+                      - text: Giai điệu & Quãng
+                  - generic [ref=e76]: expand_more
+                - button "4 Hòa âm Hợp âm & Vòng hoà thanh expand_more" [ref=e78]:
+                  - generic [ref=e79]:
+                    - generic [ref=e80]:
+                      - img [ref=e81]
+                      - generic [ref=e85]: "4"
+                    - generic [ref=e86]:
+                      - generic [ref=e87]: Hòa âm
+                      - text: Hợp âm & Vòng hoà thanh
+                  - generic [ref=e88]: expand_more
+                - button "5 Sáng tác Cấu trúc & Phong cách expand_more" [ref=e90]:
+                  - generic [ref=e91]:
+                    - generic [ref=e92]:
+                      - img [ref=e93]
+                      - generic [ref=e97]: "5"
+                    - generic [ref=e98]:
+                      - generic [ref=e99]: Sáng tác
+                      - text: Cấu trúc & Phong cách
+                  - generic [ref=e100]: expand_more
+            - generic [ref=e102] [cursor=pointer]:
+              - generic [ref=e103]: piano
+              - paragraph [ref=e104]: Luyện tập
+            - generic [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]: edit_note
+              - paragraph [ref=e108]: Soạn nhạc
+          - button "play_circle Start Game" [ref=e110]:
+            - generic [ref=e111]: play_circle
+            - text: Start Game
+        - button "help" [ref=e114]:
+          - generic [ref=e115]: help
+      - main [ref=e116]:
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: folder
+              - text: "Module 1: Cơ bản"
+            - generic [ref=e121]: ›
+            - generic [ref=e122]: Lesson 1.1
+            - generic [ref=e123]:
+              - button "Section 1 (current)" [ref=e124] [cursor=pointer]
+              - button "Section 2 (locked)" [disabled] [ref=e126]
+              - button "Section 3 (locked)" [disabled] [ref=e128]
+              - button "Section 4 (locked)" [disabled] [ref=e130]
+              - button "Section 5 (locked)" [disabled] [ref=e132]
+              - button "Section 6 (locked)" [disabled] [ref=e134]
+              - button "Section 7 (locked)" [disabled] [ref=e136]
+          - generic [ref=e137]:
+            - button "brightness_auto" [ref=e138]:
+              - generic [ref=e139]: brightness_auto
+            - generic [ref=e140] [cursor=pointer]:
+              - checkbox "VN" [ref=e141]
+              - generic [ref=e143]: VN
+        - generic [ref=e144]:
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - heading "The Staff & Clefs" [level=1] [ref=e149]
+              - paragraph [ref=e150]: Understanding the 5 lines, Treble Clef (G Clef), and Bass Clef (F Clef)
+            - generic [ref=e152]:
+              - generic [ref=e153]:
+                - heading "1. Khuông nhạc (The Musical Staff)" [level=2] [ref=e154]
+                - paragraph [ref=e155]:
+                  - text: Trước khi học các nốt nhạc, hãy hiểu nơi âm nhạc được viết.
+                  - strong [ref=e156]: Khuông nhạc
+                  - text: "(còn gọi là \"staff\" hoặc \"stave\") giống như một chiếc thang cho âm nhạc:"
+                - list [ref=e157]:
+                  - listitem [ref=e158]:
+                    - strong [ref=e159]: 5 dòng kẻ ngang
+                    - text: "- đánh số từ 1 (dưới cùng) đến 5 (trên cùng)"
+                - list [ref=e160]:
+                  - listitem [ref=e161]:
+                    - strong [ref=e162]: 4 khe
+                    - text: giữa các dòng - đánh số từ 1 (dưới cùng) đến 4 (trên cùng)
+                - paragraph [ref=e163]:
+                  - text: Mỗi dòng và mỗi khe đại diện cho một cao độ khác nhau. Nốt càng
+                  - strong [ref=e164]: cao
+                  - text: khi di chuyển lên trên, và càng
+                  - strong [ref=e165]: thấp
+                  - text: khi di chuyển xuống dưới.
+              - generic [ref=e167]:
+                - generic [ref=e168]:
+                  - generic [ref=e170]: ♪ Khuông nhạc trống - 5 Dòng & 4 Khe
+                  - generic [ref=e171]:
+                    - generic [ref=e172] [cursor=pointer]:
+                      - checkbox "Notes" [ref=e173]
+                      - generic [ref=e174]: Notes
+                    - button "play_arrow" [ref=e175]:
+                      - generic [ref=e176]: play_arrow
+                - img "Sheet Music" [ref=e178]
+                - generic [ref=e191]:
+                  - generic [ref=e192]: Click any note to hear it
+                  - button "▸ View ABC Notation" [ref=e193]:
+                    - generic [ref=e194]: ▸
+                    - text: View ABC Notation
+              - paragraph [ref=e196]:
+                - text: "> 💡"
+                - strong [ref=e197]: Hãy nghĩ như một chiếc thang
+                - text: ": Bậc cao hơn = âm thanh cao hơn!"
+              - generic [ref=e199]:
+                - paragraph [ref=e200]: Khuông nhạc có bao nhiêu dòng kẻ?
+                - generic [ref=e201]:
+                  - button "A 4 dòng" [ref=e202] [cursor=pointer]:
+                    - generic [ref=e203]: A
+                    - generic [ref=e204]: 4 dòng
+                  - button "B 5 dòng" [ref=e205] [cursor=pointer]:
+                    - generic [ref=e206]: B
+                    - generic [ref=e207]: 5 dòng
+                  - button "C 6 dòng" [ref=e208] [cursor=pointer]:
+                    - generic [ref=e209]: C
+                    - generic [ref=e210]: 6 dòng
+              - generic [ref=e211]:
+                - generic [ref=e212]:
+                  - generic [ref=e213]: 🔒
+                  - generic [ref=e214]: Trả lời câu hỏi để tiếp tục...
+                - button "👁️ XEM TẤT CẢ NỘI DUNG" [ref=e215] [cursor=pointer]
+          - generic [ref=e217]:
+            - button "arrow_back Previous" [disabled] [ref=e218]:
+              - generic [ref=e219]: arrow_back
+              - text: Previous
+            - button "check Mark Complete" [ref=e220]:
+              - generic [ref=e221]: check
+              - text: Mark Complete
+  - generic [ref=e222]:
+    - button "star 0 1000 XP để lên level tiếp theo" [ref=e223] [cursor=pointer]:
+      - generic [ref=e224]: star
+      - generic [ref=e225]: "0"
+      - generic: 1000 XP để lên level tiếp theo
+    - button "piano Piano" [ref=e226]:
+      - generic [ref=e227]: piano
+      - generic: Piano
+    - button "music_note Guitar" [ref=e228]:
+      - generic [ref=e229]: music_note
+      - generic: Guitar
+    - button "air Sáo Trúc" [ref=e230]:
+      - generic [ref=e231]: air
+      - generic: Sáo Trúc
+    - button "bug_report Bug Report" [ref=e232] [cursor=pointer]:
+      - generic [ref=e233]: bug_report
+      - generic: Bug Report
+```

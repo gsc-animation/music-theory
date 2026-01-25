@@ -18,6 +18,8 @@ describe('MainLayout', () => {
     expect(screen.getByTestId('child')).toBeInTheDocument()
   })
 
+  // TODO: AudioUnlocker is NOT rendered in MainLayout - it may be in a different component
+  // This test has incorrect expectations - MainLayout only renders children
   it.skip('should render AudioUnlocker', () => {
     render(
       <MainLayout>

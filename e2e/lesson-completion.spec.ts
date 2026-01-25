@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { LessonPage } from '../pages/LessonPage'
+import { LessonPage } from './pages/LessonPage'
 
 test.describe('Lesson Completion Flow', () => {
   test.beforeEach(async ({ page }) => {

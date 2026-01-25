@@ -18,14 +18,11 @@ describe('useAudioStore', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     // Reset store state
-    const { result } = renderHook(() => useAudioStore())
-    act(() => {
-      useAudioStore.setState({
-        isReady: false,
-        isPlaying: false,
-        activeNotes: [],
-        recordedNotes: [],
-      })
+    useAudioStore.setState({
+      isReady: false,
+      isPlaying: false,
+      activeNotes: [],
+      recordedNotes: [],
     })
   })
 
@@ -47,11 +44,11 @@ describe('useAudioStore', () => {
     expect(result.current.isReady).toBe(true)
   })
 
-  it.skip('should start and track a note', () => {
+  it('should start and track a note', async () => {
     const { result } = renderHook(() => useAudioStore())
 
-    act(() => {
-      result.current.startNote('F4')
+    await act(async () => {
+      await result.current.startNote('F4')
     })
 
     expect(audioEngine.startNote).toHaveBeenCalledWith('F4')
@@ -59,11 +56,11 @@ describe('useAudioStore', () => {
     expect(result.current.isPlaying).toBe(true)
   })
 
-  it.skip('should stop and untrack a note', () => {
+  it('should stop and untrack a note', async () => {
     const { result } = renderHook(() => useAudioStore())
 
-    act(() => {
-      result.current.startNote('G4')
+    await act(async () => {
+      await result.current.startNote('G4')
     })
     expect(result.current.activeNotes).toContain('G4')
 
@@ -75,12 +72,12 @@ describe('useAudioStore', () => {
     expect(result.current.activeNotes).not.toContain('G4')
   })
 
-  it.skip('should record notes history', () => {
+  it('should record notes history', async () => {
     const { result } = renderHook(() => useAudioStore())
 
-    act(() => {
-      result.current.startNote('C4')
-      result.current.startNote('E4')
+    await act(async () => {
+      await result.current.startNote('C4')
+      await result.current.startNote('E4')
     })
 
     expect(result.current.recordedNotes).toEqual(['C4', 'E4'])

@@ -55,7 +55,10 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
           </button>
           <div className="flex items-center gap-1 px-1">
             <span className="material-symbols-outlined text-slate-400 text-sm">timer</span>
-            <span className="text-xs font-bold text-slate-700 dark:text-slate-300 min-w-[50px] text-center">
+            <span
+              className="text-xs font-bold text-slate-700 dark:text-slate-300 min-w-[50px] text-center"
+              data-testid="bpm-display"
+            >
               {bpm} BPM
             </span>
           </div>
