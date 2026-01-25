@@ -3,6 +3,7 @@ import { AbcRenderer } from '../abc/AbcRenderer'
 import { InlineGuitar } from '../VirtualGuitar/InlineGuitar'
 import { InlinePiano } from '../VirtualPiano/InlinePiano'
 import { InlineFlute } from '../../features/sao-truc/components/InlineFlute'
+import { InlineGrandStaff } from '../MusicStaff/InlineGrandStaff'
 import { InlineQuiz } from './InlineQuiz'
 
 interface TheoryContentProps {
@@ -10,7 +11,7 @@ interface TheoryContentProps {
 }
 
 interface ContentBlock {
-  type: 'html' | 'abc' | 'guitar' | 'piano' | 'flute' | 'quiz'
+  type: 'html' | 'abc' | 'grandStaff' | 'guitar' | 'piano' | 'flute' | 'quiz'
   content: string
   title?: string
   notes?: string[] // For guitar/piano/flute blocks: notes to highlight
@@ -34,8 +35,8 @@ interface ContentBlock {
 function parseTheoryContent(content: string): ContentBlock[] {
   const blocks: ContentBlock[] = []
 
-  // Combined pattern to match all block types (abc, guitar, piano, flute)
-  const combinedPattern = /\{\{(abc|guitar|piano|flute):([^|]+)\|([^}]+)\}\}/g
+  // Combined pattern to match all block types (abc, grandStaff, guitar, piano, flute)
+  const combinedPattern = /\{\{(abc|grandStaff|guitar|piano|flute):([^|]+)\|([^}]+)\}\}/g
   
   // Quiz pattern: {{quiz:Question|opt1;opt2;*correct|explanation}}
   const quizPattern = /\{\{quiz:([^|]+)\|([^|]+)(?:\|([^}]+))?\}\}/g
@@ -52,7 +53,7 @@ function parseTheoryContent(content: string): ContentBlock[] {
 
   // Collect abc/guitar/piano/flute matches
   while ((match = combinedPattern.exec(content)) !== null) {
-    const blockType = match[1] as 'abc' | 'guitar' | 'piano' | 'flute'
+    const blockType = match[1] as 'abc' | 'grandStaff' | 'guitar' | 'piano' | 'flute'
     const title = match[2].trim()
     const blockContent = match[3].trim()
 
@@ -60,6 +61,8 @@ function parseTheoryContent(content: string): ContentBlock[] {
     if (blockType === 'guitar' || blockType === 'piano' || blockType === 'flute') {
       const notes = blockContent.split(',').map((n) => n.trim())
       block = { type: blockType, title, content: blockContent, notes }
+    } else if (blockType === 'grandStaff') {
+      block = { type: 'grandStaff', title, content: blockContent }
     } else {
       block = { type: 'abc', title, content: blockContent }
     }
@@ -250,6 +253,14 @@ export const TheoryContent: React.FC<TheoryContentProps> = ({ content }) => {
           return (
             <div key={`abc-${index}`} className="abc-renderer-wrapper">
               <AbcRenderer abc={block.content} title={block.title} />
+            </div>
+          )
+        }
+
+        if (block.type === 'grandStaff') {
+          return (
+            <div key={`grandStaff-${index}`} className="grandstaff-renderer-wrapper">
+              <InlineGrandStaff abc={block.content} title={block.title} />
             </div>
           )
         }

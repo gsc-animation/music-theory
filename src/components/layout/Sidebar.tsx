@@ -2,7 +2,6 @@ import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { COURSE_MODULES } from '../../data/course-data'
 import { useProgressStore } from '../../stores/useProgressStore'
-import { useSettingsStore } from '../../stores/useSettingsStore'
 import { ProgressRing } from '../ui/ProgressRing'
 import { useGameStore } from '../../stores/useGameStore'
 import { APP_STRINGS } from '../../constants/app-strings'
@@ -15,9 +14,8 @@ interface SidebarProps {
  * Navigation items for the sidebar
  */
 const NAV_ITEMS = [
-  { icon: 'menu_book', label: 'Syllabus', path: '/' },
-  { icon: 'piano', label: 'Practice', path: '/practice' },
-  { icon: 'person', label: 'Profile', path: '/profile' },
+  { icon: 'menu_book', label: 'Giáo trình', path: '/syllabus' },
+  { icon: 'piano', label: 'Luyện tập', path: '/practice' },
 ]
 
 /**
@@ -34,23 +32,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
     setCurrentPosition,
     completedSubmodules,
     getModuleProgress,
-    totalXP,
   } = useProgressStore()
 
   const startGame = useGameStore((state) => state.startGame)
   const stopGame = useGameStore((state) => state.stopGame)
   const isPlaying = useGameStore((state) => state.isPlaying)
 
-  const { theme, toggleTheme } = useSettingsStore()
-
   // Track which modules are expanded
   const [expandedModules, setExpandedModules] = React.useState<number[]>([currentModuleId])
-
-  // Calculate theme icon
-  const getThemeIcon = () => {
-    if (theme === 'system') return 'brightness_auto'
-    return theme === 'dark' ? 'dark_mode' : 'light_mode'
-  }
 
   const toggleModuleExpansion = (moduleId: number) => {
     setExpandedModules((prev) =>
@@ -72,8 +61,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
   }
 
   const isNavItemActive = (path: string) => {
-    if (path === '/') {
-      return location.pathname === '/' || location.pathname.startsWith('/module/')
+    if (path === '/syllabus') {
+      return location.pathname === '/syllabus' || location.pathname.startsWith('/module/')
     }
     return location.pathname === path
   }
@@ -83,17 +72,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       className={`
         w-[280px] flex-shrink-0 bg-white dark:bg-[#1a1d21]
         border-r border-slate-200 dark:border-slate-700
-        flex flex-col h-full shadow-[2px_0_20px_rgba(0,0,0,0.02)] z-30
+        flex flex-col sticky top-0 self-start shadow-[2px_0_20px_rgba(0,0,0,0.02)] z-30
         ${className}
       `}
     >
       {/* Header */}
       <div className="p-6 pb-2">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-8 h-8 bg-[#30e8e8] rounded-lg flex items-center justify-center text-[#111818]">
+        <div
+          className="flex items-center gap-2 mb-6 cursor-pointer group"
+          onClick={() => navigate('/')}
+        >
+          <div className="w-8 h-8 bg-[#30e8e8] rounded-lg flex items-center justify-center text-[#111818] group-hover:scale-105 transition-transform">
             <span className="material-symbols-outlined text-[20px]">music_note</span>
           </div>
-          <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-[#30e8e8] transition-colors">
             Music Theory Course
           </h1>
         </div>
@@ -150,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
       </div>
 
       {/* Learning Path - Module List with Submodules */}
-      <div className="flex-1 overflow-y-auto px-4 py-2 scrollbar-none">
+      <div className="flex-1 px-4 py-2">
         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 px-2">
           Learning Path
         </p>
@@ -281,37 +273,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-200 dark:border-slate-700 mt-auto">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-amber-500 text-[18px]">star</span>
-            <span className="text-sm font-bold text-slate-700 dark:text-slate-200">
-              {totalXP} XP
-            </span>
-          </div>
-          <div className="flex items-center gap-1">
-            <button
-              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              onClick={() => toggleTheme()}
-              title={`Theme: ${theme}`}
-            >
-              <span className="material-symbols-outlined text-slate-400 text-[20px]">
-                {getThemeIcon()}
-              </span>
-            </button>
-            <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              <span className="material-symbols-outlined text-slate-400 text-[20px]">help</span>
-            </button>
-          </div>
+        <div className="flex items-center justify-end">
+          <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <span className="material-symbols-outlined text-slate-400 text-[20px]">help</span>
+          </button>
         </div>
-        <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-[#30e8e8] to-[#1f9d9d] rounded-full transition-all duration-300"
-            style={{ width: `${Math.min((totalXP % 1000) / 10, 100)}%` }}
-          />
-        </div>
-        <p className="text-[10px] text-slate-400 mt-1.5">
-          {1000 - (totalXP % 1000)} XP to next level
-        </p>
       </div>
     </aside>
   )

@@ -18,7 +18,7 @@ export const SUBMODULE_1_3: Submodule = {
   id: '1.3',
   title: 'Dấu hóa (Accidentals)',
   description: 'Dấu thăng (♯), Dấu giáng (♭), và Dấu bình (♮) - Phím đen trên Piano',
-  sections: ['theory', 'grandStaff', 'piano', 'guitar', 'abcDemo', 'practice'],
+  sections: ['theory', 'piano', 'guitar', 'abcDemo', 'practice'],
   theoryContent: `
 ## 1. Dấu hóa là gì? (What are Accidentals?)
 
@@ -31,6 +31,8 @@ export const SUBMODULE_1_3: Submodule = {
 | ♮ | Dấu bình (Natural) | Hủy bỏ dấu thăng/giáng trước đó |
 
 > 💡 **Nửa cung (Semitone)** là khoảng cách nhỏ nhất giữa 2 nốt liền kề trên đàn.
+
+{{quiz:Có bao nhiêu loại dấu hóa chính?|2 loại;*3 loại;4 loại|Có 3 loại dấu hóa chính: Thăng (♯), Giáng (♭), và Bình (♮)}}
 
 ---
 
@@ -65,6 +67,8 @@ F ^F|]}}
 
 {{guitar:F và F♯ trên Guitar|F3,F#3,F4,F#4}}
 
+{{quiz:Dấu thăng (♯) làm nốt thay đổi như thế nào?|*Nâng lên nửa cung;Hạ xuống nửa cung;Giữ nguyên|Dấu thăng ♯ NÂNG nốt lên nửa cung - di chuyển sang phím bên PHẢI trên Piano}}
+
 ---
 
 ## 3. Dấu Giáng (Flat - ♭)
@@ -95,6 +99,8 @@ B _B|]}}
 
 {{guitar:B và B♭ trên Guitar|B2,Bb2,B3,Bb3}}
 
+{{quiz:Dấu giáng (♭) làm nốt thay đổi như thế nào?|Nâng lên nửa cung;*Hạ xuống nửa cung;Giữ nguyên|Dấu giáng ♭ HẠ nốt xuống nửa cung - di chuyển sang phím bên TRÁI trên Piano}}
+
 ---
 
 ## 4. Dấu Bình (Natural - ♮)
@@ -111,6 +117,8 @@ K:C
 {{guitar:C♯ trở về C Natural trên Guitar|C#3,C3,C#4,C4}}
 
 {{flute:C♯ trở về C Natural trên Sáo|C#5,C5}}
+
+{{quiz:Dấu bình (♮) có chức năng gì?|Nâng nốt lên nửa cung;Hạ nốt xuống nửa cung;*Hủy bỏ dấu thăng/giáng trước đó|Dấu bình ♮ HỦY BỎ dấu thăng hoặc giáng, đưa nốt về trạng thái tự nhiên}}
 
 ---
 
@@ -132,6 +140,8 @@ Mỗi **phím đen** trên Piano có thể được gọi bằng 2 tên khác nh
 
 > 🔔 **Hai nốt có cùng âm thanh nhưng khác tên gọi** được gọi là **nốt đồng âm (Enharmonic)**.
 > Sẽ học kỹ hơn ở bài 1.5!
+
+{{quiz:Phím đen giữa C và D có thể gọi là gì?|Chỉ có C♯;Chỉ có D♭;*C♯ hoặc D♭|Phím đen giữa C và D có thể gọi là C♯ (C thăng) HOẶC D♭ (D giáng) - cùng âm thanh, khác tên gọi!}}
 
 ---
 
@@ -157,6 +167,8 @@ L:1/2
 K:C
 ^E F|]}}
 
+{{quiz:E♯ bằng nốt nào?|E;*F;G|Vì E và F không có phím đen giữa, nên E thăng lên nửa cung chính là F!}}
+
 ---
 
 ## 7. Quy tắc về Ô nhịp (Bar Rule)
@@ -172,6 +184,8 @@ C ^C G C | C G A B |]}}
 Trong ví dụ trên:
 - **Ô nhịp 1**: Nốt C thứ 2 là C♯ (có dấu thăng), nốt C cuối cũng là C♯ (theo quy tắc ô nhịp)
 - **Ô nhịp 2**: Nốt C đầu tiên là C **tự nhiên** (sang ô nhịp mới, dấu hóa tự hết)
+
+{{quiz:Dấu hóa có hiệu lực trong phạm vi nào?|Toàn bộ bản nhạc;*Ô nhịp hiện tại;Chỉ nốt đó thôi|Dấu hóa chỉ có hiệu lực trong Ô NHỊP HIỆN TẠI. Sang ô nhịp mới, nốt tự động trở về tự nhiên!}}
 
 ---
 
@@ -232,6 +246,8 @@ G A B c | d e =F G | A B F G |]}}
 
 > 🔔 **Nhớ**: Dấu bình chỉ có hiệu lực trong **ô nhịp hiện tại**!
 
+{{quiz:Hóa biểu có tác dụng trong phạm vi nào?|Chỉ ô nhịp đầu tiên;*Toàn bộ bản nhạc;Chỉ khi có dấu bình|Hóa biểu có tác dụng TOÀN BỘ BẢN NHẠC. Muốn hủy tạm thời thì dùng dấu bình (♮)!}}
+
 ---
 
 ## 🎮 Sẵn sàng cho Thử thách!
@@ -242,17 +258,6 @@ Bây giờ bạn đã hiểu về dấu hóa, hãy thử sức với các game:
 2. **Ninja Phím Đen** ⭐⭐: Thi tốc độ bấm đúng phím đen trên Piano hoặc Guitar!
 3. **Biên Tập Viên** ⭐⭐⭐: Nghe giai điệu và thêm dấu hóa đúng vào khuông nhạc
   `,
-  staffAbc: `X:1
-T:Chromatic Adventure
-C:Music Theory Demo
-M:4/4
-L:1/4
-K:C
-%%staves {1 2}
-V:1 clef=treble name="Treble"
-C ^C D ^D | E F ^F G | ^G A ^A B | c z z z |
-V:2 clef=bass name="Bass"
-C,, z D,, z | E,, F,, z G,, | z A,, z B,, | C, z z z |`,
   abcDemos: [
     {
       id: '1.3.1',

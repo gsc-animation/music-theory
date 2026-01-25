@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
+import { ProfilePage } from './pages/ProfilePage'
 import { MainLayout } from './components/layout/MainLayout'
 import './App.css'
 import { useSettingsStore } from './stores/useSettingsStore'
@@ -9,7 +10,7 @@ import { useEffect, lazy, Suspense } from 'react'
 // Lazy load pages for better performance
 const SubmodulePage = lazy(() => import('./pages/SubmodulePage'))
 const PracticePage = lazy(() => import('./pages/PracticePage'))
-const ProfilePage = lazy(() => import('./pages/ProfilePage'))
+// Profile page is now eagerly loaded as home page
 
 // Lazy load floating instruments container
 const FloatingInstrumentsContainer = lazy(
@@ -66,15 +67,15 @@ function App() {
           }
         >
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<ProfilePage />} />
+            <Route path="/syllabus" element={<HomePage />} />
             <Route path="/module/:moduleId/:submoduleId" element={<SubmodulePage />} />
             <Route path="/practice" element={<PracticePage />} />
-            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </Suspense>
       </MainLayout>
 
-      {/* Floating instruments - always available on all pages */}
+      {/* Floating instruments & XP - always available on all pages */}
       <Suspense fallback={null}>
         <FloatingInstrumentsContainer />
       </Suspense>

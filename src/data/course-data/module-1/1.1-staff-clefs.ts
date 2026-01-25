@@ -16,209 +16,244 @@ export const SUBMODULE_1_1: Submodule = {
   id: '1.1',
   title: 'The Staff & Clefs',
   description: 'Understanding the 5 lines, Treble Clef (G Clef), and Bass Clef (F Clef)',
-  sections: ['theory', 'grandStaff', 'piano', 'abcDemo'],
+  sections: ['theory', 'piano', 'abcDemo'],
   theoryContent: `
-## 1. The Musical Staff
+## 1. Khuông nhạc (The Musical Staff)
 
-Before we learn any notes, let's understand where music is written. The **staff** (also called "stave") is like a ladder for music:
+Trước khi học các nốt nhạc, hãy hiểu nơi âm nhạc được viết. **Khuông nhạc** (còn gọi là "staff" hoặc "stave") giống như một chiếc thang cho âm nhạc:
 
-- **5 horizontal lines** - numbered 1 (bottom) to 5 (top)
-- **4 spaces** between those lines - numbered 1 (bottom) to 4 (top)
+- **5 dòng kẻ ngang** - đánh số từ 1 (dưới cùng) đến 5 (trên cùng)
+- **4 khe** giữa các dòng - đánh số từ 1 (dưới cùng) đến 4 (trên cùng)
 
-Each line and each space represents a different musical pitch. Notes go **higher** as you move up the staff, and **lower** as you move down.
+Mỗi dòng và mỗi khe đại diện cho một cao độ khác nhau. Nốt càng **cao** khi di chuyển lên trên, và càng **thấp** khi di chuyển xuống dưới.
 
-{{abc:Empty Staff - 5 Lines & 4 Spaces|X:1
+{{abc:Khuông nhạc trống - 5 Dòng & 4 Khe|X:1
 L:1/4
 K:C clef=treble
 x4|]}}
 
-> 💡 **Think of it like a ladder:** Higher rungs = higher sounds!
+> 💡 **Hãy nghĩ như một chiếc thang**: Bậc cao hơn = âm thanh cao hơn!
+
+{{quiz:Khuông nhạc có bao nhiêu dòng kẻ?|4 dòng;*5 dòng;6 dòng|Khuông nhạc có 5 dòng kẻ ngang, đánh số từ 1 (dưới) đến 5 (trên)}}
 
 ---
 
-## 2. Meet the Treble Clef (G Clef)
+## 2. Khóa Sol (Treble Clef / G Clef)
 
-A **clef** is a symbol at the beginning of the staff that tells us the names of the notes. Different clefs are used for different instruments and voice ranges.
+**Khóa nhạc** là ký hiệu ở đầu khuông nhạc cho biết tên các nốt. Các khóa khác nhau được dùng cho các nhạc cụ và giọng hát khác nhau.
 
-The **Treble Clef** (also called **G Clef**) is the most common clef. Notice how it curls around the **second line from the bottom** - that line is the note **G**.
+**Khóa Sol** (còn gọi là **G Clef**) là khóa nhạc phổ biến nhất. Chú ý cách nó cuộn quanh **dòng thứ 2 từ dưới lên** - dòng đó là nốt **Sol (G)**.
 
-{{abc:Treble Clef - Notice the G Line|X:1
+{{abc:Khóa Sol - Chú ý dòng Sol|X:1
 L:1/4
 K:C clef=treble
 x4|]}}
 
-**Used for:**
-- 🎹 Right hand of piano
+**Sử dụng cho:**
+- 🎹 Tay phải của Piano
 - 🎸 Guitar
-- 🎺 Trumpet, flute, violin
-- 🎤 Soprano and alto voices
+- 🎺 Trumpet, Flute, Violin
+- 🎤 Giọng Soprano và Alto
+
+{{quiz:Khóa Sol cuộn quanh dòng thứ mấy?|Dòng thứ 1;*Dòng thứ 2;Dòng thứ 3|Khóa Sol cuộn quanh dòng thứ 2 - dòng đó là nốt Sol (G)}}
 
 ---
 
-## 3. Meet the Bass Clef (F Clef)
+## 3. Khóa Fa (Bass Clef / F Clef)
 
-The **Bass Clef** (also called **F Clef**) is used for lower sounds. Notice the two dots surrounding the **fourth line from the bottom** - that line is the note **F**.
+**Khóa Fa** (còn gọi là **F Clef**) được dùng cho các âm thấp hơn. Chú ý hai chấm bao quanh **dòng thứ 4 từ dưới lên** - dòng đó là nốt **Fa (F)**.
 
-{{abc:Bass Clef - Notice the F Line|X:1
+{{abc:Khóa Fa - Chú ý dòng Fa|X:1
 L:1/4
 K:C clef=bass
 x4|]}}
 
-**Used for:**
-- 🎹 Left hand of piano
-- 🎻 Cello, double bass
-- 🎤 Bass and baritone voices
-- 🎵 Tuba, trombone
+**Sử dụng cho:**
+- 🎹 Tay trái của Piano
+- 🎻 Cello, Contrabass
+- 🎤 Giọng Bass và Baritone
+- 🎵 Tuba, Trombone
+
+{{quiz:Khóa Fa có 2 chấm bao quanh dòng thứ mấy?|Dòng thứ 2;Dòng thứ 3;*Dòng thứ 4|Khóa Fa có 2 chấm bao quanh dòng thứ 4 - dòng đó là nốt Fa (F)}}
 
 ---
 
-## 4. Your First Notes: C, D, E
+## 4. Những nốt đầu tiên: Đô, Rê, Mi (C, D, E)
 
-Music uses only **7 letter names**: A, B, C, D, E, F, G - then it repeats!
+Âm nhạc chỉ sử dụng **7 tên chữ cái**: A, B, C, D, E, F, G - rồi lại lặp lại!
 
-Let's start with the first three notes that are easiest to remember:
+Hãy bắt đầu với 3 nốt đầu tiên dễ nhớ nhất:
 
-### Middle C
-**Middle C** is the "home base" note - it sits on a small line between treble and bass staves.
+### Đô giữa (Middle C)
+**Middle C** là nốt "căn cứ địa" - nó nằm trên một dòng kẻ nhỏ giữa khuông Sol và khuông Fa.
 
-{{abc:Middle C - Your Home Base|X:1
+{{abc:Middle C - Căn cứ địa của bạn|X:1
 L:1/2
 K:C clef=treble
 C2|]}}
 
-### D - One Step Up
-**D** is one step higher than C. It sits in the space just below the staff.
+### Rê (D) - Một bước lên
+**D** cao hơn C một bước. Nó nằm trong khe ngay dưới khuông.
 
-{{abc:D Note - One Step from C|X:1
+{{abc:Nốt D - Một bước từ C|X:1
 L:1/2
 K:C clef=treble
 D2|]}}
 
-### E - Another Step Up
-**E** is on the first (bottom) line of the treble staff.
+### Mi (E) - Thêm một bước nữa
+**E** nằm trên dòng thứ 1 (dòng dưới cùng) của khuông khóa Sol.
 
-{{abc:E Note - First Line|X:1
+{{abc:Nốt E - Dòng thứ 1|X:1
 L:1/2
 K:C clef=treble
 E2|]}}
 
-### C, D, E Together
+### C, D, E cùng nhau
 
-{{abc:C D E - Your First Three Notes|X:1
+{{abc:C D E - Ba nốt đầu tiên|X:1
 L:1/2
 K:C clef=treble
 C D E z|]}}
 
+{{quiz:Nốt E nằm ở đâu trên khuông khóa Sol?|Trong khe thứ 1;*Trên dòng thứ 1 (dưới cùng);Trên dòng thứ 2|Nốt E nằm trên dòng thứ 1 - dòng dưới cùng của khuông khóa Sol}}
+
 ---
 
-## 5. Complete the Alphabet: F, G, A, B
+## 5. Hoàn thành bảng chữ cái: Fa, Sol, La, Si (F, G, A, B)
 
-Now let's learn the remaining four notes to complete the musical alphabet:
+Bây giờ hãy học 4 nốt còn lại để hoàn thành bảng chữ cái âm nhạc:
 
-### F - First Space
-**F** sits in the first space of the treble staff.
+### Fa (F) - Khe thứ 1
+**F** nằm trong khe thứ 1 của khuông khóa Sol.
 
-{{abc:F Note - First Space|X:1
+{{abc:Nốt F - Khe thứ 1|X:1
 L:1/2
 K:C clef=treble
 F2|]}}
 
-### G - Second Line (The Treble Clef Line!)
-**G** is on the second line - the same line the treble clef curls around!
+### Sol (G) - Dòng thứ 2 (Dòng Khóa Sol!)
+**G** nằm trên dòng thứ 2 - chính là dòng mà khóa Sol cuộn quanh!
 
-{{abc:G Note - The Treble Clef Line|X:1
+{{abc:Nốt G - Dòng Khóa Sol|X:1
 L:1/2
 K:C clef=treble
 G2|]}}
 
-### A - Second Space
-**A** sits in the second space.
+### La (A) - Khe thứ 2
+**A** nằm trong khe thứ 2.
 
-{{abc:A Note - Second Space|X:1
+{{abc:Nốt A - Khe thứ 2|X:1
 L:1/2
 K:C clef=treble
 A2|]}}
 
-### B - Third Line
-**B** is on the third (middle) line.
+### Si (B) - Dòng thứ 3
+**B** nằm trên dòng thứ 3 (dòng giữa).
 
-{{abc:B Note - Third Line|X:1
+{{abc:Nốt B - Dòng thứ 3|X:1
 L:1/2
 K:C clef=treble
 B2|]}}
 
-### F, G, A, B Together
+### F, G, A, B cùng nhau
 
-{{abc:F G A B - Complete the Alphabet|X:1
+{{abc:F G A B - Hoàn thành bảng chữ cái|X:1
 L:1/2
 K:C clef=treble
 F G A B|]}}
 
-### 🎉 The Complete C Scale!
+### 🎉 Thang âm C đầy đủ!
 
-{{abc:C D E F G A B C - One Octave!|X:1
+{{abc:C D E F G A B C - Một quãng tám!|X:1
 L:1/4
 K:C clef=treble
 C D E F | G A B c|]}}
 
+{{quiz:Nốt G nằm trên dòng nào của khóa Sol?|Dòng thứ 1;*Dòng thứ 2 (dòng khóa Sol);Dòng thứ 3|Nốt G nằm trên dòng thứ 2 - chính là dòng mà khóa Sol cuộn quanh}}
+
 ---
 
-## 6. Memory Tricks (Mnemonics)
+## 6. Câu ghi nhớ (Mnemonics)
 
-Now that you know the notes, here are some memory tricks to help you remember which notes sit on lines vs. spaces:
+Bây giờ bạn đã biết các nốt, đây là một số mẹo ghi nhớ để nhớ nốt nào nằm trên dòng, nốt nào nằm trong khe:
 
-### Treble Clef Line Notes
-**Lines (bottom to top):** E - G - B - D - F
+### Nốt trên Dòng - Khóa Sol
+**Các dòng (từ dưới lên):** E - G - B - D - F (Mi - Sol - Si - Rê - Fa)
 
-> 📝 **"Every Good Boy Does Fine"**
+> 📝 **"Every Good Boy Does Fine"** hoặc **"Mình Sẽ Sống Rất Fashion"**
 
-{{abc:Treble Clef Line Notes|X:1
+{{abc:Nốt trên dòng - Khóa Sol|X:1
 L:1/2
 K:C clef=treble
 E G B d f|]}}
 
-### Treble Clef Space Notes
-**Spaces (bottom to top):** F - A - C - E
+### Nốt trong Khe - Khóa Sol
+**Các khe (từ dưới lên):** F - A - C - E (Fa - La - Đô - Mi)
 
-> 📝 **"FACE"** (spells a word!)
+> 📝 **"FACE"** (ghép thành một từ!)
 
-{{abc:Treble Clef Space Notes|X:1
+{{abc:Nốt trong khe - Khóa Sol|X:1
 L:1/2
 K:C clef=treble
 F A c e|]}}
 
-### Bass Clef Line Notes
-**Lines (bottom to top):** G - B - D - F - A
+### Nốt trên Dòng - Khóa Fa
+**Các dòng (từ dưới lên):** G - B - D - F - A (Sol - Si - Rê - Fa - La)
 
-> 📝 **"Good Boys Do Fine Always"**
+> 📝 **"Good Boys Do Fine Always"** hoặc **"Sống Sao Đẹp Fa La"**
 
-{{abc:Bass Clef Line Notes|X:1
+{{abc:Nốt trên dòng - Khóa Fa|X:1
 L:1/2
 K:C clef=bass
 G,, B,, D, F, A,|]}}
 
-### Bass Clef Space Notes
-**Spaces (bottom to top):** A - C - E - G
+### Nốt trong Khe - Khóa Fa
+**Các khe (từ dưới lên):** A - C - E - G (La - Đô - Mi - Sol)
 
-> 📝 **"All Cows Eat Grass"**
+> 📝 **"All Cows Eat Grass"** hoặc **"LA ĐÔ MI SOL"**
 
-{{abc:Bass Clef Space Notes|X:1
+{{abc:Nốt trong khe - Khóa Fa|X:1
 L:1/2
 K:C clef=bass
 A,, C, E, G,|]}}
 
+{{quiz:Câu nhớ "FACE" giúp nhớ nốt nào trên khuông?|Các nốt trên dòng (E-G-B-D-F);*Các nốt trong khe (F-A-C-E);Tất cả các nốt|FACE là các nốt trong KHE của khóa Sol: F-A-C-E (Fa-La-Đô-Mi)}}
+
 ---
 
-## 7. The Grand Staff
+## 7. Khuông nhạc Lớn (Grand Staff)
 
-When treble and bass clefs are joined by a **brace** (a curly bracket), they form the **Grand Staff**. This is used for piano music because pianists play both high and low notes simultaneously.
+Khi khóa Sol và khóa Fa được nối với nhau bằng một **ngoặc nhọn** (brace), chúng tạo thành **Grand Staff** (Khuông nhạc Lớn). Đây là dạng khuông dùng cho Piano vì nghệ sĩ piano chơi cả nốt cao và nốt thấp cùng lúc.
 
-**Middle C** sits on a small ledger line right between the two staves - it's the meeting point!
+**Middle C** nằm trên một dòng kẻ phụ nhỏ ngay giữa hai khuông - đây là điểm giao nhau!
 
-{{abc:Middle C - The Meeting Point|X:1
+{{abc:Middle C - Điểm giao nhau|X:1
 L:1/2
 K:C clef=treble
 C2|]}}
+
+### 🎵 Ví dụ Grand Staff hoàn chỉnh
+
+Bây giờ hãy xem và nghe tất cả các khái niệm này kết hợp lại! Đây là một bài dân ca Anh truyền thống được viết cho grand staff:
+
+{{grandStaff:Bonny Green - Dân ca Anh truyền thống|X:1
+T:Bonny Green
+C:Traditional English Folk Song
+R:Jig
+O:Bucknell, England
+Q:1/8=180
+M:6/8
+L:1/8
+K:C
+%%staves {1 2}
+V:1 clef=treble name="Treble"
+G | cBc ded | cBA GAB | cBc AGF | EFD C2 |
+V:2 clef=bass name="Bass"
+z | C,3 G,3 | A,3 E,3 | C,3 F,3 | G,3 C,2 |}}
+
+Chú ý cách **khóa Sol** (khuông trên) mang giai điệu trong khi **khóa Fa** (khuông dưới) cung cấp hòa âm!
+
+{{quiz:Grand Staff được tạo thành từ gì?|Chỉ có khóa Sol;Chỉ có khóa Fa;*Khóa Sol + Khóa Fa nối bằng ngoặc nhọn|Grand Staff = Khóa Sol (treble) + Khóa Fa (bass) được nối với nhau bằng ngoặc nhọn (brace)}}
   `,
   staffAbc: `X:1
 T:Bonny Green

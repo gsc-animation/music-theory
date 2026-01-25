@@ -645,7 +645,7 @@ ${abcNotes} |`
       <div
         id={paperId}
         ref={containerRef}
-        className="abc-paper bg-slate-800/50 rounded-lg min-h-[280px] overflow-hidden cursor-pointer"
+        className="abc-paper bg-white dark:bg-slate-800/50 rounded-lg min-h-[280px] overflow-hidden cursor-pointer border border-slate-200 dark:border-transparent"
       />
       {/* Audio controls */}
       <div id={audioId} ref={audioContainerRef} className="abc-audio mt-2" />
@@ -654,64 +654,109 @@ ${abcNotes} |`
           width: 100%;
           max-width: 100%;
         }
+        /* Light mode note colors */
         .abc-grand-staff path.abcjs-notehead,
         .abc-grand-staff path.abcjs-stem,
         .abc-grand-staff path.abcjs-beam {
-          fill: #cbd5e1;
-          stroke: #cbd5e1;
+          fill: #334155;
+          stroke: #334155;
         }
         .abc-grand-staff path.abcjs-staff,
         .abc-grand-staff path.abcjs-bar {
-          stroke: #64748b;
+          stroke: #94a3b8;
         }
         .abc-grand-staff text {
-          fill: #94a3b8;
+          fill: #64748b;
         }
         .abc-grand-staff text.abcjs-annotation {
-          fill: #30e8e8;
+          fill: #0891b2;
           font-size: 7px;
           font-weight: bold;
         }
         .abc-grand-staff .abcjs-note.abcjs-highlight path {
-          fill: #30e8e8 !important;
-          stroke: #30e8e8 !important;
+          fill: #0891b2 !important;
+          stroke: #0891b2 !important;
         }
-        /* Note hover effect for clickable notes */
         .abc-grand-staff .abcjs-note:hover path {
-          fill: #30e8e8 !important;
-          stroke: #30e8e8 !important;
+          fill: #0891b2 !important;
+          stroke: #0891b2 !important;
         }
-        /* Hide voice names */
         .abc-grand-staff text.abcjs-voice-name {
           display: none;
         }
-        /* Cursor styling */
         .abc-grand-staff .abcjs-cursor {
-          stroke: #30e8e8;
+          stroke: #0891b2;
           stroke-width: 2;
           opacity: 0.8;
         }
-        /* Audio controls styling for dark theme */
+        /* Light mode audio controls */
         .abc-grand-staff .abc-audio {
           background: transparent;
         }
         .abc-grand-staff .abcjs-inline-audio {
-          background-color: rgba(30, 41, 59, 0.8);
+          background-color: rgba(241, 245, 249, 0.95);
           border-radius: 8px;
           padding: 8px 12px;
+          border: 1px solid #e2e8f0;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-btn {
-          background-color: #30e8e8;
+          background-color: #0891b2;
           border: none;
-          color: #0f172a;
+          color: white;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-btn:hover {
-          background-color: #22d3ee;
+          background-color: #0e7490;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background {
-          background-color: #334155;
+          background-color: #cbd5e1;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator {
+          background-color: #0891b2;
+        }
+
+        /* Dark mode overrides */
+        .dark .abc-grand-staff path.abcjs-notehead,
+        .dark .abc-grand-staff path.abcjs-stem,
+        .dark .abc-grand-staff path.abcjs-beam {
+          fill: #cbd5e1;
+          stroke: #cbd5e1;
+        }
+        .dark .abc-grand-staff path.abcjs-staff,
+        .dark .abc-grand-staff path.abcjs-bar {
+          stroke: #64748b;
+        }
+        .dark .abc-grand-staff text {
+          fill: #94a3b8;
+        }
+        .dark .abc-grand-staff text.abcjs-annotation {
+          fill: #30e8e8;
+        }
+        .dark .abc-grand-staff .abcjs-note.abcjs-highlight path {
+          fill: #30e8e8 !important;
+          stroke: #30e8e8 !important;
+        }
+        .dark .abc-grand-staff .abcjs-note:hover path {
+          fill: #30e8e8 !important;
+          stroke: #30e8e8 !important;
+        }
+        .dark .abc-grand-staff .abcjs-cursor {
+          stroke: #30e8e8;
+        }
+        .dark .abc-grand-staff .abcjs-inline-audio {
+          background-color: rgba(30, 41, 59, 0.8);
+          border: none;
+        }
+        .dark .abc-grand-staff .abcjs-inline-audio .abcjs-btn {
+          background-color: #30e8e8;
+          color: #0f172a;
+        }
+        .dark .abc-grand-staff .abcjs-inline-audio .abcjs-btn:hover {
+          background-color: #22d3ee;
+        }
+        .dark .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background {
+          background-color: #334155;
+        }
+        .dark .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator {
           background-color: #30e8e8;
         }
       `}</style>

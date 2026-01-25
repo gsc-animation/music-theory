@@ -7,13 +7,9 @@ import {
   getPreviousSubmodule,
 } from '../data/course-data'
 import { useProgressStore } from '../stores/useProgressStore'
-import { useAudioStore } from '../stores/useAudioStore'
-import { useNotationStore } from '../stores/useNotationStore'
 import { CollapsiblePanel } from '../components/ui/CollapsiblePanel'
 import { MainHeader } from '../components/layout/MainHeader'
 import { Sidebar } from '../components/layout/Sidebar'
-import VirtualPiano from '../components/VirtualPiano/VirtualPiano'
-import { VirtualGuitar } from '../components/VirtualGuitar/VirtualGuitar'
 
 // Lazy load heavy components
 const AbcGrandStaff = React.lazy(() => import('../components/MusicStaff/AbcGrandStaff'))
@@ -36,10 +32,6 @@ export const SubmodulePage: React.FC = () => {
   const navigate = useNavigate()
 
   const { setCurrentPosition, completeSubmodule, isSubmoduleCompleted } = useProgressStore()
-  const startNote = useAudioStore((state) => state.startNote)
-  const stopNote = useAudioStore((state) => state.stopNote)
-  const activeNotes = useAudioStore((state) => state.activeNotes)
-  const appendNote = useNotationStore((state) => state.appendNote)
 
   const [showNoteNames, setShowNoteNames] = React.useState(false)
   const [theoryComplete, setTheoryComplete] = React.useState(false)
@@ -59,11 +51,6 @@ export const SubmodulePage: React.FC = () => {
     }
   }, [moduleId, submoduleId, setCurrentPosition])
 
-  const handleStopNote = (note: string) => {
-    stopNote(note)
-    appendNote(note)
-  }
-
   const handleComplete = () => {
     if (submoduleId) {
       completeSubmodule(submoduleId)
@@ -79,9 +66,9 @@ export const SubmodulePage: React.FC = () => {
 
   if (!submodule || !module) {
     return (
-      <div className="flex h-screen bg-[#F5F7FA] dark:bg-[#121212]">
+      <div className="flex min-h-screen bg-[#F5F7FA] dark:bg-[#121212]">
         <Sidebar className="hidden md:flex" />
-        <main className="flex-1 flex flex-col h-full min-w-0">
+        <main className="flex-1 flex flex-col min-w-0">
           <MainHeader />
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
@@ -105,13 +92,13 @@ export const SubmodulePage: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen bg-[#F5F7FA] dark:bg-[#121212] overflow-hidden">
+    <div className="flex min-h-screen bg-[#F5F7FA] dark:bg-[#121212]">
       <Sidebar className="hidden md:flex" />
 
-      <main className="flex-1 flex flex-col h-full min-w-0 relative">
+      <main className="flex-1 flex flex-col min-w-0 relative">
         <MainHeader />
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth no-scrollbar">
+        <div className="flex-1 p-4 space-y-4">
           {/* Unified Lesson Card - Header + Theory + Inline Demos */}
           <div className="relative bg-white dark:bg-slate-800/95 rounded-2xl overflow-hidden shadow-lg shadow-slate-900/5 dark:shadow-black/20 border border-slate-200/80 dark:border-slate-700/80">
             {/* Gradient accent */}
@@ -174,7 +161,10 @@ export const SubmodulePage: React.FC = () => {
                       setTheoryComplete(true)
                       // Auto-scroll to interactive section after delay
                       setTimeout(() => {
-                        interactiveRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        interactiveRef.current?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        })
                       }, 300)
                     }}
                   />
@@ -183,12 +173,17 @@ export const SubmodulePage: React.FC = () => {
                   {hasSection('grandStaff') && (
                     <div className="mt-8 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700">
                       <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-[#30e8e8]">
-                            music_note
-                          </span>
-                          <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
-                            Grand Staff View
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <span className="material-symbols-outlined text-[#30e8e8]">
+                              music_note
+                            </span>
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+                              Grand Staff View
+                            </span>
+                          </div>
+                          <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 ml-7">
+                            🎵 Ứng dụng trong một bản nhạc thực tế
                           </span>
                         </div>
                         <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
@@ -217,34 +212,37 @@ export const SubmodulePage: React.FC = () => {
                   )}
 
                   {/* Inline ABC Demos - revealed after theory complete */}
-                  {theoryComplete && hasSection('abcDemo') && submodule.abcDemos && submodule.abcDemos.length > 0 && (
-                    <div
-                      ref={interactiveRef}
-                      className="mt-6"
-                      style={{ animation: 'fadeIn 0.5s ease-out' }}
-                    >
-                      <div className="flex items-center gap-2 mb-4">
-                        <span className="material-symbols-outlined text-[#30e8e8]">
-                          play_circle
-                        </span>
-                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
-                          Interactive Examples
-                        </span>
-                        <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-xs font-medium rounded-full">
-                          🎉 Mở khóa!
-                        </span>
-                      </div>
-                      <React.Suspense
-                        fallback={
-                          <div className="w-full h-32 flex items-center justify-center text-slate-400">
-                            Loading demos...
-                          </div>
-                        }
+                  {theoryComplete &&
+                    hasSection('abcDemo') &&
+                    submodule.abcDemos &&
+                    submodule.abcDemos.length > 0 && (
+                      <div
+                        ref={interactiveRef}
+                        className="mt-6"
+                        style={{ animation: 'fadeIn 0.5s ease-out' }}
                       >
-                        <AbcDemoSection demos={submodule.abcDemos} />
-                      </React.Suspense>
-                    </div>
-                  )}
+                        <div className="flex items-center gap-2 mb-4">
+                          <span className="material-symbols-outlined text-[#30e8e8]">
+                            play_circle
+                          </span>
+                          <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+                            Interactive Examples
+                          </span>
+                          <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 text-xs font-medium rounded-full">
+                            🎉 Mở khóa!
+                          </span>
+                        </div>
+                        <React.Suspense
+                          fallback={
+                            <div className="w-full h-32 flex items-center justify-center text-slate-400">
+                              Loading demos...
+                            </div>
+                          }
+                        >
+                          <AbcDemoSection demos={submodule.abcDemos} />
+                        </React.Suspense>
+                      </div>
+                    )}
                 </React.Suspense>
               )}
 
@@ -252,10 +250,15 @@ export const SubmodulePage: React.FC = () => {
               {!hasSection('theory') && hasSection('grandStaff') && (
                 <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#30e8e8]">music_note</span>
-                      <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
-                        Grand Staff View
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-[#30e8e8]">music_note</span>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+                          Grand Staff View
+                        </span>
+                      </div>
+                      <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 ml-7">
+                        🎵 Ứng dụng trong một bản nhạc thực tế
                       </span>
                     </div>
                     <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
@@ -282,19 +285,6 @@ export const SubmodulePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Guitar Fretboard */}
-          {hasSection('guitar') && (
-            <CollapsiblePanel title="Guitar Fretboard" icon="music_note" defaultOpen>
-              <VirtualGuitar
-                activeNotes={activeNotes}
-                onPlayNote={(note) => {
-                  startNote(note)
-                  setTimeout(() => handleStopNote(note), 200)
-                }}
-              />
-            </CollapsiblePanel>
-          )}
-
           {/* Flute */}
           {hasSection('flute') && (
             <CollapsiblePanel title="Flute" icon="graphic_eq" defaultOpen>
@@ -307,24 +297,6 @@ export const SubmodulePage: React.FC = () => {
               >
                 <HorizontalSaoTrucVisualizer />
               </React.Suspense>
-            </CollapsiblePanel>
-          )}
-
-          {/* Piano */}
-          {hasSection('piano') && (
-            <CollapsiblePanel title="Piano Visualization" icon="piano" defaultOpen>
-              <div className="flex justify-end mb-2">
-                <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">
-                  3 Octave Interactive Range
-                </span>
-              </div>
-              <VirtualPiano
-                startOctave={3}
-                octaves={3}
-                onStartNote={startNote}
-                onStopNote={handleStopNote}
-                activeNotes={activeNotes}
-              />
             </CollapsiblePanel>
           )}
 
@@ -350,7 +322,10 @@ export const SubmodulePage: React.FC = () => {
                     submodule.exercises.map((exercise, idx) => {
                       if (exercise.type === 'note-id' && exercise.notes) {
                         return (
-                          <GameQuiz key={`${submodule.id}-quiz-${idx}`} submoduleId={submodule.id} />
+                          <GameQuiz
+                            key={`${submodule.id}-quiz-${idx}`}
+                            submoduleId={submodule.id}
+                          />
                         )
                       }
                       return null

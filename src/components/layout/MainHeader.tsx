@@ -17,6 +17,8 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
   const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
   const bpm = useSettingsStore((state) => state.bpm)
   const adjustBpm = useSettingsStore((state) => state.adjustBpm)
+  const theme = useSettingsStore((state) => state.theme)
+  const toggleTheme = useSettingsStore((state) => state.toggleTheme)
 
   return (
     <header
@@ -40,7 +42,7 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
         </div>
       </div>
 
-      {/* Right - BPM & VN Mode */}
+      {/* Right - BPM, Dark Mode & VN Mode */}
       <div className="flex items-center gap-4">
         {/* BPM Control with +/- buttons */}
         <div className="hidden xl:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
@@ -65,6 +67,19 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
             <span className="material-symbols-outlined text-[16px]">add</span>
           </button>
         </div>
+
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          title={`Theme: ${theme}`}
+        >
+          <span className="material-symbols-outlined text-slate-500 dark:text-slate-400 text-[20px]">
+            {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
+          </span>
+        </button>
+
+        {/* VN Mode Toggle */}
         <label className="inline-flex items-center cursor-pointer group">
           <input
             className="sr-only peer"

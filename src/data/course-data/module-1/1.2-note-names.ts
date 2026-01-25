@@ -18,7 +18,7 @@ export const SUBMODULE_1_2: Submodule = {
   id: '1.2',
   title: 'Tên nốt & Cao độ',
   description: 'Nhận biết 7 nốt nhạc (A-G) trên bàn phím và khuông nhạc, khái niệm Quãng tám',
-  sections: ['theory', 'grandStaff', 'abcDemo', 'practice'],
+  sections: ['theory', 'abcDemo', 'practice'],
   theoryContent: `
 ## 1. Bảng chữ cái Âm nhạc (The Musical Alphabet)
 
@@ -30,6 +30,8 @@ export const SUBMODULE_1_2: Submodule = {
 L:1/4
 K:C clef=treble
 A B c d | e f g a|]}}
+
+{{quiz:Âm nhạc sử dụng bao nhiêu chữ cái để đặt tên cho nốt?|5 chữ cái;6 chữ cái;*7 chữ cái|Âm nhạc chỉ sử dụng 7 chữ cái: A, B, C, D, E, F, G - sau đó lặp lại!}}
 
 ---
 
@@ -52,6 +54,8 @@ C2 c2|]}}
 
 > 💡 **Mẹo nhớ**: "2 phím đen = 2 chữ trong Đô" (C = Đô)
 
+{{quiz:Nốt C nằm bên nào của nhóm 2 phím đen?|*Bên trái;Bên phải;Ở giữa|Nốt C là phím trắng ngay BÊN TRÁI nhóm 2 phím đen}}
+
 ### Bí quyết tìm nốt F (Fa)
 
 Tương tự, tìm **nhóm 3 phím đen**. Nốt **F** là phím trắng **ngay bên trái** nhóm 3 phím đen!
@@ -68,6 +72,8 @@ K:C clef=treble
 F2 f2|]}}
 
 > 💡 **Mẹo nhớ**: "3 phím đen = 3 chữ trong Fa" (F = Fa... gần đúng! 😄)
+
+{{quiz:Nốt F nằm bên nào của nhóm 3 phím đen?|*Bên trái;Bên phải;Ở giữa|Nốt F là phím trắng ngay BÊN TRÁI nhóm 3 phím đen}}
 
 ### Các nốt còn lại
 
@@ -104,6 +110,8 @@ Guitar có **6 dây**, đếm từ dây nhỏ nhất (mỏng, ở dưới) đế
 
 > 📝 **Câu nhớ tiếng Anh**: "**E**very **B**oy **G**ets **D**inner **A**t **E**ight"
 
+{{quiz:6 dây Guitar buông là những nốt gì (từ mỏng đến dày)?|E-A-D-G-B-E;*E-B-G-D-A-E;A-B-C-D-E-F|Từ dây mỏng nhất đến dày nhất: E-B-G-D-A-E. Nhớ câu "Em Bỏ Gấu Đi Ăn Eis"!}}
+
 ---
 
 ## 4. Quãng tám (Octave) & Middle C
@@ -135,6 +143,8 @@ Guitar có **6 dây**, đếm từ dây nhỏ nhất (mỏng, ở dưới) đế
 > - **C4** = Middle C (Đô giữa - nốt "trung tâm" của bàn phím)
 > - **A4** = 440 Hz (nốt La chuẩn để chỉnh dây đàn)
 
+{{quiz:C4 còn được gọi là gì?|Nốt C cao;Nốt C trầm;*Middle C (Đô giữa đàn)|C4 = Middle C - là nốt "trung tâm" của bàn phím piano}}
+
 ### So sánh quãng tám trên các nhạc cụ
 
 {{piano:Nốt E qua các quãng tám|E3,E4,E5}}
@@ -148,6 +158,8 @@ Số càng **lớn** = nốt càng **cao**:
 - G2 **thấp hơn** G5
 - Tất cả nốt có số 3 đều thấp hơn nốt cùng tên có số 4
 
+{{quiz:Nốt nào cao hơn: D3 hay D4?|D3;*D4;Giống nhau|Số càng LỚN = nốt càng CAO. D4 cao hơn D3 một quãng tám}}
+
 ---
 
 ## 🎮 Thử thách: Hành trình Cao độ
@@ -158,17 +170,6 @@ Bây giờ bạn đã sẵn sàng cho các thử thách:
 2. **Find the Frequency** ⭐⭐: Nghe lệnh "Chơi C3!" → Bấm đúng phím trên Piano
 3. **High/Low Battle** ⭐⭐⭐: So sánh 2 nốt, nốt nào cao hơn?
   `,
-  staffAbc: `X:1
-T:Octave Journey
-C:Music Theory Demo
-M:4/4
-L:1/4
-K:C
-%%staves {1 2}
-V:1 clef=treble name="Treble"
-C D E F | G A B c | d e f g | a b c' d' |
-V:2 clef=bass name="Bass"
-C,, D,, E,, F,, | G,, A,, B,, C, | D, E, F, G, | A, B, C D |`,
   abcDemos: [
     {
       id: '1.2.1',
