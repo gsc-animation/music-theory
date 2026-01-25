@@ -1,5 +1,5 @@
 /**
- * Module 3, Submodule 3.5: Âm giai thứ (The Minor Scales)
+ * Module 3, Submodule 3.5: Thang âm thứ (The Minor Scales)
  *
  * Learning Journey:
  * 1. Passive: Animation comparing C Major (happy) vs A minor (sad)
@@ -13,11 +13,11 @@ import type { Submodule } from '../types'
 
 export const SUBMODULE_3_5: Submodule = {
   id: '3.5',
-  title: 'Âm giai thứ',
+  title: 'Thang âm thứ',
   description: 'Hiểu 3 dạng: Natural, Harmonic (nâng bậc 7), Melodic (nâng bậc 6+7)',
   sections: ['theory', 'piano', 'guitar', 'abcDemo'],
   theoryContent: `
-## 1. Âm giai Thứ (Minor Scale) là gì?
+## 1. Thang âm Thứ (Minor Scale) là gì?
 
 ### So sánh với Major
 
@@ -34,7 +34,7 @@ C D E F | G A B c || A, B, C D | E F G A|]}}
 
 > 🎭 Cùng các nốt (không có dấu hóa), nhưng bắt đầu từ C = vui, từ A = buồn!
 
-{{quiz:Âm giai Thứ (Minor) có âm hưởng như thế nào?|Vui tươi, sáng sủa;*Buồn bã, u tối;Tăng tốc độ|Minor = buồn (quãng 3 thứ), Major = vui (quãng 3 trưởng)}}
+{{quiz:Thang âm Thứ (Minor) có âm hưởng như thế nào?|Vui tươi, sáng sủa;*Buồn bã, u tối;Tăng tốc độ|Minor = buồn (quãng 3 thứ), Major = vui (quãng 3 trưởng)}}
 
 ---
 
@@ -129,11 +129,11 @@ A, B, C D | E ^F ^G A | G F E D | C B, A,2|]}}
 
 ---
 
-## 5. Relative Major/Minor
+## 5. Giọng song song (Relative Major/Minor)
 
 ### Cùng hóa biểu!
 
-**Relative Major/Minor** là cặp giọng Major và Minor **dùng chung hóa biểu**.
+**Giọng song song** (Relative Major/Minor) là cặp giọng Major và Minor **dùng chung hóa biểu**.
 
 | Major | Relative Minor | Hóa biểu |
 |-------|----------------|----------|
@@ -157,11 +157,11 @@ C D E F G A B c | A, B, C D E F G A|]}}
 
 ---
 
-## 6. Parallel Major/Minor
+## 6. Giọng cùng tên (Parallel Major/Minor)
 
 ### Khác hóa biểu!
 
-**Parallel Major/Minor** là cặp giọng Major và Minor **cùng tonic** (nốt chủ).
+**Giọng cùng tên** (Parallel Major/Minor) là cặp giọng Major và Minor **cùng tonic** (nốt chủ).
 
 | Major | Parallel Minor | Khác biệt |
 |-------|----------------|-----------|
@@ -176,7 +176,7 @@ C D E F G | z4 |
 K:Cm
 C D _E F G|]}}
 
-> 🎹 Parallel minor tạo "bóng tối" cho cùng một key - dùng trong modulation!
+> 🎹 Giọng cùng tên (Parallel minor) tạo "bóng tối" cho cùng một key - dùng trong modulation!
 
 ---
 
@@ -208,8 +208,8 @@ C D _E F G|]}}
 2. **Natural Minor**: W-H-W-W-H-W-W (tất cả phím trắng từ A)
 3. **Harmonic Minor**: Nâng bậc 7 → tạo leading tone + Aug 2
 4. **Melodic Minor**: Nâng bậc 6+7 khi đi lên, natural khi xuống
-5. **Relative**: Cùng hóa biểu (C Major ↔ A minor)
-6. **Parallel**: Cùng tonic (C Major ↔ C minor)
+5. **Giọng song song** (Relative): Cùng hóa biểu (C Major ↔ A minor)
+6. **Giọng cùng tên** (Parallel): Cùng tonic (C Major ↔ C minor)
 
 > 💡 **Mẹo**: A minor = "C Major buồn" - cùng nốt, khác điểm bắt đầu!
   `,

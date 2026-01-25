@@ -43,7 +43,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
 
   return (
     <div
-      className={`bg-gradient-to-b from-slate-900 via-[#0f1729] to-slate-900 rounded-2xl p-4 shadow-2xl border border-slate-700/50 ${className}`}
+      className={`bg-gradient-to-b from-white via-slate-50 to-white dark:from-slate-900 dark:via-[#0f1729] dark:to-slate-900 rounded-2xl p-4 shadow-2xl border border-slate-200 dark:border-slate-700/50 ${className}`}
     >
       {/* Zig-Zag Path Container */}
       <div className="space-y-3">
@@ -73,7 +73,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                           ? 'bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg shadow-amber-500/40'
                           : moduleStarted
                             ? 'bg-gradient-to-br from-cyan-500 to-teal-600 shadow-lg shadow-cyan-500/40'
-                            : 'bg-slate-700/60'
+                            : 'bg-slate-200 dark:bg-slate-700/60'
                       }
                     `}
                   >
@@ -87,7 +87,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                           ? 'bg-amber-500 text-white'
                           : moduleStarted
                             ? 'bg-cyan-500 text-white'
-                            : 'bg-slate-600 text-slate-300'
+                            : 'bg-slate-300 dark:bg-slate-600 text-slate-600 dark:text-slate-300'
                       }`}
                     >
                       {module.id}
@@ -95,10 +95,10 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                     <p
                       className={`text-sm font-bold text-center leading-tight ${
                         moduleCompleted
-                          ? 'text-amber-300'
+                          ? 'text-amber-600 dark:text-amber-300'
                           : moduleStarted
-                            ? 'text-cyan-300'
-                            : 'text-slate-500'
+                            ? 'text-cyan-600 dark:text-cyan-300'
+                            : 'text-slate-600 dark:text-slate-500'
                       }`}
                     >
                       {module.name}
@@ -129,8 +129,8 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                                 : curr
                                   ? 'bg-cyan-500/20 ring-1 ring-cyan-400/50'
                                   : unlocked
-                                    ? 'bg-slate-700/30 hover:bg-slate-600/40'
-                                    : 'bg-slate-800/30 cursor-not-allowed'
+                                    ? 'bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-200 dark:hover:bg-slate-600/40'
+                                    : 'bg-slate-100 dark:bg-slate-800/30 cursor-not-allowed'
                             }
                           `}
                           title={`${sub.id}: ${sub.title}`}
@@ -145,8 +145,8 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                                   : curr
                                     ? 'bg-cyan-400 text-slate-900 shadow-md shadow-cyan-400/50 animate-pulse'
                                     : unlocked
-                                      ? 'bg-slate-600 text-slate-300'
-                                      : 'bg-slate-800 text-slate-600'
+                                      ? 'bg-slate-300 dark:bg-slate-600 text-slate-600 dark:text-slate-300'
+                                      : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600'
                               }
                             `}
                           >
@@ -156,12 +156,12 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                           <span
                             className={`text-[9px] leading-tight text-center w-full ${
                               done
-                                ? 'text-emerald-400'
+                                ? 'text-emerald-600 dark:text-emerald-400'
                                 : curr
-                                  ? 'text-cyan-300'
+                                  ? 'text-cyan-600 dark:text-cyan-300'
                                   : unlocked
-                                    ? 'text-slate-400'
-                                    : 'text-slate-600'
+                                    ? 'text-slate-600 dark:text-slate-400'
+                                    : 'text-slate-400 dark:text-slate-600'
                             }`}
                           >
                             {sub.title}
@@ -178,7 +178,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                 <div
                   className={`flex ${isEven ? 'justify-start ml-8' : 'justify-end mr-8'} my-1`}
                 >
-                  <svg width="30" height="16" className="text-slate-600">
+                  <svg width="30" height="16" className="text-slate-300 dark:text-slate-600">
                     <path
                       d={
                         isEven
@@ -200,18 +200,18 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
       </div>
 
       {/* Compact Legend */}
-      <div className="flex items-center justify-center gap-3 mt-4 pt-3 border-t border-slate-700/50">
-        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+      <div className="flex items-center justify-center gap-3 mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50">
+        <span className="flex items-center gap-1 text-[9px] text-slate-600 dark:text-slate-500">
           <span className="w-2 h-2 bg-emerald-500 rounded-full" /> Xong
         </span>
-        <span className="flex items-center gap-1 text-[9px] text-slate-500">
+        <span className="flex items-center gap-1 text-[9px] text-slate-600 dark:text-slate-500">
           <span className="w-2 h-2 bg-cyan-400 rounded-full" /> Đang học
         </span>
-        <span className="flex items-center gap-1 text-[9px] text-slate-500">
-          <span className="w-2 h-2 bg-slate-600 rounded-full" /> Mở
+        <span className="flex items-center gap-1 text-[9px] text-slate-600 dark:text-slate-500">
+          <span className="w-2 h-2 bg-slate-400 dark:bg-slate-600 rounded-full" /> Mở
         </span>
-        <span className="flex items-center gap-1 text-[9px] text-slate-500">
-          <span className="w-2 h-2 bg-slate-800 rounded-full" /> Khoá
+        <span className="flex items-center gap-1 text-[9px] text-slate-600 dark:text-slate-500">
+          <span className="w-2 h-2 bg-slate-300 dark:bg-slate-800 rounded-full" /> Khoá
         </span>
       </div>
     </div>

@@ -1,5 +1,5 @@
 /**
- * Module 3, Submodule 3.6: Âm giai ngũ cung (The Pentatonic Scale)
+ * Module 3, Submodule 3.6: Thang âm ngũ cung (The Pentatonic Scale)
  *
  * Learning Journey:
  * 1. Passive: Animation "5 black keys" on Piano = Major Pentatonic
@@ -13,7 +13,7 @@ import type { Submodule } from '../types'
 
 export const SUBMODULE_3_6: Submodule = {
   id: '3.6',
-  title: 'Âm giai ngũ cung',
+  title: 'Thang âm ngũ cung',
   description: 'Xây dựng Major/Minor Pentatonic và ứng dụng trong nhạc Việt Nam, Blues',
   sections: ['theory', 'piano', 'guitar', 'abcDemo'],
   theoryContent: `
@@ -21,7 +21,7 @@ export const SUBMODULE_3_6: Submodule = {
 
 ### Định nghĩa
 
-**Pentatonic** (từ tiếng Hy Lạp "penta" = 5) là âm giai có **5 nốt** (thay vì 7 như Major/Minor thông thường).
+**Pentatonic** (từ tiếng Hy Lạp "penta" = 5) là thang âm có **5 nốt** (thay vì 7 như Major/Minor thông thường).
 
 > 🎹 **Bí mật**: 5 phím đen trên Piano tạo thành một Pentatonic scale!
 

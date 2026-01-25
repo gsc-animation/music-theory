@@ -221,9 +221,9 @@ A,, C, E, G,|]}}
 
 ---
 
-## 7. Khuông nhạc Lớn (Grand Staff)
+## 7. Khuông nhạc kép (Grand Staff)
 
-Khi khóa Sol và khóa Fa được nối với nhau bằng một **ngoặc nhọn** (brace), chúng tạo thành **Grand Staff** (Khuông nhạc Lớn). Đây là dạng khuông dùng cho Piano vì nghệ sĩ piano chơi cả nốt cao và nốt thấp cùng lúc.
+Khi khóa Sol và khóa Fa được nối với nhau bằng một **ngoặc nhọn** (brace), chúng tạo thành **Khuông nhạc kép** (Grand Staff). Đây là dạng khuông dùng cho Piano vì nghệ sĩ piano chơi cả nốt cao và nốt thấp cùng lúc.
 
 **Middle C** nằm trên một dòng kẻ phụ nhỏ ngay giữa hai khuông - đây là điểm giao nhau!
 
@@ -232,7 +232,7 @@ L:1/2
 K:C clef=treble
 C2|]}}
 
-### 🎵 Ví dụ Grand Staff hoàn chỉnh
+### 🎵 Ví dụ Khuông nhạc kép hoàn chỉnh
 
 Bây giờ hãy xem và nghe tất cả các khái niệm này kết hợp lại! Đây là một bài dân ca Anh truyền thống được viết cho grand staff:
 
@@ -253,7 +253,7 @@ z | C,3 G,3 | A,3 E,3 | C,3 F,3 | G,3 C,2 |}}
 
 Chú ý cách **khóa Sol** (khuông trên) mang giai điệu trong khi **khóa Fa** (khuông dưới) cung cấp hòa âm!
 
-{{quiz:Grand Staff được tạo thành từ gì?|Chỉ có khóa Sol;Chỉ có khóa Fa;*Khóa Sol + Khóa Fa nối bằng ngoặc nhọn|Grand Staff = Khóa Sol (treble) + Khóa Fa (bass) được nối với nhau bằng ngoặc nhọn (brace)}}
+{{quiz:Khuông nhạc kép (Grand Staff) được tạo thành từ gì?|Chỉ có khóa Sol;Chỉ có khóa Fa;*Khóa Sol + Khóa Fa nối bằng ngoặc nhọn|Khuông nhạc kép = Khóa Sol (treble) + Khóa Fa (bass) được nối với nhau bằng ngoặc nhọn (brace)}}
   `,
   staffAbc: `X:1
 T:Bonny Green

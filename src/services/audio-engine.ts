@@ -1,5 +1,79 @@
 import type * as Tone from 'tone'
 
+/**
+ * Sanitize note to ensure it's in standard format (e.g., "C#4" not "^C")
+ * Handles ABC notation accidentals that might slip through from various callers
+ */
+function sanitizeNote(note: string): string {
+  if (!note || typeof note !== 'string') return 'C4'
+
+  // If it already looks like a standard note (e.g., "C4", "C#4", "Bb3"), return as-is
+  if (/^[A-G][#b]?\d$/.test(note)) {
+    return note
+  }
+
+  // Handle ABC notation accidentals
+  let accidental = ''
+  let cleanNote = note
+
+  if (note.startsWith('^^')) {
+    accidental = '##'
+    cleanNote = note.slice(2)
+  } else if (note.startsWith('^')) {
+    accidental = '#'
+    cleanNote = note.slice(1)
+  } else if (note.startsWith('__')) {
+    accidental = 'bb'
+    cleanNote = note.slice(2)
+  } else if (note.startsWith('_')) {
+    accidental = 'b'
+    cleanNote = note.slice(1)
+  } else if (note.startsWith('=')) {
+    cleanNote = note.slice(1)
+  }
+
+  // ABC notation: uppercase = octave 4, lowercase = octave 5
+  const baseNotes: Record<string, string> = {
+    C: 'C4',
+    D: 'D4',
+    E: 'E4',
+    F: 'F4',
+    G: 'G4',
+    A: 'A4',
+    B: 'B4',
+    c: 'C5',
+    d: 'D5',
+    e: 'E5',
+    f: 'F5',
+    g: 'G5',
+    a: 'A5',
+    b: 'B5',
+  }
+
+  // Remove octave markers for lookup
+  const baseLetter = cleanNote.replace(/[',]/g, '')
+  const baseResult = baseNotes[baseLetter]
+
+  if (!baseResult) {
+    // Already in standard format or unknown - return as-is
+    console.warn(`[AudioEngine] Unknown note format: "${note}", passing through`)
+    return note
+  }
+
+  // Parse base note and insert accidental
+  const match = baseResult.match(/([A-G])(\d)/)
+  if (!match) return baseResult
+
+  let octave = parseInt(match[2])
+
+  // Handle octave modifiers
+  const commas = (cleanNote.match(/,/g) || []).length
+  const apostrophes = (cleanNote.match(/'/g) || []).length
+  octave = octave - commas + apostrophes
+
+  return `${match[1]}${accidental}${octave}`
+}
+
 class AudioEngine {
   private static instance: AudioEngine
   private isInitialized: boolean = false
@@ -54,7 +128,7 @@ class AudioEngine {
       console.warn('AudioEngine not initialized')
       return
     }
-    this.synth.triggerAttackRelease(note, duration)
+    this.synth.triggerAttackRelease(sanitizeNote(note), duration)
   }
 
   public startNote(note: string): void {
@@ -62,14 +136,14 @@ class AudioEngine {
       console.warn('AudioEngine not initialized')
       return
     }
-    this.synth.triggerAttack(note)
+    this.synth.triggerAttack(sanitizeNote(note))
   }
 
   public stopNote(note: string): void {
     if (!this.isInitialized || !this.synth) {
       return
     }
-    this.synth.triggerRelease(note)
+    this.synth.triggerRelease(sanitizeNote(note))
   }
 
   public playSuccess(): void {

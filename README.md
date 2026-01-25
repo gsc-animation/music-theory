@@ -173,17 +173,105 @@ Code blocks if needed
 
 #### ABC Notation (Sheet Music)
 
-Embed interactive sheet music:
+Embed interactive sheet music with play buttons:
 
 ```markdown
-{{abc:X:1
+{{abc:Title|X:1
 M:4/4
 K:C
 CDEF GABc|
 }}
 ```
 
+#### Grand Staff View
+
+Embed Grand Staff with treble and bass clefs:
+
+```markdown
+{{grandStaff:Title|X:1
+M:4/4
+K:C
+V:1
+CDEF GABc|
+V:2 clef=bass
+C,D,E,F, G,A,B,C|
+}}
+```
+
 ---
+
+### 🎹 Instrument Synchronization (CRITICAL)
+
+**All musical playback MUST synchronize with virtual instruments.** When notes play in ANY of the following contexts, the Piano, Guitar, and/or Flute MUST visually highlight the corresponding notes:
+
+| Context                           | Component          | Synchronization Behavior          |
+| --------------------------------- | ------------------ | --------------------------------- |
+| `{{abc:...}}`                     | `AbcRenderer`      | During playback AND on note click |
+| `{{grandStaff:...}}`              | `InlineGrandStaff` | During playback AND on note click |
+| Interactive Examples              | Various            | During playback AND on note click |
+| Grand Staff View (floating panel) | `AbcGrandStaff`    | During playback AND on note click |
+
+#### Implementation Requirements
+
+1. **Click Interactions**: When user clicks a note on any ABC/staff notation:
+   - Play audio via `playNoteWithRelease()` or `playNote()`/`releaseNote()`
+   - This automatically updates `activeNotes` in audio store → instruments highlight
+
+2. **Playback Animations**: When music plays via play button:
+   - Use `abcjs.TimingCallbacks` with `eventCallback`
+   - Convert `midiPitches` to note names using `midiPitchToNoteName()`
+   - Call `highlightNote()` for each note as it plays
+   - Call `unhighlightNote()` when note ends or changes
+   - Call `clearHighlights()` on playback stop
+
+#### Code Pattern (AbcRenderer / InlineGrandStaff)
+
+```typescript
+// Import from audio store
+const { highlightNote, unhighlightNote, clearHighlights } = useAudioStore()
+
+// Track current notes for cleanup
+const currentNotesRef = useRef<string[]>([])
+
+// In eventCallback during playback:
+const eventCallback = (ev) => {
+  // Clear previous highlights
+  currentNotesRef.current.forEach((note) => unhighlightNote(note))
+  currentNotesRef.current = []
+
+  // Highlight new notes
+  if (ev.midiPitches?.length > 0) {
+    const notes = ev.midiPitches.map((p) => midiPitchToNoteName(p.pitch)).filter((n) => n !== '')
+    currentNotesRef.current = notes
+    notes.forEach((note) => highlightNote(note))
+  }
+}
+
+// On playback stop:
+currentNotesRef.current.forEach((note) => unhighlightNote(note))
+clearHighlights()
+```
+
+#### MIDI Pitch to Note Name Conversion
+
+```typescript
+const midiPitchToNoteName = (midiPitch: number): string => {
+  if (midiPitch < 12 || midiPitch > 127) return ''
+  const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+  const octave = Math.floor(midiPitch / 12) - 1
+  const noteIndex = midiPitch % 12
+  return `${noteNames[noteIndex]}${octave}`
+}
+```
+
+#### ⚠️ Common Issues
+
+| Issue                                        | Cause                                            | Fix                                             |
+| -------------------------------------------- | ------------------------------------------------ | ----------------------------------------------- |
+| Instruments not highlighting during playback | Missing `highlightNote()` calls in eventCallback | Add MIDI-to-note conversion and highlight calls |
+| Highlights persist after stop                | Not clearing notes on playback end               | Call `clearHighlights()` in stopPlayback        |
+| Chords only play one note                    | Only processing first pitch                      | Iterate ALL `pitches` in click handler          |
+| Audio engine not initialized                 | First interaction issue                          | Auto-initialize in `playNote()` functions       |
 
 ### Component Architecture
 

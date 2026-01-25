@@ -117,12 +117,12 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
     return (
       <div
         style={{ position: 'fixed', left: state.position.x, top: state.position.y, zIndex }}
-        className="bg-slate-800 rounded-lg shadow-xl border border-[#30e8e8]/50 cursor-pointer"
+        className="bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-[#30e8e8]/50 cursor-pointer"
         onClick={() => restoreInstrument(type)}
       >
         <div className="flex items-center gap-2 px-3 py-2">
           <span className="material-symbols-outlined text-[#30e8e8] text-sm">{icon}</span>
-          <span className="text-xs font-medium text-white">{title}</span>
+          <span className="text-xs font-medium text-slate-900 dark:text-white">{title}</span>
           <span className="material-symbols-outlined text-slate-400 text-sm ml-2">
             open_in_full
           </span>
@@ -142,32 +142,32 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
         zIndex,
       }}
       className={`
-        bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-2xl 
+        bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-2xl 
         border-2 transition-colors duration-200
-        ${isActive ? 'border-[#30e8e8]' : 'border-slate-600/50'}
+        ${isActive ? 'border-[#30e8e8]' : 'border-slate-300 dark:border-slate-600/50'}
       `}
       onMouseDown={() => bringToFront(type)}
     >
       {/* Header - draggable */}
       <div
-        className="flex items-center justify-between px-3 py-2 bg-slate-900/80 rounded-t-xl cursor-move select-none"
+        className="flex items-center justify-between px-3 py-2 bg-slate-100 dark:bg-slate-900/80 rounded-t-xl cursor-move select-none"
         onMouseDown={handleMouseDown}
       >
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[#30e8e8] text-lg">{icon}</span>
-          <span className="text-sm font-bold text-white uppercase tracking-wide">{title}</span>
+          <span className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">{title}</span>
         </div>
 
         <div className="panel-controls flex items-center gap-1">
           <button
             onClick={() => minimizeInstrument(type)}
-            className="w-6 h-6 flex items-center justify-center rounded hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             <span className="material-symbols-outlined text-sm">remove</span>
           </button>
           <button
             onClick={() => hideInstrument(type)}
-            className="w-6 h-6 flex items-center justify-center rounded hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-red-500/20 text-slate-500 dark:text-slate-400 hover:text-red-400 transition-colors"
           >
             <span className="material-symbols-outlined text-sm">close</span>
           </button>

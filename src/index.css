@@ -166,10 +166,10 @@ details summary::-webkit-details-marker {
   background: linear-gradient(135deg, rgba(48, 232, 232, 0.15) 0%, rgba(48, 232, 232, 0.05) 100%);
 }
 
-/* Paragraphs - justified text for readability */
+/* Paragraphs - left aligned for readability */
 .theory-formatted p {
   margin-bottom: 1rem;
-  text-align: justify;
+  text-align: left;
 }
 
 /* Strong/bold text */

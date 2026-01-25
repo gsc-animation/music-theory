@@ -1,5 +1,5 @@
 /**
- * Module 3, Submodule 3.1: Âm giai trưởng (The Major Scale)
+ * Module 3, Submodule 3.1: Thang âm trưởng (The Major Scale)
  *
  * Learning Journey:
  * 1. Passive: Animation "scale stairs" with W-W-H-W-W-W-H pattern
@@ -13,28 +13,28 @@ import type { Submodule } from '../types'
 
 export const SUBMODULE_3_1: Submodule = {
   id: '3.1',
-  title: 'Âm giai trưởng',
+  title: 'Thang âm trưởng',
   description: 'Hiểu công thức Cung-Cung-Nửa-Cung-Cung-Cung-Nửa (W-W-H-W-W-W-H)',
   sections: ['theory', 'piano', 'guitar', 'abcDemo'],
   theoryContent: `
-## 1. Âm giai (Scale) là gì?
+## 1. Thang âm (Scale) là gì?
 
 ### Định nghĩa
 
-**Âm giai (Scale)** là một chuỗi các nốt được sắp xếp theo thứ tự từ thấp đến cao (hoặc ngược lại), bắt đầu và kết thúc bằng nốt cùng tên.
+**Thang âm (Scale)** là một chuỗi các nốt được sắp xếp theo thứ tự từ thấp đến cao (hoặc ngược lại), bắt đầu và kết thúc bằng nốt cùng tên.
 
 > 🎼 Scale như "bảng chữ cái" của âm nhạc - mỗi giọng sử dụng một tập hợp nốt riêng!
 
-### Âm giai Trưởng (Major Scale)
+### Thang âm Trưởng (Major Scale)
 
 **Major Scale** có âm hưởng **vui tươi, sáng sủa, hoàn chỉnh**.
 
-{{abc:Âm giai C Major - Âm hưởng vui tươi!|X:1
+{{abc:Thang âm C Major - Âm hưởng vui tươi!|X:1
 L:1/4
 K:C
 C D E F | G A B c|]}}
 
-{{quiz:Âm giai Trưởng (Major Scale) có âm hưởng như thế nào?|Buồn bã, u ám;*Vui tươi, sáng sủa;Căng thẳng, kịch tính|Major Scale có âm hưởng vui tươi, hoàn chỉnh - khác với Minor (buồn)}}
+{{quiz:Thang âm Trưởng (Major Scale) có âm hưởng như thế nào?|Buồn bã, u ám;*Vui tươi, sáng sủa;Căng thẳng, kịch tính|Major Scale có âm hưởng vui tươi, hoàn chỉnh - khác với Minor (buồn)}}
 
 ---
 
@@ -42,7 +42,7 @@ C D E F | G A B c|]}}
 
 ### Quy tắc bất biến
 
-Mọi âm giai trưởng đều được xây dựng theo **một công thức duy nhất**:
+Mọi thang âm trưởng đều được xây dựng theo **một công thức duy nhất**:
 
 > **W - W - H - W - W - W - H**
 >
@@ -60,7 +60,7 @@ Mọi âm giai trưởng đều được xây dựng theo **một công thức d
 
 > 💡 **C Major đặc biệt**: Chỉ dùng phím trắng vì E-F và B-C vốn là nửa cung tự nhiên!
 
-{{quiz:Công thức của âm giai trưởng là gì?|W-H-W-W-H-W-W;*W-W-H-W-W-W-H;H-W-W-W-H-W-W|W-W-H-W-W-W-H = Cung-Cung-Nửa-Cung-Cung-Cung-Nửa}}
+{{quiz:Công thức của thang âm trưởng là gì?|W-H-W-W-H-W-W;*W-W-H-W-W-W-H;H-W-W-W-H-W-W|W-W-H-W-W-W-H = Cung-Cung-Nửa-Cung-Cung-Cung-Nửa}}
 
 {{quiz:Trong công thức W-W-H-W-W-W-H, "H" nghĩa là gì?|Whole step (Cung);*Half step (Nửa cung);High note|H = Half step = Nửa cung. W = Whole step = Cung}}
 
@@ -188,7 +188,7 @@ B c d e | f g a b|]}}
 
 ## 🎯 Tóm tắt
 
-1. **Âm giai trưởng** = Chuỗi 8 nốt với âm hưởng vui tươi
+1. **Thang âm trưởng** = Chuỗi 8 nốt với âm hưởng vui tươi
 2. **Công thức**: W-W-H-W-W-W-H (Cung-Cung-Nửa-Cung-Cung-Cung-Nửa)
 3. **C Major** đặc biệt: Chỉ dùng phím trắng
 4. **G Major**: Cần F# để giữ công thức

@@ -42,9 +42,9 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
     <header
       className={`
         px-4 md:px-8 py-3 flex items-center justify-between gap-4
-        bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900
+        bg-gradient-to-r from-white via-slate-50 to-white dark:from-slate-900 dark:via-slate-800 dark:to-slate-900
         sticky top-0 z-20
-        border-b border-slate-700/50 shadow-lg
+        border-b border-slate-200 dark:border-slate-700/50 shadow-lg
         ${className}
       `}
     >
@@ -57,15 +57,15 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
             </span>
           </div>
           <div className="min-w-0">
-            <h2 className="text-base font-bold text-white tracking-tight truncate">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white tracking-tight truncate">
               Hành Trình Học Nhạc Lý
             </h2>
             <div className="flex items-center gap-2">
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 {completedCount}/{totalSubmodules} bài học • {progressPercent}% hoàn thành
               </p>
               {/* Inline Progress Bar */}
-              <div className="hidden sm:block w-20 h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
+              <div className="hidden sm:block w-20 h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full transition-all duration-700"
                   style={{ width: `${progressPercent}%` }}
@@ -96,10 +96,10 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-lg hover:bg-slate-700/50 transition-colors"
+          className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors"
           title={`Theme: ${theme}`}
         >
-          <span className="material-symbols-outlined text-slate-400 text-[20px]">
+          <span className="material-symbols-outlined text-slate-500 dark:text-slate-400 text-[20px]">
             {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
           </span>
         </button>
@@ -112,8 +112,8 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
             checked={notationSystem === 'solfege'}
             onChange={toggleNotationSystem}
           />
-          <div className="relative w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#30e8e8] shadow-inner" />
-          <span className="ms-2 text-xs font-bold uppercase tracking-wider text-slate-400 group-hover:text-cyan-400 transition-colors">
+          <div className="relative w-9 h-5 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#30e8e8] shadow-inner" />
+          <span className="ms-2 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">
             VN Mode
           </span>
         </label>

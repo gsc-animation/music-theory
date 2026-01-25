@@ -5,6 +5,18 @@ import { useAudioStore } from '../../stores/useAudioStore'
 import { getNoteLabel } from '../../utils/note-labels'
 
 /**
+ * Convert MIDI pitch number to standard note name (e.g., "C4")
+ * Used during playback to sync with virtual instruments
+ */
+const midiPitchToNoteName = (midiPitch: number): string => {
+  if (midiPitch < 12 || midiPitch > 127) return ''
+  const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+  const octave = Math.floor(midiPitch / 12) - 1
+  const noteIndex = midiPitch % 12
+  return `${noteNames[noteIndex]}${octave}`
+}
+
+/**
  * Props for the AbcRenderer component
  */
 interface AbcRendererProps {
@@ -32,6 +44,7 @@ const abcPlaybackManager = {
 
 /**
  * Map ABC notation to standard note names
+ * Handles accidentals: ^ = sharp, ^^ = double sharp, _ = flat, __ = double flat
  */
 function abcToNoteName(abcPitch: string): string {
   const baseNotes: Record<string, string> = {
@@ -51,19 +64,57 @@ function abcToNoteName(abcPitch: string): string {
     b: 'B5',
   }
 
-  const base = abcPitch.replace(/[',]/g, '')
-  let note = baseNotes[base] || base
+  // Extract accidentals from ABC notation
+  let accidental = ''
+  let cleanPitch = abcPitch
 
-  if (abcPitch.includes(',')) {
-    const match = note.match(/([A-G]#?b?)(\d)/)
-    if (match) {
-      note = match[1] + (parseInt(match[2]) - 1)
+  // Handle double accidentals first, then single
+  if (abcPitch.startsWith('^^')) {
+    accidental = '##'
+    cleanPitch = abcPitch.slice(2)
+  } else if (abcPitch.startsWith('^')) {
+    accidental = '#'
+    cleanPitch = abcPitch.slice(1)
+  } else if (abcPitch.startsWith('__')) {
+    accidental = 'bb'
+    cleanPitch = abcPitch.slice(2)
+  } else if (abcPitch.startsWith('_')) {
+    accidental = 'b'
+    cleanPitch = abcPitch.slice(1)
+  } else if (abcPitch.startsWith('=')) {
+    // Natural sign - no accidental
+    cleanPitch = abcPitch.slice(1)
+  }
+
+  // Remove octave markers for lookup
+  const base = cleanPitch.replace(/[',]/g, '')
+  const baseNote = baseNotes[base]
+
+  if (!baseNote) {
+    // Fallback: return a safe default note if unrecognized
+    console.warn(`Unrecognized ABC pitch: ${abcPitch}`)
+    return 'C4'
+  }
+
+  // Parse the base note to insert accidental
+  const match = baseNote.match(/([A-G])(\d)/)
+  if (!match) {
+    return baseNote
+  }
+
+  let note = match[1] + accidental + match[2]
+
+  // Handle octave modifiers
+  if (cleanPitch.includes(',')) {
+    const octaveMatch = note.match(/([A-G]#?b?b?)(\d)/)
+    if (octaveMatch) {
+      note = octaveMatch[1] + (parseInt(octaveMatch[2]) - 1)
     }
   }
-  if (abcPitch.includes("'")) {
-    const match = note.match(/([A-G]#?b?)(\d)/)
-    if (match) {
-      note = match[1] + (parseInt(match[2]) + 1)
+  if (cleanPitch.includes("'")) {
+    const octaveMatch = note.match(/([A-G]#?b?b?)(\d)/)
+    if (octaveMatch) {
+      note = octaveMatch[1] + (parseInt(octaveMatch[2]) + 1)
     }
   }
 
@@ -130,7 +181,10 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const notationSystem = useSettingsStore((s) => s.notationSystem)
-  const { playNote, releaseNote } = useAudioStore()
+  const { playNoteWithRelease, highlightNote, unhighlightNote, clearHighlights } = useAudioStore()
+
+  // Track currently highlighted notes during playback for proper cleanup
+  const currentNotesRef = useRef<string[]>([])
 
   // Generate ABC with or without note annotations
   const processedAbc = useMemo(() => {
@@ -150,12 +204,17 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
       timingRef.current.stop()
       timingRef.current = null
     }
+    // Clear instrument highlights
+    currentNotesRef.current.forEach((note) => unhighlightNote(note))
+    currentNotesRef.current = []
+    clearHighlights()
+
     setIsPlaying(false)
     // Re-render with current options
     if (containerRef.current) {
       abcjs.renderAbc(containerRef.current, processedAbc, RENDER_OPTIONS)
     }
-  }, [processedAbc])
+  }, [processedAbc, unhighlightNote, clearHighlights])
 
   // Register with global manager
   useEffect(() => {
@@ -166,14 +225,19 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
     }
   }, [stopPlayback])
 
-  // Handle note click
+  // Handle note click - supports chords (multiple notes)
+  // Uses playNoteWithRelease for both audio auto-release and visual feedback
   const handleNoteClick = useCallback(
-    (abcNote: string) => {
-      const note = abcToNoteName(abcNote)
-      playNote(note)
-      setTimeout(() => releaseNote(note), 200)
+    (abcNotes: string | string[]) => {
+      const notes = Array.isArray(abcNotes) ? abcNotes : [abcNotes]
+      const playableNotes = notes.map((n) => abcToNoteName(n))
+
+      // Play all notes simultaneously with auto-release (audio + visual)
+      playableNotes.forEach((note) => {
+        playNoteWithRelease(note)
+      })
     },
-    [playNote, releaseNote]
+    [playNoteWithRelease]
   )
 
   // Initial render
@@ -183,8 +247,10 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
         ...RENDER_OPTIONS,
         clickListener: (abcelem: unknown) => {
           const elem = abcelem as { pitches?: Array<{ name: string }> }
-          if (elem.pitches && elem.pitches[0]) {
-            handleNoteClick(elem.pitches[0].name)
+          if (elem.pitches && elem.pitches.length > 0) {
+            // Play ALL notes in the chord, not just the first one
+            const noteNames = elem.pitches.map((p) => p.name)
+            handleNoteClick(noteNames)
           }
         },
       })
@@ -232,6 +298,12 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
             stopPlayback()
             return 'continue' as const
           }
+
+          // Clear previous note highlights on instruments
+          currentNotesRef.current.forEach((note) => unhighlightNote(note))
+          currentNotesRef.current = []
+
+          // Highlight notes on staff SVG
           if (containerRef.current) {
             containerRef.current.querySelectorAll('.abcjs-note.highlight').forEach((el) => {
               el.classList.remove('highlight')
@@ -240,6 +312,20 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
               group.forEach((el) => el.classList.add('highlight'))
             })
           }
+
+          // Sync with virtual instruments (Piano, Guitar, Flute)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const evWithMidi = ev as any
+          if (evWithMidi.midiPitches && evWithMidi.midiPitches.length > 0) {
+            const notes = evWithMidi.midiPitches
+              .map((p: { pitch: number }) => midiPitchToNoteName(p.pitch))
+              .filter((note: string) => note !== '')
+            if (notes.length > 0) {
+              currentNotesRef.current = notes
+              notes.forEach((note: string) => highlightNote(note))
+            }
+          }
+
           return undefined
         },
       })
@@ -267,7 +353,9 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
             </div>
           )}
           {description && (
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 text-left">{description}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 text-left">
+              {description}
+            </p>
           )}
         </div>
 

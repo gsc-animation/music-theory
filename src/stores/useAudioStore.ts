@@ -15,6 +15,8 @@ interface AudioState {
   stopNote: (note: string) => void
   // Play note without recording (for preview/click playback)
   playNote: (note: string) => Promise<void>
+  // Play note with auto-release (for click playback - audio stops automatically)
+  playNoteWithRelease: (note: string, duration?: string) => Promise<void>
   releaseNote: (note: string) => void
   // Highlight note for visual feedback only (no audio)
   highlightNote: (note: string) => void
@@ -68,6 +70,39 @@ export const useAudioStore = create<AudioState>((set) => ({
         isPlaying: newActiveNotes.length > 0,
       }
     })
+  },
+
+  // Play note with auto-release audio - for click/preview playback
+  // Uses triggerAttackRelease for audio, with visual feedback auto-cleared
+  playNoteWithRelease: async (note: string, duration: string = '8n') => {
+    // Auto-initialize on first interaction
+    const { isReady } = useAudioStore.getState()
+    if (!isReady) {
+      await audioEngine.initialize()
+      set({ isReady: true })
+    }
+
+    // Play note with auto-release (triggerAttackRelease)
+    audioEngine.playNote(note, duration)
+
+    // Visual feedback
+    set((state) => ({
+      activeNotes: state.activeNotes.includes(note)
+        ? state.activeNotes
+        : [...state.activeNotes, note],
+      isPlaying: true,
+    }))
+
+    // Auto-clear visual feedback after ~300ms
+    setTimeout(() => {
+      set((state) => {
+        const newActiveNotes = state.activeNotes.filter((n) => n !== note)
+        return {
+          activeNotes: newActiveNotes,
+          isPlaying: newActiveNotes.length > 0,
+        }
+      })
+    }, 300)
   },
 
   // Play note without recording - for preview/click playback
