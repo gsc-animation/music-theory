@@ -1,12 +1,17 @@
 import { render, RenderOptions } from '@testing-library/react'
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, createElement } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 /**
  * Custom render function that wraps components with necessary providers
  */
-export function renderWithProviders(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
-  const Wrapper = ({ children }: { children: ReactNode }) => <BrowserRouter>{children}</BrowserRouter>
+export function renderWithProviders(
+  ui: ReactElement,
+  options?: Omit<RenderOptions, 'wrapper'>,
+) {
+  function Wrapper({ children }: { children: ReactNode }) {
+    return createElement(BrowserRouter, null, children)
+  }
 
   return render(ui, { wrapper: Wrapper, ...options })
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen, fireEvent, cleanup } from '@testing-library/react'
+import { render, screen, cleanup } from '@testing-library/react'
 import { HomePage } from '../../src/pages/HomePage'
 import { useSettingsStore } from '../../src/stores/useSettingsStore'
 import { useAudioStore } from '../../src/stores/useAudioStore'
