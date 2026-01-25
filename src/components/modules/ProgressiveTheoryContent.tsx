@@ -3,6 +3,7 @@ import { AbcRenderer } from '../abc/AbcRenderer'
 import { InlineGuitar } from '../VirtualGuitar/InlineGuitar'
 import { InlinePiano } from '../VirtualPiano/InlinePiano'
 import { InlineFlute } from '../../features/sao-truc/components/InlineFlute'
+import { InlineGrandStaff } from '../MusicStaff/InlineGrandStaff'
 import { InlineQuiz } from './InlineQuiz'
 
 interface ProgressiveTheoryContentProps {
@@ -11,7 +12,7 @@ interface ProgressiveTheoryContentProps {
 }
 
 interface ContentBlock {
-  type: 'html' | 'abc' | 'guitar' | 'piano' | 'flute' | 'quiz'
+  type: 'html' | 'abc' | 'grandStaff' | 'guitar' | 'piano' | 'flute' | 'quiz'
   content: string
   title?: string
   notes?: string[]
@@ -38,8 +39,9 @@ function splitIntoSections(content: string): string[] {
 function parseSectionContent(content: string): ContentBlock[] {
   const blocks: ContentBlock[] = []
 
-  // Combined pattern for abc, guitar, piano, flute
-  const combinedPattern = /\{\{(abc|guitar|piano|flute):([^|]+)\|([^}]+)\}\}/g
+  // Combined pattern for abc, grandStaff, guitar, piano, flute
+  // Use [\s\S]+? to match multi-line content (for grandStaff with ABC notation)
+  const combinedPattern = /\{\{(abc|grandStaff|guitar|piano|flute):([^|]+)\|([\s\S]+?)\}\}/g
   // Quiz pattern
   const quizPattern = /\{\{quiz:([^|]+)\|([^|]+)(?:\|([^}]+))?\}\}/g
 
@@ -52,7 +54,7 @@ function parseSectionContent(content: string): ContentBlock[] {
 
   let match
   while ((match = combinedPattern.exec(content)) !== null) {
-    const blockType = match[1] as 'abc' | 'guitar' | 'piano' | 'flute'
+    const blockType = match[1] as 'abc' | 'grandStaff' | 'guitar' | 'piano' | 'flute'
     const title = match[2].trim()
     const blockContent = match[3].trim()
 
@@ -60,6 +62,8 @@ function parseSectionContent(content: string): ContentBlock[] {
     if (blockType === 'guitar' || blockType === 'piano' || blockType === 'flute') {
       const notes = blockContent.split(',').map((n) => n.trim())
       block = { type: blockType, title, content: blockContent, notes }
+    } else if (blockType === 'grandStaff') {
+      block = { type: 'grandStaff', title, content: blockContent }
     } else {
       block = { type: 'abc', title, content: blockContent }
     }
@@ -242,6 +246,9 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
   // Track which quizzes have been completed (by section index)
   const [completedQuizzes, setCompletedQuizzes] = useState<Set<number>>(new Set())
   
+  // Track if user wants to bypass all quizzes and see all content
+  const [bypassQuiz, setBypassQuiz] = useState(false)
+  
   // Track if completion callback has been called
   const completionCalledRef = useRef(false)
 
@@ -325,6 +332,14 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
       )
     }
 
+    if (block.type === 'grandStaff') {
+      return (
+        <div key={`grandstaff-${blockIndex}`} className="grandstaff-renderer-wrapper">
+          <InlineGrandStaff title={block.title} abc={block.content} />
+        </div>
+      )
+    }
+
     if (block.type === 'quiz' && block.question && block.options) {
       return (
         <div key={`quiz-${blockIndex}`} className="quiz-renderer-wrapper">
@@ -348,13 +363,30 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     )
   }
 
+  // Handle bypass - show all content at once
+  const handleBypassQuiz = () => {
+    setBypassQuiz(true)
+    setVisibleCount(sections.length)
+    // Mark all sections as completed for bypass mode
+    const allIndices = new Set(parsedSections.map((_, i) => i))
+    setCompletedQuizzes(allIndices)
+    // Trigger completion callback
+    if (onAllSectionsComplete && !completionCalledRef.current) {
+      completionCalledRef.current = true
+      setTimeout(onAllSectionsComplete, 500)
+    }
+  }
+
+  // Determine how many sections to show
+  const effectiveVisibleCount = bypassQuiz ? sections.length : visibleCount
+
   return (
     <div className="progressive-theory-content">
-      {parsedSections.slice(0, visibleCount).map((blocks, sectionIndex) => {
-        const isLast = sectionIndex === visibleCount - 1
+      {parsedSections.slice(0, effectiveVisibleCount).map((blocks, sectionIndex) => {
+        const isLast = sectionIndex === effectiveVisibleCount - 1
         const hasQuiz = sectionHasQuiz(blocks)
-        const isQuizCompleted = completedQuizzes.has(sectionIndex)
-        const showLockedIndicator = isLast && hasQuiz && !isQuizCompleted && visibleCount < sections.length
+        const isQuizCompleted = completedQuizzes.has(sectionIndex) || bypassQuiz
+        const showLockedIndicator = isLast && hasQuiz && !isQuizCompleted && effectiveVisibleCount < sections.length
 
         return (
           <div
@@ -369,11 +401,20 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
           >
             {blocks.map((block, blockIndex) => renderBlock(block, blockIndex, sectionIndex))}
 
-            {/* Show "more content locked" hint */}
+            {/* Show "more content locked" hint with bypass option */}
             {showLockedIndicator && (
-              <div className="locked-hint">
-                <span className="locked-icon">🔒</span>
-                <span>Trả lời câu hỏi để tiếp tục...</span>
+              <div className="locked-hint-container">
+                <div className="locked-hint">
+                  <span className="locked-icon">🔒</span>
+                  <span>Trả lời câu hỏi để tiếp tục...</span>
+                </div>
+                <button 
+                  className="bypass-quiz-btn"
+                  onClick={handleBypassQuiz}
+                  title="Bỏ qua tất cả câu hỏi và xem toàn bộ nội dung"
+                >
+                  👁️ XEM TẤT CẢ NỘI DUNG
+                </button>
               </div>
             )}
           </div>
@@ -390,13 +431,20 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
           to { opacity: 1; transform: translateY(0); }
         }
         
+        .locked-hint-container {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          margin-top: 1rem;
+        }
+        
         .locked-hint {
           display: flex;
           align-items: center;
-          justify-content: center;
           gap: 0.5rem;
-          padding: 1rem;
-          margin-top: 1rem;
+          padding: 0.75rem 1rem;
           background: rgba(100, 116, 139, 0.1);
           border: 1px dashed rgba(100, 116, 139, 0.3);
           border-radius: 8px;
@@ -406,6 +454,33 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
         
         .locked-hint .locked-icon {
           font-size: 1.1rem;
+        }
+        
+        .bypass-quiz-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1rem;
+          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+          border: none;
+          border-radius: 8px;
+          color: white;
+          font-size: 0.85rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .bypass-quiz-btn:hover {
+          background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .bypass-quiz-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
         }
       `}</style>
     </div>

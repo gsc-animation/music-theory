@@ -36,7 +36,8 @@ function parseTheoryContent(content: string): ContentBlock[] {
   const blocks: ContentBlock[] = []
 
   // Combined pattern to match all block types (abc, grandStaff, guitar, piano, flute)
-  const combinedPattern = /\{\{(abc|grandStaff|guitar|piano|flute):([^|]+)\|([^}]+)\}\}/g
+  // Use [\s\S]+? to match multi-line content (including newlines) non-greedily
+  const combinedPattern = /\{\{(abc|grandStaff|guitar|piano|flute):([^|]+)\|([\s\S]+?)\}\}/g
   
   // Quiz pattern: {{quiz:Question|opt1;opt2;*correct|explanation}}
   const quizPattern = /\{\{quiz:([^|]+)\|([^|]+)(?:\|([^}]+))?\}\}/g
@@ -52,10 +53,13 @@ function parseTheoryContent(content: string): ContentBlock[] {
   let match
 
   // Collect abc/guitar/piano/flute matches
+  console.log('[TheoryContent] Content length:', content.length)
+  console.log('[TheoryContent] Has grandStaff:', content.includes('{{grandStaff:'))
   while ((match = combinedPattern.exec(content)) !== null) {
     const blockType = match[1] as 'abc' | 'grandStaff' | 'guitar' | 'piano' | 'flute'
     const title = match[2].trim()
     const blockContent = match[3].trim()
+    console.log('[TheoryContent] Matched:', blockType, title)
 
     let block: ContentBlock
     if (blockType === 'guitar' || blockType === 'piano' || blockType === 'flute') {
