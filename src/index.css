@@ -45,7 +45,15 @@
   --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
   --shadow-glow: 0 0 15px rgba(48, 232, 232, 0.5);
   --shadow-paper: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
+  /* Mobile-friendly touch targets and spacing */
+  --touch-target-min: 44px;
+  --touch-target-recommended: 48px;
+  --mobile-spacing-sm: 0.5rem;
+  --mobile-spacing-md: 1rem;
+  --mobile-spacing-lg: 1.5rem;
 }
+
 
 body {
   font-family: var(--font-body);
@@ -100,6 +108,57 @@ details summary::-webkit-details-marker {
   border-right: 1px solid rgba(0, 0, 0, 0.05);
   cursor: move;
 }
+
+/* =========================================
+   MOBILE-FRIENDLY UTILITIES
+   Touch targets and responsive helpers
+   ========================================= */
+
+/* Touch-friendly minimum sizes */
+.touch-target {
+  min-width: var(--touch-target-recommended);
+  min-height: var(--touch-target-recommended);
+}
+
+.touch-target-sm {
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+}
+
+/* Mobile drawer backdrop */
+.mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Mobile drawer slide animation */
+.mobile-drawer-slide-in {
+  animation: slideInFromLeft 0.3s ease;
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.mobile-drawer-slide-out {
+  animation: slideOutToLeft 0.3s ease;
+}
+
+@keyframes slideOutToLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
 
 /* =========================================
    THEORY CONTENT STYLING

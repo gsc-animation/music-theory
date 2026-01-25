@@ -5,10 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 /**
  * Custom render function that wraps components with necessary providers
  */
-export function renderWithProviders(
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>,
-) {
+export function renderWithProviders(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
   function Wrapper({ children }: { children: ReactNode }) {
     return createElement(BrowserRouter, null, children)
   }
@@ -53,10 +50,7 @@ export function clearTestState() {
 /**
  * Simulate quiz completion
  */
-export async function completeQuiz(
-  getByTestId: (id: string) => HTMLElement,
-  answer: string,
-) {
+export async function completeQuiz(getByTestId: (id: string) => HTMLElement, answer: string) {
   const answerInput = getByTestId('quiz-answer')
   const submitButton = getByTestId('quiz-submit')
 
