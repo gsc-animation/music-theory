@@ -9,6 +9,7 @@ import {
 import { useProgressStore } from '../stores/useProgressStore'
 import { CollapsiblePanel } from '../components/ui/CollapsiblePanel'
 import { MainHeader } from '../components/layout/MainHeader'
+import { SubmoduleHeader } from '../components/layout/SubmoduleHeader'
 import { Sidebar } from '../components/layout/Sidebar'
 
 // Lazy load heavy components
@@ -36,6 +37,13 @@ export const SubmodulePage: React.FC = () => {
   const [showNoteNames, setShowNoteNames] = React.useState(false)
   const [theoryComplete, setTheoryComplete] = React.useState(false)
   const interactiveRef = React.useRef<HTMLDivElement>(null)
+
+  // Progress dots state
+  const [totalSections, setTotalSections] = React.useState(0)
+  const [visibleCount, setVisibleCount] = React.useState(0)
+  const [currentSection, setCurrentSection] = React.useState(0)
+  const [scrollToSection, setScrollToSection] = React.useState<number | undefined>(undefined)
+  const [revealUpToSection, setRevealUpToSection] = React.useState<number | undefined>(undefined)
 
   // Get current submodule data
   const submodule = submoduleId ? findSubmodule(submoduleId) : undefined
@@ -96,66 +104,50 @@ export const SubmodulePage: React.FC = () => {
       <Sidebar className="hidden md:flex" />
 
       <main className="flex-1 flex flex-col min-w-0 relative">
-        <MainHeader />
+        <SubmoduleHeader
+          moduleId={module.id}
+          moduleName={module.name}
+          submoduleId={submodule.id}
+          isCompleted={isCompleted}
+          totalSections={totalSections}
+          visibleCount={visibleCount}
+          currentSection={currentSection}
+          onDotClick={(index) => {
+            if (isCompleted) {
+              // For completed submodules, reveal all sections up to clicked index
+              setRevealUpToSection(index)
+              setTimeout(() => setRevealUpToSection(undefined), 100)
+            } else {
+              // For incomplete submodules, just scroll to the section (if unlocked)
+              setScrollToSection(index)
+              setTimeout(() => setScrollToSection(undefined), 100)
+            }
+          }}
+        />
 
         <div className="flex-1 p-4 space-y-4">
-          {/* Unified Lesson Card - Header + Theory + Inline Demos */}
+          {/* Lesson Content Card */}
           <div className="relative bg-white dark:bg-slate-800/95 rounded-2xl overflow-hidden shadow-lg shadow-slate-900/5 dark:shadow-black/20 border border-slate-200/80 dark:border-slate-700/80">
             {/* Gradient accent */}
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#30e8e8] via-[#26d4d4] to-[#1f9d9d]" />
 
             <div className="p-5 pb-6">
-              {/* Header Section */}
-              <div className="flex items-start justify-between gap-4 mb-6">
-                <div className="flex-1">
-                  {/* Breadcrumb */}
-                  <div className="flex items-center gap-2 text-xs font-medium mb-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#30e8e8]/10 text-[#1f9d9d] dark:bg-[#30e8e8]/20 dark:text-[#30e8e8]">
-                      <span className="material-symbols-outlined text-sm">folder</span>
-                      Module {module.id}: {module.name}
-                    </span>
-                    <span className="text-slate-300 dark:text-slate-600">›</span>
-                    <span className="text-slate-500 dark:text-slate-400">
-                      Lesson {submodule.id}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                    {submodule.title}
-                  </h1>
-
-                  {/* Description */}
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {submodule.description}
-                  </p>
-                </div>
-
-                {/* Completion badge */}
-                {isCompleted && (
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30">
-                    <span
-                      className="material-symbols-outlined text-emerald-500 text-lg"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      check_circle
-                    </span>
-                    <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                      Completed
-                    </span>
-                  </div>
-                )}
+              {/* Submodule Title and Description */}
+              <div className="mb-6">
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                  {submodule.title}
+                </h1>
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {submodule.description}
+                </p>
               </div>
-
-              {/* Divider */}
-              {hasSection('theory') && submodule.theoryContent && (
-                <div className="border-t border-slate-200 dark:border-slate-700 mb-6" />
-              )}
 
               {/* Theory Content with Inline Demos - Progressive Reveal */}
               {hasSection('theory') && submodule.theoryContent && (
                 <React.Suspense fallback={<div className="text-slate-400">Loading content...</div>}>
                   <ProgressiveTheoryContent
+                    key={submodule.id} // Force remount on submodule change to reset state
+                    submoduleId={submodule.id}
                     content={submodule.theoryContent}
                     onAllSectionsComplete={() => {
                       setTheoryComplete(true)
@@ -167,6 +159,13 @@ export const SubmodulePage: React.FC = () => {
                         })
                       }, 300)
                     }}
+                    onVisibleCountChange={(visible, total) => {
+                      setVisibleCount(visible)
+                      setTotalSections(total)
+                    }}
+                    onCurrentSectionChange={setCurrentSection}
+                    externalScrollToSection={scrollToSection}
+                    externalRevealUpToSection={revealUpToSection}
                   />
 
                   {/* Inline Grand Staff - embedded within theory card */}

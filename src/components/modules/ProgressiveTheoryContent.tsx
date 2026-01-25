@@ -8,7 +8,12 @@ import { InlineQuiz } from './InlineQuiz'
 
 interface ProgressiveTheoryContentProps {
   content: string
+  submoduleId?: string // Used to scope bypass state per submodule
   onAllSectionsComplete?: () => void // Called when all sections are revealed
+  onVisibleCountChange?: (count: number, total: number) => void // Called when visible sections change
+  onCurrentSectionChange?: (index: number) => void // Called when current visible section changes
+  externalScrollToSection?: number // External trigger to scroll to a specific section
+  externalRevealUpToSection?: number // External trigger to reveal sections up to this index (for completed submodules)
 }
 
 interface ContentBlock {
@@ -234,7 +239,12 @@ function sectionHasQuiz(blocks: ContentBlock[]): boolean {
  */
 export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> = ({
   content,
+  submoduleId,
   onAllSectionsComplete,
+  onVisibleCountChange,
+  onCurrentSectionChange,
+  externalScrollToSection,
+  externalRevealUpToSection,
 }) => {
   const sections = useMemo(() => splitIntoSections(content), [content])
   const parsedSections = useMemo(() => sections.map(parseSectionContent), [sections])
@@ -263,11 +273,19 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
   // Track which quizzes have been completed (by section index)
   const [completedQuizzes, setCompletedQuizzes] = useState<Set<number>>(new Set())
 
-  // Track if user wants to bypass all quizzes and see all content
-  const [bypassQuiz, setBypassQuiz] = useState(false)
-
   // Track if completion callback has been called
   const completionCalledRef = useRef(false)
+
+  // Track if user wants to bypass all quizzes and see all content
+  // State is scoped to current submodule and persisted in localStorage
+  // Note: Component remounts on submodule change due to key prop, so useState initializer reads correct localStorage value
+  const bypassStorageKey = submoduleId ? `bypass-quiz-${submoduleId}` : null
+  const [bypassQuiz, setBypassQuiz] = useState(() => {
+    if (bypassStorageKey) {
+      return localStorage.getItem(bypassStorageKey) === 'true'
+    }
+    return false
+  })
 
   // Check if last section has a quiz
   const lastSectionHasQuiz = useMemo(() => {
@@ -316,17 +334,110 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     }
   }, [visibleCount, sections.length, lastSectionHasQuiz, onAllSectionsComplete])
 
-  // Auto-scroll to newly revealed section
+  // Auto-scroll to newly revealed section after quiz completion
+  const prevVisibleCountRef = useRef(visibleCount)
   useEffect(() => {
-    if (visibleCount > 1) {
+    // Only scroll if visibleCount increased (not on initial load)
+    if (visibleCount > prevVisibleCountRef.current && visibleCount > 1) {
       const newSectionRef = sectionRefs.current[visibleCount - 1]
       if (newSectionRef) {
+        // Delay to let the new section render and animate in
         setTimeout(() => {
-          newSectionRef.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }, 100)
+          // Get the element's position and scroll with offset for sticky header
+          const headerOffset = 80 // Account for sticky header height
+          const elementPosition = newSectionRef.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.scrollY - headerOffset
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          })
+        }, 300) // Slightly longer delay for smoother experience
       }
     }
+    prevVisibleCountRef.current = visibleCount
   }, [visibleCount])
+
+  // Notify parent when visible count changes
+  useEffect(() => {
+    onVisibleCountChange?.(visibleCount, sections.length)
+  }, [visibleCount, sections.length, onVisibleCountChange])
+
+  // Track current section with intersection observer
+  useEffect(() => {
+    if (!onCurrentSectionChange) return
+
+    // Track visibility ratios for all sections
+    const visibilityRatios = new Map<Element, number>()
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Update visibility ratios
+        for (const entry of entries) {
+          visibilityRatios.set(entry.target, entry.intersectionRatio)
+        }
+
+        // Find the section with highest visibility
+        let maxRatio = 0
+        let mostVisibleIndex = 0
+
+        sectionRefs.current.forEach((ref, index) => {
+          if (ref) {
+            const ratio = visibilityRatios.get(ref) || 0
+            if (ratio > maxRatio) {
+              maxRatio = ratio
+              mostVisibleIndex = index
+            }
+          }
+        })
+
+        if (maxRatio > 0) {
+          onCurrentSectionChange(mostVisibleIndex)
+        }
+      },
+      { threshold: [0, 0.1, 0.25, 0.5, 0.75, 1], rootMargin: '-50px 0px -30% 0px' }
+    )
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref)
+    })
+
+    return () => observer.disconnect()
+  }, [onCurrentSectionChange, visibleCount])
+
+  // Handle external scroll to section
+  useEffect(() => {
+    if (externalScrollToSection !== undefined && externalScrollToSection >= 0) {
+      const targetRef = sectionRefs.current[externalScrollToSection]
+      if (targetRef) {
+        targetRef.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }, [externalScrollToSection])
+
+  // Handle external reveal up to section (for completed submodules)
+  // This reveals all sections up to and including the specified index
+  useEffect(() => {
+    if (externalRevealUpToSection !== undefined && externalRevealUpToSection >= 0) {
+      const targetCount = externalRevealUpToSection + 1 // +1 because index is 0-based
+      if (targetCount > visibleCount) {
+        // Use setTimeout to avoid synchronous setState in effect
+        setTimeout(() => {
+          setVisibleCount(targetCount)
+          // Scroll to the target section after sections are revealed
+          setTimeout(() => {
+            const targetRef = sectionRefs.current[externalRevealUpToSection]
+            if (targetRef) {
+              const headerOffset = 80
+              const elementPosition = targetRef.getBoundingClientRect().top
+              const offsetPosition = elementPosition + window.scrollY - headerOffset
+              window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
+            }
+          }, 100)
+        }, 0)
+      }
+    }
+  }, [externalRevealUpToSection, visibleCount])
 
   const renderBlock = (block: ContentBlock, blockIndex: number, sectionIndex: number) => {
     if (block.type === 'abc') {
@@ -393,8 +504,12 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
   }
 
   // Handle bypass - show all content at once
+  // Save bypass state to localStorage scoped to current submodule
   const handleBypassQuiz = () => {
     setBypassQuiz(true)
+    if (bypassStorageKey) {
+      localStorage.setItem(bypassStorageKey, 'true')
+    }
     setVisibleCount(sections.length)
     // Mark all sections as completed for bypass mode
     const allIndices = new Set(parsedSections.map((_, i) => i))
