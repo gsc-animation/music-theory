@@ -5,6 +5,7 @@ import { MainLayout } from './components/layout/MainLayout'
 import './App.css'
 import { useSettingsStore } from './stores/useSettingsStore'
 import { useProgressStore } from './stores/useProgressStore'
+import { useBugReportStore } from './stores/useBugReportStore'
 import { useEffect, lazy, Suspense } from 'react'
 
 // Lazy load pages for better performance
@@ -17,9 +18,18 @@ const FloatingInstrumentsContainer = lazy(
   () => import('./components/ui/FloatingInstrumentsContainer')
 )
 
+// Bug report modal (button is in FloatingInstrumentsToolbar)
+const BugReportModal = lazy(() => import('./components/ui/BugReportModal'))
+
 function App() {
   const theme = useSettingsStore((state) => state.theme)
   const updateStreak = useProgressStore((state) => state.updateStreak)
+  const initializeBugReporter = useBugReportStore((state) => state.initializeInterceptors)
+
+  // Initialize bug reporter on app load
+  useEffect(() => {
+    initializeBugReporter()
+  }, [initializeBugReporter])
 
   // Update streak on app load
   useEffect(() => {
@@ -75,9 +85,14 @@ function App() {
         </Suspense>
       </MainLayout>
 
-      {/* Floating instruments & XP - always available on all pages */}
+      {/* Floating instruments, XP & Bug Report - always available on all pages */}
       <Suspense fallback={null}>
         <FloatingInstrumentsContainer />
+      </Suspense>
+
+      {/* Bug Report Modal */}
+      <Suspense fallback={null}>
+        <BugReportModal />
       </Suspense>
     </BrowserRouter>
   )

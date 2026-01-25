@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import type { InstrumentType } from '../../stores/useFloatingInstrumentsStore'
 import { useFloatingInstrumentsStore } from '../../stores/useFloatingInstrumentsStore'
 import { useProgressStore } from '../../stores/useProgressStore'
+import { useBugReportStore } from '../../stores/useBugReportStore'
 import { COURSE_MODULES } from '../../data/course-data'
 
 const instrumentConfig: Array<{ type: InstrumentType; icon: string; label: string }> = [
@@ -17,6 +18,10 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
   const totalXP = useProgressStore((state) => state.totalXP)
   const completedSubmodules = useProgressStore((state) => state.completedSubmodules)
   const xpToNextLevel = 1000 - (totalXP % 1000)
+
+  // Bug report state
+  const setModalOpen = useBugReportStore((state) => state.setModalOpen)
+  const errorCount = useBugReportStore((state) => state.errors.length)
 
   // Find next lesson to learn
   const allSubmodules = COURSE_MODULES.flatMap((m) =>
@@ -96,6 +101,27 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
           </button>
         )
       })}
+
+      {/* Bug Report Button */}
+      <button
+        onClick={() => setModalOpen(true)}
+        className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-rose-600 text-white hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer border border-rose-500"
+        title="Bug Report - Xem logs và copy để báo lỗi"
+      >
+        <span className="material-symbols-outlined text-xl">bug_report</span>
+
+        {/* Error count badge */}
+        {errorCount > 0 && (
+          <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-amber-400 text-slate-900 text-[10px] font-bold rounded-full min-w-[20px] text-center">
+            {errorCount > 9 ? '9+' : errorCount}
+          </span>
+        )}
+
+        {/* Tooltip */}
+        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+          Bug Report
+        </span>
+      </button>
     </div>
   )
 }

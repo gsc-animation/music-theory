@@ -316,3 +316,426 @@ details summary::-webkit-details-marker {
   display: block;
   margin: 0.25rem 0;
 }
+
+/* =========================================
+   BUG REPORT COMPONENT STYLES
+   ========================================= */
+
+/* Floating Button */
+.bug-report-button {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bug-report-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+}
+
+.dark .bug-report-button {
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+}
+
+.bug-report-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #fbbf24;
+  color: #1f2937;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bug-report-tooltip {
+  position: absolute;
+  left: 56px;
+  padding: 6px 10px;
+  background: #1f2937;
+  color: white;
+  font-size: 12px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.bug-report-button:hover .bug-report-tooltip {
+  opacity: 1;
+}
+
+/* Modal Overlay */
+.bug-report-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Modal Container */
+.bug-report-modal {
+  width: 100%;
+  max-width: 700px;
+  max-height: 80vh;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dark .bug-report-modal {
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+/* Header */
+.bug-report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #fef2f2 0%, #fff 100%);
+}
+
+.dark .bug-report-header {
+  background: linear-gradient(135deg, #3f1f1f 0%, #1e293b 100%);
+  border-bottom-color: #334155;
+}
+
+.bug-report-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #ef4444;
+}
+
+.dark .bug-report-header h2 {
+  color: #f87171;
+}
+
+.bug-report-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bug-report-close:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.dark .bug-report-close:hover {
+  background: #334155;
+  color: #f1f5f9;
+}
+
+/* Tabs */
+.bug-report-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.dark .bug-report-tabs {
+  background: #1e293b;
+  border-bottom-color: #334155;
+}
+
+.bug-report-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.bug-report-tab:hover {
+  color: #1e293b;
+}
+
+.dark .bug-report-tab:hover {
+  color: #f1f5f9;
+}
+
+.bug-report-tab.active {
+  color: #ef4444;
+  border-bottom-color: #ef4444;
+}
+
+.dark .bug-report-tab.active {
+  color: #f87171;
+  border-bottom-color: #f87171;
+}
+
+.bug-report-tab-count {
+  padding: 2px 6px;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.dark .bug-report-tab-count {
+  background: #334155;
+  color: #94a3b8;
+}
+
+.bug-report-tab.active .bug-report-tab-count {
+  background: #fecaca;
+  color: #dc2626;
+}
+
+.dark .bug-report-tab.active .bug-report-tab-count {
+  background: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+}
+
+/* Content */
+.bug-report-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  min-height: 300px;
+}
+
+.bug-report-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bug-report-empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Log Entries */
+.bug-report-log-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  border-left: 3px solid #cbd5e1;
+}
+
+.dark .bug-report-log-entry {
+  background: #0f172a;
+  border-left-color: #475569;
+}
+
+.bug-report-log-entry.error {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+
+.dark .bug-report-log-entry.error {
+  background: rgba(239, 68, 68, 0.1);
+  border-left-color: #f87171;
+}
+
+.bug-report-log-entry.console.warn {
+  border-left-color: #f59e0b;
+}
+
+.bug-report-log-entry.console.error {
+  border-left-color: #ef4444;
+  background: #fef2f2;
+}
+
+.dark .bug-report-log-entry.console.error {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.log-time {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.log-type {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.log-level {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.log-level.log { background: #e0e7ff; color: #4338ca; }
+.log-level.info { background: #dbeafe; color: #1d4ed8; }
+.log-level.warn { background: #fef3c7; color: #b45309; }
+.log-level.error { background: #fecaca; color: #dc2626; }
+
+.dark .log-level.log { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+.dark .log-level.info { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+.dark .log-level.warn { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+.dark .log-level.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+
+.log-details,
+.log-message {
+  color: #475569;
+  word-break: break-all;
+  flex: 1;
+}
+
+.dark .log-details,
+.dark .log-message {
+  color: #cbd5e1;
+}
+
+.log-error-name {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.dark .log-error-name {
+  color: #f87171;
+}
+
+.log-error-message {
+  color: #991b1b;
+  flex: 1;
+}
+
+.dark .log-error-message {
+  color: #fca5a5;
+}
+
+.log-context {
+  width: 100%;
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.log-stack {
+  width: 100%;
+  margin: 0.5rem 0 0;
+  padding: 0.5rem;
+  background: #1e293b;
+  color: #fca5a5;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Footer */
+.bug-report-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.dark .bug-report-footer {
+  background: #0f172a;
+  border-top-color: #334155;
+}
+
+.bug-report-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bug-report-btn.secondary {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.bug-report-btn.secondary:hover {
+  background: #cbd5e1;
+}
+
+.dark .bug-report-btn.secondary {
+  background: #334155;
+  color: #94a3b8;
+}
+
+.dark .bug-report-btn.secondary:hover {
+  background: #475569;
+}
+
+.bug-report-btn.primary {
+  background: linear-gradient(135deg, #30e8e8 0%, #26d4d4 100%);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.bug-report-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(48, 232, 232, 0.4);
+}
+
+.bug-report-btn .material-symbols-outlined {
+  font-size: 18px;
+}
