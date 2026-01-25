@@ -34,6 +34,8 @@ C D E F | G A B c || A, B, C D | E F G A|]}}
 
 > 🎭 Cùng các nốt (không có dấu hóa), nhưng bắt đầu từ C = vui, từ A = buồn!
 
+{{quiz:Âm giai Thứ (Minor) có âm hưởng như thế nào?|Vui tươi, sáng sủa;*Buồn bã, u tối;Tăng tốc độ|Minor = buồn (quãng 3 thứ), Major = vui (quãng 3 trưởng)}}
+
 ---
 
 ## 2. Natural Minor (Thứ tự nhiên)
@@ -61,6 +63,8 @@ A, B, C D | E F G A|]}}
 - Bậc 5→6 (E→F): Nửa cung
 
 > 📝 Nhớ: Nửa cung ở vị trí **2-3** và **5-6** (khác với Major: 3-4 và 7-8)
+
+{{quiz:Công thức của Natural Minor là gì?|W-W-H-W-W-W-H;*W-H-W-W-H-W-W;H-W-W-H-W-W-W|Natural Minor = W-H-W-W-H-W-W (khác với Major)}}
 
 ---
 
@@ -91,6 +95,8 @@ A, B, C D | E F ^G A|]}}
 
 > 🎸 Metal guitarists love Harmonic Minor! 🤘
 
+{{quiz:Harmonic Minor khác Natural Minor ở điểm nào?|Bậc 6 được nâng;*Bậc 7 được nâng;Bậc 3 được nâng|Harmonic Minor nâng bậc 7 để tạo Leading Tone (G→G#)}}
+
 ---
 
 ## 4. Melodic Minor (Thứ giai điệu)
@@ -119,6 +125,8 @@ A, B, C D | E ^F ^G A | G F E D | C B, A,2|]}}
 | **Melodic ↑** | **F#** | **G#** | Mượt mà khi đi lên |
 | **Melodic ↓** | F | G | = Natural minor |
 
+{{quiz:Melodic Minor nâng những bậc nào khi đi LÊN?|Chỉ bậc 7;*Bậc 6 và 7;Bậc 3 và 7|Melodic Minor nâng bậc 6 và 7 khi lên, trả về Natural khi xuống}}
+
 ---
 
 ## 5. Relative Major/Minor
@@ -144,6 +152,8 @@ Ví dụ: C → B → B♭ → A = **A minor**
 L:1/4
 K:C
 C D E F G A B c | A, B, C D E F G A|]}}
+
+{{quiz:Relative Minor của C Major là gì?|C minor;E minor;*A minor|C Major xuống 3 semitones = A minor. Cùng hóa biểu (0 dấu)!}}
 
 ---
 

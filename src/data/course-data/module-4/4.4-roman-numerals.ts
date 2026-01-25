@@ -7,7 +7,7 @@ export const SUBMODULE_4_4: Submodule = {
   id: '4.4',
   title: 'Ký hiệu số La Mã',
   description: 'Hiểu tại sao dùng số La Mã (transpose dễ dàng) và Nashville Number System',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Tại sao dùng số La Mã?
 
@@ -24,6 +24,8 @@ Thay vì viết tên hợp âm cụ thể, viết **bậc**:
 > **I - V - vi - IV**
 
 Áp dụng cho BẤT KỲ giọng nào!
+
+{{quiz:Tại sao dùng số La Mã thay vì tên hợp âm?|Vì trông đẹp hơn;*Vì có thể transpose giữ nguyên số;Vì dễ viết hơn|Số La Mã đại diện cho BẬC chứ không phải tên cụ thể → transpose dễ!}}
 
 ---
 
@@ -42,6 +44,8 @@ Thay vì viết tên hợp âm cụ thể, viết **bậc**:
 - **°** = diminished (C°)
 - **+** = augmented (C+)
 - **7** = seventh chord (V7)
+
+{{quiz:Chữ hoa trong số La Mã (I, IV, V) có nghĩa là gì?|Minor;*Major;Diminished|Chữ hoa = Major (I, IV, V), chữ thường = minor (ii, iii, vi)}}
 
 ---
 

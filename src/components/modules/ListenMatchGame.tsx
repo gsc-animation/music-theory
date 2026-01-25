@@ -87,8 +87,8 @@ export const ListenMatchGame: React.FC<ListenMatchGameProps> = ({ submoduleId, o
   const [hasPlayedNote, setHasPlayedNote] = useState(false)
   const [countdown, setCountdown] = useState<number | null>(null)
 
-  const autoAdvanceRef = useRef<NodeJS.Timeout | null>(null)
-  const countdownRef = useRef<NodeJS.Timeout | null>(null)
+  const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const level = LEVELS[currentLevel]
 

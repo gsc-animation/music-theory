@@ -15,7 +15,7 @@ export const SUBMODULE_2_1: Submodule = {
   id: '2.1',
   title: 'Giá trị nốt nhạc',
   description: 'Nhận biết 5 loại nốt: Tròn, Trắng, Đen, Móc đơn, Móc kép và tỷ lệ độ dài',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Giá trị nốt nhạc là gì?
 
@@ -28,6 +28,8 @@ export const SUBMODULE_2_1: Submodule = {
 ### Đơn vị đo: Phách (Beat)
 
 **Phách** là đơn vị đo thời gian cơ bản trong âm nhạc. Giống như nhịp tim đập đều đều, phách giúp ta đếm nhịp: 1 - 2 - 3 - 4...
+
+{{quiz:Giá trị nốt cho biết điều gì?|Cao độ của nốt;*Độ dài của nốt;Tên của nốt|Giá trị nốt = độ dài (bao lâu), còn cao độ = nốt gì}}
 
 ---
 
@@ -65,6 +67,10 @@ L:1/2
 K:C
 C E | G B|]}}
 
+{{quiz:Nốt tròn có giá trị bằng bao nhiêu phách?|2 phách;*4 phách;8 phách|Nốt tròn = 4 phách, chiếm cả ô nhịp 4/4}}
+
+{{quiz:Đặc điểm hình dạng của nốt trắng là gì?|Đầu đặc, có thân;*Đầu rỗng, có thân;Đầu rỗng, không thân|Nốt trắng có đầu rỗng và có thân. Nốt tròn mới không có thân!}}
+
 ---
 
 ## 3. Nốt đen - "Nhịp tim" của âm nhạc ♩
@@ -92,6 +98,10 @@ M:4/4
 L:1/4
 K:C
 C D E F | G A B c|]}}
+
+{{quiz:Nốt đen có giá trị bằng bao nhiêu phách?|1/2 phách;*1 phách;2 phách|Nốt đen = 1 phách = đơn vị đếm cơ bản}}
+
+{{quiz:Bao nhiêu nốt đen điền đầy 1 ô nhịp 4/4?|2;*4;8|4 nốt đen = 4 phách = 1 ô nhịp 4/4}}
 
 ---
 
@@ -122,6 +132,10 @@ M:4/4
 L:1/16
 K:C
 CDEF GABc defg abc'|]}}
+
+{{quiz:Nốt móc đơn có bao nhiêu đuôi (flag)?|Không có đuôi;*1 đuôi;2 đuôi|Móc đơn = 1 đuôi, Móc kép = 2 đuôi}}
+
+{{quiz:Bao nhiêu nốt móc đơn trong 1 ô nhịp 4/4?|4;*8;16|8 nốt móc đơn = 8 × 1/2 phách = 4 phách = 1 ô nhịp}}
 
 ---
 
@@ -157,6 +171,10 @@ Mỗi loại nốt có giá trị **bằng một nửa** loại nốt trước �
 | **Móc kép** 𝅘𝅥𝅯 | 1/4 | 16 | Đầu đặc, 2 đuôi |
 
 > 🔢 **Công thức**: 1 Tròn = 2 Trắng = 4 Đen = 8 Móc đơn = 16 Móc kép
+
+{{quiz:1 Nốt tròn bằng bao nhiêu nốt trắng?|1;*2;4|1 Tròn = 2 Trắng (mỗi nốt chia đôi thành 2 nốt nhỏ hơn)}}
+
+{{quiz:Mỗi loại nốt có giá trị bằng bao nhiêu so với loại trước?|Gấp đôi;*Một nửa;Bằng nhau|Mỗi loại nốt = 1/2 giá trị của loại trước. Tròn→Trắng→Đen→Móc}}
 
 ---
 

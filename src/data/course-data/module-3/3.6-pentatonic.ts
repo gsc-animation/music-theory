@@ -4,7 +4,7 @@
  * Learning Journey:
  * 1. Passive: Animation "5 black keys" on Piano = Major Pentatonic
  * 2. Guided: Compare Major Pentatonic vs Minor Pentatonic
- * 3. Interactive: Improvisation on Flute with Vietnamese folk backing
+ * 3. Interactive: Improvisation with Vietnamese folk backing
  * 4. Milestone: Create 8-bar melody using pentatonic scale
  *
  * Skipped: Game Journey (to be implemented later)
@@ -15,7 +15,7 @@ export const SUBMODULE_3_6: Submodule = {
   id: '3.6',
   title: 'Âm giai ngũ cung',
   description: 'Xây dựng Major/Minor Pentatonic và ứng dụng trong nhạc Việt Nam, Blues',
-  sections: ['theory', 'piano', 'guitar', 'flute', 'abcDemo'],
+  sections: ['theory', 'piano', 'guitar', 'abcDemo'],
   theoryContent: `
 ## 1. Pentatonic là gì?
 
@@ -32,6 +32,8 @@ export const SUBMODULE_3_6: Submodule = {
 - **Không có "nốt sai"** - mọi nốt đều hòa hợp
 - Rất phổ biến trên **toàn thế giới**: châu Á, châu Phi, Celtic, Blues
 - Dễ improvise (ứng tác) cho người mới
+
+{{quiz:Pentatonic có bao nhiêu nốt?|4 nốt;*5 nốt;7 nốt|Penta (Hy Lạp) = 5. Pentatonic = âm giai ngũ cung (5 nốt)}}
 
 ---
 
@@ -57,6 +59,8 @@ C D E G A | c A G E D C2|]}}
 - Bậc 4 (F) và 7 (B) tạo **tension** (căng thẳng)
 - Khi bỏ chúng → mọi nốt đều "nghe hay" với mọi hợp âm
 - "Impossible to play wrong notes!"
+
+{{quiz:Major Pentatonic bỏ những bậc nào từ Major Scale?|Bậc 2 và 6;*Bậc 4 và 7;Bậc 3 và 5|Major Pent = 1-2-3-5-6, bỏ bậc 4 và 7 (để loại bỏ tension)}}
 
 ---
 
@@ -85,6 +89,8 @@ A, C D E G | A G E D C A,2|]}}
 
 {{guitar:Minor Pentatonic "Box 1"|A3,C4,D4,E4,G4,A4}}
 
+{{quiz:Minor Pentatonic có công thức là gì?|1-2-3-5-6;*1-♭3-4-5-♭7;1-2-4-5-7|Minor Pent = 1-♭3-4-5-♭7 (bỏ bậc 2 và 6)}}
+
 ---
 
 ## 4. Blues Scale
@@ -102,7 +108,9 @@ L:1/4
 K:Am
 A, C D _E =E G | A G =E _E D C A,2|]}}
 
-> 🎷 **The Blue Note** (♭5) tạo cảm giác "đau đớn ngọt ngào" của Blues!
+> 🎷 **The Blue Note** (♭5) tạo cảm giác "đau đớnn gọt ngào" của Blues!
+
+{{quiz:Blues Scale = Minor Pentatonic + nốt nào?|Bậc 2;Bậc 4;*Bậc ♭5 (Blue Note)|Blues Scale thêm ♭5 vào Minor Pentatonic để tạo "đau đớnn gọt ngào"}}
 
 ---
 
@@ -127,9 +135,9 @@ A, C D _E =E G | A G =E _E D C A,2|]}}
 | **Điệu Bắc** | Vui tươi, trang trọng | Miền Bắc | Xang = Mi (E) |
 | **Điệu Nam** | Buồn, ai oán | Miền Nam/Trung | Xang = Fa (F), có rung/nhấn |
 
-{{flute:Điệu Bắc (vui)|C4,D4,E4,G4,A4}}
+{{piano:Điệu Bắc (vui)|C4,D4,E4,G4,A4}}
 
-{{flute:Điệu Nam (buồn)|C4,D4,F4,G4,A4}}
+{{piano:Điệu Nam (buồn)|C4,D4,F4,G4,A4}}
 
 ### Kỹ thuật đặc trưng
 
@@ -137,7 +145,7 @@ A, C D _E =E G | A G =E _E D C A,2|]}}
 - **Nhấn** (Bend): Nhấn lỗ tay để thay đổi cao độ
 - **Luyến** (Slide): Trượt giữa các nốt
 
-> 🎋 Sáo Trúc là nhạc cụ pentatonic xuất sắc!
+> 🎵 Âm nhạc truyền thống Việt Nam sử dụng pentatonic với các kỹ thuật độc đáo!
 
 ---
 

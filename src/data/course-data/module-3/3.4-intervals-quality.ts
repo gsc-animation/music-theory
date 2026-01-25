@@ -15,7 +15,7 @@ export const SUBMODULE_3_4: Submodule = {
   id: '3.4',
   title: 'Quãng - Tính chất',
   description: 'Phân biệt Perfect (1,4,5,8) vs Major/Minor (2,3,6,7)',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Tại sao cần "Tính chất" quãng?
 
@@ -31,6 +31,8 @@ K:C
 C E | C _E|]}}
 
 > 🎭 **Tính chất (Quality)** cho ta biết quãng đó nghe "vui" hay "buồn"!
+
+{{quiz:Tại sao cần biết "tính chất" của quãng?|Vì quãng có nhiều tên;*Vì cùng số quãng nhưng nghe khác nhau (vui/buồn);Vì muốn đánh số|Cùng là "quãng 3" nhưng C-E (vui) và C-Eb (buồn) nghe khác!}}
 
 ---
 
@@ -60,6 +62,8 @@ L:1/2
 K:C
 C E | C _E|]}}
 
+{{quiz:Quãng nào ONLY có tên "Perfect"?|2, 3, 6, 7;*1, 4, 5, 8;Tất cả quãng|Chỉ Unison(1), 4th, 5th, Octave(8) mới gọi là Perfect}}
+
 ---
 
 ## 3. Đếm Semitones
@@ -82,6 +86,10 @@ C E | C _E|]}}
 | **m7** | 10 | Minor 7th |
 | **M7** | 11 | Major 7th |
 | **P8** | 12 | Perfect Octave |
+
+{{quiz:Major 3rd có bao nhiêu semitones?|3;*4;5|M3 = 4 semitones. Minor 3rd (m3) = 3 semitones}}
+
+{{quiz:Perfect 5th có bao nhiêu semitones?|5;6;*7|P5 = 7 semitones (Power chord!)}}
 
 ---
 
@@ -157,6 +165,8 @@ C _E|]}}
 > **Major - 1 semitone = Minor**
 > **Minor + 1 semitone = Major**
 
+{{quiz:Major 3rd trừ 1 semitone sẽ thành gì?|Major 2nd;*Minor 3rd;Perfect 4th|Major - 1 semitone = Minor. M3 (4) - 1 = m3 (3)}}
+
 ---
 
 ## 6. Tritone - Quãng "ma quỷ" 👹
@@ -172,6 +182,8 @@ C _E|]}}
 L:1/2
 K:C
 C ^F|]}}
+
+{{quiz:Tritone có bao nhiêu semitones?|5;*6;7|Tritone = 6 semitones, chia đôi octave (12÷2=6). Âm thanh "ma quỷ"!}}
 
 ---
 

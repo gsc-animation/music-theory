@@ -15,7 +15,7 @@ export const SUBMODULE_2_2: Submodule = {
   id: '2.2',
   title: 'Dấu lặng',
   description: 'Nhận biết 5 loại dấu lặng và vai trò của sự im lặng trong âm nhạc',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Dấu lặng là gì?
 
@@ -31,6 +31,8 @@ export const SUBMODULE_2_2: Submodule = {
 - Tạo **điểm nhấn** và **syncopation**
 - Phân biệt các **câu nhạc** với nhau
 - Tạo **kịch tính** và **bất ngờ**
+
+{{quiz:Khi gặp dấu lặng, bạn cần làm gì?|Chơi nốt nhẹ hơn;*Không chơi nhưng vẫn đếm nhịp;Bỏ qua không đếm|Dấu lặng = im lặng, nhưng vẫn phải đếm nhịp để giữ đúng tempo!}}
 
 ---
 
@@ -66,6 +68,10 @@ z C|]}}
 > - Whole rest: treo DƯỚI dòng kẻ (nặng → rớt)
 > - Half rest: nằm TRÊN dòng kẻ (nhẹ hơn → nổi)
 
+{{quiz:Dấu lặng tròn (Whole Rest) có vị trí như thế nào trên khuông nhạc?|Nằm trên dòng kẻ;*Treo dưới dòng kẻ;Ở giữa 2 dòng kẻ|Whole rest "nặng" nên treo xuống dưới dòng kẻ. Half rest "nhẹ" hơn nên nổi lên trên!}}
+
+{{quiz:Dấu lặng trắng có giá trị bằng bao nhiêu phách?|1 phách;*2 phách;4 phách|Dấu lặng trắng = 2 phách, tương ứng với nốt trắng}}
+
 ---
 
 ## 3. Dấu lặng đen & Dấu lặng móc
@@ -100,6 +106,10 @@ Cz Dz Ez Fz|]}}
 - **Giá trị**: 1/4 phách
 - **Hình dạng**: Giống số "7" với 2 chấm tròn
 
+{{quiz:Dấu lặng đen có hình dạng giống gì?|Hình chữ nhật;Số 7;*Chữ Z xoắn / sấm sét|Dấu lặng đen trông giống chữ "Z" xoắn hoặc hình sấm sét}}
+
+{{quiz:Dấu lặng móc đơn có giá trị bằng bao nhiêu phách?|1/4 phách;*1/2 phách;1 phách|Lặng móc đơn = 1/2 phách, như nốt móc đơn}}
+
 ---
 
 ## 4. Bảng so sánh 5 loại dấu lặng
@@ -113,6 +123,8 @@ Cz Dz Ez Fz|]}}
 | **Lặng móc kép** | 1/4 phách | 7 với 2 chấm | Nốt móc kép |
 
 > 🔗 **Quy tắc quan trọng**: Mỗi loại dấu lặng có giá trị BẰNG CHÍNH XÁC với loại nốt tương ứng!
+
+{{quiz:Dấu lặng đen tương ứng với loại nốt nào?|Nốt trắng;*Nốt đen;Nốt móc đơn|Tên dấu lặng = tên nốt tương ứng. Lặng đen = Nốt đen = 1 phách}}
 
 ---
 
@@ -139,6 +151,8 @@ K:C
 C D E z|]}}
 
 Giải thích: C + D + E (3 phách) + z (1 phách) = 4 phách ✅
+
+{{quiz:Trong nhịp 4/4, nếu có 1 nốt trắng (2 phách), bạn cần thêm gì để điền đầy ô nhịp?|1 dấu lặng đen;*1 dấu lặng trắng hoặc 2 dấu lặng đen;1 dấu lặng tròn|2 phách còn lại = 1 lặng trắng (2) hoặc 2 lặng đen (1+1)}}
 
 ---
 

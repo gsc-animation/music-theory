@@ -7,7 +7,7 @@ export const SUBMODULE_4_3: Submodule = {
   id: '4.3',
   title: 'Hợp âm trong giọng',
   description: 'Xây dựng 7 hợp âm từ 7 bậc của âm giai và quy luật I-ii-iii-IV-V-vi-vii°',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Diatonic Chords là gì?
 
@@ -16,6 +16,8 @@ export const SUBMODULE_4_3: Submodule = {
 **Diatonic Chords** là các hợp âm được xây dựng chỉ từ các nốt **trong một âm giai** (scale).
 
 > 🎵 Mỗi bậc của scale = một hợp âm → 7 bậc = 7 hợp âm!
+
+{{quiz:Diatonic Chords là gì?|Hợp âm có 7 nốt;*Hợp âm xây từ các nốt trong âm giai;Hợp âm ngoài âm giai|Diatonic = chỉ dùng nốt trong scale để xây hợp âm}}
 
 ---
 
@@ -63,6 +65,8 @@ Trong **MỌI** giọng trưởng:
 | **ii, iii, vi** | minor (chữ thường) | "3 em út" |
 | **vii°** | diminished | "Nốt lẻ" |
 
+{{quiz:Pattern tính chất của 7 hợp âm trong giọng Trưởng là gì?|M-M-M-M-M-M-M;*M-m-m-M-M-m-dim;m-m-m-m-m-m-M|M-m-m-M-M-m-dim. I, IV, V = Major; ii, iii, vi = minor; vii° = dim}}
+
 ---
 
 ## 4. "3 Anh Cả" - Primary Chords
@@ -84,6 +88,8 @@ K:C
 [CEG] | [FAc] | [GBd] | [CEG]|]}}
 
 > 🎸 Hàng ngàn bài hát chỉ dùng 3 hợp âm này!
+
+{{quiz:"3 Anh Cả" - Primary Chords là những bậc nào?|ii, iii, vi;*I, IV, V;I, II, III|I (Tonic), IV (Subdominant), V (Dominant) là 3 hợp âm quan trọng nhất}}
 
 ---
 

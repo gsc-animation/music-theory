@@ -35,6 +35,8 @@ C [CEG]|]}}
 - **1 nốt**: Đơn lẻ, "trống rỗng"
 - **Hợp âm**: Đầy đặn, "hoàn chỉnh", có cảm xúc rõ ràng
 
+{{quiz:Hợp âm (Chord) là gì?|1 nốt vang lên;2 nốt vang lên;*3+ nốt vang lên cùng lúc|Hợp âm = 3 nốt hoặc nhiều hơn vang lên cùng một lúc}}
+
 ---
 
 ## 2. Triad - Hợp âm cơ bản nhất
@@ -58,6 +60,8 @@ L:1/1
 K:C
 [CEG]|]}}
 
+{{quiz:Triad gồm những thành phần nào?|Root + 2nd + 4th;*Root + 3rd + 5th;Root + 4th + 6th|Triad = Root (nốt gốc) + 3rd (quãng 3) + 5th (quãng 5)}}
+
 ---
 
 ## 3. Xây dựng C Major Triad
@@ -76,6 +80,8 @@ K:C
 
 - C → E = M3 (4 semitones)
 - E → G = m3 (3 semitones)
+
+{{quiz:Major Triad có công thức là gì?|m3 + M3;*M3 + m3;M3 + M3|Major Triad = Major 3rd (4) + minor 3rd (3) = 7 semitones}}
 
 ---
 
@@ -109,6 +115,8 @@ K:Am
 {{piano:A minor Triad (m3 + M3)|A3,C4,E4}}
 
 > 🎭 A minor có quãng 3 **thứ** (3 semitones) thay vì quãng 3 trưởng → buồn!
+
+{{quiz:Sự khác biệt giữa Major Triad và Minor Triad là gì?|Nốt Root;*Nốt bậc 3 (M3 vs m3);Nốt bậc 5|Major = M3 + m3, Minor = m3 + M3. Chỉ khác bậc 3!}}
 
 ---
 

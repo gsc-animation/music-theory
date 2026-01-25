@@ -15,7 +15,7 @@ export const SUBMODULE_2_5: Submodule = {
   id: '2.5',
   title: 'Nhịp ghép',
   description: 'Hiểu nhịp 6/8 và cảm giác "triplet feel", phân biệt nhịp đơn và nhịp ghép',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Nhịp ghép (Compound Meter) là gì?
 
@@ -29,6 +29,8 @@ export const SUBMODULE_2_5: Submodule = {
 | **Nhịp ghép** (Compound) | Chia 3 | "1-và-a" |
 
 > 🎵 Nhịp ghép tạo cảm giác "lắc lư", "dập dình" đặc trưng!
+
+{{quiz:Sự khác biệt chính giữa nhịp đơn và nhịp ghép là gì?|Số nốt trong ô nhịp;*Cách chia phách (2 vs 3);Tốc độ bài hát|Nhịp đơn chia phách làm 2, nhịp ghép chia phách làm 3}}
 
 ---
 
@@ -58,6 +60,8 @@ CDE FGA | Bcd efg|]}}
 - **Tarantella** (Italian)
 - **Barcarolle** (Venetian gondola songs)
 - Nhiều bài hát Pop ballad!
+
+{{quiz:Nhịp 6/8 có bao nhiêu phách CHÍNH trong mỗi ô nhịp?|6 phách;3 phách;*2 phách|6/8 = 2 phách chính × 3 nốt. Đếm "1-và-a, 2-và-a"}}
 
 ---
 
@@ -94,6 +98,10 @@ K:C
 CDE FGA | BCD EFG|]}}
 
 > ⚠️ **Nhìn giống nhau nhưng nghe KHÁC!** 3/4 nhấn 3 lần, 6/8 nhấn 2 lần.
+
+{{quiz:3/4 và 6/8 khác nhau ở điểm nào?|Số nốt móc đơn;*Cách nhóm nốt (2+2+2 vs 3+3);Tên gọi|Cùng 6 móc đơn, nhưng 3/4 nhóm 2+2+2, còn 6/8 nhóm 3+3}}
+
+{{quiz:"Feel" của nhịp 3/4 và 6/8 khác nhau như thế nào?|Giống nhau hoàn toàn;*3/4 = Waltz (1-2-3), 6/8 = Jig (1-và-a-2-và-a);3/4 nhanh hơn|3/4 có 3 phách mạnh, 6/8 chỉ có 2 phách mạnh với cảm giác "lắc lư"}}
 
 ---
 
@@ -132,6 +140,8 @@ CCC EEE | GGG ccc | CCC EEE | GGG ccc|]}}
 > - 9 ÷ 3 = 3 phách
 > - 12 ÷ 3 = 4 phách
 
+{{quiz:Nhịp 12/8 có bao nhiêu phách chính?|12 phách;3 phách;*4 phách|12 ÷ 3 = 4 phách chính. Đây là Blues/Shuffle feel!}}
+
 ---
 
 ## 5. Triplet Feel & Swing
@@ -156,6 +166,8 @@ K:C
 - **Swung 8ths**: 1--và-2--và... (dài-ngắn-dài-ngắn)
 
 > 🎷 **Jazz essential!** Swing làm cho nhạc "bounce" và có groove!
+
+{{quiz:Swing feel biến nhịp 8ths như thế nào?|Từ đều thành đều hơn;*Từ đều (đơn) thành dài-ngắn (triplet feel);Nhanh hơn|Swing biến straight 8ths thành triplet feel: dài-ngắn-dài-ngắn}}
 
 ---
 

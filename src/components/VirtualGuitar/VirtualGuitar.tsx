@@ -36,7 +36,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
   activeNotes = [],
   onPlayNote,
   showLabels = true,
-  allowedNotes,
+  allowedNotes: _allowedNotes,
 }) => {
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   // Pre-calculate active positions for fast lookup

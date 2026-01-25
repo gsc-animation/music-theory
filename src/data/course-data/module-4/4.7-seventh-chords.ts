@@ -22,6 +22,8 @@ L:1/1
 K:C
 [CEG] | [CEG_B]|]}}
 
+{{quiz:Seventh Chord có bao nhiêu nốt?|3;*4;5|Seventh Chord = Triad (3 nốt) + nốt 7 = 4 nốt}}
+
 ---
 
 ## 2. Ba loại Seventh Chord phổ biến
@@ -31,6 +33,8 @@ K:C
 | **Major 7** | Major triad + M7 | Cmaj7, CM7, C△7 | Mơ màng, Jazz |
 | **minor 7** | minor triad + m7 | Cm7, C-7 | Soul, R&B |
 | **Dominant 7** | Major triad + m7 | C7 | Blues, căng thẳng |
+
+{{quiz:Dominant 7 (C7) có công thức là gì?|Major triad + Major 7;*Major triad + minor 7;minor triad + minor 7|Dom7 = Major triad + minor 7. Đặc biệt: có tritone, căng thẳng!}}
 
 ---
 
@@ -109,6 +113,8 @@ L:1/2
 K:C
 [GBd_f] [CEGc]|]}}
 
+{{quiz:V7 → I được gọi là gì?|Plagal Cadence;*Authentic/Perfect Cadence;Deceptive Cadence|V7→I là Authentic Cadence - cadence mạnh nhất do tritone resolution}}
+
 ---
 
 ## 6. ii-V-I: Tiến trình Jazz
@@ -132,6 +138,8 @@ K:C
 - **Circle of Fifths movement**: D→G→C
 - V7 chứa tritone → muốn resolve về I
 - Âm thanh "sophisticated", jazzy
+
+{{quiz:ii-V-I trong C Major là progression nào?|Cmaj7-G7-Dm7;Am7-D7-Gmaj7;*Dm7-G7-Cmaj7|ii-V-I trong C = Dm7 (ii) → G7 (V) → Cmaj7 (I)}}
 
 ---
 

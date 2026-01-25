@@ -15,7 +15,7 @@ export const SUBMODULE_3_2: Submodule = {
   id: '3.2',
   title: 'Hóa biểu',
   description: 'Nhớ thứ tự dấu thăng/giáng và xác định giọng từ hóa biểu',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Hóa biểu (Key Signature) là gì?
 
@@ -35,6 +35,8 @@ G A B c | d e f g|]}}
 - Không phải viết dấu hóa trước **mỗi** nốt
 - Nhìn là biết ngay "giọng gì"
 - Tiết kiệm không gian, dễ đọc
+
+{{quiz:Hóa biểu (Key Signature) là gì?|Dấu hóa viết trước mỗi nốt;*Dấu hóa ở đầu khuông, áp dụng cả bài;Tên của bài hát|Hóa biểu ở đầu khuông nhạc, áp dụng cho TOÀN BỘ bài}}
 
 ---
 
@@ -59,6 +61,8 @@ C D E F | G A B c|]}}
 
 > "**F**a **Đ**ô **S**ol **R**ê **L**a **M**i **S**i" (theo thứ tự quãng 5)
 
+{{quiz:Thứ tự dấu thăng là gì?|B-E-A-D-G-C-F;*F-C-G-D-A-E-B;C-G-D-A-E-B-F|F-C-G-D-A-E-B. Nhớ: "Father Charles Goes Down And Ends Battle"}}
+
 ---
 
 ## 3. Thứ tự dấu giáng (Order of Flats)
@@ -81,6 +85,8 @@ C D E F | G A B c|]}}
 ### Câu nhớ tiếng Việt
 
 > "**S**i **M**i **L**a **R**ê **S**ol **Đ**ô **F**a" (ngược lại)
+
+{{quiz:Thứ tự dấu giáng là gì?|*B-E-A-D-G-C-F;F-C-G-D-A-E-B;A-E-B-F-C-G-D|B-E-A-D-G-C-F (ngược với thứ tự dấu thăng)}}
 
 ---
 
@@ -113,6 +119,10 @@ C D E F | G A B c|]}}
 |----------|-------|---------|
 | 0 dấu | **C Major** | "C = Clean" (không dấu) |
 | 1♭ (B♭) | **F Major** | Không có "kế cuối" → nhớ riêng! |
+
+{{quiz:Nếu hóa biểu có 3 dấu thăng (F#, C#, G#), giọng là gì?|G Major;*A Major;E Major|Dấu thăng cuối là G#, +1/2 cung = A → A Major}}
+
+{{quiz:Nếu hóa biểu có 2 dấu giáng (B♭, E♭), giọng là gì?|E♭ Major;*B♭ Major;F Major|Dấu giáng kế cuối là B♭ → B♭ Major}}
 
 ---
 

@@ -7,7 +7,7 @@ export const SUBMODULE_5_6: Submodule = {
   id: '5.6',
   title: 'Chuyển giọng',
   description: 'Phân biệt Direct vs Pivot Chord modulation và hiệu ứng tạo ra',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Modulation là gì?
 
@@ -22,6 +22,8 @@ export const SUBMODULE_5_6: Submodule = {
 - Tăng **năng lượng** (key change lên)
 - Thay đổi **mood** (Major → minor)
 - Tạo **surprise** và giữ interest
+
+{{quiz:Modulation là gì?|Thay đổi tempo;*Đổi key trong bài hát;Thay đổi volume|Modulation = chuyển từ key này sang key khác}}
 
 ---
 
@@ -44,6 +46,8 @@ export const SUBMODULE_5_6: Submodule = {
 - "I Will Always Love You" - Whitney Houston (final chorus)
 - "My Heart Will Go On" - Celine Dion
 - "Love on Top" - Beyoncé (lên 4 lần liên tiếp!)
+
+{{quiz:Direct Modulation hoạt động như thế nào?|Dùng pivot chord để chuyển mượt;*Nhảy thẳng sang key mới, không chuẩn bị;Dùng common tone|Direct = nhảy thẳng, không chuẩn bị, "truck driver gear change"}}
 
 ---
 
@@ -69,6 +73,8 @@ Am có thể là vi của C **HOẶC** ii của G → Pivot!
 2. **Am** = pivot (vi của C, ii của G)
 3. Am → D7 → G (ii-V-I trong G)
 4. Bây giờ ở G Major!
+
+{{quiz:Pivot Chord modulation hoạt động như thế nào?|Nhảy thẳng không chuẩn bị;*Dùng chord chung giữa 2 keys làm cầu nối;Tăng tempo|Pivot chord thuộc cả 2 keys, dùng làm "cầu nối" mượt mà}}
 
 ---
 

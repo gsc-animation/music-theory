@@ -7,7 +7,7 @@ export const SUBMODULE_5_2: Submodule = {
   id: '5.2',
   title: 'Chỗ ngắt',
   description: 'Phân biệt 4 loại cadence: Perfect, Plagal, Half, Deceptive',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Cadence là gì?
 
@@ -23,6 +23,8 @@ export const SUBMODULE_5_2: Submodule = {
 | Plagal | Bình yên | Dấu phẩy **( , )** |
 | Half | Chờ đợi | Dấu hỏi **( ? )** |
 | Deceptive | Bất ngờ | Dấu chấm than **( ! )** |
+
+{{quiz:Cadence trong âm nhạc giống như gì trong văn viết?|Tiêu đề;*Dấu câu;Phần mở đầu|Cadence = cách kết thúc câu nhạc, giống dấu chấm/phẩy trong văn}}
 
 ---
 
@@ -47,6 +49,8 @@ K:C
 - Dùng ở **cuối bài** hoặc cuối đoạn lớn
 
 > 🎬 Như cảnh cuối phim - "THE END"!
+
+{{quiz:Perfect Cadence là progression nào?|IV → I;*V → I;I → V|Perfect/Authentic Cadence = V(7) → I, kết thúc dứt khoát nhất}}
 
 ---
 
@@ -74,6 +78,8 @@ K:C
 
 - Kết thúc nhạc nhà thờ
 - Outro Rock/Pop: "Let It Be", "Hey Jude"
+
+{{quiz:Plagal Cadence còn được gọi là gì?|Blues Cadence;*Amen Cadence;Jazz Cadence|Plagal (IV→I) gọi là "Amen Cadence" vì thường dùng ở cuối thánh ca}}
 
 ---
 
@@ -129,6 +135,8 @@ K:C
 - Kéo dài bài hát
 - Tạo surprise effect
 - Đổi từ Major sang minor mood
+
+{{quiz:Deceptive Cadence là gì?|V → I;IV → I;*V → vi|Deceptive = V→vi (thay vì V→I như expected). "Plot twist"!}}
 
 ---
 

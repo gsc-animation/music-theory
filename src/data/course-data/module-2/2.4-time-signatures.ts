@@ -15,7 +15,7 @@ export const SUBMODULE_2_4: Submodule = {
   id: '2.4',
   title: 'Nhịp đơn',
   description: 'Hiểu ý nghĩa số trên/dưới và phân biệt nhịp 4/4, 3/4, 2/4',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Time Signature là gì?
 
@@ -43,6 +43,10 @@ export const SUBMODULE_2_4: Submodule = {
 | **4** | Nốt đen (Quarter note) |
 | **8** | Nốt móc đơn (Eighth note) |
 
+{{quiz:Số trên trong Time Signature cho biết điều gì?|Loại nốt = 1 phách;*Số phách trong 1 ô nhịp;Tốc độ bài hát|Số trên = số phách mỗi ô nhịp. Ví dụ: 4/4 có 4 phách mỗi ô}}
+
+{{quiz:Trong nhịp 4/4, số 4 ở dưới có nghĩa là gì?|4 phách mỗi ô;*Nốt đen = 1 phách;4 ô nhịp|Số dưới cho biết loại nốt được tính là 1 phách. 4 = Nốt đen}}
+
 ---
 
 ## 2. Nhịp 4/4 - "Common Time"
@@ -67,6 +71,8 @@ C D E F | G A B c|]}}
 >
 > (Phách 1 mạnh nhất)
 
+{{quiz:Nhịp nào là phổ biến nhất trong nhạc Pop và Rock?|2/4;3/4;*4/4|4/4 (Common Time) là nhịp phổ biến nhất trong hầu hết nhạc đại chúng}}
+
 ---
 
 ## 3. Nhịp 3/4 - "Waltz Time"
@@ -90,6 +96,8 @@ C D E | F G A | B c d|]}}
 > **1** - 2 - 3 | **1** - 2 - 3
 >
 > (Nhấn mạnh phách 1, nhẹ phách 2-3)
+
+{{quiz:Nhịp 3/4 thường dùng cho loại nhạc nào?|March (hành khúc);*Waltz (luân vũ);Pop/Rock|3/4 có cảm giác "dập dình" 1-2-3, rất đặc trưng của Waltz}}
 
 ---
 
@@ -138,6 +146,10 @@ C D | E F | G A | B c|]}}
 **2/4**: ● ○ (Mạnh - Nhẹ)
 
 > 🥁 Drummer và bassist thường nhấn mạnh phách 1 để tạo "nền móng" cho bản nhạc!
+
+{{quiz:Trong mọi loại nhịp, phách nào LUÔN mạnh nhất?|Phách cuối cùng;*Phách 1;Phách giữa|Phách 1 luôn là Downbeat - phách mạnh nhất trong ô nhịp}}
+
+{{quiz:Trong nhịp 4/4, phách nào được coi là "vừa vừa"?|Phách 2;*Phách 3;Phách 4|4/4: Phách 1 mạnh, 3 vừa (downbeat phụ), 2 và 4 nhẹ}}
 
 ---
 

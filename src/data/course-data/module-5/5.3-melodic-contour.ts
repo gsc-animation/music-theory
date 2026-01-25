@@ -7,7 +7,7 @@ export const SUBMODULE_5_3: Submodule = {
   id: '5.3',
   title: 'Đường nét giai điệu',
   description: 'Hiểu Passing Tone, Neighbor Tone, Suspension và quy tắc "bước nhỏ sau nhảy lớn"',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Melodic Contour là gì?
 
@@ -37,6 +37,8 @@ Nốt **không thuộc** hợp âm - tạo **tension** rồi **resolve**
 
 > 🎵 Non-chord tones làm melody "có gia vị"!
 
+{{quiz:Non-chord tone là gì?|Nốt thuộc hợp âm;*Nốt không thuộc hợp âm đang chơi;Nốt bằng hòa thượng|Non-chord tone = nốt ngoài hợp âm, tạo tension rồi resolve}}
+
 ---
 
 ## 3. Passing Tone (Nốt lướt)
@@ -62,6 +64,8 @@ C D E G|]}}
 - Đi theo **một hướng** (lên hoặc xuống)
 - Phách yếu (thường)
 - Làm giai điệu **mượt mà**
+
+{{quiz:Passing Tone hoạt động như thế nào?|Quay về nốt gốc;*Nối 2 chord tones, đi một hướng;Giữ lại từ hợp âm trước|Passing tone nằm giữa 2 chord tones, đi theo 1 hướng}}
 
 ---
 
@@ -113,6 +117,8 @@ K:C
 - Rất phổ biến trong ballad
 - Csus4 → C = "Sự chờ đợi → Giải quyết"
 
+{{quiz:Suspension (Sus4) hoạt động như thế nào?|Nối 2 nốt khác;Quay về nốt gốc;*Giữ nốt từ hợp âm trước, tạo tension, rồi resolve|Sus4 giữ bậc 4, tạo tension, rồi resolve về bậc 3}}
+
 ---
 
 ## 6. Quy tắc "Leap & Step"
@@ -137,6 +143,8 @@ C A G F | E D C2|]}}
 - Tạo **cân bằng** (balance)
 - Không "leo mãi" hay "rớt mãi"
 - Melody nghe **tự nhiên**
+
+{{quiz:Quy tắc "Leap & Step" là gì?|Luôn đi bước nhỏ;*Sau bước nhảy lớn, đi ngược lại bằng bước nhỏ;Luôn nhảy lớn|Leap & Step: nhảy lớn lên → bước nhỏ xuống (và ngược lại)}}
 
 ---
 

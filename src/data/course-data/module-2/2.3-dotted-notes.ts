@@ -15,7 +15,7 @@ export const SUBMODULE_2_3: Submodule = {
   id: '2.3',
   title: 'Nốt chấm & Dây liên',
   description: 'Tính giá trị nốt chấm và phân biệt Tie (cùng pitch) với Slur (khác pitch)',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Nốt chấm (Dotted Notes)
 
@@ -33,6 +33,8 @@ Khi thêm **dấu chấm** (dot) vào sau nốt, giá trị nốt được **tă
 | Nốt trắng chấm | 2 phách | +1 | **3 phách** |
 | Nốt tròn chấm | 4 phách | +2 | **6 phách** |
 | Móc đơn chấm | 0.5 phách | +0.25 | **0.75 phách** |
+
+{{quiz:Nốt chấm có giá trị bằng bao nhiêu so với nốt gốc?|Gấp đôi;*1.5 lần (gốc + 50%);0.5 lần|Nốt chấm = Gốc + 50% = Gốc × 1.5}}
 
 ---
 
@@ -53,6 +55,8 @@ Trong ví dụ trên:
 
 > 🎵 Pattern "Nốt đen chấm + móc đơn" rất phổ biến trong nhạc Pop và Country!
 
+{{quiz:Nốt đen chấm có giá trị bằng bao nhiêu phách?|1 phách;*1.5 phách;2 phách|Nốt đen (1 phách) + 50% (0.5) = 1.5 phách}}
+
 ---
 
 ## 3. Nốt trắng chấm (Dotted Half)
@@ -71,6 +75,8 @@ Trong ví dụ trên:
 - Tổng: 3 + 1 = 4 phách ✅
 
 > 💡 Nốt trắng chấm thường dùng trong nhịp 3/4 (Waltz) vì nó điền đầy 1 ô nhịp!
+
+{{quiz:Nốt trắng chấm có giá trị bằng bao nhiêu phách?|2 phách;*3 phách;4 phách|Nốt trắng (2 phách) + 50% (1) = 3 phách}}
 
 ---
 
@@ -104,6 +110,8 @@ CD | E-E | FG | A-A|]}}
 2. Tạo giá trị "kỳ lạ" (ví dụ: 5 phách = 4 + 1 tie)
 3. Thể hiện syncopation phức tạp
 
+{{quiz:Khi có Tie, bạn cần đánh bao nhiêu lần?|2 lần (mỗi nốt 1 lần);*1 lần (giữ tiếng qua cả 2 nốt);Tùy theo số nốt|Tie nối 2 nốt cùng cao độ thành 1 âm dài - chỉ đánh 1 lần!}}
+
 ---
 
 ## 5. Tie vs Slur - Khác biệt quan trọng!
@@ -134,6 +142,10 @@ K:C
 (CDE) F|]}}
 
 > 🎹 **Slur** yêu cầu chơi **legato** - các nốt nối liền không có khoảng nghỉ giữa chúng.
+
+{{quiz:Sự khác biệt chính giữa Tie và Slur là gì?|Số nốt được nối;*Cao độ của các nốt (cùng vs khác);Độ dài của đường cong|Tie = cùng cao độ (1 âm dài). Slur = khác cao độ (legato)}}
+
+{{quiz:Nếu thấy đường cong nối 2 nốt C-C cùng cao độ, đó là gì?|Slur;*Tie;Cả hai|2 nốt CÙNG cao độ = Tie. Bạn chỉ đánh 1 lần!}}
 
 ---
 

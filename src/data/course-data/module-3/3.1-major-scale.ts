@@ -34,6 +34,8 @@ L:1/4
 K:C
 C D E F | G A B c|]}}
 
+{{quiz:Âm giai Trưởng (Major Scale) có âm hưởng như thế nào?|Buồn bã, u ám;*Vui tươi, sáng sủa;Căng thẳng, kịch tính|Major Scale có âm hưởng vui tươi, hoàn chỉnh - khác với Minor (buồn)}}
+
 ---
 
 ## 2. Công thức "vàng" W-W-H-W-W-W-H
@@ -58,6 +60,10 @@ Mọi âm giai trưởng đều được xây dựng theo **một công thức d
 
 > 💡 **C Major đặc biệt**: Chỉ dùng phím trắng vì E-F và B-C vốn là nửa cung tự nhiên!
 
+{{quiz:Công thức của âm giai trưởng là gì?|W-H-W-W-H-W-W;*W-W-H-W-W-W-H;H-W-W-W-H-W-W|W-W-H-W-W-W-H = Cung-Cung-Nửa-Cung-Cung-Cung-Nửa}}
+
+{{quiz:Trong công thức W-W-H-W-W-W-H, "H" nghĩa là gì?|Whole step (Cung);*Half step (Nửa cung);High note|H = Half step = Nửa cung. W = Whole step = Cung}}
+
 ---
 
 ## 3. C Major - Thang âm "trắng tinh"
@@ -81,6 +87,8 @@ C D E F | G A B c | c B A G | F E D C|]}}
 
 {{piano:Nửa cung trong C Major: E-F và B-C|E4,F4,B4,C5}}
 
+{{quiz:Trong âm giai C Major, nửa cung nằm ở vị trí nào?|Bậc 1→2 và 4→5;*Bậc 3→4 và 7→8;Bậc 2→3 và 5→6|Nửa cung luôn ở bậc 3→4 (E-F) và bậc 7→8 (B-C) trong mọi Major Scale}}
+
 ---
 
 ## 4. G Major - Cần F#
@@ -103,6 +111,8 @@ G A B c | d e ^f g|]}}
 
 > 📝 **G Major có 1 dấu thăng**: F# (trong hóa biểu)
 
+{{quiz:Tại sao G Major cần F# thay vì F?|Vì F nghe không hay;*Vì công thức yêu cầu 1 cung ở bậc 6→7, mà E-F chỉ là nửa cung;Vì F# dễ chơi hơn|E→F chỉ là nửa cung, nhưng công thức yêu cầu 1 cung → phải nâng F lên F#}}
+
 ---
 
 ## 5. F Major - Cần Bb
@@ -124,6 +134,8 @@ F G A B | c d e f|]}}
 {{piano:F Major: F G A Bb C D E F|F3,G3,A3,Bb3,C4,D4,E4,F4}}
 
 > 📝 **F Major có 1 dấu giáng**: Bb (trong hóa biểu)
+
+{{quiz:F Major cần dấu hóa gì?|F#;*Bb;C#|F Major cần Bb vì A→B là 1 cung, nhưng công thức yêu cầu nửa cung ở bậc 3→4}}
 
 ---
 

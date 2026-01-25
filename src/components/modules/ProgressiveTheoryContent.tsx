@@ -239,16 +239,33 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
   const sections = useMemo(() => splitIntoSections(content), [content])
   const parsedSections = useMemo(() => sections.map(parseSectionContent), [sections])
 
-  // Track which sections are visible
-  const [visibleCount, setVisibleCount] = useState(1)
+  // Calculate initial visible count: show all consecutive sections without quiz, plus the first section with quiz
+  const initialVisibleCount = useMemo(() => {
+    let count = 1
+    for (let i = 0; i < parsedSections.length; i++) {
+      if (!sectionHasQuiz(parsedSections[i])) {
+        // This section has no quiz, so we need to show the next one too
+        if (i + 1 < parsedSections.length) {
+          count = i + 2 // +2 because we're 0-indexed and need to include the next section
+        }
+      } else {
+        // Found a section with quiz, stop here
+        break
+      }
+    }
+    return Math.min(count, parsedSections.length)
+  }, [parsedSections])
+
+  // Track which sections are visible - start with the calculated initial count
+  const [visibleCount, setVisibleCount] = useState(initialVisibleCount)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
 
   // Track which quizzes have been completed (by section index)
   const [completedQuizzes, setCompletedQuizzes] = useState<Set<number>>(new Set())
-  
+
   // Track if user wants to bypass all quizzes and see all content
   const [bypassQuiz, setBypassQuiz] = useState(false)
-  
+
   // Track if completion callback has been called
   const completionCalledRef = useRef(false)
 
@@ -262,13 +279,25 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     // Mark this quiz as completed
     setCompletedQuizzes((prev) => new Set([...prev, sectionIndex]))
 
-    // Reveal next section
+    // Reveal next section(s) - skip over sections without quiz
     if (sectionIndex === visibleCount - 1 && visibleCount < sections.length) {
-      setVisibleCount((prev) => prev + 1)
+      // Find how many consecutive sections without quiz follow
+      let nextVisibleCount = visibleCount + 1
+      while (
+        nextVisibleCount < sections.length &&
+        !sectionHasQuiz(parsedSections[nextVisibleCount - 1])
+      ) {
+        nextVisibleCount++
+      }
+      setVisibleCount(nextVisibleCount)
     }
 
     // If this was the last section's quiz, trigger completion
-    if (sectionIndex === sections.length - 1 && onAllSectionsComplete && !completionCalledRef.current) {
+    if (
+      sectionIndex === sections.length - 1 &&
+      onAllSectionsComplete &&
+      !completionCalledRef.current
+    ) {
       completionCalledRef.current = true
       setTimeout(onAllSectionsComplete, 500)
     }
@@ -386,7 +415,8 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
         const isLast = sectionIndex === effectiveVisibleCount - 1
         const hasQuiz = sectionHasQuiz(blocks)
         const isQuizCompleted = completedQuizzes.has(sectionIndex) || bypassQuiz
-        const showLockedIndicator = isLast && hasQuiz && !isQuizCompleted && effectiveVisibleCount < sections.length
+        const showLockedIndicator =
+          isLast && hasQuiz && !isQuizCompleted && effectiveVisibleCount < sections.length
 
         return (
           <div
@@ -408,7 +438,7 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
                   <span className="locked-icon">🔒</span>
                   <span>Trả lời câu hỏi để tiếp tục...</span>
                 </div>
-                <button 
+                <button
                   className="bypass-quiz-btn"
                   onClick={handleBypassQuiz}
                   title="Bỏ qua tất cả câu hỏi và xem toàn bộ nội dung"

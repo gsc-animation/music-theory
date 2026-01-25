@@ -7,7 +7,7 @@ export const SUBMODULE_5_5: Submodule = {
   id: '5.5',
   title: 'Cường độ & Kỹ thuật diễn tấu',
   description: 'Đọc ký hiệu dynamics (pp-ff), crescendo, staccato, legato',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Dynamics là gì?
 
@@ -38,6 +38,8 @@ export const SUBMODULE_5_5: Submodule = {
 - **fff**: fortississimo (cực to)
 - **sfz**: sforzando (đột ngột to)
 
+{{quiz:"ff" (fortissimo) có nghĩa là gì?|Rất nhỏ;*Rất to;Trung bình|ff = fortissimo = rất to. pp = pianissimo = rất nhỏ}}
+
 ---
 
 ## 3. Crescendo & Decrescendo
@@ -61,6 +63,8 @@ Ký hiệu: ────────>
 ### "Hairpin" Dynamics
 
 Ký hiệu < > trông như cái kẹp tóc, nên gọi là hairpin!
+
+{{quiz:Crescendo (<) có nghĩa là gì?|Nhỏ dần;*To dần lên;Giữ nguyên|Crescendo = to dần lên. Decrescendo = nhỏ dần đi}}
 
 ---
 
@@ -118,6 +122,8 @@ Ký hiệu < > trông như cái kẹp tóc, nên gọi là hairpin!
 | Khoảng cách | Có gaps | Không gaps |
 | Cảm giác | Bouncy, light | Smooth, connected |
 | Ví dụ | March, upbeat pop | Ballad, strings |
+
+{{quiz:Staccato và Legato khác nhau như thế nào?|Staccato = to, Legato = nhỏ;*Staccato = ngắt, Legato = liền;Giống nhau|Staccato = ngắt, nảy. Legato = liền, mượt mà}}
 
 ---
 

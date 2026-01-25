@@ -15,7 +15,7 @@ export const SUBMODULE_2_6: Submodule = {
   id: '2.6',
   title: 'Nhịp độ & BPM',
   description: 'Hiểu BPM (Beats Per Minute) và các thuật ngữ tempo tiếng Ý',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. BPM là gì?
 
@@ -39,6 +39,10 @@ export const SUBMODULE_2_6: Submodule = {
 
 > 💓 **Nhịp tim nghỉ ngơi**: 60-100 BPM. Bài nhạc trong range này cảm thấy "tự nhiên" nhất!
 
+{{quiz:BPM là viết tắt của gì?|Bars Per Minute;*Beats Per Minute;Bass Per Music|BPM = Beats Per Minute = Số phách trong 1 phút}}
+
+{{quiz:BPM càng cao thì bài nhạc như thế nào?|Càng chậm;*Càng nhanh;Không liên quan|BPM cao = nhiều phách mỗi phút = nhanh hơn}}
+
 ---
 
 ## 2. Thuật ngữ Tempo tiếng Ý
@@ -60,6 +64,8 @@ export const SUBMODULE_2_6: Submodule = {
 | **Vivace** | 168-176 | Sống động | Rất nhanh, tươi vui |
 | **Presto** | 176-200 | Rất nhanh | Cực nhanh! |
 | **Prestissimo** | 200+ | Nhanh nhất | "Chạy đua với thời gian" |
+
+{{quiz:Thuật ngữ nào chỉ tốc độ CHẬM NHẤT?|Presto;Allegro;*Largo|Largo (40-60 BPM) = "Rộng rãi", chậm và trang nghiêm}}
 
 ---
 
@@ -92,6 +98,10 @@ export const SUBMODULE_2_6: Submodule = {
 
 - **Flight of the Bumblebee** (Rimsky-Korsakov)
 - Solo virtuoso, đoạn climax
+
+{{quiz:"Allegro" có nghĩa là gì và BPM khoảng bao nhiêu?|Chậm rãi, 40-60 BPM;*Vui vẻ, 120-168 BPM;Rất nhanh, 200+ BPM|Allegro = "vui vẻ", tốc độ nhanh (120-168 BPM), phổ biến trong nhạc Pop}}
+
+{{quiz:"Andante" có nghĩa là gì?|Chạy;*Bước đi (walking pace);Nhảy|Andante = "bước đi" (76-108 BPM), như tốc độ đi bộ thong thả}}
 
 ---
 
@@ -141,6 +151,10 @@ export const SUBMODULE_2_6: Submodule = {
 ### A Tempo
 
 **Trở về tempo ban đầu** - Sau khi đã accel. hoặc rit.
+
+{{quiz:"Ritardando" (rit.) có nghĩa là gì?|Tăng tốc dần;*Chậm dần;Giữ nguyên tốc độ|Ritardando = chậm dần, thường dùng ở cuối bài}}
+
+{{quiz:"Accelerando" (accel.) có nghĩa là gì?|Chậm dần;*Tăng tốc dần;Dừng lại|Accelerando = tăng tốc dần, tạo hưng phấn dẫn đến climax}}
 
 ---
 

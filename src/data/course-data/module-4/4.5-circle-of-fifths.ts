@@ -7,7 +7,7 @@ export const SUBMODULE_4_5: Submodule = {
   id: '4.5',
   title: 'Vòng quãng 5',
   description: 'Hiểu cấu trúc Circle of Fifths và sử dụng để xác định hóa biểu',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Circle of Fifths là gì?
 
@@ -16,6 +16,8 @@ export const SUBMODULE_4_5: Submodule = {
 **Vòng quãng 5** là sơ đồ tổ chức 12 giọng Major (và minor) thành hình tròn, mỗi bước cách nhau **quãng 5 đúng**.
 
 > 🔄 Như mặt đồng hồ với **C ở 12 giờ**!
+
+{{quiz:Circle of Fifths có giọng nào ở vị trí 12 giờ?|G Major;*C Major;F Major|C Major ở 12 giờ với 0 dấu hóa}}
 
 ---
 
@@ -37,6 +39,8 @@ export const SUBMODULE_4_5: Submodule = {
 
 - **Thuận chiều kim đồng hồ**: +1 sharp mỗi bước (C→G→D→A...)
 - **Ngược chiều**: +1 flat mỗi bước (C→F→B♭→E♭...)
+
+{{quiz:Khi đi THEO chiều kim đồng hồ trên Circle of Fifths, số dấu hóa thay đổi như thế nào?|+1 flat mỗi bước;*+1 sharp mỗi bước;Không đổi|Thuận chiều = +1# (C→G→D→A...). Ngược chiều = +1♭}}
 
 ---
 
@@ -97,6 +101,8 @@ Mỗi giọng Major có một **Relative Minor** cùng hóa biểu:
 
 - Major ở **vòng ngoài**
 - Minor ở **vòng trong** (cùng vị trí)
+
+{{quiz:Relative Minor của G Major là gì?|Dm;*Em;Am|G Major và Em cùng hóa biểu (1#). Minor ở vòng trong, cùng vị trí với Major}}
 
 ---
 

@@ -21,7 +21,7 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
   const theme = useSettingsStore((state) => state.theme)
   const toggleTheme = useSettingsStore((state) => state.toggleTheme)
   
-  const { completedSubmodules, currentSubmoduleId } = useProgressStore()
+  const { completedSubmodules } = useProgressStore()
 
   // Calculate overall progress
   const totalSubmodules = COURSE_MODULES.reduce((acc, m) => acc + m.submodules.length, 0)

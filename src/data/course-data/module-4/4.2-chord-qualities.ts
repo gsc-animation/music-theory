@@ -33,6 +33,8 @@ K:C
 
 > 🎭 **Tính chất (Quality)** quyết định "cảm xúc" của hợp âm!
 
+{{quiz:Tại sao cùng Root mà hợp âm nghe khác nhau?|Vì số nốt khác;*Vì tính chất (Quality) khác;Vì tốc độ khác|C Major và C minor cùng Root (C) nhưng khác tính chất → khác cảm xúc}}
+
 ---
 
 ## 2. Bốn tính chất cơ bản
@@ -45,6 +47,8 @@ K:C
 | **Minor** | m3 + M3 | Buồn, sâu 😢 | Cm, Cmin, C- |
 | **Diminished** | m3 + m3 | Căng thẳng, sợ 😱 | Cdim, C° |
 | **Augmented** | M3 + M3 | Mơ hồ, lơ lửng ☁️ | Caug, C+ |
+
+{{quiz:Công thức của Diminished Triad là gì?|M3 + M3;M3 + m3;*m3 + m3|Diminished = m3 + m3 (2 quãng 3 thứ, tạo tritone!)}}
 
 ---
 
@@ -80,6 +84,8 @@ K:Cm
 
 > 💡 Major → Minor: Hạ bậc 3 xuống **1 semitone**!
 
+{{quiz:Muốn chuyển từ Major Triad sang Minor Triad, làm gì?|Nâng bậc 5;*Hạ bậc 3 xuống 1 semitone;Hạ Root|Major → Minor: chỉ cần hạ bậc 3 xuống 1 semitone (E → Eb)}}
+
 ---
 
 ## 4. Diminished Triad (Hợp âm Giảm) 😱
@@ -103,6 +109,8 @@ K:C
 - Không ổn định, cần "giải quyết" về chord khác
 
 > 🎬 Khi nghe chord diminished, bạn biết điều gì đó "đáng sợ" sắp xảy ra!
+
+{{quiz:Diminished Triad có âm thanh như thế nào?|Vui tươi;Buồn bã;*Căng thẳng, đáng sợ|Diminished chứa tritone (6 semitones) → căng thẳng tột độ!}}
 
 ---
 

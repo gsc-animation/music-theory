@@ -37,6 +37,12 @@ K:C clef=treble
 
 > 🔔 **Kết luận**: C# và Db là **một phím**, **một âm thanh**, nhưng **hai tên gọi**!
 
+
+
+{{quiz:Phím đen giữa C và D có bao nhiêu tên gọi?|1 tên;*2 tên;3 tên|Mỗi phím đen có 2 tên: một tên thăng (Sharp) và một tên giáng (Flat)}}
+
+{{quiz:C# và Db khác nhau như thế nào?|Khác âm thanh;Khác phím đàn;*Cùng âm thanh, khác tên gọi|C# và Db là cùng một phím, cùng âm thanh, chỉ khác tên gọi!}}
+
 ---
 
 ## 2. Khái niệm Nốt Đồng Âm (Enharmonic)
@@ -48,6 +54,10 @@ K:C clef=treble
 {{piano:C# = Db (Nốt đồng âm)|C#4,Db4}}
 
 > 🎵 Khi bạn bấm phím đen giữa C và D, âm thanh HOÀN TOÀN GIỐNG NHAU dù bạn gọi nó là C# hay Db!
+
+
+
+{{quiz:Nốt đồng âm (Enharmonic) là gì?|Nốt có cao độ khác nhau;*Nốt có cùng cao độ nhưng khác tên;Nốt viết giống nhau|Nốt đồng âm = cùng cao độ, cùng tần số, nhưng được viết bằng tên khác nhau}}
 
 ---
 
@@ -76,6 +86,14 @@ Trong 1 quãng tám có **5 phím đen**, mỗi phím có 2 tên:
 {{piano:Cặp 4: G# = Ab|G#4}}
 
 {{piano:Cặp 5: A# = Bb|A#4}}
+
+
+
+{{quiz:Trong 1 quãng tám có bao nhiêu phím đen?|4;*5;6|Có 5 phím đen trong 1 quãng tám, mỗi phím có 2 tên gọi = 10 tên}}
+
+{{quiz:Nốt đồng âm của F# là gì?|Fb;*Gb;G#|F# = Gb (phím đen giữa F và G)}}
+
+{{quiz:Nốt đồng âm của Bb là gì?|B#;Ab;*A#|Bb = A# (phím đen giữa A và B)}}
 
 ---
 
@@ -107,6 +125,14 @@ K:C clef=treble
 ^B c|]}}
 
 > 🤯 **Điểm gây "sốc"**: E# và F là CÙNG MỘT PHÍM TRẮNG! B# và C cũng vậy!
+
+
+
+{{quiz:E# bằng nốt nào?|E;*F;F#|E thăng lên nửa cung = F (vì E-F vốn chỉ cách nhau nửa cung)}}
+
+{{quiz:B# bằng nốt nào?|B;Bb;*C|B thăng lên nửa cung = C (vì B-C vốn chỉ cách nhau nửa cung)}}
+
+{{quiz:Fb bằng nốt nào?|F;*E;Eb|F giáng xuống nửa cung = E (vì E-F vốn chỉ cách nhau nửa cung)}}
 
 ---
 
@@ -146,6 +172,14 @@ L:1/4
 K:C clef=treble
 D _D C|]}}
 
+
+
+{{quiz:Trong thang âm F Major, bậc thứ 4 phải viết là gì?|A#;*Bb;B|Phải viết Bb vì không được lặp chữ cái A (đã có ở bậc 3)}}
+
+{{quiz:Khi giai điệu đi LÊN, thường dùng dấu gì?|*Thăng (#);Giáng (b);Bình (♮)|Giai điệu đi lên thường dùng dấu thăng (#)}}
+
+{{quiz:Khi giai điệu đi XUỐNG, thường dùng dấu gì?|Thăng (#);*Giáng (b);Bình (♮)|Giai điệu đi xuống thường dùng dấu giáng (b)}}
+
 ---
 
 ## 6. Bảng tổng hợp Nốt đồng âm
@@ -168,6 +202,12 @@ D _D C|]}}
 | Fb | E | F - nửa cung = E |
 | B# | C | B + nửa cung = C |
 | Cb | B | C - nửa cung = B |
+
+
+
+{{quiz:Cb bằng nốt nào?|C;C#;*B|C giáng xuống nửa cung = B (vì B-C vốn chỉ cách nhau nửa cung)}}
+
+{{quiz:Tổng cộng có bao nhiêu cặp nốt đồng âm (cả phím đen và phím trắng)?|5 cặp;7 cặp;*9 cặp|5 cặp phím đen + 4 trường hợp phím trắng (E#=F, Fb=E, B#=C, Cb=B) = 9 cặp}}
 
 ---
 

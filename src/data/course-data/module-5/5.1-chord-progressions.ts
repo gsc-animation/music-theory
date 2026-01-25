@@ -17,6 +17,8 @@ export const SUBMODULE_5_1: Submodule = {
 
 > 🎵 Melody là "lời kể", Progression là "cốt truyện"!
 
+{{quiz:Chord Progression là gì?|Một hợp âm duy nhất;*Chuỗi hợp âm theo thứ tự cố định;Giai điệu của bài hát|Progression = chuỗi hợp âm tạo nên "bộ khung" hòa âm}}
+
 ---
 
 ## 2. I-V-vi-IV - "The Pop Progression"
@@ -42,6 +44,8 @@ K:C
 - Hàng trăm bài khác!
 
 > 🎤 "4 Chords Song" của Axis of Awesome chứng minh: 1 progression, vô số hits!
+
+{{quiz:I-V-vi-IV trong C Major là progression nào?|C-F-Am-G;*C-G-Am-F;C-Am-F-G|I-V-vi-IV = C(I)-G(V)-Am(vi)-F(IV)}}
 
 ---
 
@@ -96,6 +100,8 @@ K:C
 1. **Circle of Fifths**: D→G→C (di chuyển theo quãng 5)
 2. **Tritone resolution**: G7 chứa B-F, resolve về C-E
 3. **Voice leading mượt**: Các nốt di chuyển gần nhau
+
+{{quiz:ii-V-I trong C Major là progression nào?|Am7-D7-Gmaj7;*Dm7-G7-Cmaj7;Em7-A7-Dmaj7|ii-V-I trong C = Dm7(ii)-G7(V)-Cmaj7(I)}}
 
 ---
 

@@ -17,6 +17,8 @@ export const SUBMODULE_4_6: Submodule = {
 
 > 🔄 Cùng 3 nốt C-E-G, nhưng sắp xếp khác nhau!
 
+{{quiz:Inversion là gì?|Thêm nốt vào hợp âm;*Đổi nốt nào nằm ở bass;Bỏ nốt khỏi hợp âm|Đảo hợp âm = thay đổi nốt nào ở bass, giữ nguyên các nốt}}
+
 ---
 
 ## 2. Root Position (Vị trí gốc)
@@ -57,6 +59,8 @@ K:C
 - "Chưa hoàn toàn ổn định"
 - Phổ biến trong Classical và Pop ballad
 
+{{quiz:Trong 1st Inversion, nốt nào nằm ở bass?|Root;*3rd;5th|1st Inversion = 3rd ở bass. Ví dụ: C/E = E ở bass}}
+
 ---
 
 ## 4. Second Inversion (Đảo 2)
@@ -96,6 +100,8 @@ K:C
 ### Không nhất thiết là inversion!
 
 **F/G** có thể là F chord với G ở bass (không phải nốt của F chord) - đây là **slash bass**.
+
+{{quiz:C/G có nghĩa là gì?|G chord;*C chord với G ở bass;G chord với C ở bass|C/G = C chord nhung G ở bass = 2nd Inversion}}
 
 ---
 

@@ -15,7 +15,7 @@ export const SUBMODULE_3_3: Submodule = {
   id: '3.3',
   title: 'Quãng - Số lượng',
   description: 'Đếm quãng bằng cách đếm TẤT CẢ các nốt (bao gồm cả nốt đầu)',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Quãng (Interval) là gì?
 
@@ -27,6 +27,8 @@ export const SUBMODULE_3_3: Submodule = {
 - **Harmonic interval**: Hai nốt chơi **cùng lúc** (hòa âm)
 
 > 🎵 Quãng là "nguyên liệu" của giai điệu và hòa âm!
+
+{{quiz:Quãng (Interval) là gì?|Tên của nốt;*Khoảng cách về cao độ giữa 2 nốt;Độ dài của nốt|Quãng = khoảng cách cao độ giữa 2 nốt nhạc}}
 
 ---
 
@@ -53,6 +55,10 @@ C E|]}}
 ❌ **Sai**: Đếm "bước đi" (C→D là 1, D→E là 2 → "Quãng 2")
 
 ✅ **Đúng**: Đếm "số nốt" (C=1, D=2, E=3 → "Quãng 3")
+
+{{quiz:Khi đếm quãng, nốt đầu được tính là bao nhiêu?|0;*1;2|Đếm cả nốt đầu là 1! C(1)→D(2)→E(3) = Quãng 3}}
+
+{{quiz:C lên G là quãng mấy?|4;*5;6|C(1)-D(2)-E(3)-F(4)-G(5) = Quãng 5}}
 
 ---
 
@@ -128,6 +134,8 @@ L:1/2
 K:C
 C c|]}}
 
+{{quiz:Quãng 5 (C→G) có âm thanh đặc trưng gì?|Buồn bã;*Mạnh mẽ như Power chord;Căng thẳng|Quãng 5 là nền tảng của Power chord trong Rock!}}
+
 ---
 
 ## 4. Bảng tổng hợp
@@ -193,6 +201,8 @@ K:C
 [CG]2|]}}
 
 > 🎹 Melodic = Ngang (theo thời gian), Harmonic = Dọc (cùng thời điểm)
+
+{{quiz:Melodic interval và Harmonic interval khác nhau ở điểm nào?|Số nốt;*Cách chơi (nối tiếp vs cùng lúc);Cao độ|Melodic = nối tiếp (giai điệu), Harmonic = cùng lúc (hòa âm)}}
 
 ---
 

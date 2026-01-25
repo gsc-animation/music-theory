@@ -7,7 +7,7 @@ export const SUBMODULE_5_4: Submodule = {
   id: '5.4',
   title: 'Cấu trúc bài hát',
   description: 'Nhận biết Intro, Verse, Pre-Chorus, Chorus, Bridge, Outro',
-  sections: ['theory', 'grandStaff', 'abcDemo'],
+  sections: ['theory', 'abcDemo'],
   theoryContent: `
 ## 1. Song Structure là gì?
 
@@ -57,6 +57,10 @@ export const SUBMODULE_5_4: Submodule = {
 - **Đặc điểm**: Fade out hoặc dứt khoát
 - **Dư âm**: Để lại ấn tượng cuối
 
+{{quiz:Section nào có energy CAO NHẤT trong bài hát?|Verse;Bridge;*Chorus|Chorus là cao trào, hook chính, energy cao nhất!}}
+
+{{quiz:Pre-Chorus có vai trò gì?|Kết thúc bài;*Tạo build-up dẫn vào Chorus;Kể chuyện|Pre-Chorus tăng tension dần, dẫn listener vào Chorus}}
+
 ---
 
 ## 3. Cấu trúc phổ biến
@@ -103,6 +107,8 @@ Energy
 - **Chorus**: Cao nhất (bùng nổ!)
 - **Bridge**: Drop xuống rồi build lại
 - **Final Chorus**: Cao nhất, có thể double!
+
+{{quiz:Energy của Verse so với Chorus như thế nào?|Cao hơn Chorus;*Thấp hơn Chorus;Bằng Chorus|Verse thấp (kể chuyện), Chorus cao (bùng nổ)}}
 
 ---
 

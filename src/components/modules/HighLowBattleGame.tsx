@@ -71,8 +71,8 @@ export const HighLowBattleGame: React.FC<HighLowBattleGameProps> = ({
   const setSubmoduleScore = useProgressStore((state) => state.setSubmoduleScore)
   const addXP = useProgressStore((state) => state.addXP)
 
-  const staffRef1 = useRef<HTMLDivElement>(null)
-  const staffRef2 = useRef<HTMLDivElement>(null)
+  const staffRef1 = useRef<HTMLDivElement | null>(null)
+  const staffRef2 = useRef<HTMLDivElement | null>(null)
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
@@ -221,7 +221,7 @@ export const HighLowBattleGame: React.FC<HighLowBattleGameProps> = ({
   useEffect(() => {
     if (!currentQ || currentQ.mode !== 'binary') return
 
-    const renderStaff = (ref: React.RefObject<HTMLDivElement>, note: string) => {
+    const renderStaff = (ref: React.RefObject<HTMLDivElement | null>, note: string) => {
       if (!ref.current) return
       const octave = parseInt(note.match(/\d/)?.[0] || '4')
       const clef = octave < 4 ? 'bass' : 'treble'
