@@ -180,7 +180,8 @@ Nhỏ + mượt → To dần → To + nảy
     {
       id: '5.5.1',
       title: 'Volume Slider',
-      description: 'pp → ff interactive: Từ pianissimo (rất nhỏ) đến fortissimo (rất to). 6 mức dynamics cơ bản. Cảm nhận sự khác biệt về volume!',
+      description:
+        'pp → ff interactive: Từ pianissimo (rất nhỏ) đến fortissimo (rất to). 6 mức dynamics cơ bản. Cảm nhận sự khác biệt về volume!',
       abc: `X:1
 M:4/4
 L:1/4
@@ -192,7 +193,8 @@ K:C
     {
       id: '5.5.2',
       title: 'Crescendo Wave',
-      description: '< animation with audio: Bắt đầu nhỏ (p), to dần (cresc.), đến đỉnh (f). Crescendo tạo tension, build-up. Kỹ thuật quan trọng trong mọi thể loại!',
+      description:
+        '< animation with audio: Bắt đầu nhỏ (p), to dần (cresc.), đến đỉnh (f). Crescendo tạo tension, build-up. Kỹ thuật quan trọng trong mọi thể loại!',
       abc: `X:1
 M:4/4
 L:1/4
@@ -204,7 +206,8 @@ K:C
     {
       id: '5.5.3',
       title: 'Staccato vs Legato',
-      description: 'Same melody, different feel: Staccato (ngắt, bouncy) vs Legato (liền, smooth). Articulation thay đổi hoàn toàn character của melody!',
+      description:
+        'Same melody, different feel: Staccato (ngắt, bouncy) vs Legato (liền, smooth). Articulation thay đổi hoàn toàn character của melody!',
       abc: `X:1
 M:4/4
 L:1/4

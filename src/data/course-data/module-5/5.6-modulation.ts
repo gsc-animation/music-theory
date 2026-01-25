@@ -193,7 +193,8 @@ Nghe "I Will Always Love You", bấm nút khi bạn nghe key change!
     {
       id: '5.6.1',
       title: 'Gear Change Demo',
-      description: 'Direct +1 step modulation: C Major → D Major. Không chuẩn bị, nhảy thẳng lên! Đây là "truck driver modulation" - đơn giản nhưng hiệu quả, rất phổ biến trong Pop ballad final chorus.',
+      description:
+        'Direct +1 step modulation: C Major → D Major. Không chuẩn bị, nhảy thẳng lên! Đây là "truck driver modulation" - đơn giản nhưng hiệu quả, rất phổ biến trong Pop ballad final chorus.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -207,7 +208,8 @@ D E ^F A | d ^c B A|]`,
     {
       id: '5.6.2',
       title: 'Pivot Chord',
-      description: 'Smooth transition: C Major → G Major qua Am (pivot). Am = vi của C VÀ ii của G. Am → D7 → G = ii-V-I trong G Major. Mượt mà, listener không shock!',
+      description:
+        'Smooth transition: C Major → G Major qua Am (pivot). Am = vi của C VÀ ii của G. Am → D7 → G = ii-V-I trong G Major. Mượt mà, listener không shock!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -221,7 +223,8 @@ K:G
     {
       id: '5.6.3',
       title: 'Relative Key Shift',
-      description: 'C Major ↔ A minor: Cùng hóa biểu, khác tonic. Đây là modulation "tự nhiên nhất" vì hai keys share tất cả nốt. Mood change từ vui → buồn hoặc ngược lại.',
+      description:
+        'C Major ↔ A minor: Cùng hóa biểu, khác tonic. Đây là modulation "tự nhiên nhất" vì hai keys share tất cả nốt. Mood change từ vui → buồn hoặc ngược lại.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -235,7 +238,8 @@ A, B, C D | E F G A|]`,
     {
       id: '5.6.4',
       title: 'Famous Modulations',
-      description: 'Real song examples: Whitney Houston "I Will Always Love You" modulates từ A → Bb → B ở final chorus. Mỗi lần lên = emotional boost mới! Modulation là công cụ cảm xúc mạnh mẽ.',
+      description:
+        'Real song examples: Whitney Houston "I Will Always Love You" modulates từ A → Bb → B ở final chorus. Mỗi lần lên = emotional boost mới! Modulation là công cụ cảm xúc mạnh mẽ.',
       abc: `X:1
 M:4/4
 L:1/4

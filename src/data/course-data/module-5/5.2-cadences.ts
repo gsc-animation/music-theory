@@ -205,7 +205,8 @@ Dùng **Deceptive Cadence** (V → vi)
     {
       id: '5.2.1',
       title: 'Perfect Cadence',
-      description: 'V → I = "The End". G7 (với tritone B-F) resolve về C Major. Đây là cadence mạnh nhất, dứt khoát nhất. Dùng ở cuối bài!',
+      description:
+        'V → I = "The End". G7 (với tritone B-F) resolve về C Major. Đây là cadence mạnh nhất, dứt khoát nhất. Dùng ở cuối bài!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -217,7 +218,8 @@ K:C
     {
       id: '5.2.2',
       title: 'Plagal "Amen"',
-      description: 'IV → I = peaceful ending. F → C không có tension như V→I. Thường nghe trong thánh ca kết thúc bằng "A-men". Cũng phổ biến trong Rock ballad!',
+      description:
+        'IV → I = peaceful ending. F → C không có tension như V→I. Thường nghe trong thánh ca kết thúc bằng "A-men". Cũng phổ biến trong Rock ballad!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -229,7 +231,8 @@ K:C
     {
       id: '5.2.3',
       title: 'Half Cadence',
-      description: '→ V = "To be continued..." Kết thúc trên chord V (G), không về I. Listener cảm thấy "chưa xong", muốn nghe tiếp. Dùng để tạo suspense!',
+      description:
+        '→ V = "To be continued..." Kết thúc trên chord V (G), không về I. Listener cảm thấy "chưa xong", muốn nghe tiếp. Dùng để tạo suspense!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -241,7 +244,8 @@ K:C
     {
       id: '5.2.4',
       title: 'Deceptive Surprise',
-      description: 'V → vi = "Plot twist!" Đáng lẽ G7 → C (expected), nhưng đi về Am (surprise!). Dùng để kéo dài bài hoặc tạo unexpected emotional shift.',
+      description:
+        'V → vi = "Plot twist!" Đáng lẽ G7 → C (expected), nhưng đi về Am (surprise!). Dùng để kéo dài bài hoặc tạo unexpected emotional shift.',
       abc: `X:1
 M:4/4
 L:1/2

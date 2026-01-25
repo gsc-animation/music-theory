@@ -205,7 +205,8 @@ K:C
     {
       id: '5.1.1',
       title: 'I-V-vi-IV Loop',
-      description: 'The 4 Chords progression: C-G-Am-F. Axis of Awesome đã chứng minh hàng trăm hit songs dùng CÙNG progression này. Universal và timeless!',
+      description:
+        'The 4 Chords progression: C-G-Am-F. Axis of Awesome đã chứng minh hàng trăm hit songs dùng CÙNG progression này. Universal và timeless!',
       abc: `X:1
 M:4/4
 L:1/1
@@ -217,7 +218,8 @@ K:C
     {
       id: '5.1.2',
       title: '12-Bar Blues',
-      description: 'Classic blues structure: I-I-I-I, IV-IV-I-I, V-IV-I-V. 12 ô nhịp với pattern cố định. Nền tảng của Blues, Rock n Roll, và R&B!',
+      description:
+        'Classic blues structure: I-I-I-I, IV-IV-I-I, V-IV-I-V. 12 ô nhịp với pattern cố định. Nền tảng của Blues, Rock n Roll, và R&B!',
       abc: `X:1
 M:4/4
 L:1/1
@@ -229,7 +231,8 @@ K:C
     {
       id: '5.1.3',
       title: 'ii-V-I Jazz',
-      description: 'Dm7-G7-Cmaj7: Smooth Jazz resolution. Circle of Fifths movement tạo flow tự nhiên. Mọi Jazz standard đều có ii-V-I ở đâu đó!',
+      description:
+        'Dm7-G7-Cmaj7: Smooth Jazz resolution. Circle of Fifths movement tạo flow tự nhiên. Mọi Jazz standard đều có ii-V-I ở đâu đó!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -241,7 +244,8 @@ K:C
     {
       id: '5.1.4',
       title: 'Axis Comparison',
-      description: 'Pop vs Sad versions: I-V-vi-IV (pop, starts on I) vs vi-IV-I-V (sad/epic, starts on vi). Cùng 4 chords, khác starting point, khác vibe!',
+      description:
+        'Pop vs Sad versions: I-V-vi-IV (pop, starts on I) vs vi-IV-I-V (sad/epic, starts on vi). Cùng 4 chords, khác starting point, khác vibe!',
       abc: `X:1
 M:4/4
 L:1/1

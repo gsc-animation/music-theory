@@ -134,7 +134,10 @@ export const SubmodulePage: React.FC = () => {
             <div className="p-5 pb-6">
               {/* Submodule Title and Description */}
               <div className="mb-6">
-                <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                <h1
+                  data-testid="submodule-title"
+                  className="text-2xl font-bold text-slate-900 dark:text-white mb-2"
+                >
                   {submodule.title}
                 </h1>
                 <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">

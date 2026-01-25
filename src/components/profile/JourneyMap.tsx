@@ -60,9 +60,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
           return (
             <div key={module.id}>
               {/* Module Row - Alternating left/right */}
-              <div
-                className={`flex items-start gap-3 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}
-              >
+              <div className={`flex items-start gap-3 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
                 {/* Module Icon + Name - Larger */}
                 <div className="flex flex-col items-center flex-shrink-0 w-28">
                   <div
@@ -108,9 +106,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
 
                 {/* Checkpoint Trail with Submodule Names */}
                 <div className={`flex-1 ${isEven ? '' : 'flex flex-col items-end'}`}>
-                  <div
-                    className={`flex flex-wrap gap-2 ${isEven ? '' : 'justify-end'}`}
-                  >
+                  <div className={`flex flex-wrap gap-2 ${isEven ? '' : 'justify-end'}`}>
                     {module.submodules.map((sub, subIndex) => {
                       const done = isCompleted(sub.id)
                       const curr = isCurrent(sub.id)
@@ -175,9 +171,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
 
               {/* Vertical Connector - Zig-zag curve */}
               {!isLast && (
-                <div
-                  className={`flex ${isEven ? 'justify-start ml-8' : 'justify-end mr-8'} my-1`}
-                >
+                <div className={`flex ${isEven ? 'justify-start ml-8' : 'justify-end mr-8'} my-1`}>
                   <svg width="30" height="16" className="text-slate-300 dark:text-slate-600">
                     <path
                       d={

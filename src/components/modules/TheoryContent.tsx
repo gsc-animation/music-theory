@@ -38,7 +38,7 @@ function parseTheoryContent(content: string): ContentBlock[] {
   // Combined pattern to match all block types (abc, grandStaff, guitar, piano, flute)
   // Use [\s\S]+? to match multi-line content (including newlines) non-greedily
   const combinedPattern = /\{\{(abc|grandStaff|guitar|piano|flute):([^|]+)\|([\s\S]+?)\}\}/g
-  
+
   // Quiz pattern: {{quiz:Question|opt1;opt2;*correct|explanation}}
   const quizPattern = /\{\{quiz:([^|]+)\|([^|]+)(?:\|([^}]+))?\}\}/g
 
@@ -49,7 +49,7 @@ function parseTheoryContent(content: string): ContentBlock[] {
     block: ContentBlock
   }
   const allMatches: MatchInfo[] = []
-  
+
   let match
 
   // Collect abc/guitar/piano/flute matches
@@ -70,16 +70,16 @@ function parseTheoryContent(content: string): ContentBlock[] {
     } else {
       block = { type: 'abc', title, content: blockContent }
     }
-    
+
     allMatches.push({ index: match.index, length: match[0].length, block })
   }
-  
+
   // Collect quiz matches
   while ((match = quizPattern.exec(content)) !== null) {
     const question = match[1].trim()
     const optionsStr = match[2].trim()
     const explanation = match[3]?.trim()
-    
+
     // Parse options, find correct one (prefixed with *)
     const rawOptions = optionsStr.split(';').map((o) => o.trim())
     let correctIndex = 0
@@ -90,7 +90,7 @@ function parseTheoryContent(content: string): ContentBlock[] {
       }
       return opt
     })
-    
+
     allMatches.push({
       index: match.index,
       length: match[0].length,
@@ -104,10 +104,10 @@ function parseTheoryContent(content: string): ContentBlock[] {
       },
     })
   }
-  
+
   // Sort all matches by position
   allMatches.sort((a, b) => a.index - b.index)
-  
+
   // Build blocks array with HTML content between matches
   let lastIndex = 0
   for (const matchInfo of allMatches) {
@@ -121,7 +121,7 @@ function parseTheoryContent(content: string): ContentBlock[] {
         })
       }
     }
-    
+
     blocks.push(matchInfo.block)
     lastIndex = matchInfo.index + matchInfo.length
   }

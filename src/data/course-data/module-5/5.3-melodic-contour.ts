@@ -200,7 +200,8 @@ E D C G | B A G D | C D E A | G F E C|]}}
     {
       id: '5.3.1',
       title: 'Passing Tone Demo',
-      description: 'Fill the gap: C → D → E. D là passing tone nối C và E (chord tones). Giúp melody di chuyển mượt mà thay vì nhảy.',
+      description:
+        'Fill the gap: C → D → E. D là passing tone nối C và E (chord tones). Giúp melody di chuyển mượt mà thay vì nhảy.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -212,7 +213,8 @@ C D E G | G F E C|]`,
     {
       id: '5.3.2',
       title: 'Neighbor Tone Demo',
-      description: 'Orbit around: C → D → C (upper neighbor), E → D → E (lower neighbor). Nốt đi sang rồi quay về, tạo ornament cho note chính.',
+      description:
+        'Orbit around: C → D → C (upper neighbor), E → D → E (lower neighbor). Nốt đi sang rồi quay về, tạo ornament cho note chính.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -224,7 +226,8 @@ C D C E | E D E G|]`,
     {
       id: '5.3.3',
       title: 'Suspension Resolution',
-      description: 'Csus4 → C: F (bậc 4) giữ lại từ chord trước, tạo tension, rồi resolve về E (bậc 3). Cảm giác: mong chờ → thỏa mãn. Rất cảm xúc!',
+      description:
+        'Csus4 → C: F (bậc 4) giữ lại từ chord trước, tạo tension, rồi resolve về E (bậc 3). Cảm giác: mong chờ → thỏa mãn. Rất cảm xúc!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -236,7 +239,8 @@ K:C
     {
       id: '5.3.4',
       title: 'Leap & Step Rule',
-      description: 'Balance demonstration: C nhảy lên A (leap 6th), rồi step xuống G-F-E-D-C. Quy tắc counterpoint cổ điển này làm melody nghe tự nhiên và cân bằng.',
+      description:
+        'Balance demonstration: C nhảy lên A (leap 6th), rồi step xuống G-F-E-D-C. Quy tắc counterpoint cổ điển này làm melody nghe tự nhiên và cân bằng.',
       abc: `X:1
 M:4/4
 L:1/4

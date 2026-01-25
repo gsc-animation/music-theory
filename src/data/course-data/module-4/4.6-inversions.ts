@@ -165,7 +165,8 @@ Nhiều guitarists dùng slash chords để tạo bass line đẹp mà không c�
     {
       id: '4.6.1',
       title: '3 Positions of C Chord',
-      description: 'Root (C-E-G) → 1st (E-G-C) → 2nd (G-C-E). Cùng 3 nốt, khác sắp xếp. Root position ổn định nhất, 2nd inversion lơ lửng nhất.',
+      description:
+        'Root (C-E-G) → 1st (E-G-C) → 2nd (G-C-E). Cùng 3 nốt, khác sắp xếp. Root position ổn định nhất, 2nd inversion lơ lửng nhất.',
       abc: `X:1
 M:4/4
 L:1/2
@@ -177,7 +178,8 @@ K:C
     {
       id: '4.6.2',
       title: 'Slash Chord Notation',
-      description: 'C/E = C chord với E ở bass. C/G = C chord với G ở bass. F/A = F chord với A ở bass. Ký hiệu "/" = chỉ nốt bass.',
+      description:
+        'C/E = C chord với E ở bass. C/G = C chord với G ở bass. F/A = F chord với A ở bass. Ký hiệu "/" = chỉ nốt bass.',
       abc: `X:1
 M:4/4
 L:1/1
@@ -189,7 +191,8 @@ K:C
     {
       id: '4.6.3',
       title: 'Voice Leading Demo',
-      description: 'C → F → G → C với smooth movement: Giữ common tones, di chuyển nốt khác gần nhất. Đây là kỹ thuật của pianist và arranger chuyên nghiệp!',
+      description:
+        'C → F → G → C với smooth movement: Giữ common tones, di chuyển nốt khác gần nhất. Đây là kỹ thuật của pianist và arranger chuyên nghiệp!',
       abc: `X:1
 M:4/4
 L:1/1

@@ -190,7 +190,8 @@ K:C
     {
       id: '4.7.1',
       title: 'Maj7 vs min7 vs Dom7',
-      description: 'Side-by-side-by-side: Cmaj7 (C-E-G-B, mơ màng), Cm7 (C-Eb-G-Bb, buồn nhẹ), C7 (C-E-G-Bb, blues căng). Nốt 7 và 3 tạo sự khác biệt lớn!',
+      description:
+        'Side-by-side-by-side: Cmaj7 (C-E-G-B, mơ màng), Cm7 (C-Eb-G-Bb, buồn nhẹ), C7 (C-E-G-Bb, blues căng). Nốt 7 và 3 tạo sự khác biệt lớn!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -202,7 +203,8 @@ K:C
     {
       id: '4.7.2',
       title: 'V7 → I Resolution',
-      description: 'G7 → C: Tritone trong G7 (B-F) muốn resolve về C-E. Đây là "tension & release" mạnh nhất trong harmony. Blues, Rock, Pop đều dùng!',
+      description:
+        'G7 → C: Tritone trong G7 (B-F) muốn resolve về C-E. Đây là "tension & release" mạnh nhất trong harmony. Blues, Rock, Pop đều dùng!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -214,7 +216,8 @@ K:C
     {
       id: '4.7.3',
       title: 'ii-V-I Loop',
-      description: 'Dm7 → G7 → Cmaj7: THE Jazz progression. Circle of Fifths movement (D→G→C). Mọi bài Jazz standard đều có ii-V-I. Essential knowledge!',
+      description:
+        'Dm7 → G7 → Cmaj7: THE Jazz progression. Circle of Fifths movement (D→G→C). Mọi bài Jazz standard đều có ii-V-I. Essential knowledge!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -226,7 +229,8 @@ K:C
     {
       id: '4.7.4',
       title: '7th Chords on Guitar',
-      description: 'G7, C7, E7 open chords: Common trong Blues và Jazz. Dominant 7 chords tạo Blues feel ngay lập tức. Try G7→C7→G7!',
+      description:
+        'G7, C7, E7 open chords: Common trong Blues và Jazz. Dominant 7 chords tạo Blues feel ngay lập tức. Try G7→C7→G7!',
       abc: `X:1
 M:4/4
 L:1/2

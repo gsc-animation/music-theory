@@ -161,7 +161,8 @@ Các chord cùng chức năng có thể thay thế nhau:
     {
       id: '4.3.1',
       title: 'Building Diatonic Chords',
-      description: 'Animation step-by-step: Từ mỗi nốt trong C Major, chồng quãng 3 lên. Kết quả: 7 hợp âm với pattern M-m-m-M-M-m-dim.',
+      description:
+        'Animation step-by-step: Từ mỗi nốt trong C Major, chồng quãng 3 lên. Kết quả: 7 hợp âm với pattern M-m-m-M-M-m-dim.',
       abc: `X:1
 M:4/4
 L:1/2
@@ -173,7 +174,8 @@ K:C
     {
       id: '4.3.2',
       title: 'I-IV-V Primary Chords',
-      description: '3 hợp âm chính: I (Tonic - nhà), IV (Subdominant - đi xa), V (Dominant - muốn về). Đủ để đệm hàng ngàn bài hát!',
+      description:
+        '3 hợp âm chính: I (Tonic - nhà), IV (Subdominant - đi xa), V (Dominant - muốn về). Đủ để đệm hàng ngàn bài hát!',
       abc: `X:1
 M:4/4
 L:1/1
@@ -185,7 +187,8 @@ K:C
     {
       id: '4.3.3',
       title: 'vii° Diminished',
-      description: 'Bdim trong C Major: B-D-F chứa tritone (B-F = 6 semitones). Đây là chord "căng thẳng nhất" trong scale, thường dẫn về I.',
+      description:
+        'Bdim trong C Major: B-D-F chứa tritone (B-F = 6 semitones). Đây là chord "căng thẳng nhất" trong scale, thường dẫn về I.',
       abc: `X:1
 M:4/4
 L:1/1
@@ -197,7 +200,8 @@ K:C
     {
       id: '4.3.4',
       title: 'Key of G Diatonic',
-      description: 'G-Am-Bm-C-D-Em-F#dim: Cùng pattern M-m-m-M-M-m-dim, chỉ khác nốt. Quy luật này hoạt động cho MỌI giọng trưởng!',
+      description:
+        'G-Am-Bm-C-D-Em-F#dim: Cùng pattern M-m-m-M-M-m-dim, chỉ khác nốt. Quy luật này hoạt động cho MỌI giọng trưởng!',
       abc: `X:1
 M:4/4
 L:1/2

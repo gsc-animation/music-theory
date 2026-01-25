@@ -536,6 +536,7 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
         return (
           <div
             key={`section-${sectionIndex}`}
+            data-testid={`theory-section-${sectionIndex}`}
             ref={(el) => {
               sectionRefs.current[sectionIndex] = el
             }}
@@ -554,6 +555,7 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
                   <span>Trả lời câu hỏi để tiếp tục...</span>
                 </div>
                 <button
+                  data-testid="bypass-button"
                   className="bypass-quiz-btn"
                   onClick={handleBypassQuiz}
                   title="Bỏ qua tất cả câu hỏi và xem toàn bộ nội dung"

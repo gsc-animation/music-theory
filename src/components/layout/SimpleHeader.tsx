@@ -14,13 +14,16 @@ interface SimpleHeaderProps {
  * SimpleHeader - Header with global controls (Dark Mode & VN Mode)
  * Optionally shows journey progress for ProfilePage
  */
-export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourneyProgress = false }) => {
+export const SimpleHeader: React.FC<SimpleHeaderProps> = ({
+  className,
+  showJourneyProgress = false,
+}) => {
   const navigate = useNavigate()
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
   const theme = useSettingsStore((state) => state.theme)
   const toggleTheme = useSettingsStore((state) => state.toggleTheme)
-  
+
   const { completedSubmodules } = useProgressStore()
 
   // Calculate overall progress
@@ -29,7 +32,7 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
   const progressPercent = Math.round((completedCount / totalSubmodules) * 100)
 
   // Find next adventure
-  const allSubmodules = COURSE_MODULES.flatMap((m, mi) => 
+  const allSubmodules = COURSE_MODULES.flatMap((m, mi) =>
     m.submodules.map((s, si) => ({ ...s, moduleId: m.id, moduleIndex: mi, subIndex: si }))
   )
   const nextAdventure = allSubmodules.find((s, idx) => {
@@ -52,7 +55,10 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
       {showJourneyProgress ? (
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 flex-shrink-0">
-            <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+            <span
+              className="material-symbols-outlined text-white text-xl"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
               route
             </span>
           </div>
@@ -66,21 +72,24 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({ className, showJourn
               </p>
               {/* Inline Progress Bar */}
               <div className="hidden sm:block w-20 h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 rounded-full transition-all duration-700"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </div>
           </div>
-          
+
           {/* Next Lesson CTA */}
           {nextAdventure && (
             <button
               onClick={() => navigate(`/module/${nextAdventure.moduleId}/${nextAdventure.id}`)}
               className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-105 transition-all text-xs flex-shrink-0 ml-auto"
             >
-              <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>
+              <span
+                className="material-symbols-outlined text-base"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
                 play_arrow
               </span>
               <span className="hidden sm:inline">Tiếp tục học</span>

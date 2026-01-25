@@ -42,7 +42,10 @@ export const InlineQuiz: React.FC<InlineQuizProps> = ({
   const isCorrect = selectedIndex === correctIndex
 
   return (
-    <div className={`inline-quiz ${showResult ? (isCorrect ? 'correct' : 'incorrect') : ''}`}>
+    <div
+      data-testid="inline-quiz"
+      className={`inline-quiz ${showResult ? (isCorrect ? 'correct' : 'incorrect') : ''}`}
+    >
       <p className="quiz-question">{question}</p>
 
       <div className="quiz-options">
@@ -60,6 +63,7 @@ export const InlineQuiz: React.FC<InlineQuizProps> = ({
           return (
             <button
               key={index}
+              data-testid={`quiz-option-${index}`}
               className={optionClass}
               onClick={() => handleSelect(index)}
               disabled={showResult}

@@ -29,7 +29,11 @@ export const ProfilePage: React.FC = () => {
   }
 
   const handleReset = () => {
-    if (window.confirm('Bạn có chắc muốn xóa toàn bộ tiến trình học? Hành động này không thể hoàn tác.')) {
+    if (
+      window.confirm(
+        'Bạn có chắc muốn xóa toàn bộ tiến trình học? Hành động này không thể hoàn tác.'
+      )
+    ) {
       resetProgress()
     }
   }
@@ -55,7 +59,10 @@ export const ProfilePage: React.FC = () => {
           {/* Section 2: Activity Statistics */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
             <div className="flex items-center gap-2 mb-6">
-              <span className="material-symbols-outlined text-amber-500 text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+              <span
+                className="material-symbols-outlined text-amber-500 text-2xl"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
                 analytics
               </span>
               <h2 className="text-lg font-bold text-slate-800 dark:text-white">
@@ -106,9 +113,13 @@ export const ProfilePage: React.FC = () => {
                     <span className="text-slate-700 dark:text-slate-200 font-medium group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                       {stat.name}
                     </span>
-                    <span className={`font-bold ${
-                      stat.percent === 100 ? 'text-emerald-500' : 'text-slate-500 dark:text-slate-400'
-                    }`}>
+                    <span
+                      className={`font-bold ${
+                        stat.percent === 100
+                          ? 'text-emerald-500'
+                          : 'text-slate-500 dark:text-slate-400'
+                      }`}
+                    >
                       {stat.completed}/{stat.total}
                     </span>
                   </div>
@@ -133,24 +144,27 @@ export const ProfilePage: React.FC = () => {
                   Điểm Luyện Tập Gần Đây
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {Object.entries(submoduleScores).slice(-8).map(([id, score]) => (
-                    <div
-                      key={id}
-                      className={`
+                  {Object.entries(submoduleScores)
+                    .slice(-8)
+                    .map(([id, score]) => (
+                      <div
+                        key={id}
+                        className={`
                         px-3 py-1.5 rounded-lg text-sm font-medium
-                        ${score === 100
-                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
-                          : score >= 80
-                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-                            : score >= 60
-                              ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
-                              : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
+                        ${
+                          score === 100
+                            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300'
+                            : score >= 80
+                              ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                              : score >= 60
+                                ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
+                                : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
                         }
                       `}
-                    >
-                      Bài {id}: {score}%
-                    </div>
-                  ))}
+                      >
+                        Bài {id}: {score}%
+                      </div>
+                    ))}
                 </div>
               </div>
             )}
@@ -169,7 +183,8 @@ export const ProfilePage: React.FC = () => {
                   Vùng Nguy Hiểm
                 </h2>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                  Xóa toàn bộ tiến trình và bắt đầu lại từ đầu. Điều này sẽ xóa XP, các bài đã học, và điểm luyện tập. Hành động này không thể hoàn tác.
+                  Xóa toàn bộ tiến trình và bắt đầu lại từ đầu. Điều này sẽ xóa XP, các bài đã học,
+                  và điểm luyện tập. Hành động này không thể hoàn tác.
                 </p>
                 <button
                   onClick={handleReset}
@@ -199,7 +214,7 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ icon, iconColor, bgColor, label, value }) => (
   <div className={`${bgColor} rounded-xl p-4 transition-all hover:scale-105`}>
-    <span 
+    <span
       className={`material-symbols-outlined ${iconColor} text-2xl`}
       style={{ fontVariationSettings: "'FILL' 1" }}
     >

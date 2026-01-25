@@ -107,7 +107,7 @@ export const Module13GameQuiz: React.FC<Module13GameQuizProps> = ({ submoduleId 
       // Mark as completed with score (requiredScore = 60, xpReward = 30)
       // The progress store uses Math.max() to keep best score
       setLevelScore(key, Math.max(percentage, 60), 60, 30)
-      
+
       // If this game was previously skipped, remove from skipped set
       // This allows players to "redeem" a skipped game by completing it
       if (skippedGames.has(gameType)) {
@@ -117,7 +117,7 @@ export const Module13GameQuiz: React.FC<Module13GameQuizProps> = ({ submoduleId 
           return newSet
         })
       }
-      
+
       setLastCompletedGame(gameType)
       setShowCelebration(true)
     },
@@ -180,9 +180,7 @@ export const Module13GameQuiz: React.FC<Module13GameQuizProps> = ({ submoduleId 
                     </span>
                   ))}
                 </div>
-                {status.skipped && (
-                  <span className="text-xs text-orange-400">Đã bỏ</span>
-                )}
+                {status.skipped && <span className="text-xs text-orange-400">Đã bỏ</span>}
               </div>
             )
           })}

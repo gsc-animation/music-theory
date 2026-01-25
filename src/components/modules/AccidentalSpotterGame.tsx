@@ -96,7 +96,7 @@ const getAccidentalDisplay = (acc: string): string => {
 /**
  * AccidentalSpotterGame - Identify accidentals on staff
  * ⭐ Tier 1 Game for Module 1.3
- * 
+ *
  * Embeddable: Can be used standalone or within Module13GameQuiz orchestrator
  */
 export const AccidentalSpotterGame: React.FC<AccidentalSpotterGameProps> = ({
@@ -261,9 +261,7 @@ export const AccidentalSpotterGame: React.FC<AccidentalSpotterGameProps> = ({
         </div>
 
         <div className="text-center py-8">
-          <div className="text-5xl mb-4 animate-pulse">
-            {currentLevel >= 4 ? '🔥' : '⭐'}
-          </div>
+          <div className="text-5xl mb-4 animate-pulse">{currentLevel >= 4 ? '🔥' : '⭐'}</div>
           <h3 className="text-xl font-bold text-white mb-2">{level.name} - Hoàn thành!</h3>
           <p className="text-amber-400 text-base mb-6">{level.celebration}</p>
 
@@ -306,9 +304,7 @@ export const AccidentalSpotterGame: React.FC<AccidentalSpotterGameProps> = ({
             Level {currentLevel + 1}/{LEVELS.length}
           </span>
           {streak >= 3 && (
-            <span className="text-sm">
-              {streak >= 8 ? '🔥🔥🔥' : streak >= 5 ? '🔥🔥' : '🔥'}
-            </span>
+            <span className="text-sm">{streak >= 8 ? '🔥🔥🔥' : streak >= 5 ? '🔥🔥' : '🔥'}</span>
           )}
         </div>
       </div>

@@ -59,8 +59,11 @@ class CursorControl {
       this.onNoteStop(this.currentNotes)
       this.currentNotes = []
     }
-    
-    console.log('🎵 [InlineGrandStaff] CursorControl.onEvent() - Audio playing notes:', ev.midiPitches)
+
+    console.log(
+      '🎵 [InlineGrandStaff] CursorControl.onEvent() - Audio playing notes:',
+      ev.midiPitches
+    )
 
     const lastSelection = document.querySelectorAll(this.rootSelector + ' .abcjs-highlight')
     lastSelection.forEach((el) => el.classList.remove('abcjs-highlight'))
@@ -360,8 +363,10 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
         await synthControlRef.current!.setTune(visualObjRef.current!, false, {
           chordsOff: false,
         })
-        
-        console.log('🔄 [InlineGrandStaff] Re-rendering ABC after setTune to restore click listeners')
+
+        console.log(
+          '🔄 [InlineGrandStaff] Re-rendering ABC after setTune to restore click listeners'
+        )
         // Re-render ABC notation after setTune to restore click listeners
         // setTune() can interfere with the click handlers set during initial render
         if (containerRef.current) {
@@ -402,7 +407,9 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-0 p-3 bg-slate-100 dark:bg-slate-800/80 rounded-t-xl border-b border-slate-300 dark:border-slate-700">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-teal-600 dark:text-[#30e8e8]">music_note</span>
+          <span className="material-symbols-outlined text-teal-600 dark:text-[#30e8e8]">
+            music_note
+          </span>
           <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
             {title || 'Grand Staff View'}
           </span>

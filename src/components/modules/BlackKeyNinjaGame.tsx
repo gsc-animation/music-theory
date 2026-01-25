@@ -81,11 +81,11 @@ const getAccidentalDisplay = (acc: string): string => {
 // Normalize note name to handle enharmonic equivalents
 const normalizeNote = (note: string): string => {
   const noteMap: Record<string, string> = {
-    'Db': 'C#',
-    'Eb': 'D#',
-    'Gb': 'F#',
-    'Ab': 'G#',
-    'Bb': 'A#',
+    Db: 'C#',
+    Eb: 'D#',
+    Gb: 'F#',
+    Ab: 'G#',
+    Bb: 'A#',
   }
   const noteName = note.replace(/[0-9]/g, '')
   return noteMap[noteName] || noteName
@@ -102,10 +102,10 @@ const isCorrectNote = (playedNote: string, targetAcc: string): boolean => {
 /**
  * BlackKeyNinjaGame - Speed game for playing accidentals on Piano or Guitar
  * ⭐⭐ Tier 2 Game for Module 1.3
- * 
+ *
  * Features DUAL INSTRUMENT mode: Piano (above) + Guitar (below)
  * Player can click either instrument to answer correctly
- * 
+ *
  * Embeddable: Can be used standalone or within Module13GameQuiz orchestrator
  */
 export const BlackKeyNinjaGame: React.FC<BlackKeyNinjaGameProps> = ({
@@ -242,7 +242,16 @@ export const BlackKeyNinjaGame: React.FC<BlackKeyNinjaGameProps> = ({
         }, 500)
       }
     },
-    [showFeedback, targetAccidental, timeLeft, level, streak, playNote, releaseNote, advanceQuestion]
+    [
+      showFeedback,
+      targetAccidental,
+      timeLeft,
+      level,
+      streak,
+      playNote,
+      releaseNote,
+      advanceQuestion,
+    ]
   )
 
   const handleNextLevel = useCallback(() => {
@@ -292,9 +301,7 @@ export const BlackKeyNinjaGame: React.FC<BlackKeyNinjaGameProps> = ({
         </div>
 
         <div className="text-center py-8">
-          <div className="text-5xl mb-4 animate-pulse">
-            {currentLevel >= 4 ? '🔥' : '⚡'}
-          </div>
+          <div className="text-5xl mb-4 animate-pulse">{currentLevel >= 4 ? '🔥' : '⚡'}</div>
           <h3 className="text-xl font-bold text-white mb-2">{level.name} - Hoàn thành!</h3>
           <p className="text-violet-400 text-base mb-6">{level.celebration}</p>
 
@@ -337,9 +344,7 @@ export const BlackKeyNinjaGame: React.FC<BlackKeyNinjaGameProps> = ({
             Level {currentLevel + 1}/{LEVELS.length}
           </span>
           {streak >= 3 && (
-            <span className="text-sm">
-              {streak >= 8 ? '🔥🔥🔥' : streak >= 5 ? '🔥🔥' : '🔥'}
-            </span>
+            <span className="text-sm">{streak >= 8 ? '🔥🔥🔥' : streak >= 5 ? '🔥🔥' : '🔥'}</span>
           )}
         </div>
       </div>
@@ -441,9 +446,7 @@ export const BlackKeyNinjaGame: React.FC<BlackKeyNinjaGameProps> = ({
 
       {/* Hint */}
       <div className="text-center">
-        <p className="text-xs text-slate-400">
-          ✅ Bấm vào nhạc cụ bất kỳ! • Điểm: {score}
-        </p>
+        <p className="text-xs text-slate-400">✅ Bấm vào nhạc cụ bất kỳ! • Điểm: {score}</p>
       </div>
     </div>
   )

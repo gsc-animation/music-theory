@@ -150,7 +150,8 @@ Các giọng **kề nhau** trên vòng = dễ modulate:
     {
       id: '4.5.1',
       title: 'Circle Navigation',
-      description: 'Click để xoay vòng, hiện key info. C ở 12 giờ (0 dấu), G ở 1 giờ (1#), F ở 11 giờ (1♭). Đây là organization system quan trọng nhất trong nhạc lý!',
+      description:
+        'Click để xoay vòng, hiện key info. C ở 12 giờ (0 dấu), G ở 1 giờ (1#), F ở 11 giờ (1♭). Đây là organization system quan trọng nhất trong nhạc lý!',
       abc: `X:1
 M:4/4
 L:1/4
@@ -162,7 +163,8 @@ C D E F | G A B c|]`,
     {
       id: '4.5.2',
       title: 'Sharp Keys (right side)',
-      description: 'G(1#), D(2#), A(3#), E(4#), B(5#), F#(6#). Mỗi bước đi thuận = thêm 1 sharp theo thứ tự F-C-G-D-A-E-B.',
+      description:
+        'G(1#), D(2#), A(3#), E(4#), B(5#), F#(6#). Mỗi bước đi thuận = thêm 1 sharp theo thứ tự F-C-G-D-A-E-B.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -174,7 +176,8 @@ A B c d | e f g a|]`,
     {
       id: '4.5.3',
       title: 'Flat Keys (left side)',
-      description: 'F(1♭), B♭(2♭), E♭(3♭), A♭(4♭), D♭(5♭), G♭(6♭). Mỗi bước ngược = thêm 1 flat theo thứ tự B-E-A-D-G-C-F.',
+      description:
+        'F(1♭), B♭(2♭), E♭(3♭), A♭(4♭), D♭(5♭), G♭(6♭). Mỗi bước ngược = thêm 1 flat theo thứ tự B-E-A-D-G-C-F.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -186,7 +189,8 @@ E F G A | B c d e|]`,
     {
       id: '4.5.4',
       title: 'Relative Pairs',
-      description: 'Major + minor cùng vị trí: C/Am, G/Em, F/Dm... Cùng hóa biểu, khác tonic. Đây là cách chuyển mood vui→buồn một cách tự nhiên!',
+      description:
+        'Major + minor cùng vị trí: C/Am, G/Em, F/Dm... Cùng hóa biểu, khác tonic. Đây là cách chuyển mood vui→buồn một cách tự nhiên!',
       abc: `X:1
 M:4/4
 L:1/4

@@ -216,7 +216,8 @@ Chorus lặp 3-4 lần → Listener nhớ!
     {
       id: '5.4.1',
       title: 'Song Structure Blocks',
-      description: 'Visual block diagram: Intro-Verse-Chorus-Verse-Chorus-Bridge-Chorus-Outro. Mỗi block là một "phòng" trong "ngôi nhà" bài hát.',
+      description:
+        'Visual block diagram: Intro-Verse-Chorus-Verse-Chorus-Bridge-Chorus-Outro. Mỗi block là một "phòng" trong "ngôi nhà" bài hát.',
       abc: `X:1
 M:4/4
 L:1/4
@@ -228,7 +229,8 @@ K:C
     {
       id: '5.4.2',
       title: 'Energy Curve',
-      description: 'Verse (low) → Pre-Chorus (building) → Chorus (high!). Energy curve là "heartbeat" của bài hát. Contrast giữa các sections tạo drama!',
+      description:
+        'Verse (low) → Pre-Chorus (building) → Chorus (high!). Energy curve là "heartbeat" của bài hát. Contrast giữa các sections tạo drama!',
       abc: `X:1
 M:4/4
 L:1/4
@@ -240,7 +242,8 @@ K:C
     {
       id: '5.4.3',
       title: 'Song Analysis',
-      description: 'Real song breakdown: Nghe và xác định sections. Verse thường có melody thấp hơn, Chorus có hook catchy, Bridge có chords mới lạ.',
+      description:
+        'Real song breakdown: Nghe và xác định sections. Verse thường có melody thấp hơn, Chorus có hook catchy, Bridge có chords mới lạ.',
       abc: `X:1
 M:4/4
 L:1/4

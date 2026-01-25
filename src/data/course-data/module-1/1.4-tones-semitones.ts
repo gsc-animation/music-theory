@@ -14,7 +14,8 @@ import type { Submodule } from '../types'
 export const SUBMODULE_1_4: Submodule = {
   id: '1.4',
   title: 'Cung và Nửa cung',
-  description: 'Phân biệt Nửa cung (Semitone) và Cung (Tone/Whole step), quy tắc "Mi-Fa" và "Si-Đô"',
+  description:
+    'Phân biệt Nửa cung (Semitone) và Cung (Tone/Whole step), quy tắc "Mi-Fa" và "Si-Đô"',
   sections: ['theory', 'piano', 'guitar', 'abcDemo'],
   theoryContent: `
 ## 1. Nửa cung (Semitone / Half Step)

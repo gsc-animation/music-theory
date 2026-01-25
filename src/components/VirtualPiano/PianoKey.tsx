@@ -103,6 +103,7 @@ const PianoKey: React.FC<PianoKeyProps> = ({
 
   return (
     <button
+      data-testid={`piano-key-${note}`}
       className={`${baseClasses} ${typeClasses} ${activeClasses}`}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}

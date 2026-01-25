@@ -133,5 +133,28 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './tests/setup.ts',
     logHeapUsage: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html', 'json', 'lcov'],
+      exclude: [
+        'node_modules/',
+        'tests/',
+        'e2e/',
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+        'dist/',
+        '*.config.{js,ts}',
+      ],
+      thresholds: {
+        // Global thresholds
+        lines: 60,
+        functions: 60,
+        branches: 60,
+        statements: 60,
+      },
+      // Per-file thresholds for critical modules
+      perFile: true,
+    },
+    include: ['src/**/*.test.{ts,tsx}', 'tests/**/*.test.{ts,tsx}'],
   },
 } as UserConfig)

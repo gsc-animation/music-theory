@@ -155,7 +155,9 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
       >
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-[#30e8e8] text-lg">{icon}</span>
-          <span className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">{title}</span>
+          <span className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">
+            {title}
+          </span>
         </div>
 
         <div className="panel-controls flex items-center gap-1">

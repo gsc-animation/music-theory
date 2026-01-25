@@ -114,7 +114,11 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
   }
 
   return (
-    <div className="flex justify-center w-full px-4" style={{ touchAction: 'none' }}>
+    <div
+      data-testid="virtual-piano"
+      className="flex justify-center w-full px-4"
+      style={{ touchAction: 'none' }}
+    >
       {Array.from({ length: octaves }).map((_, i) => renderOctave(i))}
     </div>
   )

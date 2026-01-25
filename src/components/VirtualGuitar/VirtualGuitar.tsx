@@ -78,7 +78,10 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
   const singleDots = [3, 5, 7]
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+    <div
+      data-testid="virtual-guitar"
+      className="w-full overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700"
+    >
       {/* Header with key label */}
       <div className="flex justify-end px-3 py-1 bg-slate-50 dark:bg-slate-800/50">
         <span className="text-[9px] text-slate-400 uppercase font-medium tracking-wide">

@@ -140,7 +140,8 @@ Phân tích: **I - V - vi - IV** (trong A Major)
     {
       id: '4.4.1',
       title: 'Roman Numeral Chart',
-      description: 'I-ii-iii-IV-V-vi-vii° reference. Chữ hoa = Major, chữ thường = minor, ° = diminished. Đây là "ngôn ngữ chung" của nhạc sĩ toàn thế giới!',
+      description:
+        'I-ii-iii-IV-V-vi-vii° reference. Chữ hoa = Major, chữ thường = minor, ° = diminished. Đây là "ngôn ngữ chung" của nhạc sĩ toàn thế giới!',
       abc: `X:1
 M:4/4
 L:1/2
@@ -152,7 +153,8 @@ K:C
     {
       id: '4.4.2',
       title: 'I-V-vi-IV in C, G, D',
-      description: 'Same progression, 3 keys: C(C-G-Am-F), G(G-D-Em-C), D(D-A-Bm-G). Nghe giống nhau về "feel" vì quan hệ giữa các bậc không đổi!',
+      description:
+        'Same progression, 3 keys: C(C-G-Am-F), G(G-D-Em-C), D(D-A-Bm-G). Nghe giống nhau về "feel" vì quan hệ giữa các bậc không đổi!',
       abc: `X:1
 M:4/4
 L:1/1
@@ -166,7 +168,8 @@ K:G
     {
       id: '4.4.3',
       title: 'Transposer Tool',
-      description: 'Interactive key change: Nhập progression bằng số, chọn giọng, hệ thống tự động hiện tên hợp âm. Transpose trong 1 giây!',
+      description:
+        'Interactive key change: Nhập progression bằng số, chọn giọng, hệ thống tự động hiện tên hợp âm. Transpose trong 1 giây!',
       abc: `X:1
 M:4/4
 L:1/1

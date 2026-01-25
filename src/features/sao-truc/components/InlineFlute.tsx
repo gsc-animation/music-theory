@@ -29,10 +29,7 @@ const NOTE_COLORS: Record<string, string> = {
   B: '#3b82f6', // blue
 }
 
-export const InlineFlute: React.FC<InlineFluteProps> = ({
-  title,
-  highlightNotes = [],
-}) => {
+export const InlineFlute: React.FC<InlineFluteProps> = ({ title, highlightNotes = [] }) => {
   const notationSystem = useSettingsStore((state) => state.notationSystem)
 
   // Get unique fingerings (deduplicate same note letters with same fingering)
@@ -150,7 +147,7 @@ export const InlineFlute: React.FC<InlineFluteProps> = ({
             const leftHandStart = 200
             const holeSpacing = 50
             const handGap = 70 // Gap between hands
-            
+
             let cx: number
             if (i < 3) {
               // Left hand (holes 6, 5, 4)
@@ -159,10 +156,9 @@ export const InlineFlute: React.FC<InlineFluteProps> = ({
               // Right hand (holes 3, 2, 1) - add extra gap
               cx = leftHandStart + i * holeSpacing + handGap
             }
-            
+
             const cy = fluteHeight / 2
             const r = 11
-
 
             return (
               <g key={i}>
@@ -234,7 +230,9 @@ export const InlineFlute: React.FC<InlineFluteProps> = ({
           </div>
           <div className="flex items-center gap-1">
             <span className="text-red-600 text-sm font-bold">→</span>
-            <span className="text-[10px] text-slate-600 dark:text-slate-300 font-medium">Lỗ thổi</span>
+            <span className="text-[10px] text-slate-600 dark:text-slate-300 font-medium">
+              Lỗ thổi
+            </span>
           </div>
         </div>
       </div>

@@ -300,7 +300,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
                                             : 'text-slate-300 dark:text-slate-600'
                                       }
                                     `}
-                                      style={isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}}
+                                      style={
+                                        isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}
+                                      }
                                     >
                                       {isCompleted
                                         ? 'check_circle'
