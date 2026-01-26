@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { InstrumentType } from '../../stores/useFloatingInstrumentsStore'
 import { useFloatingInstrumentsStore } from '../../stores/useFloatingInstrumentsStore'
+import { useSettingsStore } from '../../stores/useSettingsStore'
 import { useProgressStore } from '../../stores/useProgressStore'
 import { useBugReportStore } from '../../stores/useBugReportStore'
 import { COURSE_MODULES } from '../../data/course-data'
@@ -19,6 +20,10 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false)
   
   const { instruments, toggleInstrument } = useFloatingInstrumentsStore()
+  const notationSystem = useSettingsStore((state) => state.notationSystem)
+  const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
+  const theme = useSettingsStore((state) => state.theme)
+  const toggleTheme = useSettingsStore((state) => state.toggleTheme)
   const totalXP = useProgressStore((state) => state.totalXP)
   const completedSubmodules = useProgressStore((state) => state.completedSubmodules)
   const xpToNextLevel = 1000 - (totalXP % 1000)
@@ -123,6 +128,47 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
                   {errorCount > 9 ? '9+' : errorCount}
                 </span>
               )}
+            </button>
+
+            {/* Divider */}
+            <div className="h-px bg-slate-600 my-1 w-12 self-center animate-slideInUp" style={{ animationDelay: `${(instrumentConfig.length + 2) * 50}ms` }} />
+
+            {/* VN Mode Toggle */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleNotationSystem()
+              }}
+              className={`
+                flex items-center justify-center
+                w-12 h-12 rounded-full shadow-lg
+                transition-transform active:scale-95
+                animate-slideInUp
+                ${
+                  notationSystem === 'solfege'
+                    ? 'bg-[#30e8e8] text-slate-900'
+                    : 'bg-slate-800 text-slate-300 border border-slate-600'
+                }
+              `}
+              title={notationSystem === 'solfege' ? 'Vietnamese Notation' : 'Switch to VN'}
+              style={{ animationDelay: `${(instrumentConfig.length + 3) * 50}ms` }}
+            >
+              <span className="text-xs font-bold">VN</span>
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleTheme()
+              }}
+              className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 text-slate-300 border border-slate-600 active:scale-95 transition-transform animate-slideInUp"
+              title={`Theme: ${theme}`}
+              style={{ animationDelay: `${(instrumentConfig.length + 4) * 50}ms` }}
+            >
+              <span className="material-symbols-outlined text-xl">
+                {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
+              </span>
             </button>
           </>
         )}
@@ -230,6 +276,48 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
         {/* Tooltip */}
         <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
           Bug Report
+        </span>
+      </button>
+
+      {/* Divider */}
+      <div className="h-px bg-slate-600 my-1" />
+
+      {/* VN Mode Toggle */}
+      <button
+        onClick={toggleNotationSystem}
+        className={`
+          group relative flex items-center justify-center
+          w-12 h-12 rounded-full shadow-lg
+          transition-all duration-200 hover:scale-110
+          ${
+            notationSystem === 'solfege'
+              ? 'bg-[#30e8e8] text-slate-900'
+              : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600'
+          }
+        `}
+        title={notationSystem === 'solfege' ? 'Vietnamese Notation (Active)' : 'Switch to VN Mode'}
+      >
+        <span className="text-xs font-bold">VN</span>
+
+        {/* Tooltip */}
+        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+          {notationSystem === 'solfege' ? 'Vietnamese Notation' : 'VN Mode'}
+        </span>
+      </button>
+
+      {/* Theme Toggle */}
+      <button
+        onClick={toggleTheme}
+        className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:scale-110 transition-all cursor-pointer border border-slate-600"
+        title={`Theme: ${theme}`}
+      >
+        <span className="material-symbols-outlined text-xl">
+          {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
+        </span>
+
+        {/* Tooltip */}
+        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+          {theme === 'system' ? 'Auto' : theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
         </span>
       </button>
     </div>

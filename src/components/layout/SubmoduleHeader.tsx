@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSettingsStore } from '../../stores/useSettingsStore'
 
 interface SubmoduleHeaderProps {
   className?: string
@@ -24,11 +23,6 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
   totalSections,
   currentSection,
 }) => {
-  const notationSystem = useSettingsStore((state) => state.notationSystem)
-  const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
-  const theme = useSettingsStore((state) => state.theme)
-  const toggleTheme = useSettingsStore((state) => state.toggleTheme)
-
   // Calculate section progress percentage
   const sectionProgress = totalSections > 0 ? (currentSection / totalSections) * 100 : 0
 
@@ -39,6 +33,7 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
         bg-white/80 dark:bg-[#22252a]/80 backdrop-blur-md
         sticky top-0 z-20
         border-b border-slate-200 dark:border-slate-700 shadow-sm
+        overflow-hidden
         ${className || ''}
       `}
     >
@@ -50,38 +45,6 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
         <span className="text-slate-700 dark:text-slate-200 font-semibold truncate">
           {shortName}
         </span>
-      </div>
-
-      {/* Right: Compact controls */}
-      <div className="flex items-center gap-1 flex-shrink-0">
-        {/* Dark Mode Toggle */}
-        <button
-          onClick={toggleTheme}
-          className="w-7 h-7 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          title={`Theme: ${theme}`}
-          aria-label="Toggle theme"
-        >
-          <span className="material-symbols-outlined text-slate-500 dark:text-slate-400 text-[18px]">
-            {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
-          </span>
-        </button>
-
-        {/* VN Mode Toggle - icon button */}
-        <button
-          onClick={toggleNotationSystem}
-          className={`
-            w-7 h-7 rounded-lg transition-colors flex items-center justify-center text-[10px] font-bold
-            ${
-              notationSystem === 'solfege'
-                ? 'bg-[#30e8e8] text-slate-900'
-                : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400'
-            }
-          `}
-          title={notationSystem === 'solfege' ? 'Vietnamese notation' : 'Switch to VN'}
-          aria-label="Toggle notation system"
-        >
-          VN
-        </button>
       </div>
 
       {/* Thin section progress bar - constrained to header width */}
