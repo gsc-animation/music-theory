@@ -97,13 +97,12 @@ export const SubmodulePage: React.FC = () => {
     <AppLayout showMobileNav={true}>
       <SubmoduleHeader
         moduleId={module.id}
-        moduleName={module.name}
         submoduleId={submodule.id}
-        isCompleted={isCompleted}
-        totalSections={totalSections}
-        visibleCount={visibleCount}
-        currentSection={currentSection}
-        onDotClick={(index) => {
+        isCompleted={isSubmoduleCompleted}
+        totalSections={submodule.sections.length}
+        visibleCount={visibleCount} // Assuming visibleSectionCount is meant to be visibleCount
+        currentSection={currentSection} // Assuming currentSectionIndex is meant to be currentSection
+        onDotClick={(index) => { // Assuming handleDotClick is meant to be this inline function
           if (isCompleted) {
             // For completed submodules, reveal all sections up to clicked index
             setRevealUpToSection(index)
