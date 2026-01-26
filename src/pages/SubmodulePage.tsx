@@ -11,6 +11,7 @@ import { CollapsiblePanel } from '../components/ui/CollapsiblePanel'
 import { MainHeader } from '../components/layout/MainHeader'
 import { SubmoduleHeader } from '../components/layout/SubmoduleHeader'
 import { AppLayout } from '../components/layout/AppLayout'
+import { getShortLessonName } from '../utils/lessonUtils'
 
 // Lazy load heavy components
 const AbcGrandStaff = React.lazy(() => import('../components/MusicStaff/AbcGrandStaff'))
@@ -35,12 +36,8 @@ export const SubmodulePage: React.FC = () => {
   const [theoryComplete, setTheoryComplete] = React.useState(false)
   const interactiveRef = React.useRef<HTMLDivElement>(null)
 
-  // Progress dots state
-  // totalSections removed - calculated directly from submodule.sections.length
-  const [visibleCount, setVisibleCount] = React.useState(0)
+  // Section tracking for progress bar
   const [currentSection, setCurrentSection] = React.useState(0)
-  const [scrollToSection, setScrollToSection] = React.useState<number | undefined>(undefined)
-  const [revealUpToSection, setRevealUpToSection] = React.useState<number | undefined>(undefined)
 
   // Get current submodule data
   const submodule = submoduleId ? findSubmodule(submoduleId) : undefined
@@ -93,27 +90,22 @@ export const SubmodulePage: React.FC = () => {
     )
   }
 
+  // Get short lesson name for header
+  const shortName = submodule ? getShortLessonName(submodule.title) : ''
+
   return (
-    <AppLayout showMobileNav={true} hideMobileHeader={true}>
-      <SubmoduleHeader
-        moduleId={module.id}
-        submoduleId={submodule.id}
-        isCompleted={isSubmoduleCompleted(submodule.id)}
-        totalSections={submodule.sections.length}
-        visibleCount={visibleCount}
-        currentSection={currentSection}
-        onDotClick={(index) => {
-          if (isCompleted) {
-            // For completed submodules, reveal all sections up to clicked index
-            setRevealUpToSection(index)
-            setTimeout(() => setRevealUpToSection(undefined), 100)
-          } else {
-            // For incomplete submodules, just scroll to the section (if unlocked)
-            setScrollToSection(index)
-            setTimeout(() => setScrollToSection(undefined), 100)
-          }
-        }}
-      />
+    <AppLayout 
+      showMobileNav={true} 
+      hideMobileHeader={true}
+      headerSlot={
+        <SubmoduleHeader
+          moduleId={module.id}
+          shortName={shortName}
+          totalSections={submodule.sections.length}
+          currentSection={currentSection}
+        />
+      }
+    >
 
       {/* Container - full width on mobile with padding only on desktop */}
       <div className="md:p-4 space-y-4">
@@ -153,13 +145,12 @@ export const SubmodulePage: React.FC = () => {
                       })
                     }, 300)
                   }}
-                  onVisibleCountChange={(visible, _total) => {
-                    setVisibleCount(visible)
-                    // totalSections calculated directly from submodule.sections.length
+                  onVisibleCountChange={() => {
+                    // Progress tracking no longer needed
                   }}
                   onCurrentSectionChange={setCurrentSection}
-                  externalScrollToSection={scrollToSection}
-                  externalRevealUpToSection={revealUpToSection}
+                  externalScrollToSection={undefined}
+                  externalRevealUpToSection={undefined}
                 />
 
                 {/* Inline Grand Staff - embedded within theory card */}

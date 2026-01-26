@@ -10,6 +10,7 @@ interface AppLayoutProps {
   className?: string
   showMobileNav?: boolean // Option to hide bottom nav on certain pages
   hideMobileHeader?: boolean // Option to hide mobile header on lesson pages
+  headerSlot?: React.ReactNode // Optional header to render outside scroll container
 }
 
 /**
@@ -22,6 +23,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   className,
   showMobileNav = true,
   hideMobileHeader = false,
+  headerSlot,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const isMobile = useIsMobile()
@@ -46,7 +48,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         className={`flex flex-col min-h-screen bg-[#F5F7FA] dark:bg-[#121212] ${className || ''}`}
       >
         {/* Mobile Header - hidden on lesson pages for single-line design */}
-        {!hideMobileHeader && <MobileHeader onSettings={handleSettings} onProfile={handleProfile} />}
+        {!hideMobileHeader && (
+          <MobileHeader onSettings={handleSettings} onProfile={handleProfile} />
+        )}
+
+        {/* Optional header slot - renders outside scroll container for true sticky behavior */}
+        {headerSlot}
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto pb-12">{children}</main>
