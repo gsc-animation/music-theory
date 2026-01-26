@@ -94,7 +94,7 @@ export const SubmodulePage: React.FC = () => {
   }
 
   return (
-    <AppLayout showMobileNav={true}>
+    <AppLayout showMobileNav={true} hideMobileHeader={true}>
       <SubmoduleHeader
         moduleId={module.id}
         submoduleId={submodule.id}
@@ -153,7 +153,7 @@ export const SubmodulePage: React.FC = () => {
                       })
                     }, 300)
                   }}
-                  onVisibleCountChange={(visible, total) => {
+                  onVisibleCountChange={(visible, _total) => {
                     setVisibleCount(visible)
                     // totalSections calculated directly from submodule.sections.length
                   }}
