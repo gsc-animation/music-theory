@@ -47,7 +47,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         <MobileHeader onSettings={handleSettings} onProfile={handleProfile} />
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto pb-16">{children}</main>
+        <main className="flex-1 overflow-y-auto pb-12">{children}</main>
 
         {/* Bottom Navigation */}
         {showMobileNav && <BottomNavigation />}

@@ -67,7 +67,7 @@
 
   /* Layout */
   --mobile-header-height: 110px;
-  --bottom-nav-height: 64px;
+  --bottom-nav-height: 45px; /* Reduced from 64px (30% reduction) */
   --mobile-card-padding: 1rem;
   --desktop-card-padding: 2rem;
 

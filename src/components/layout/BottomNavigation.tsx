@@ -63,7 +63,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
-      <div className="flex items-stretch h-16">
+      <div className="flex items-stretch h-11">
         {NAV_ITEMS.map((item) => {
           const isActive = currentTab === item.id
 
@@ -72,8 +72,8 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
               key={item.id}
               onClick={() => handleTabClick(item)}
               className={`
-                flex-1 flex flex-col items-center justify-center gap-1
-                transition-all duration-200 touch-target
+                flex-1 flex flex-col items-center justify-center gap-0.5
+                transition-all duration-200 touch-target-sm
                 ${
                   isActive
                     ? 'bg-[#1e40af] text-white'
@@ -85,14 +85,14 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             >
               {/* Icon */}
               <span
-                className="material-symbols-outlined text-[24px]"
+                className="material-symbols-outlined text-[20px]"
                 style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
               >
                 {item.icon}
               </span>
 
               {/* Label */}
-              <span className="text-xs font-medium">{item.label}</span>
+              <span className="text-[10px] font-medium leading-tight">{item.label}</span>
             </button>
           )
         })}
