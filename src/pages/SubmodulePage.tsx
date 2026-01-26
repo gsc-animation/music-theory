@@ -36,7 +36,7 @@ export const SubmodulePage: React.FC = () => {
   const interactiveRef = React.useRef<HTMLDivElement>(null)
 
   // Progress dots state
-  const [totalSections, setTotalSections] = React.useState(0)
+  // totalSections removed - calculated directly from submodule.sections.length
   const [visibleCount, setVisibleCount] = React.useState(0)
   const [currentSection, setCurrentSection] = React.useState(0)
   const [scrollToSection, setScrollToSection] = React.useState<number | undefined>(undefined)
@@ -98,11 +98,11 @@ export const SubmodulePage: React.FC = () => {
       <SubmoduleHeader
         moduleId={module.id}
         submoduleId={submodule.id}
-        isCompleted={isSubmoduleCompleted}
+        isCompleted={isSubmoduleCompleted(submodule.id)}
         totalSections={submodule.sections.length}
-        visibleCount={visibleCount} // Assuming visibleSectionCount is meant to be visibleCount
-        currentSection={currentSection} // Assuming currentSectionIndex is meant to be currentSection
-        onDotClick={(index) => { // Assuming handleDotClick is meant to be this inline function
+        visibleCount={visibleCount}
+        currentSection={currentSection}
+        onDotClick={(index) => {
           if (isCompleted) {
             // For completed submodules, reveal all sections up to clicked index
             setRevealUpToSection(index)
@@ -155,7 +155,7 @@ export const SubmodulePage: React.FC = () => {
                   }}
                   onVisibleCountChange={(visible, total) => {
                     setVisibleCount(visible)
-                    setTotalSections(total)
+                    // totalSections calculated directly from submodule.sections.length
                   }}
                   onCurrentSectionChange={setCurrentSection}
                   externalScrollToSection={scrollToSection}
