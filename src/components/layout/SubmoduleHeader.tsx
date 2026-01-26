@@ -84,8 +84,8 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
         </button>
       </div>
 
-      {/* Thin section progress bar */}
-      <div className="absolute bottom-0 inset-x-0 h-0.5 bg-slate-200 dark:bg-slate-800">
+      {/* Thin section progress bar - constrained to header width */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800">
         <div
           className="h-full bg-gradient-to-r from-[#30e8e8] to-[#26d4d4] transition-all duration-500 ease-out"
           style={{ width: `${sectionProgress}%` }}
