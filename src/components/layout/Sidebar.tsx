@@ -508,6 +508,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   // Desktop: Render as sidebar
   return (
     <aside
+      data-testid="sidebar"
       className={`
         ${sidebarCollapsed ? 'w-[72px]' : 'w-[280px]'} 
         flex-shrink-0 bg-white dark:bg-[#1a1d21]

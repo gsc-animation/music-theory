@@ -1,5 +1,5 @@
 import React from 'react'
-import { Sidebar } from '../components/layout/Sidebar'
+import { AppLayout } from '../components/layout/AppLayout'
 import { SimpleHeader } from '../components/layout/SimpleHeader'
 import { useGameStore } from '../stores/useGameStore'
 import { CollapsiblePanel } from '../components/ui/CollapsiblePanel'
@@ -29,72 +29,68 @@ export const PracticePage: React.FC = () => {
   }, [streak, isPlaying])
 
   return (
-    <div className="flex min-h-screen bg-[#F5F7FA] dark:bg-[#121212]">
-      <Sidebar className="hidden md:flex" />
+    <AppLayout>
+      <SimpleHeader />
 
-      <main className="flex-1 flex flex-col min-w-0 relative">
-        <SimpleHeader />
+      <GameOverlay />
+      <FeedbackOverlay />
+      <ConfettiExplosion run={showConfetti} onComplete={() => setShowConfetti(false)} />
 
-        <GameOverlay />
-        <FeedbackOverlay />
-        <ConfettiExplosion run={showConfetti} onComplete={() => setShowConfetti(false)} />
+      <div className="flex-1 py-4 md:p-4 space-y-3">
+        {/* Practice Header */}
+        <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-700">
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span className="material-symbols-outlined text-[#30e8e8]">piano</span>
+            Free Practice Mode
+          </h1>
+          <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
+            Practice freely with all instruments. Use the "Start Practice" button in the sidebar for
+            guided exercises.
+          </p>
+        </div>
 
-        <div className="flex-1 p-4 space-y-3">
-          {/* Practice Header */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-700">
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#30e8e8]">piano</span>
-              Free Practice Mode
-            </h1>
-            <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
-              Practice freely with all instruments. Use the "Start Practice" button in the sidebar
-              for guided exercises.
-            </p>
-          </div>
-
-          {/* Grand Staff */}
-          <CollapsiblePanel
-            title="Grand Staff View"
-            icon="music_note"
-            defaultOpen
-            headerExtra={
-              <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
-                <input
-                  type="checkbox"
-                  checked={showNoteNames}
-                  onChange={(e) => setShowNoteNames(e.target.checked)}
-                  className="w-3 h-3 accent-[#30e8e8]"
-                />
-                <span>Notes</span>
-              </label>
+        {/* Grand Staff */}
+        <CollapsiblePanel
+          title="Grand Staff View"
+          icon="music_note"
+          defaultOpen
+          headerExtra={
+            <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-400 hover:text-slate-200">
+              <input
+                type="checkbox"
+                checked={showNoteNames}
+                onChange={(e) => setShowNoteNames(e.target.checked)}
+                className="w-3 h-3 accent-[#30e8e8]"
+              />
+              <span>Notes</span>
+            </label>
+          }
+        >
+          <React.Suspense
+            fallback={
+              <div className="w-full h-[150px] flex items-center justify-center text-slate-400">
+                Loading staff...
+              </div>
             }
           >
-            <React.Suspense
-              fallback={
-                <div className="w-full h-[150px] flex items-center justify-center text-slate-400">
-                  Loading staff...
-                </div>
-              }
-            >
-              <AbcGrandStaff showNoteNames={showNoteNames} />
-            </React.Suspense>
-          </CollapsiblePanel>
+            <AbcGrandStaff showNoteNames={showNoteNames} />
+          </React.Suspense>
+        </CollapsiblePanel>
 
-          {/* Flute */}
-          <CollapsiblePanel title="Flute" icon="graphic_eq" defaultOpen>
-            <React.Suspense
-              fallback={
-                <div className="w-full h-16 flex items-center justify-center text-slate-400">
-                  Loading...
-                </div>
-              }
-            >
-              <HorizontalSaoTrucVisualizer />
-            </React.Suspense>
-          </CollapsiblePanel>
-        </div>
-      </main>
-    </div>
+        {/* Flute */}
+        <CollapsiblePanel title="Flute" icon="graphic_eq" defaultOpen>
+          <React.Suspense
+            fallback={
+              <div className="w-full h-16 flex items-center justify-center text-slate-400">
+                Loading...
+              </div>
+            }
+          >
+            <HorizontalSaoTrucVisualizer />
+          </React.Suspense>
+        </CollapsiblePanel>
+      </div>
+    </AppLayout>
   )
 }
 

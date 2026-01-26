@@ -49,6 +49,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
     <>
       {/* Backdrop */}
       <div
+        data-testid="mobile-drawer-backdrop"
         className="mobile-drawer-backdrop fixed inset-0 z-40"
         onClick={onClose}
         aria-hidden="true"
@@ -56,6 +57,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
       {/* Drawer Panel */}
       <div
+        data-testid="mobile-drawer"
         className={`
           fixed top-0 ${sideClasses} bottom-0 z-50
           w-[280px] max-w-[85vw]

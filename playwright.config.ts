@@ -58,11 +58,32 @@ export default defineConfig({
     //   use: { ...devices['Desktop Safari'] },
     // },
 
-    // Mobile testing
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    // Mobile testing - iPhone SE (smallest modern phone)
+    {
+      name: 'Mobile Chrome - iPhone SE',
+      use: {
+        ...devices['iPhone SE'],
+        viewport: { width: 375, height: 667 },
+      },
+    },
+
+    // Mobile testing - iPhone 12 (standard modern phone)
+    {
+      name: 'Mobile Safari - iPhone 12',
+      use: {
+        ...devices['iPhone 12'],
+        viewport: { width: 390, height: 844 },
+      },
+    },
+
+    // Tablet testing - iPad (md breakpoint at 768px)
+    {
+      name: 'Mobile Safari - iPad',
+      use: {
+        ...devices['iPad Pro'],
+        viewport: { width: 768, height: 1024 },
+      },
+    },
   ],
 
   // Run your local dev server before starting the tests

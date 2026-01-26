@@ -22,11 +22,13 @@ export const MainHeader: React.FC<MainHeaderProps> = ({ className }) => {
 
   return (
     <header
+      data-testid="main-header"
       className={`
         h-[72px] px-8 flex items-center justify-between
         bg-white/80 dark:bg-[#22252a]/80 backdrop-blur-md
         sticky top-0 z-20
         border-b border-slate-200 dark:border-slate-700 shadow-sm
+        md:h-[72px] h-[56px] md:px-8 px-4
         ${className}
       `}
     >

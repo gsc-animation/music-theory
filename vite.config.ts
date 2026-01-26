@@ -14,6 +14,10 @@ type UserConfig = ViteUserConfig & {
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    host: '0.0.0.0', // Expose dev server to network
+    port: 5503,
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

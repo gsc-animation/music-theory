@@ -11,6 +11,8 @@ import { useEffect, lazy, Suspense } from 'react'
 // Lazy load pages for better performance
 const SubmodulePage = lazy(() => import('./pages/SubmodulePage'))
 const PracticePage = lazy(() => import('./pages/PracticePage'))
+const ComposePage = lazy(() => import('./pages/ComposePage'))
+const AbcEditorPage = lazy(() => import('./pages/AbcEditorPage'))
 // Profile page is now eagerly loaded as home page
 
 // Lazy load floating instruments container
@@ -81,6 +83,8 @@ function App() {
             <Route path="/compose" element={<HomePage />} />
             <Route path="/module/:moduleId/:submoduleId" element={<SubmodulePage />} />
             <Route path="/practice" element={<PracticePage />} />
+            <Route path="/demo" element={<ComposePage />} />
+            <Route path="/abc-editor" element={<AbcEditorPage />} />
           </Routes>
         </Suspense>
       </MainLayout>
