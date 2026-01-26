@@ -4,6 +4,7 @@ import 'abcjs/abcjs-audio.css'
 import { useAudioStore } from '../../stores/useAudioStore'
 import { useSettingsStore } from '../../stores/useSettingsStore'
 import { getNoteLabel } from '../../utils/note-labels'
+import { useIsMobile, useIsTablet } from '../../hooks/useResponsive'
 
 /**
  * Convert MIDI pitch number to standard note name (e.g., "C4")
@@ -196,6 +197,17 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
   const clearHighlights = useAudioStore((state) => state.clearHighlights)
   const notationSystem = useSettingsStore((state) => state.notationSystem)
 
+  // Responsive layout hooks
+  const isMobile = useIsMobile()
+  const isTablet = useIsTablet()
+
+  // Calculate responsive staffwidth based on viewport
+  const staffWidth = useMemo(() => {
+    if (isMobile) return Math.min(typeof window !== 'undefined' ? window.innerWidth - 40 : 600, 600)
+    if (isTablet) return 680
+    return 740 // Desktop (slightly wider for grand staff)
+  }, [isMobile, isTablet])
+
   const paperId = useMemo(() => `paper-${instanceId}`, [instanceId])
   const audioId = useMemo(() => `audio-${instanceId}`, [instanceId])
 
@@ -329,7 +341,7 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
       const rendered = abcjs.renderAbc(paperId, processedAbc, {
         responsive: 'resize',
         add_classes: true,
-        staffwidth: 740,
+        staffwidth: staffWidth,
         paddingtop: 5,
         paddingbottom: 5,
         paddingleft: 10,
@@ -349,7 +361,7 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
     } catch (error) {
       console.warn('InlineGrandStaff: Render error:', error)
     }
-  }, [processedAbc, paperId, handleNoteClick])
+  }, [processedAbc, paperId, handleNoteClick, staffWidth])
 
   // Setup audio after controller is loaded and notation is rendered
   useEffect(() => {
@@ -374,7 +386,7 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
             const rendered = abcjs.renderAbc(paperId, processedAbc, {
               responsive: 'resize',
               add_classes: true,
-              staffwidth: 740,
+              staffwidth: staffWidth,
               paddingtop: 5,
               paddingbottom: 5,
               paddingleft: 10,
@@ -400,7 +412,7 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
     }
 
     setupAudio()
-  }, [isControllerReady, processedAbc, paperId, handleNoteClick])
+  }, [isControllerReady, processedAbc, paperId, handleNoteClick, staffWidth])
 
   return (
     <div className={`inline-grand-staff my-6 ${className}`}>
@@ -425,12 +437,14 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
         </label>
       </div>
 
-      {/* Staff container */}
-      <div
-        id={paperId}
-        ref={containerRef}
-        className="abc-paper bg-white dark:bg-slate-800/50 min-h-[150px] overflow-hidden cursor-pointer rounded-b-xl border-x border-b border-slate-300 dark:border-transparent"
-      />
+      {/* Staff container with mobile horizontal scroll */}
+      <div className="overflow-x-auto md:overflow-visible">
+        <div
+          id={paperId}
+          ref={containerRef}
+          className="abc-paper bg-white dark:bg-slate-800/50 min-h-[150px] min-w-min overflow-hidden cursor-pointer rounded-b-xl border-x border-b border-slate-300 dark:border-transparent"
+        />
+      </div>
 
       {/* Audio controls */}
       <div id={audioId} ref={audioContainerRef} className="abc-audio mt-2" />
@@ -530,7 +544,8 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
         }
         :root.dark .inline-grand-staff path.abcjs-staff,
         :root.dark .inline-grand-staff path.abcjs-bar {
-          stroke: #64748b;
+          stroke: #cbd5e1;
+          stroke-width: 1.5;
         }
         :root.dark .inline-grand-staff text {
           fill: #94a3b8;

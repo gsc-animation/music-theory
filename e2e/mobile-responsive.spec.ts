@@ -193,24 +193,62 @@ test.describe('ABC Notation Rendering', () => {
   test('musical notation is readable without overflow', async ({ page }) => {
     await page.goto('/module/1/1.1')
     await page.waitForLoadState('networkidle')
-    
+
     // Find ABC rendered content
     const abcSvg = page.locator('svg.abcjs-container').first()
-    
+
     if (await abcSvg.count() > 0) {
       const svgBox = await abcSvg.boundingBox()
-      
+
       if (svgBox) {
         // SVG should not exceed viewport width (allowing horizontal scroll is ok)
         const viewportWidth = page.viewportSize()?.width || 375
-        
+
         // Either fits in viewport OR parent has horizontal scroll
         const parent = page.locator('svg.abcjs-container').first().locator('..')
         const hasHorizontalScroll = await parent.evaluate(el => el.scrollWidth > el.clientWidth)
-        
+
         const fitsInViewport = svgBox.width <= viewportWidth
         expect(fitsInViewport || hasHorizontalScroll).toBeTruthy()
       }
+    }
+  })
+
+  test('ABC renderer uses responsive staffwidth on mobile', async ({ page }) => {
+    await page.goto('/module/1/1.1')
+    await page.waitForLoadState('networkidle')
+
+    // Check that ABC container adapts to mobile viewport
+    const abcRenderer = page.locator('.abc-renderer').first()
+
+    if (await abcRenderer.count() > 0) {
+      const rendererWidth = await abcRenderer.evaluate(el => 
+        el.getBoundingClientRect().width
+      )
+
+      const viewportWidth = page.viewportSize()?.width || 375
+
+      // Renderer should not exceed viewport width
+      expect(rendererWidth).toBeLessThanOrEqual(viewportWidth)
+      console.log(`ABC renderer width: ${rendererWidth}px on ${viewportWidth}px viewport`)
+    }
+  })
+
+  test('horizontal scroll container exists for ABC notation', async ({ page }) => {
+    await page.goto('/module/1/1.1')
+    await page.waitForLoadState('networkidle')
+
+    const abcRenderer = page.locator('.abc-renderer').first()
+
+    if (await abcRenderer.count() > 0) {
+      // Check for horizontal scroll container
+      const scrollContainer = abcRenderer.locator('..')
+      const hasOverflowAuto = await scrollContainer.evaluate(el => {
+        const style = window.getComputedStyle(el)
+        return style.overflowX === 'auto' || style.overflowX === 'scroll'
+      })
+
+      expect(hasOverflowAuto).toBeTruthy()
     }
   })
 })

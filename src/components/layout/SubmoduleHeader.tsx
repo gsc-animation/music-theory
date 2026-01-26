@@ -60,23 +60,20 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
         ${className || ''}
       `}
     >
-      {/* Left: Compact breadcrumb with short name */}
+      {/* Left: Clickable breadcrumb - entire section opens menu */}
       <div ref={menuRef} className="relative flex items-center gap-1.5 text-xs font-medium min-w-0">
-        <span className="material-symbols-outlined text-[16px] text-[#30e8e8]">folder</span>
-        
-        {/* Clickable Module Badge */}
         <button
           onClick={() => setShowMenu(!showMenu)}
-          className="text-[#1f9d9d] dark:text-[#30e8e8] whitespace-nowrap hover:bg-[#30e8e8]/10 dark:hover:bg-[#30e8e8]/10 px-1.5 py-0.5 rounded transition-colors"
+          className="flex items-center gap-1.5 hover:bg-[#30e8e8]/10 dark:hover:bg-[#30e8e8]/10 px-2 py-1 -mx-2 rounded transition-colors min-w-0"
           title="Open module navigation"
         >
-          M{moduleId}
+          <span className="material-symbols-outlined text-[16px] text-[#30e8e8] flex-shrink-0">folder</span>
+          <span className="text-[#1f9d9d] dark:text-[#30e8e8] whitespace-nowrap">M{moduleId}</span>
+          <span className="text-slate-300 dark:text-slate-600">›</span>
+          <span className="text-slate-700 dark:text-slate-200 font-semibold truncate">
+            {shortName}
+          </span>
         </button>
-        
-        <span className="text-slate-300 dark:text-slate-600">›</span>
-        <span className="text-slate-700 dark:text-slate-200 font-semibold truncate">
-          {shortName}
-        </span>
 
         {/* Module Navigation Menu */}
         {showMenu && (

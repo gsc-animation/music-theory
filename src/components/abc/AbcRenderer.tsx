@@ -3,6 +3,7 @@ import abcjs from 'abcjs'
 import { useSettingsStore } from '../../stores/useSettingsStore'
 import { useAudioStore } from '../../stores/useAudioStore'
 import { getNoteLabel } from '../../utils/note-labels'
+import { useIsMobile, useIsTablet } from '../../hooks/useResponsive'
 
 /**
  * Convert MIDI pitch number to standard note name (e.g., "C4")
@@ -151,16 +152,14 @@ function injectNoteAnnotations(abc: string, notationSystem: 'latin' | 'solfege')
   return processedLines.join('\n')
 }
 
-// Consistent render options for all ABC notation
-// Staff width set to fill content area
-const RENDER_OPTIONS = {
-  responsive: 'resize' as const,
-  staffwidth: 700,
-  paddingtop: 0,
-  paddingbottom: 5,
-  paddingleft: 0,
-  paddingright: 0,
-  add_classes: true,
+// Mobile-first responsive staffwidth helper
+const getResponsiveStaffWidth = (isMobile: boolean, isTablet: boolean): number => {
+  if (isMobile) {
+    // Mobile: use viewport width minus padding, max 600px for comfortable scroll
+    return Math.min(typeof window !== 'undefined' ? window.innerWidth - 40 : 600, 600)
+  }
+  if (isTablet) return 680
+  return 700 // Desktop
 }
 
 /**
@@ -182,6 +181,30 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const notationSystem = useSettingsStore((s) => s.notationSystem)
   const { playNoteWithRelease, highlightNote, unhighlightNote, clearHighlights } = useAudioStore()
+
+  // Responsive layout hooks
+  const isMobile = useIsMobile()
+  const isTablet = useIsTablet()
+
+  // Calculate responsive staffwidth based on viewport
+  const staffWidth = useMemo(
+    () => getResponsiveStaffWidth(isMobile, isTablet),
+    [isMobile, isTablet]
+  )
+
+  // Render options with responsive staffwidth
+  const RENDER_OPTIONS = useMemo(
+    () => ({
+      responsive: 'resize' as const,
+      staffwidth: staffWidth,
+      paddingtop: 0,
+      paddingbottom: 5,
+      paddingleft: 0,
+      paddingright: 0,
+      add_classes: true,
+    }),
+    [staffWidth]
+  )
 
   // Track currently highlighted notes during playback for proper cleanup
   const currentNotesRef = useRef<string[]>([])
@@ -229,7 +252,7 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
       console.log('✅ [AbcRenderer] Render complete with clickListener')
       return result
     },
-    [handleNoteClick]
+    [handleNoteClick, RENDER_OPTIONS]
   )
 
   // Stop function for this instance
@@ -429,15 +452,17 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
         </div>
       </div>
 
-      {/* ABC notation container */}
-      <div
-        ref={containerRef}
-        className="p-3
-          [&_svg]:max-w-full [&_svg]:h-auto [&_svg]:mx-auto
-          [&_.abcjs-note]:cursor-pointer [&_.abcjs-note:hover]:opacity-70
-          [&_.abcjs-note.highlight]:fill-[#30e8e8]
-          [&_.abcjs-note.highlight]:stroke-[#30e8e8]"
-      />
+      {/* ABC notation container with mobile horizontal scroll */}
+      <div className="overflow-x-auto md:overflow-visible">
+        <div
+          ref={containerRef}
+          className="p-3 min-w-min
+            [&_svg]:max-w-full [&_svg]:h-auto [&_svg]:mx-auto
+            [&_.abcjs-note]:cursor-pointer [&_.abcjs-note:hover]:opacity-70
+            [&_.abcjs-note.highlight]:fill-[#30e8e8]
+            [&_.abcjs-note.highlight]:stroke-[#30e8e8]"
+        />
+      </div>
 
       {/* Footer - unified design */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-slate-200 dark:border-slate-700">
@@ -458,12 +483,49 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
         </pre>
       )}
 
-      {/* Annotation styling */}
+      {/* Theme-adaptive styling for Light and Dark modes */}
       <style>{`
+        /* ===== LIGHT MODE (Default - WCAG AA Compliant) ===== */
+        .abc-renderer path.abcjs-notehead,
+        .abc-renderer path.abcjs-stem,
+        .abc-renderer path.abcjs-beam {
+          fill: #1e293b;
+          stroke: #1e293b;
+        }
+        .abc-renderer path.abcjs-staff,
+        .abc-renderer path.abcjs-bar {
+          stroke: #64748b;
+        }
+        .abc-renderer text {
+          fill: #334155;
+        }
         .abc-renderer text.abcjs-annotation {
-          fill: #30e8e8;
+          fill: #0d9488;
           font-size: 7px;
           font-weight: bold;
+        }
+        .abc-renderer .abcjs-note.highlight path {
+          fill: #0d9488 !important;
+          stroke: #0d9488 !important;
+        }
+        
+        /* ===== DARK MODE - Comprehensive SVG targeting ===== */
+        :root.dark .abc-renderer svg path,
+        :root.dark .abc-renderer svg line,
+        :root.dark .abc-renderer svg rect {
+          fill: #cbd5e1 !important;
+          stroke: #cbd5e1 !important;
+        }
+        
+        /* Maintain highlight colors for playback */
+        :root.dark .abc-renderer .abcjs-note.highlight path {
+          fill: #30e8e8 !important;
+          stroke: #30e8e8 !important;
+        }
+        
+        /* Annotation text */
+        :root.dark .abc-renderer text.abcjs-annotation {
+          fill: #30e8e8 !important;
         }
       `}</style>
     </div>
