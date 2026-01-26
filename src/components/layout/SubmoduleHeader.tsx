@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { ModuleNavigationMenu } from '../navigation/ModuleNavigationMenu'
 
 interface SubmoduleHeaderProps {
   className?: string
   // Module info
   moduleId: number
+  // Submodule ID for menu state
+  submoduleId: string
   // Submodule info - SHORT NAME instead of ID
   shortName: string
   // Section progress (for progress bar)
@@ -19,10 +22,31 @@ interface SubmoduleHeaderProps {
 export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
   className,
   moduleId,
+  submoduleId,
   shortName,
   totalSections,
   currentSection,
 }) => {
+  const [showMenu, setShowMenu] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false)
+      }
+    }
+
+    if (showMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showMenu])
+
   // Calculate section progress percentage
   const sectionProgress = totalSections > 0 ? (currentSection / totalSections) * 100 : 0
 
@@ -33,18 +57,35 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
         bg-white/80 dark:bg-[#22252a]/80 backdrop-blur-md
         sticky top-0 z-20
         border-b border-slate-200 dark:border-slate-700 shadow-sm
-        overflow-hidden
         ${className || ''}
       `}
     >
       {/* Left: Compact breadcrumb with short name */}
-      <div className="flex items-center gap-1.5 text-xs font-medium min-w-0">
+      <div ref={menuRef} className="relative flex items-center gap-1.5 text-xs font-medium min-w-0">
         <span className="material-symbols-outlined text-[16px] text-[#30e8e8]">folder</span>
-        <span className="text-[#1f9d9d] dark:text-[#30e8e8] whitespace-nowrap">M{moduleId}</span>
+        
+        {/* Clickable Module Badge */}
+        <button
+          onClick={() => setShowMenu(!showMenu)}
+          className="text-[#1f9d9d] dark:text-[#30e8e8] whitespace-nowrap hover:bg-[#30e8e8]/10 dark:hover:bg-[#30e8e8]/10 px-1.5 py-0.5 rounded transition-colors"
+          title="Open module navigation"
+        >
+          M{moduleId}
+        </button>
+        
         <span className="text-slate-300 dark:text-slate-600">›</span>
         <span className="text-slate-700 dark:text-slate-200 font-semibold truncate">
           {shortName}
         </span>
+
+        {/* Module Navigation Menu */}
+        {showMenu && (
+          <ModuleNavigationMenu
+            currentModuleId={moduleId}
+            currentSubmoduleId={submoduleId}
+            onClose={() => setShowMenu(false)}
+          />
+        )}
       </div>
 
       {/* Thin section progress bar - constrained to header width */}

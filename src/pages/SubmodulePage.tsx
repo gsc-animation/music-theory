@@ -100,6 +100,7 @@ export const SubmodulePage: React.FC = () => {
       headerSlot={
         <SubmoduleHeader
           moduleId={module.id}
+          submoduleId={submodule.id}
           shortName={shortName}
           totalSections={submodule.sections.length}
           currentSection={currentSection}
