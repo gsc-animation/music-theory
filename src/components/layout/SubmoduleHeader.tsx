@@ -59,16 +59,18 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
           Lesson {submoduleId}
         </span>
 
-        {/* Progress Dots - show all unlocked if submodule is completed */}
+        {/* Progress Dots - hidden on mobile, show on tablet+ */}
         {totalSections > 1 && (
-          <React.Suspense fallback={null}>
-            <SubmoduleProgressDots
-              totalSections={totalSections}
-              visibleCount={isCompleted ? totalSections : visibleCount}
-              currentSection={isCompleted ? totalSections - 1 : currentSection}
-              onDotClick={onDotClick}
-            />
-          </React.Suspense>
+          <div className="hidden md:flex">
+            <React.Suspense fallback={null}>
+              <SubmoduleProgressDots
+                totalSections={totalSections}
+                visibleCount={isCompleted ? totalSections : visibleCount}
+                currentSection={isCompleted ? totalSections - 1 : currentSection}
+                onDotClick={onDotClick}
+              />
+            </React.Suspense>
+          </div>
         )}
       </div>
 
