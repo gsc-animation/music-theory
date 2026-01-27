@@ -53,7 +53,7 @@ export const FloatingInstrumentsContainer: React.FC = () => {
 
   return (
     <>
-      {/* Piano Panel */}
+      {/* Piano Panel - 3 octaves on all devices */}
       {instruments.piano.isVisible && (
         <FloatingInstrumentPanel type="piano" title="Piano" icon="piano">
           <Suspense fallback={<LoadingFallback />}>

@@ -654,6 +654,15 @@ ${abcNotes} |`
           width: 100%;
           max-width: 100%;
         }
+        /* Dark mode: set color on SVG so currentColor resolves to white */
+        .dark .abc-grand-staff .abcjs-container svg {
+          color: #ffffff;
+        }
+        /* Override all SVG paths in dark mode */
+        .dark .abc-grand-staff svg path {
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
+        }
         /* Light mode note colors */
         .abc-grand-staff path.abcjs-notehead,
         .abc-grand-staff path.abcjs-stem,
@@ -721,12 +730,32 @@ ${abcNotes} |`
           fill: #cbd5e1;
           stroke: #cbd5e1;
         }
-        .dark .abc-grand-staff path.abcjs-staff,
+        /* Staff lines - paths inside .abcjs-staff group */
+        .dark .abc-grand-staff .abcjs-staff path {
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
+        }
+        .dark .abc-grand-staff .abcjs-top-line {
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
+        }
+        /* Bar lines */
         .dark .abc-grand-staff path.abcjs-bar {
-          stroke: #64748b;
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
+        }
+        /* Clefs, braces, and other staff extras */
+        .dark .abc-grand-staff .abcjs-staff-extra path,
+        .dark .abc-grand-staff .abcjs-clef path,
+        .dark .abc-grand-staff .abcjs-brace path {
+          fill: #ffffff !important;
+        }
+        .dark .abc-grand-staff .abcjs-ledger {
+          fill: #ffffff !important;
+          stroke: #ffffff !important;
         }
         .dark .abc-grand-staff text {
-          fill: #94a3b8;
+          fill: #ffffff;
         }
         .dark .abc-grand-staff text.abcjs-annotation {
           fill: #30e8e8;

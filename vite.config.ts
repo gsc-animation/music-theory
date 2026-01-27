@@ -16,7 +16,7 @@ type UserConfig = ViteUserConfig & {
 export default defineConfig({
   server: {
     host: '0.0.0.0', // Expose dev server to network
-    port: 5503,
+    port: 5504,
   },
   resolve: {
     alias: {

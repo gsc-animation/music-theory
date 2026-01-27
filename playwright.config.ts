@@ -26,7 +26,7 @@ export default defineConfig({
 
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://localhost:5504',
 
     // Collect trace when retrying the failed test
     trace: 'on-first-retry',
@@ -63,6 +63,7 @@ export default defineConfig({
       name: 'Mobile Chrome - iPhone SE',
       use: {
         ...devices['iPhone SE'],
+        browserName: 'chromium', // Override to use Chrome instead of Safari
         viewport: { width: 375, height: 667 },
       },
     },
@@ -89,7 +90,7 @@ export default defineConfig({
   // Run your local dev server before starting the tests
   webServer: {
     command: 'npm run dev',
-    url: 'http://localhost:5173',
+    url: 'http://localhost:5504',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },

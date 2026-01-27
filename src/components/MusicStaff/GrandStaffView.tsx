@@ -165,7 +165,7 @@ const StaffNote: React.FC<StaffNoteProps> = ({
     >
       {/* Ledger line for notes outside staff */}
       {(position === 0 || position <= 1 || position >= 11 || position <= -9 || position >= -1) && (
-        <div className="absolute w-6 h-[1px] bg-slate-400 dark:bg-slate-500 -left-1" />
+        <div className="absolute w-6 h-[1px] bg-slate-400 dark:bg-white -left-1" />
       )}
       {/* Accidental symbol */}
       {accidental && (
@@ -280,31 +280,31 @@ export const GrandStaffView: React.FC<GrandStaffViewProps> = ({ className }) => 
         <div className="relative">
           {/* Bracket connecting both staves */}
           <div
-            className="absolute left-[-1px] top-0 bottom-0 w-[14px] border-l-[5px] border-t-[5px] border-b-[5px] border-slate-800 dark:border-slate-400 rounded-tl rounded-bl"
+            className="absolute left-[-1px] top-0 bottom-0 w-[14px] border-l-[5px] border-t-[5px] border-b-[5px] border-slate-800 dark:border-white rounded-tl rounded-bl"
             style={{ borderRightWidth: 0 }}
           />
 
           {/* Left bar line */}
-          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-slate-800 dark:bg-slate-400" />
+          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-slate-800 dark:bg-white" />
 
           {/* Right bar line */}
-          <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-slate-400" />
+          <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-slate-400 dark:bg-white" />
 
           {/* Staves container */}
           <div className="flex flex-col gap-[60px]">
             {/* Treble Staff */}
             <div className="relative h-10 w-full">
               {/* Treble Clef symbol */}
-              <div className="absolute -left-10 -top-[22px] text-[3.8rem] leading-none font-serif text-slate-800 dark:text-slate-200 z-10">
+              <div className="absolute -left-10 -top-[22px] text-[3.8rem] leading-none font-serif text-slate-800 dark:text-white z-10">
                 𝄞
               </div>
               {/* Staff lines */}
               <div className="flex flex-col justify-between h-full w-full absolute top-0 left-0">
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
               </div>
 
               {/* Render treble clef notes */}
@@ -323,16 +323,16 @@ export const GrandStaffView: React.FC<GrandStaffViewProps> = ({ className }) => 
             {/* Bass Staff */}
             <div className="relative h-10 w-full">
               {/* Bass Clef symbol */}
-              <div className="absolute -left-10 -top-[16px] text-[2.4rem] leading-none font-serif text-slate-800 dark:text-slate-200 z-10">
+              <div className="absolute -left-10 -top-[16px] text-[2.4rem] leading-none font-serif text-slate-800 dark:text-white z-10">
                 𝄢
               </div>
               {/* Staff lines */}
               <div className="flex flex-col justify-between h-full w-full absolute top-0 left-0">
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
-                <div className="h-[1px] w-full bg-slate-300 dark:bg-slate-600" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
+                <div className="h-[1px] w-full bg-slate-300 dark:bg-white" />
               </div>
 
               {/* Render bass clef notes */}

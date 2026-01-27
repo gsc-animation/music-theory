@@ -57,11 +57,16 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
         style={{ touchAction: 'none' }}
       >
         {/* White Keys Layer */}
-        {whiteKeys.map((note) => {
+        {whiteKeys.map((note, index) => {
           const noteLetter = note.replace(/[0-9]/g, '')
           const isHinted = allowedNotes && allowedNotes.includes(noteLetter)
+          const leftPosition = index * 14.2857 // 100% / 7 keys
           return (
-            <div key={note} className="flex-1 h-full relative">
+            <div
+              key={note}
+              className="absolute h-full"
+              style={{ left: `${leftPosition}%`, width: '14.2857%' }}
+            >
               <PianoKey
                 note={note}
                 type="white"
@@ -94,7 +99,7 @@ export const VirtualPiano: React.FC<VirtualPianoProps> = ({
           return (
             <div
               key={note}
-              className="absolute top-0 w-[10%] h-32 pointer-events-auto z-10"
+              className="absolute top-0 w-[10%] h-20 pointer-events-auto z-10"
               style={{ left: `${left}%` }}
             >
               <PianoKey

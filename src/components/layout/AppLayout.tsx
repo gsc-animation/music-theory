@@ -4,6 +4,7 @@ import { MobileHeader } from './MobileHeader'
 import { BottomNavigation } from './BottomNavigation'
 import { useIsMobile } from '../../hooks/useMediaQuery'
 import { useNavigate } from 'react-router-dom'
+import { useFloatingInstrumentsStore } from '../../stores/useFloatingInstrumentsStore'
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -41,8 +42,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     navigate('/profile')
   }
 
+  // Check if any instrument is visible
+  const instruments = useFloatingInstrumentsStore((state) => state.instruments)
+  const anyInstrumentVisible = Object.values(instruments).some((i) => i.isVisible)
+
   // Mobile layout (<768px)
   if (isMobile) {
+    // Dynamic bottom padding: normal (12 = 48px) or with instrument (240px)
+    const bottomPadding = anyInstrumentVisible ? 'pb-[240px]' : 'pb-12'
+
     return (
       <div
         className={`flex flex-col min-h-screen bg-[#F5F7FA] dark:bg-[#121212] ${className || ''}`}
@@ -55,8 +63,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         {/* Optional header slot - renders outside scroll container for true sticky behavior */}
         {headerSlot}
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto pb-12">{children}</main>
+        {/* Main Content - dynamic padding to prevent content hidden by instrument */}
+        <main className={`flex-1 overflow-y-auto ${bottomPadding}`}>{children}</main>
 
         {/* Bottom Navigation */}
         {showMobileNav && <BottomNavigation />}

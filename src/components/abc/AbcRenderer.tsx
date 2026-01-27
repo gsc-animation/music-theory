@@ -512,7 +512,20 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
         /* ===== DARK MODE - Comprehensive SVG targeting ===== */
         :root.dark .abc-renderer svg path,
         :root.dark .abc-renderer svg line,
-        :root.dark .abc-renderer svg rect {
+        :root.dark .abc-renderer svg rect,
+        :root.dark .abc-renderer svg circle,
+        :root.dark .abc-renderer svg ellipse,
+        :root.dark .abc-renderer svg text,
+        :root.dark .abc-renderer svg tspan,
+        :root.dark .abc-renderer .abcjs-beam,
+        :root.dark .abc-renderer .abcjs-dot,
+        :root.dark .abc-renderer .abcjs-staff,
+        :root.dark .abc-renderer .abcjs-bar,
+        :root.dark .abc-renderer .abcjs-stem,
+        :root.dark .abc-renderer .abcjs-notehead,
+        :root.dark .abc-renderer .abcjs-title,
+        :root.dark .abc-renderer .abcjs-composer,
+        :root.dark .abc-renderer .abcjs-meta-top {
           fill: #cbd5e1 !important;
           stroke: #cbd5e1 !important;
         }

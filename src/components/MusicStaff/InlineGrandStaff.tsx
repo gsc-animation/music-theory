@@ -251,7 +251,10 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
     [showNoteNames, notationSystem]
   )
 
-  const processedAbc = useMemo(() => injectNoteAnnotations(abc), [abc, injectNoteAnnotations])
+  const processedAbc = useMemo(() => {
+    const formattedAbc = abc.replace(/\\n/g, '\n')
+    return injectNoteAnnotations(formattedAbc)
+  }, [abc, injectNoteAnnotations])
 
   const [isControllerReady, setControllerReady] = useState(false)
 
@@ -535,20 +538,25 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
           display: none;
         }
         
-        /* ===== DARK MODE ===== */
-        :root.dark .inline-grand-staff path.abcjs-notehead,
-        :root.dark .inline-grand-staff path.abcjs-stem,
-        :root.dark .inline-grand-staff path.abcjs-beam {
-          fill: #cbd5e1;
-          stroke: #cbd5e1;
-        }
-        :root.dark .inline-grand-staff path.abcjs-staff,
-        :root.dark .inline-grand-staff path.abcjs-bar {
-          stroke: #cbd5e1;
-          stroke-width: 1.5;
-        }
-        :root.dark .inline-grand-staff text {
-          fill: #94a3b8;
+        /* ===== DARK MODE - Comprehensive SVG targeting ===== */
+        :root.dark .inline-grand-staff svg path,
+        :root.dark .inline-grand-staff svg line,
+        :root.dark .inline-grand-staff svg rect,
+        :root.dark .inline-grand-staff svg circle,
+        :root.dark .inline-grand-staff svg ellipse,
+        :root.dark .inline-grand-staff svg text,
+        :root.dark .inline-grand-staff svg tspan,
+        :root.dark .inline-grand-staff .abcjs-beam,
+        :root.dark .inline-grand-staff .abcjs-dot,
+        :root.dark .inline-grand-staff .abcjs-staff,
+        :root.dark .inline-grand-staff .abcjs-bar,
+        :root.dark .inline-grand-staff .abcjs-stem,
+        :root.dark .inline-grand-staff .abcjs-notehead,
+        :root.dark .inline-grand-staff .abcjs-title,
+        :root.dark .inline-grand-staff .abcjs-composer,
+        :root.dark .inline-grand-staff .abcjs-meta-top {
+          fill: #cbd5e1 !important;
+          stroke: #cbd5e1 !important;
         }
         :root.dark .inline-grand-staff text.abcjs-annotation {
           fill: #30e8e8;

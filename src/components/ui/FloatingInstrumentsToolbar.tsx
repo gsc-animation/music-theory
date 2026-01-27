@@ -8,6 +8,16 @@ import { useBugReportStore } from '../../stores/useBugReportStore'
 import { COURSE_MODULES } from '../../data/course-data'
 import { useIsMobile } from '../../hooks/useMediaQuery'
 
+// Mobile instrument heights (matching FloatingInstrumentPanel)
+const INSTRUMENT_HEIGHTS: Record<InstrumentType, number> = {
+  piano: 144, // Reduced by 20% from 180px
+  guitar: 160,
+  flute: 120,
+}
+
+const BOTTOM_NAV_HEIGHT = 45
+const TOOLBAR_OFFSET = 16 // Spacing between toolbar and instrument
+
 const instrumentConfig: Array<{ type: InstrumentType; icon: string; label: string }> = [
   { type: 'piano', icon: 'piano', label: 'Piano' },
   { type: 'guitar', icon: 'music_note', label: 'Guitar' },
@@ -50,10 +60,33 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
     }
   }
 
+  // Calculate dynamic toolbar position on mobile
+  const visibleInstrument = Object.entries(instruments).find(
+    ([_, state]) => state.isVisible
+  )?.[0] as InstrumentType | undefined
+
+  const getToolbarBottom = () => {
+    if (!isMobile || !visibleInstrument) {
+      return 80 // Default: 80px (bottom-20)
+    }
+
+    // Position above instrument: bottom nav + instrument height + offset
+    const instrumentHeight = INSTRUMENT_HEIGHTS[visibleInstrument]
+    return BOTTOM_NAV_HEIGHT + instrumentHeight + TOOLBAR_OFFSET
+    // Piano: 45 + 180 + 16 = 241px
+    // Guitar: 45 + 160 + 16 = 221px
+    // Flute: 45 + 120 + 16 = 181px
+  }
+
+  const toolbarBottom = getToolbarBottom()
+
   // Mobile: collapsed menu
   if (isMobile) {
     return (
-      <div className="fixed bottom-20 right-4 z-[1100] flex flex-col-reverse gap-2">
+      <div
+        className="fixed right-4 z-[1100] flex flex-col-reverse gap-2 transition-all duration-300"
+        style={{ bottom: `${toolbarBottom}px` }}
+      >
         {/* Expanded Menu Items - show when expanded */}
         {isExpanded && (
           <>
@@ -64,12 +97,12 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
                 handleXPClick()
                 setIsExpanded(false)
               }}
-              className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 border border-slate-600 active:scale-95 transition-transform animate-slideInUp"
+              className="flex items-center justify-center w-8 h-8 rounded-full shadow-lg bg-slate-800 border border-slate-600 active:scale-95 transition-transform animate-slideInUp"
               title={nextLesson ? `Tiếp tục học: ${nextLesson.id}` : 'Xem bài học'}
               style={{ animationDelay: '0ms' }}
             >
               <span
-                className="material-symbols-outlined text-amber-500 text-xl"
+                className="material-symbols-outlined text-amber-500 text-base"
                 style={{ fontVariationSettings: "'FILL' 1" }}
               >
                 star
@@ -88,10 +121,11 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
                   onClick={(e) => {
                     e.stopPropagation()
                     toggleInstrument(type)
+                    setIsExpanded(false) // Auto-hide menu after selection
                   }}
                   className={`
                     flex items-center justify-center
-                    w-12 h-12 rounded-full shadow-lg
+                    w-8 h-8 rounded-full shadow-lg
                     transition-transform active:scale-95
                     animate-slideInUp
                     ${
@@ -103,7 +137,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
                   title={label}
                   style={{ animationDelay: `${(index + 1) * 50}ms` }}
                 >
-                  <span className="material-symbols-outlined text-xl">{icon}</span>
+                  <span className="material-symbols-outlined text-base">{icon}</span>
                   {isVisible && (
                     <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" />
                   )}
@@ -118,11 +152,11 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
                 setModalOpen(true)
                 setIsExpanded(false)
               }}
-              className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-rose-600 text-white active:scale-95 transition-transform border border-rose-500 animate-slideInUp"
+              className="flex items-center justify-center w-8 h-8 rounded-full shadow-lg bg-rose-600 text-white active:scale-95 transition-transform border border-rose-500 animate-slideInUp"
               title="Bug Report"
               style={{ animationDelay: `${(instrumentConfig.length + 1) * 50}ms` }}
             >
-              <span className="material-symbols-outlined text-xl">bug_report</span>
+              <span className="material-symbols-outlined text-base">bug_report</span>
               {errorCount > 0 && (
                 <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-amber-400 text-slate-900 text-[10px] font-bold rounded-full min-w-[20px] text-center">
                   {errorCount > 9 ? '9+' : errorCount}
@@ -131,7 +165,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
             </button>
 
             {/* Divider */}
-            <div className="h-px bg-slate-600 my-1 w-12 self-center animate-slideInUp" style={{ animationDelay: `${(instrumentConfig.length + 2) * 50}ms` }} />
+            <div className="h-px bg-slate-600 my-1 w-8 self-center animate-slideInUp" style={{ animationDelay: `${(instrumentConfig.length + 2) * 50}ms` }} />
 
             {/* VN Mode Toggle */}
             <button
@@ -141,7 +175,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
               }}
               className={`
                 flex items-center justify-center
-                w-12 h-12 rounded-full shadow-lg
+                w-8 h-8 rounded-full shadow-lg
                 transition-transform active:scale-95
                 animate-slideInUp
                 ${
@@ -162,11 +196,11 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
                 e.stopPropagation()
                 toggleTheme()
               }}
-              className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 text-slate-300 border border-slate-600 active:scale-95 transition-transform animate-slideInUp"
+              className="flex items-center justify-center w-8 h-8 rounded-full shadow-lg bg-slate-800 text-slate-300 border border-slate-600 active:scale-95 transition-transform animate-slideInUp"
               title={`Theme: ${theme}`}
               style={{ animationDelay: `${(instrumentConfig.length + 4) * 50}ms` }}
             >
-              <span className="material-symbols-outlined text-xl">
+              <span className="material-symbols-outlined text-base">
                 {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
               </span>
             </button>
@@ -178,7 +212,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
           onClick={() => setIsExpanded(!isExpanded)}
           className={`
             flex items-center justify-center
-            w-14 h-14 rounded-full shadow-xl
+            w-10 h-10 rounded-full shadow-xl
             transition-all duration-300
             ${
               isExpanded
@@ -188,7 +222,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
           `}
           title={isExpanded ? 'Đóng menu' : 'Mở menu công cụ'}
         >
-          <span className="material-symbols-outlined text-2xl">
+          <span className="material-symbols-outlined text-lg">
             {isExpanded ? 'close' : 'apps'}
           </span>
         </button>

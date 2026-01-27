@@ -13,6 +13,7 @@ const SubmodulePage = lazy(() => import('./pages/SubmodulePage'))
 const PracticePage = lazy(() => import('./pages/PracticePage'))
 const ComposePage = lazy(() => import('./pages/ComposePage'))
 const AbcEditorPage = lazy(() => import('./pages/AbcEditorPage'))
+const TestUIPage = lazy(() => import('./pages/TestUIPage'))
 // Profile page is now eagerly loaded as home page
 
 // Lazy load floating instruments container
@@ -85,6 +86,7 @@ function App() {
             <Route path="/practice" element={<PracticePage />} />
             <Route path="/demo" element={<ComposePage />} />
             <Route path="/abc-editor" element={<AbcEditorPage />} />
+            <Route path="/test-ui" element={<TestUIPage />} />
           </Routes>
         </Suspense>
       </MainLayout>

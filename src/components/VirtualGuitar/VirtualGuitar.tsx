@@ -25,8 +25,8 @@ const TOTAL_FRETS = 8
 // SVG Dimensions - more compact like Module 5
 const WIDTH = 600
 const HEIGHT = 120
-const PADDING_X = 30
-const PADDING_Y = 15
+const PADDING_X = 15 // Reduced from 30 for better mobile scale
+const PADDING_Y = 8  // Reduced from 15
 const FRETBOARD_WIDTH = WIDTH - PADDING_X * 2
 const FRETBOARD_HEIGHT = HEIGHT - PADDING_Y * 2
 const STRING_SPACING = FRETBOARD_HEIGHT / 5
@@ -89,7 +89,7 @@ export const VirtualGuitar: React.FC<VirtualGuitarProps> = ({
         </span>
       </div>
 
-      <div className="p-3">
+      <div className="p-1">
         {/* Fretboard */}
         <div className="relative">
           <svg
