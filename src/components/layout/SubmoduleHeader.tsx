@@ -67,7 +67,9 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
           className="flex items-center gap-1.5 hover:bg-[#30e8e8]/10 dark:hover:bg-[#30e8e8]/10 px-2 py-1 -mx-2 rounded transition-colors min-w-0"
           title="Open module navigation"
         >
-          <span className="material-symbols-outlined text-[16px] text-[#30e8e8] flex-shrink-0">folder</span>
+          <span className="material-symbols-outlined text-[16px] text-[#30e8e8] flex-shrink-0">
+            folder
+          </span>
           <span className="text-[#1f9d9d] dark:text-[#30e8e8] whitespace-nowrap">M{moduleId}</span>
           <span className="text-slate-300 dark:text-slate-600">›</span>
           <span className="text-slate-700 dark:text-slate-200 font-semibold truncate">
@@ -86,12 +88,12 @@ export const SubmoduleHeader: React.FC<SubmoduleHeaderProps> = ({
       </div>
 
       {/* Thin section progress bar - constrained to header width */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800">
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-800 overflow-hidden">
         <div
           className="h-full bg-gradient-to-r from-[#30e8e8] to-[#26d4d4] transition-all duration-500 ease-out"
-          style={{ width: `${sectionProgress}%` }}
+          style={{ width: `${Math.min(100, sectionProgress)}%` }}
           role="progressbar"
-          aria-valuenow={Math.round(sectionProgress)}
+          aria-valuenow={Math.round(Math.min(100, sectionProgress))}
           aria-valuemin={0}
           aria-valuemax={100}
           aria-label={`Section progress: ${currentSection} of ${totalSections}`}

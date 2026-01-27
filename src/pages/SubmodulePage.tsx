@@ -38,6 +38,7 @@ export const SubmodulePage: React.FC = () => {
 
   // Section tracking for progress bar
   const [currentSection, setCurrentSection] = React.useState(0)
+  const [totalSections, setTotalSections] = React.useState(0)
 
   // Get current submodule data
   const submodule = submoduleId ? findSubmodule(submoduleId) : undefined
@@ -57,7 +58,7 @@ export const SubmodulePage: React.FC = () => {
     if (submoduleId) {
       completeSubmodule(submoduleId)
       // Navigate to next submodule if available
-     if (nextSubmodule) {
+      if (nextSubmodule) {
         const nextModuleId = parseInt(nextSubmodule.id.split('.')[0])
         navigate(`/module/${nextModuleId}/${nextSubmodule.id}`)
       }
@@ -94,20 +95,19 @@ export const SubmodulePage: React.FC = () => {
   const shortName = submodule ? getShortLessonName(submodule.title) : ''
 
   return (
-    <AppLayout 
-      showMobileNav={true} 
+    <AppLayout
+      showMobileNav={true}
       hideMobileHeader={true}
       headerSlot={
         <SubmoduleHeader
           moduleId={module.id}
           submoduleId={submodule.id}
           shortName={shortName}
-          totalSections={submodule.sections.length}
+          totalSections={totalSections || submodule.sections.length}
           currentSection={currentSection}
         />
       }
     >
-
       {/* Container - full width on mobile with padding only on desktop */}
       <div className="md:p-4 space-y-4">
         {/* Lesson Content Card - edge-to-edge on mobile */}
@@ -146,8 +146,8 @@ export const SubmodulePage: React.FC = () => {
                       })
                     }, 300)
                   }}
-                  onVisibleCountChange={() => {
-                    // Progress tracking no longer needed
+                  onVisibleCountChange={(_, total) => {
+                    setTotalSections(total)
                   }}
                   onCurrentSectionChange={setCurrentSection}
                   externalScrollToSection={undefined}
