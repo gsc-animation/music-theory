@@ -273,4 +273,22 @@ C D E F | G A B c|]`,
       questionCount: 10,
     },
   ],
+  // New game configuration format - 3-tier journey for Module 1.2
+  games: [
+    {
+      type: 'note-hunt',
+      labelVi: 'Săn Nốt',
+      description: 'Tìm tất cả nốt C/F trên Piano',
+    },
+    {
+      type: 'listen-match',
+      labelVi: 'Nghe Quãng Tám',
+      description: 'Nghe nốt và chọn đúng quãng tám',
+    },
+    {
+      type: 'same-different',
+      labelVi: 'Giống hay Khác',
+      description: 'So sánh tên của 2 nốt nhạc',
+    },
+  ],
 }

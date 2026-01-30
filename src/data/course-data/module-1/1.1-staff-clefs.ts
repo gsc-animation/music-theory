@@ -16,7 +16,7 @@ export const SUBMODULE_1_1: Submodule = {
   id: '1.1',
   title: 'The Staff & Clefs',
   description: 'Understanding the 5 lines, Treble Clef (G Clef), and Bass Clef (F Clef)',
-  sections: ['theory', 'piano', 'abcDemo'],
+  sections: ['theory', 'piano', 'abcDemo', 'practice'],
   theoryContent: `
 ## 1. Khuông nhạc (The Musical Staff)
 
@@ -375,6 +375,138 @@ A,, C, E, G,|]`,
       type: 'note-id',
       notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
       questionCount: 5,
+    },
+  ],
+  // Interleaved Progressive Pattern: Master each note count before advancing
+  // 2 notes → 3 notes → 5 notes → 7 notes
+  // Each level: Recognition → Play → Place (12 games total)
+  games: [
+    // ===== LEVEL 1: 2 Notes (C-D) =====
+    {
+      type: 'note-id',
+      labelVi: '🎵 Nhận Diện: 2 Nốt',
+      descriptionVi: 'Bắt đầu với Đô & Rê (C-D)',
+      config: {
+        notes: ['C4', 'D4'],
+        questionCount: 4,
+        xpReward: 10,
+      },
+    },
+    {
+      type: 'instrument-match',
+      labelVi: '🎹 Chơi Nhạc Cụ: 2 Nốt',
+      descriptionVi: 'Nhấn phím C hoặc D trên Piano',
+      config: {
+        notes: ['C4', 'D4'],
+        questionCount: 4,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '📍 Đặt Nốt: 2 Nốt',
+      descriptionVi: 'Click vị trí C hoặc D trên khuông',
+      config: {
+        notes: ['C4', 'D4'],
+        questionCount: 4,
+        xpReward: 20,
+      },
+    },
+
+    // ===== LEVEL 2: 3 Notes (C-D-E) =====
+    {
+      type: 'note-id',
+      labelVi: '🎵 Nhận Diện: 3 Nốt',
+      descriptionVi: 'Thêm Mi (C-D-E)',
+      config: {
+        notes: ['C4', 'D4', 'E4'],
+        questionCount: 4,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'instrument-match',
+      labelVi: '🎹 Chơi Nhạc Cụ: 3 Nốt',
+      descriptionVi: 'Chơi C, D hoặc E trên Piano',
+      config: {
+        notes: ['C4', 'D4', 'E4'],
+        questionCount: 4,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '📍 Đặt Nốt: 3 Nốt',
+      descriptionVi: 'Click vị trí C, D hoặc E trên khuông',
+      config: {
+        notes: ['C4', 'D4', 'E4'],
+        questionCount: 4,
+        xpReward: 25,
+      },
+    },
+
+    // ===== LEVEL 3: 5 Notes (C-D-E-F-G) =====
+    {
+      type: 'note-id',
+      labelVi: '🎵 Nhận Diện: 5 Nốt',
+      descriptionVi: 'Mở rộng lên Đô-Rê-Mi-Fa-Sol',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4'],
+        questionCount: 5,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'instrument-match',
+      labelVi: '🎹 Chơi Nhạc Cụ: 5 Nốt',
+      descriptionVi: 'Chơi 5 nốt đầu tiên trên Piano',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4'],
+        questionCount: 5,
+        xpReward: 25,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '📍 Đặt Nốt: 5 Nốt',
+      descriptionVi: 'Click đúng vị trí 5 nốt trên khuông',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4'],
+        questionCount: 5,
+        xpReward: 30,
+      },
+    },
+
+    // ===== LEVEL 4: 7 Notes (C-D-E-F-G-A-B) - FULL SCALE =====
+    {
+      type: 'note-id',
+      labelVi: '🎵 Nhận Diện: 7 Nốt',
+      descriptionVi: 'Toàn bộ nốt cơ bản (C-D-E-F-G-A-B)',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
+        questionCount: 7,
+        xpReward: 30,
+      },
+    },
+    {
+      type: 'instrument-match',
+      labelVi: '🎹 Chơi Nhạc Cụ: 7 Nốt',
+      descriptionVi: 'Chơi tất cả 7 nốt trên Piano',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
+        questionCount: 7,
+        xpReward: 40,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '📍 Đặt Nốt: 7 Nốt',
+      descriptionVi: 'Thử thách cuối - Đặt tất cả 7 nốt!',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
+        questionCount: 7,
+        xpReward: 50,
+      },
     },
   ],
 }

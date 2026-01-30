@@ -345,4 +345,17 @@ K:C
       questionCount: 10,
     },
   ],
+  // New game configuration format - 3-tier journey for Module 1.3
+  games: [
+    {
+      type: 'accidental-spotter',
+      labelVi: 'Soi Dấu Hóa',
+      description: 'Nhận diện nốt có dấu hóa trên khuông nhạc',
+    },
+    {
+      type: 'black-key-ninja',
+      labelVi: 'Ninja Phím Đen',
+      description: 'Tốc độ bấm phím đen trên Piano và Guitar',
+    },
+  ],
 }

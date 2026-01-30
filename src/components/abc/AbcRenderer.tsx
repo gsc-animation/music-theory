@@ -261,7 +261,6 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
 
   // Stop function for this instance
   const stopPlayback = useCallback(() => {
-    console.log('🛑 [AbcRenderer] Stopping playback and re-rendering with clickListener')
     if (synthRef.current) {
       synthRef.current.stop()
       synthRef.current = null

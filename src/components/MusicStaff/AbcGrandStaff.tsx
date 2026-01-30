@@ -550,7 +550,6 @@ ${abcNotes} |`
         }
       )
       setControllerReady(true)
-      console.log('AbcGrandStaff: Controller loaded with cursor control')
     }, 100)
 
     return () => {
@@ -628,7 +627,6 @@ ${abcNotes} |`
         await synthControlRef.current!.setTune(visualObjRef.current!, false, {
           chordsOff: false,
         })
-        console.log('AbcGrandStaff: Audio ready')
       } catch (err) {
         console.warn('AbcGrandStaff: Audio setup error:', err)
       }
