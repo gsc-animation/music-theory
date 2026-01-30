@@ -1,13 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import type { PracticeSheet, PracticeCategory, ButterworthEntry } from '../../data/practiceLibrary'
+import type {
+  PracticeSheet,
+  PracticeCategory,
+  ButterworthEntry,
+  SahajaYogaEntry,
+} from '../../data/practiceLibrary'
+
+// Union type for lazy-loaded entries
+type LazyEntry = ButterworthEntry | SahajaYogaEntry
 
 interface SheetSelectorModalProps {
   isOpen: boolean
   onClose: () => void
   category: PracticeCategory | null
   onSelectSheet: (sheet: PracticeSheet) => void
-  // For Butterworth lazy loading
-  butterworthEntries?: ButterworthEntry[]
+  // For lazy-loaded collections (Butterworth, Sahaja Yoga, etc.)
+  butterworthEntries?: LazyEntry[]
   onLoadButterworth?: (filename: string) => Promise<string>
 }
 
@@ -50,24 +58,28 @@ export const SheetSelectorModal: React.FC<SheetSelectorModalProps> = ({
   )
 
   const handleButterworthClick = useCallback(
-    async (entry: ButterworthEntry) => {
+    async (entry: LazyEntry) => {
       if (!onLoadButterworth) return
 
       setLoadingSheet(entry.filename)
       try {
         const abc = await onLoadButterworth(entry.filename)
+        // Check if entry has 'key' property (Butterworth) or not (Sahaja Yoga)
+        const hasKey = 'key' in entry && entry.key
+        // Extract clean ID from filename (e.g., "./music-sheets/.../raga-bupali.abc" -> "raga-bupali")
+        const cleanId = entry.filename.split('/').pop()?.replace('.abc', '') || entry.filename
         const sheet: PracticeSheet = {
-          id: entry.filename,
+          id: cleanId,
           title: entry.title,
-          description: `Key: ${entry.key} - Traditional folk song`,
+          description: hasKey ? `Key: ${entry.key} - Traditional folk song` : 'Traditional Indian raga',
           abc,
           difficulty: 'intermediate',
-          source: 'butterworth',
+          source: hasKey ? 'butterworth' : 'curriculum',
         }
         onSelectSheet(sheet)
         onClose()
       } catch (error) {
-        console.error('Failed to load Butterworth song:', error)
+        console.error('Failed to load song:', error)
       } finally {
         setLoadingSheet(null)
       }
@@ -87,7 +99,7 @@ export const SheetSelectorModal: React.FC<SheetSelectorModalProps> = ({
   const filteredButterworth = butterworthEntries?.filter(
     (entry) =>
       entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entry.key.toLowerCase().includes(searchQuery.toLowerCase())
+      ('key' in entry && entry.key?.toLowerCase().includes(searchQuery.toLowerCase()))
   )
 
   return (
@@ -159,7 +171,9 @@ export const SheetSelectorModal: React.FC<SheetSelectorModalProps> = ({
                     <h4 className="text-slate-900 dark:text-white font-medium text-sm truncate">
                       {entry.title}
                     </h4>
-                    <p className="text-slate-500 dark:text-slate-400 text-xs">Key: {entry.key}</p>
+                    {'key' in entry && entry.key && (
+                      <p className="text-slate-500 dark:text-slate-400 text-xs">Key: {entry.key}</p>
+                    )}
                   </div>
                 </button>
               ))}

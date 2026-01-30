@@ -288,8 +288,8 @@ export const AbcGrandStaff: React.FC<AbcGrandStaffProps> = ({
       // Split into header and body (lines starting with letters vs music content)
       const lines = abc.split('\n')
       const processedLines = lines.map((line) => {
-        // Skip header lines (X:, T:, M:, L:, Q:, K:, %%, V:, [V:])
-        if (/^[A-Z]:/.test(line) || /^%%/.test(line) || /^\[V:/.test(line)) {
+        // Skip header lines (X:, T:, M:, L:, Q:, K:, %%, V:, [V:]) AND lyrics lines (w:)
+        if (/^[A-Z]:/.test(line) || /^%%/.test(line) || /^\[V:/.test(line) || /^w:/.test(line)) {
           return line
         }
 
@@ -598,17 +598,14 @@ ${abcNotes} |`
       const rendered = abcjs.renderAbc(paperId, abc, {
         responsive: 'resize',
         add_classes: true,
-        staffwidth: 740,
+        staffwidth: 1000,
         paddingtop: 5,
         paddingbottom: 5,
         paddingleft: 10,
         paddingright: 10,
         clickListener: handleNoteClick,
-        wrap: {
-          minSpacing: 1.8,
-          maxSpacing: 2.7,
-          preferredMeasuresPerLine: 4,
-        },
+        // Note: Do NOT use wrap option - it overrides the ABC source line breaks
+        // The ABC file already has proper line breaks (4 measures per line)
       })
 
       if (rendered[0]) {
@@ -679,8 +676,15 @@ ${abcNotes} |`
         }
         .abc-grand-staff text.abcjs-annotation {
           fill: #0891b2;
-          font-size: 7px;
-          font-weight: bold;
+          font-size: 10px;
+          font-weight: normal !important;
+        }
+        /* Lyrics text styling - override abcjs default bold */
+        .abc-grand-staff .abcjs-lyric text,
+        .abc-grand-staff text.abcjs-lyric {
+          font-weight: normal !important;
+          font-size: 12px !important;
+          fill: #334155 !important;
         }
         .abc-grand-staff .abcjs-note.abcjs-highlight path {
           fill: #0891b2 !important;
@@ -823,6 +827,13 @@ ${abcNotes} |`
         }
         .dark .abc-grand-staff text.abcjs-annotation {
           fill: #30e8e8;
+        }
+        /* Dark mode lyrics styling */
+        .dark .abc-grand-staff .abcjs-lyric text,
+        .dark .abc-grand-staff text.abcjs-lyric {
+          font-weight: normal !important;
+          font-size: 12px !important;
+          fill: #cbd5e1 !important;
         }
         .dark .abc-grand-staff .abcjs-note.abcjs-highlight path {
           fill: #30e8e8 !important;

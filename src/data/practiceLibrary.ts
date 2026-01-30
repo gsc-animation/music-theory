@@ -11,6 +11,12 @@ const butterworthModules = import.meta.glob('./music-sheets/butterworth/*.abc', 
   import: 'default',
 })
 
+// Dynamic imports for Sahaja Yoga Songs collection
+const sahajaYogaModules = import.meta.glob('./music-sheets/sahaja-yoga-songs/*.abc', {
+  query: '?raw',
+  import: 'default',
+})
+
 export interface PracticeSheet {
   id: string
   title: string
@@ -191,6 +197,68 @@ export function createButterworthCategory(): Omit<PracticeCategory, 'sheets'> & 
     isLazy: true,
     getSheets: getButterworthList,
     loadSheet: loadButterworthSong,
+  }
+}
+
+/**
+ * Sahaja Yoga Songs metadata
+ */
+export interface SahajaYogaEntry {
+  filename: string
+  title: string
+}
+
+/**
+ * Parse Sahaja Yoga filename to extract title
+ * Format: {title}.abc (kebab-case)
+ */
+export function parseSahajaYogaFilename(filename: string): SahajaYogaEntry {
+  const basename = filename.split('/').pop()?.replace('.abc', '') || ''
+  const title = basename
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+  return { filename, title }
+}
+
+/**
+ * Get list of all Sahaja Yoga song filenames
+ */
+export function getSahajaYogaList(): SahajaYogaEntry[] {
+  return Object.keys(sahajaYogaModules).map((path) => parseSahajaYogaFilename(path))
+}
+
+/**
+ * Load a Sahaja Yoga song by filename
+ */
+export async function loadSahajaYogaSong(filename: string): Promise<string> {
+  const loader = sahajaYogaModules[filename]
+  if (!loader) {
+    throw new Error(`Sahaja Yoga song not found: ${filename}`)
+  }
+  return (await loader()) as string
+}
+
+/**
+ * Create Sahaja Yoga Songs category (lazy loaded)
+ */
+export function createSahajaYogaCategory(): Omit<PracticeCategory, 'sheets'> & {
+  isLazy: true
+  getSheets: () => SahajaYogaEntry[]
+  loadSheet: (filename: string) => Promise<string>
+} {
+  return {
+    id: 7,
+    name: 'Sahaja Yoga Songs',
+    nameVi: 'Sahaja Yoga Songs',
+    description: 'Traditional Indian ragas for meditation',
+    descriptionVi: 'Những bản Raga truyền thống Ấn Độ cho thiền định',
+    icon: 'self_improvement',
+    color: 'from-purple-500 to-indigo-600',
+    difficulty: 'intermediate',
+    isLazy: true,
+    getSheets: getSahajaYogaList,
+    loadSheet: loadSahajaYogaSong,
   }
 }
 

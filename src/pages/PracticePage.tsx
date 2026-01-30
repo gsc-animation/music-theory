@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { AppLayout } from '../components/layout/AppLayout'
 import { SimpleHeader } from '../components/layout/SimpleHeader'
 import { useGameStore } from '../stores/useGameStore'
@@ -9,9 +10,15 @@ import { ConfettiExplosion } from '../components/ui/ConfettiExplosion'
 import { MusicCategoryCard, SheetSelectorModal, NowPlayingBanner } from '../components/practice'
 import PRACTICE_CATEGORIES, {
   createButterworthCategory,
+  loadButterworthSong,
+  parseButterworthFilename,
+  createSahajaYogaCategory,
+  loadSahajaYogaSong,
+  parseSahajaYogaFilename,
   type PracticeSheet,
   type PracticeCategory,
   type ButterworthEntry,
+  type SahajaYogaEntry,
 } from '../data/practiceLibrary'
 
 const AbcGrandStaff = React.lazy(() => import('../components/MusicStaff/AbcGrandStaff'))
@@ -23,6 +30,7 @@ const HorizontalSaoTrucVisualizer = React.lazy(
  * PracticePage - Music Library with dynamic sheet loading
  */
 export const PracticePage: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
   const isPlaying = useGameStore((state) => state.isPlaying)
   const streak = useGameStore((state) => state.streak)
 
@@ -34,10 +42,16 @@ export const PracticePage: React.FC = () => {
   const [selectedSheet, setSelectedSheet] = useState<PracticeSheet | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [isButterworthModal, setIsButterworthModal] = useState(false)
+  const urlLoadedRef = useRef(false)
 
   // Butterworth category (lazy)
   const butterworthCategory = useMemo(() => createButterworthCategory(), [])
   const [butterworthEntries, setButterworthEntries] = useState<ButterworthEntry[]>([])
+
+  // Sahaja Yoga category (lazy)
+  const sahajaYogaCategory = useMemo(() => createSahajaYogaCategory(), [])
+  const [sahajaYogaEntries, setSahajaYogaEntries] = useState<SahajaYogaEntry[]>([])
+  const [isSahajaYogaModal, setIsSahajaYogaModal] = useState(false)
 
   React.useEffect(() => {
     if (isPlaying && streak > 0 && streak % 10 === 0) {
@@ -45,15 +59,64 @@ export const PracticePage: React.FC = () => {
     }
   }, [streak, isPlaying])
 
+  // Load sheet from URL on mount
+  useEffect(() => {
+    if (urlLoadedRef.current) return
+    urlLoadedRef.current = true
+
+    const sheetId = searchParams.get('sheet')
+    if (!sheetId) return
+
+    // Check curriculum categories first
+    for (const category of PRACTICE_CATEGORIES) {
+      const found = category.sheets.find((s) => s.id === sheetId)
+      if (found) {
+        setSelectedSheet(found)
+        return
+      }
+    }
+
+    // Check Butterworth collection
+    const butterworthPath = `./music-sheets/butterworth/${sheetId}.abc`
+    loadButterworthSong(butterworthPath)
+      .then((abc) => {
+        const entry = parseButterworthFilename(butterworthPath)
+        setSelectedSheet({
+          id: sheetId,
+          title: entry.title,
+          description: `Folk song in ${entry.key}`,
+          abc,
+          difficulty: 'intermediate',
+          source: 'butterworth',
+        })
+      })
+      .catch(() => {
+        // Try Sahaja Yoga collection
+        const sahajaPath = `./music-sheets/sahaja-yoga-songs/${sheetId}.abc`
+        loadSahajaYogaSong(sahajaPath)
+          .then((abc) => {
+            const entry = parseSahajaYogaFilename(sahajaPath)
+            setSelectedSheet({
+              id: sheetId,
+              title: entry.title,
+              description: 'Traditional Indian raga',
+              abc,
+              difficulty: 'intermediate',
+              source: 'curriculum',
+            })
+          })
+          .catch(() => {
+            console.warn(`Sheet not found: ${sheetId}`)
+          })
+      })
+  }, [searchParams])
+
   // Handle category click
-  const handleCategoryClick = useCallback(
-    (category: PracticeCategory) => {
-      setSelectedCategory(category)
-      setIsButterworthModal(false)
-      setModalOpen(true)
-    },
-    []
-  )
+  const handleCategoryClick = useCallback((category: PracticeCategory) => {
+    setSelectedCategory(category)
+    setIsButterworthModal(false)
+    setModalOpen(true)
+  }, [])
 
   // Handle Butterworth category click
   const handleButterworthClick = useCallback(() => {
@@ -73,18 +136,46 @@ export const PracticePage: React.FC = () => {
       sheets: [], // Empty - using butterworthEntries instead
     })
     setIsButterworthModal(true)
+    setIsSahajaYogaModal(false)
     setModalOpen(true)
   }, [butterworthCategory, butterworthEntries.length])
 
-  // Handle sheet selection
-  const handleSelectSheet = useCallback((sheet: PracticeSheet) => {
-    setSelectedSheet(sheet)
-  }, [])
+  // Handle Sahaja Yoga category click
+  const handleSahajaYogaClick = useCallback(() => {
+    if (sahajaYogaEntries.length === 0) {
+      setSahajaYogaEntries(sahajaYogaCategory.getSheets())
+    }
+    setSelectedCategory({
+      id: sahajaYogaCategory.id,
+      name: sahajaYogaCategory.name,
+      nameVi: sahajaYogaCategory.nameVi,
+      description: sahajaYogaCategory.description,
+      descriptionVi: sahajaYogaCategory.descriptionVi,
+      icon: sahajaYogaCategory.icon,
+      color: sahajaYogaCategory.color,
+      difficulty: sahajaYogaCategory.difficulty,
+      sheets: [],
+    })
+    setIsSahajaYogaModal(true)
+    setIsButterworthModal(false)
+    setModalOpen(true)
+  }, [sahajaYogaCategory, sahajaYogaEntries.length])
 
-  // Clear selected sheet
+  // Handle sheet selection - also update URL for sharing
+  const handleSelectSheet = useCallback(
+    (sheet: PracticeSheet) => {
+      setSelectedSheet(sheet)
+      // Update URL with sheet ID for sharing
+      setSearchParams({ sheet: sheet.id }, { replace: true })
+    },
+    [setSearchParams]
+  )
+
+  // Clear selected sheet - also clear URL
   const handleClearSheet = useCallback(() => {
     setSelectedSheet(null)
-  }, [])
+    setSearchParams({}, { replace: true })
+  }, [setSearchParams])
 
   // Get category color for now playing banner
   const nowPlayingColor = useMemo(() => {
@@ -148,6 +239,24 @@ export const PracticePage: React.FC = () => {
               onClick={handleButterworthClick}
               isActive={selectedCategory?.id === butterworthCategory.id && isButterworthModal}
             />
+
+            {/* Sahaja Yoga Songs */}
+            <MusicCategoryCard
+              category={{
+                id: sahajaYogaCategory.id,
+                name: sahajaYogaCategory.name,
+                nameVi: sahajaYogaCategory.nameVi,
+                description: sahajaYogaCategory.description,
+                descriptionVi: sahajaYogaCategory.descriptionVi,
+                icon: sahajaYogaCategory.icon,
+                color: sahajaYogaCategory.color,
+                difficulty: sahajaYogaCategory.difficulty,
+                sheets: [],
+              }}
+              songCount={sahajaYogaEntries.length || 1}
+              onClick={handleSahajaYogaClick}
+              isActive={selectedCategory?.id === sahajaYogaCategory.id && isSahajaYogaModal}
+            />
           </div>
         </div>
 
@@ -184,10 +293,7 @@ export const PracticePage: React.FC = () => {
               </div>
             }
           >
-            <AbcGrandStaff
-              showNoteNames={showNoteNames}
-              overrideAbc={selectedSheet?.abc}
-            />
+            <AbcGrandStaff showNoteNames={showNoteNames} overrideAbc={selectedSheet?.abc} />
           </React.Suspense>
         </CollapsiblePanel>
 
@@ -211,8 +317,8 @@ export const PracticePage: React.FC = () => {
         onClose={() => setModalOpen(false)}
         category={selectedCategory}
         onSelectSheet={handleSelectSheet}
-        butterworthEntries={isButterworthModal ? butterworthEntries : undefined}
-        onLoadButterworth={isButterworthModal ? butterworthCategory.loadSheet : undefined}
+        butterworthEntries={isButterworthModal ? butterworthEntries : isSahajaYogaModal ? sahajaYogaEntries : undefined}
+        onLoadButterworth={isButterworthModal ? butterworthCategory.loadSheet : isSahajaYogaModal ? sahajaYogaCategory.loadSheet : undefined}
       />
     </AppLayout>
   )

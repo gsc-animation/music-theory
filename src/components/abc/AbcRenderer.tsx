@@ -128,7 +128,8 @@ function abcToNoteName(abcPitch: string): string {
 function injectNoteAnnotations(abc: string, notationSystem: 'latin' | 'solfege'): string {
   const lines = abc.split('\n')
   const processedLines = lines.map((line) => {
-    if (/^[A-Z]:/.test(line) || /^%%/.test(line) || /^\[V:/.test(line)) {
+    // Skip header lines AND lyrics lines (w:)
+    if (/^[A-Z]:/.test(line) || /^%%/.test(line) || /^\[V:/.test(line) || /^w:/.test(line)) {
       return line
     }
     return line.replace(
@@ -192,7 +193,7 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
     [isMobile, isTablet]
   )
 
-  // Render options with responsive staffwidth
+  // Render options with responsive staffwidth and line wrapping
   const RENDER_OPTIONS = useMemo(
     () => ({
       responsive: 'resize' as const,
@@ -202,6 +203,11 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
       paddingleft: 0,
       paddingright: 0,
       add_classes: true,
+      wrap: {
+        minSpacing: 1.5,
+        maxSpacing: 2.5,
+        preferredMeasuresPerLine: 4,
+      },
     }),
     [staffWidth]
   )
