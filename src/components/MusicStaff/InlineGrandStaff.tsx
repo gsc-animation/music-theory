@@ -418,34 +418,39 @@ export const InlineGrandStaff: React.FC<InlineGrandStaffProps> = ({
   }, [isControllerReady, processedAbc, paperId, handleNoteClick, staffWidth])
 
   return (
-    <div className={`inline-grand-staff my-6 ${className}`}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-0 p-3 bg-slate-100 dark:bg-slate-800/80 rounded-t-xl border-b border-slate-300 dark:border-slate-700">
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-teal-600 dark:text-[#30e8e8]">
-            music_note
-          </span>
-          <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+    <div className={`inline-grand-staff my-6 ${className} rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-800/95 shadow-lg shadow-slate-900/5 dark:shadow-black/20 overflow-hidden`}>
+      {/* Gradient accent bar at top - matching CollapsiblePanel */}
+      <div className="h-1 bg-gradient-to-r from-[#30e8e8] via-[#26d4d4] to-[#1f9d9d] opacity-80" />
+
+      {/* Header - matching CollapsiblePanel styling */}
+      <div className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-slate-50/80 dark:hover:bg-slate-700/30 transition-all duration-200">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#30e8e8]/10 dark:bg-[#30e8e8]/20">
+            <span className="material-symbols-outlined text-[#30e8e8] text-xl">
+              music_note
+            </span>
+          </div>
+          <span className="text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
             {title || 'Grand Staff View'}
           </span>
         </div>
-        <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+        <label className="flex items-center gap-1 cursor-pointer text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
           <input
             type="checkbox"
             checked={showNoteNames}
             onChange={(e) => setShowNoteNames(e.target.checked)}
-            className="w-3 h-3 accent-teal-600 dark:accent-[#30e8e8]"
+            className="w-3 h-3 accent-[#30e8e8]"
           />
           <span>Notes</span>
         </label>
       </div>
 
       {/* Staff container with mobile horizontal scroll */}
-      <div className="overflow-x-auto md:overflow-visible">
+      <div className="overflow-x-auto md:overflow-visible px-4 pb-4">
         <div
           id={paperId}
           ref={containerRef}
-          className="abc-paper bg-white dark:bg-slate-800/50 min-h-[150px] min-w-min overflow-hidden cursor-pointer rounded-b-xl border-x border-b border-slate-300 dark:border-transparent"
+          className="abc-paper bg-white dark:bg-slate-800/50 min-h-[150px] min-w-min overflow-hidden cursor-pointer rounded-xl border border-slate-200 dark:border-transparent"
         />
       </div>
 
