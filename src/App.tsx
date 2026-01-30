@@ -30,6 +30,7 @@ const BugReportModal = lazy(() => import('./components/ui/BugReportModal'))
 function App() {
   const theme = useSettingsStore((state) => state.theme)
   const updateStreak = useProgressStore((state) => state.updateStreak)
+  const initFromCloud = useProgressStore((state) => state.initFromCloud)
   const initializeBugReporter = useBugReportStore((state) => state.initializeInterceptors)
 
   // Initialize bug reporter on app load
@@ -41,6 +42,13 @@ function App() {
   useEffect(() => {
     updateStreak()
   }, [updateStreak])
+
+  // Initialize cloud sync on app load
+  useEffect(() => {
+    initFromCloud().catch((error) => {
+      console.warn('[App] Failed to sync from cloud:', error)
+    })
+  }, [initFromCloud])
 
   useEffect(() => {
     const root = window.document.documentElement

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { StateStorage } from 'zustand/middleware'
+import { scheduleSyncToSupabase, initializeProgressSync } from '../services/progress-sync'
 
 /**
  * IndexedDB storage adapter for Zustand
@@ -130,6 +131,10 @@ interface ProgressState extends UserProgress {
   isSubmoduleCompleted: (submoduleId: string) => boolean
   getModuleProgress: (moduleId: number) => number
   resetProgress: () => void
+
+  // Cloud sync actions
+  initFromCloud: () => Promise<void>
+  _applyMergedProgress: (progress: UserProgress) => void
 }
 
 const initialState: UserProgress = {
@@ -266,6 +271,30 @@ export const useProgressStore = create<ProgressState>()(
         }),
 
       resetProgress: () => set(initialState),
+
+      // Cloud sync actions
+      initFromCloud: async () => {
+        const currentState = get()
+        const localProgress: UserProgress = {
+          completedSubmodules: currentState.completedSubmodules,
+          completedLevels: currentState.completedLevels,
+          submoduleScores: currentState.submoduleScores,
+          totalXP: currentState.totalXP,
+          streakDays: currentState.streakDays,
+          lastActiveDate: currentState.lastActiveDate,
+          practiceSessionsCompleted: currentState.practiceSessionsCompleted,
+          totalPracticeMinutes: currentState.totalPracticeMinutes,
+          currentModuleId: currentState.currentModuleId,
+          currentSubmoduleId: currentState.currentSubmoduleId,
+        }
+
+        const mergedProgress = await initializeProgressSync(localProgress)
+        if (mergedProgress) {
+          set(mergedProgress)
+        }
+      },
+
+      _applyMergedProgress: (progress: UserProgress) => set(progress),
     }),
     {
       name: 'music-theory-progress',
@@ -304,3 +333,26 @@ function getModuleSubmoduleIds(moduleId: number): string[] {
 }
 
 export default useProgressStore
+
+/**
+ * Subscribe to store changes and sync to Supabase
+ * This runs once when the module loads
+ */
+useProgressStore.subscribe((state) => {
+  // Extract only the data fields (not actions) for syncing
+  const progressData: UserProgress = {
+    completedSubmodules: state.completedSubmodules,
+    completedLevels: state.completedLevels,
+    submoduleScores: state.submoduleScores,
+    totalXP: state.totalXP,
+    streakDays: state.streakDays,
+    lastActiveDate: state.lastActiveDate,
+    practiceSessionsCompleted: state.practiceSessionsCompleted,
+    totalPracticeMinutes: state.totalPracticeMinutes,
+    currentModuleId: state.currentModuleId,
+    currentSubmoduleId: state.currentSubmoduleId,
+  }
+
+  // Schedule debounced sync to cloud
+  scheduleSyncToSupabase(progressData)
+})

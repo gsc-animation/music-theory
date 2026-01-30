@@ -41,29 +41,6 @@ function getSemitone(note: string): number {
 }
 
 /**
- * Get interval set from notes (relative to root)
- */
-function getIntervalSet(notes: string[]): Set<number> {
-  if (notes.length === 0) return new Set()
-
-  const normalizedNotes = notes.map(normalizeNote)
-  const uniqueNotes = [...new Set(normalizedNotes)]
-
-  if (uniqueNotes.length === 0) return new Set()
-
-  const rootSemitone = getSemitone(uniqueNotes[0])
-  const intervals = new Set<number>()
-
-  uniqueNotes.forEach((note) => {
-    const semitone = getSemitone(note)
-    const interval = (semitone - rootSemitone + 12) % 12
-    intervals.add(interval)
-  })
-
-  return intervals
-}
-
-/**
  * Check if two sets of intervals match
  */
 function intervalsMatch(set1: Set<number>, set2: Set<number>): boolean {
