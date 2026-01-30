@@ -28,15 +28,36 @@ export const ProfilePage: React.FC = () => {
     return remaining > 0 ? `${hours}h ${remaining}p` : `${hours} giờ`
   }
 
-  const handleReset = () => {
-    if (
-      window.confirm(
-        'Bạn có chắc muốn xóa toàn bộ tiến trình học? Hành động này không thể hoàn tác.'
-      )
-    ) {
+  // Two-click confirmation for reset
+  const [confirmReset, setConfirmReset] = React.useState(false)
+  const confirmTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleResetClick = () => {
+    if (confirmReset) {
+      // Second click - execute reset
       resetProgress()
+      setConfirmReset(false)
+      if (confirmTimeoutRef.current) {
+        clearTimeout(confirmTimeoutRef.current)
+      }
+    } else {
+      // First click - show confirmation state
+      setConfirmReset(true)
+      // Auto-reset after 5 seconds
+      confirmTimeoutRef.current = setTimeout(() => {
+        setConfirmReset(false)
+      }, 5000)
     }
   }
+
+  // Cleanup timeout on unmount
+  React.useEffect(() => {
+    return () => {
+      if (confirmTimeoutRef.current) {
+        clearTimeout(confirmTimeoutRef.current)
+      }
+    }
+  }, [])
 
   // Calculate module-level stats
   const moduleStats = COURSE_MODULES.map((module) => {
@@ -182,12 +203,18 @@ export const ProfilePage: React.FC = () => {
                 điểm luyện tập. Hành động này không thể hoàn tác.
               </p>
               <button
-                onClick={handleReset}
-                className="px-4 py-2.5 bg-rose-100 text-rose-700 rounded-xl font-semibold hover:bg-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50 transition-all active:scale-95"
+                onClick={handleResetClick}
+                className={`px-4 py-2.5 rounded-xl font-semibold transition-all active:scale-95 ${
+                  confirmReset
+                    ? 'bg-rose-600 text-white hover:bg-rose-700 animate-pulse'
+                    : 'bg-rose-100 text-rose-700 hover:bg-rose-200 dark:bg-rose-900/30 dark:text-rose-300 dark:hover:bg-rose-900/50'
+                }`}
               >
                 <span className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-lg">delete_forever</span>
-                  Xóa Toàn Bộ Tiến Trình
+                  <span className="material-symbols-outlined text-lg">
+                    {confirmReset ? 'warning' : 'delete_forever'}
+                  </span>
+                  {confirmReset ? 'Nhấn lần nữa để xác nhận!' : 'Xóa Toàn Bộ Tiến Trình'}
                 </span>
               </button>
             </div>

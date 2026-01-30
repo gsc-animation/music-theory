@@ -291,7 +291,22 @@ export const useProgressStore = create<ProgressState>()(
           }
         }),
 
-      resetProgress: () => set(initialState),
+      resetProgress: () => {
+        // Reset local state
+        set(initialState)
+        // Immediately sync reset to Supabase (bypass debounce to ensure it completes)
+        import('../services/progress-sync').then(({ saveProgressToSupabase }) => {
+          saveProgressToSupabase(initialState).then((success) => {
+            if (success) {
+              console.log('[ProgressStore] 🗑️ Progress reset synced to Supabase')
+            }
+          })
+        })
+        // Also clear any bypass-quiz flags from localStorage
+        Object.keys(localStorage)
+          .filter((key) => key.startsWith('bypass-quiz-'))
+          .forEach((key) => localStorage.removeItem(key))
+      },
 
       // Cloud sync actions
       initFromCloud: async () => {

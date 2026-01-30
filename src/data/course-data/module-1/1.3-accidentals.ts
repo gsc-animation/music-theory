@@ -345,17 +345,104 @@ K:C
       questionCount: 10,
     },
   ],
-  // New game configuration format - 3-tier journey for Module 1.3
+  // Interleaved Progressive Pattern: 2 Sharps → 3 Flats → 5 Black Keys + Naturals
+  // Each level: Recognition → Recall → Application (9 games total, 195 XP)
+  // NOTE: 'the-editor' game type doesn't exist yet - using 'staff-placement' as placeholder
   games: [
+    // ===== LEVEL 1: 2 Sharps (C#, F#) =====
     {
       type: 'accidental-spotter',
-      labelVi: 'Soi Dấu Hóa',
-      description: 'Nhận diện nốt có dấu hóa trên khuông nhạc',
+      labelVi: '👁️ Soi Dấu Hóa: Mức 1',
+      descriptionVi: 'Nhận diện C#, F#',
+      config: {
+        notes: ['C#4', 'F#4'],
+        questionCount: 4,
+        xpReward: 10,
+      },
     },
     {
       type: 'black-key-ninja',
-      labelVi: 'Ninja Phím Đen',
-      description: 'Tốc độ bấm phím đen trên Piano và Guitar',
+      labelVi: '🥷 Ninja Phím Đen: Mức 1',
+      descriptionVi: 'Chơi C#, F# trên Piano',
+      config: {
+        notes: ['C#4', 'F#4'],
+        questionCount: 4,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '✏️ Biên Tập Viên: Mức 1',
+      descriptionVi: 'Đặt dấu # vào C, F',
+      config: {
+        notes: ['C#4', 'F#4'],
+        questionCount: 4,
+        xpReward: 20,
+      },
+    },
+
+    // ===== LEVEL 2: 3 Flats (Bb, Eb, Ab) =====
+    {
+      type: 'accidental-spotter',
+      labelVi: '👁️ Soi Dấu Hóa: Mức 2',
+      descriptionVi: 'Nhận diện Bb, Eb, Ab',
+      config: {
+        notes: ['Bb3', 'Bb4', 'Eb4', 'Ab4'],
+        questionCount: 5,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'black-key-ninja',
+      labelVi: '🥷 Ninja Phím Đen: Mức 2',
+      descriptionVi: 'Chơi 3 nốt giáng',
+      config: {
+        notes: ['Bb3', 'Bb4', 'Eb4', 'Ab4'],
+        questionCount: 5,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '✏️ Biên Tập Viên: Mức 2',
+      descriptionVi: 'Đặt dấu ♭',
+      config: {
+        notes: ['Bb3', 'Bb4', 'Eb4', 'Ab4'],
+        questionCount: 5,
+        xpReward: 25,
+      },
+    },
+
+    // ===== LEVEL 3: 5 Black Keys + Naturals =====
+    {
+      type: 'accidental-spotter',
+      labelVi: '👁️ Soi Dấu Hóa: Mức 3',
+      descriptionVi: 'Tất cả dấu hóa',
+      config: {
+        notes: ['C#4', 'D#4', 'F#4', 'G#4', 'A#4', 'Db4', 'Eb4', 'Gb4', 'Ab4', 'Bb4'],
+        questionCount: 6,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'black-key-ninja',
+      labelVi: '🥷 Ninja Phím Đen: Mức 3',
+      descriptionVi: '5 phím đen + dấu bình',
+      config: {
+        notes: ['C#4', 'D#4', 'F#4', 'G#4', 'A#4', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'],
+        questionCount: 6,
+        xpReward: 30,
+      },
+    },
+    {
+      type: 'staff-placement',
+      labelVi: '✏️ Biên Tập Viên: Mức 3',
+      descriptionVi: 'Viết melody với dấu hóa',
+      config: {
+        notes: ['C#4', 'D#4', 'F#4', 'G#4', 'A#4', 'Db4', 'Eb4', 'Gb4', 'Ab4', 'Bb4'],
+        questionCount: 6,
+        xpReward: 40,
+      },
     },
   ],
 }

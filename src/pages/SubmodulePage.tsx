@@ -37,8 +37,10 @@ export const SubmodulePage: React.FC = () => {
   const { setCurrentPosition, completeSubmodule, completedSubmodules } = useProgressStore()
 
   const [showNoteNames, setShowNoteNames] = React.useState(false)
-  // Track whether theory section is complete (to reveal games)
+  // Track whether theory section is complete (to reveal games permanently)
   const [theoryComplete, setTheoryComplete] = React.useState(false)
+  // Track session-only bypass (temporary - resets on refresh)
+  const [sessionBypass, setSessionBypass] = React.useState(false)
   const interactiveRef = React.useRef<HTMLDivElement>(null)
 
   // Section tracking for progress bar
@@ -51,12 +53,29 @@ export const SubmodulePage: React.FC = () => {
   const nextSubmodule = submoduleId ? getNextSubmodule(submoduleId) : undefined
   const prevSubmodule = submoduleId ? getPreviousSubmodule(submoduleId) : undefined
   const isCompleted = submoduleId ? completedSubmodules.includes(submoduleId) : false
+  
+  // Get section progress for current submodule
+  const sectionProgress = useProgressStore((state) => 
+    submoduleId ? state.getSectionProgress(submoduleId) : undefined
+  )
 
-  // Sync theoryComplete with isCompleted when store hydrates or route changes
-  // IMPORTANT: Reset to false when navigating to an incomplete submodule
+  // Reset states when submoduleId changes
+  // Set theoryComplete to true if:
+  // 1. This submodule is marked as completed in store, OR
+  // 2. Section progress shows 100% (visibleCount === totalSections)
   React.useEffect(() => {
-    setTheoryComplete(isCompleted)
-  }, [isCompleted, submoduleId])
+    // Always reset first when submodule changes
+    setTheoryComplete(false)
+    setSessionBypass(false) // Also reset session bypass on navigation
+    
+    // Check if this submodule is completed OR has 100% section progress
+    const isFullyCompleted = submoduleId && completedSubmodules.includes(submoduleId)
+    const hasFullProgress = sectionProgress && sectionProgress.visibleCount >= sectionProgress.totalSections && sectionProgress.totalSections > 0
+    
+    if (isFullyCompleted || hasFullProgress) {
+      setTheoryComplete(true)
+    }
+  }, [submoduleId, completedSubmodules, sectionProgress])
 
   // Update current position when page loads
   React.useEffect(() => {
@@ -157,6 +176,17 @@ export const SubmodulePage: React.FC = () => {
                       })
                     }, 300)
                   }}
+                  onBypassActivated={() => {
+                    // Session-only bypass - show games but don't persist
+                    setSessionBypass(true)
+                    // Auto-scroll to interactive section
+                    setTimeout(() => {
+                      interactiveRef.current?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                      })
+                    }, 300)
+                  }}
                   onVisibleCountChange={(_, total) => {
                     setTotalSections(total)
                   }}
@@ -207,8 +237,8 @@ export const SubmodulePage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Inline ABC Demos - revealed after theory complete */}
-                {theoryComplete &&
+                {/* Inline ABC Demos - revealed after theory complete or bypass */}
+                {(theoryComplete || sessionBypass) &&
                   hasSection('abcDemo') &&
                   submodule.abcDemos &&
                   submodule.abcDemos.length > 0 && (
@@ -241,7 +271,7 @@ export const SubmodulePage: React.FC = () => {
                   )}
 
                 {/* Games Section - NEW: Uses UniversalGameRouter with games config */}
-                {theoryComplete && submodule.games && submodule.games.length > 0 && (
+                {(theoryComplete || sessionBypass) && submodule.games && submodule.games.length > 0 && (
                   <div className="mt-6" style={{ animation: 'fadeIn 0.5s ease-out' }}>
                     <div className="flex items-center gap-2 mb-4">
                       <span className="material-symbols-outlined text-[#30e8e8]">
@@ -267,7 +297,7 @@ export const SubmodulePage: React.FC = () => {
                 )}
 
                 {/* Legacy Exercises Section - for backward compatibility */}
-                {theoryComplete &&
+                {(theoryComplete || sessionBypass) &&
                   !submodule.games &&
                   submodule.exercises &&
                   submodule.exercises.length > 0 && (

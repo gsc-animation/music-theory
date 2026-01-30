@@ -262,4 +262,104 @@ C D | E F |]`,
       questionCount: 5,
     },
   ],
+  // Interleaved Progressive Pattern: Semitones (E-F, B-C) → Whole Steps → Mixed
+  // Each level: Recognition → Recall → Application (9 games total, 195 XP)
+  // NOTE: step-counter, build-a-step, string-walker don't exist yet - using placeholders
+  games: [
+    // ===== LEVEL 1: Semitones (E-F, B-C) =====
+    {
+      type: 'same-different', // Placeholder for step-counter
+      labelVi: '🎵 Đếm Bước: Mức 1',
+      descriptionVi: 'Nhận diện E-F, B-C (nửa cung)',
+      config: {
+        notes: ['E4', 'F4', 'B4', 'C5'],
+        questionCount: 4,
+        xpReward: 10,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for build-a-step
+      labelVi: '🎹 Xây Bước: Mức 1',
+      descriptionVi: 'Chơi nửa cung từ E, B',
+      config: {
+        notes: ['E4', 'F4', 'B4', 'C5'],
+        questionCount: 4,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for string-walker
+      labelVi: '🎸 Đi Dây: Mức 1',
+      descriptionVi: '1 fret = nửa cung',
+      config: {
+        notes: ['E2', 'F2', 'B2', 'C3'],
+        questionCount: 4,
+        xpReward: 20,
+      },
+    },
+
+    // ===== LEVEL 2: Whole Steps (C-D, F-G, A-B) =====
+    {
+      type: 'same-different', // Placeholder for step-counter
+      labelVi: '🎵 Đếm Bước: Mức 2',
+      descriptionVi: 'Nhận diện whole steps',
+      config: {
+        notes: ['C4', 'D4', 'F4', 'G4', 'A4', 'B4'],
+        questionCount: 5,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for build-a-step
+      labelVi: '🎹 Xây Bước: Mức 2',
+      descriptionVi: 'Chơi cung từ C, F, A',
+      config: {
+        notes: ['C4', 'D4', 'F4', 'G4', 'A4', 'B4'],
+        questionCount: 5,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for string-walker
+      labelVi: '🎸 Đi Dây: Mức 2',
+      descriptionVi: '2 frets = 1 cung',
+      config: {
+        notes: ['C3', 'D3', 'F3', 'G3', 'A3', 'B3'],
+        questionCount: 5,
+        xpReward: 25,
+      },
+    },
+
+    // ===== LEVEL 3: Mix Semitone + Tone =====
+    {
+      type: 'same-different', // Placeholder for step-counter
+      labelVi: '🎵 Đếm Bước: Mức 3',
+      descriptionVi: 'Phân biệt nhanh cung / nửa cung',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'],
+        questionCount: 6,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for build-a-step
+      labelVi: '🎹 Xây Bước: Mức 3',
+      descriptionVi: 'Xây 2-3 bước liên tiếp',
+      config: {
+        notes: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'],
+        questionCount: 6,
+        xpReward: 30,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for string-walker
+      labelVi: '🎸 Đi Dây: Mức 3',
+      descriptionVi: 'Đi 3-4 semitones',
+      config: {
+        notes: ['E2', 'F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3'],
+        questionCount: 6,
+        xpReward: 40,
+      },
+    },
+  ],
 }

@@ -283,4 +283,71 @@ C ^C D z | D _D C z|]`,
       questionCount: 5,
     },
   ],
+  // Interleaved Progressive Pattern: 2 pairs → 5 pairs (6 games total, 165 XP)
+  // NOTE: twin-finder, alias-agent, grammar-police don't exist yet - using placeholders
+  games: [
+    // ===== LEVEL 1: 2 Pairs (C#/Db, F#/Gb) =====
+    {
+      type: 'accidental-spotter', // Placeholder for twin-finder
+      labelVi: '🎵 Tìm Sinh Đôi: Mức 1',
+      descriptionVi: 'Nhận diện C#=Db, F#=Gb',
+      config: {
+        notes: ['C#4', 'Db4', 'F#4', 'Gb4'],
+        questionCount: 4,
+        xpReward: 15,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for alias-agent
+      labelVi: '🎹 Điệp Viên Biệt Danh: Mức 1',
+      descriptionVi: 'Chơi cùng phím, khác tên',
+      config: {
+        notes: ['C#4', 'Db4', 'F#4', 'Gb4'],
+        questionCount: 4,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'note-id', // Placeholder for grammar-police
+      labelVi: '📝 Cảnh Sát Ngữ Pháp: Mức 1',
+      descriptionVi: 'Chọn # hay ♭ theo context',
+      config: {
+        notes: ['C#4', 'Db4', 'F#4', 'Gb4'],
+        questionCount: 4,
+        xpReward: 25,
+      },
+    },
+
+    // ===== LEVEL 2: 5 Pairs (All Black Keys) =====
+    {
+      type: 'accidental-spotter', // Placeholder for twin-finder
+      labelVi: '🎵 Tìm Sinh Đôi: Mức 2',
+      descriptionVi: '+D#/Eb, G#/Ab, A#/Bb',
+      config: {
+        notes: ['C#4', 'Db4', 'D#4', 'Eb4', 'F#4', 'Gb4', 'G#4', 'Ab4', 'A#4', 'Bb4'],
+        questionCount: 5,
+        xpReward: 25,
+      },
+    },
+    {
+      type: 'instrument-match', // Placeholder for alias-agent
+      labelVi: '🎹 Điệp Viên Biệt Danh: Mức 2',
+      descriptionVi: 'Tất cả 5 phím đen',
+      config: {
+        notes: ['C#4', 'Db4', 'D#4', 'Eb4', 'F#4', 'Gb4', 'G#4', 'Ab4', 'A#4', 'Bb4'],
+        questionCount: 5,
+        xpReward: 35,
+      },
+    },
+    {
+      type: 'note-id', // Placeholder for grammar-police
+      labelVi: '📝 Cảnh Sát Ngữ Pháp: Mức 2',
+      descriptionVi: 'Scale context: F Major, G Major',
+      config: {
+        notes: ['C#4', 'Db4', 'D#4', 'Eb4', 'F#4', 'Gb4', 'G#4', 'Ab4', 'A#4', 'Bb4'],
+        questionCount: 5,
+        xpReward: 45,
+      },
+    },
+  ],
 }

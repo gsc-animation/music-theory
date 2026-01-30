@@ -10,7 +10,8 @@ import { useProgressStore } from '../../stores/useProgressStore'
 interface ProgressiveTheoryContentProps {
   content: string
   submoduleId?: string // Used to scope bypass state per submodule
-  onAllSectionsComplete?: () => void // Called when all sections are revealed
+  onAllSectionsComplete?: () => void // Called when all sections are revealed (permanent completion)
+  onBypassActivated?: () => void // Called when user clicks bypass (session-only reveal)
   onVisibleCountChange?: (count: number, total: number) => void // Called when visible sections change
   onCurrentSectionChange?: (index: number) => void // Called when current visible section changes
   externalScrollToSection?: number // External trigger to scroll to a specific section
@@ -242,6 +243,7 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
   content,
   submoduleId,
   onAllSectionsComplete,
+  onBypassActivated,
   onVisibleCountChange,
   onCurrentSectionChange,
   externalScrollToSection,
@@ -286,16 +288,9 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
   // Track if completion callback has been called
   const completionCalledRef = useRef(false)
 
-  // Track if user wants to bypass all quizzes and see all content
-  // State is scoped to current submodule and persisted in localStorage
-  // Note: Component remounts on submodule change due to key prop, so useState initializer reads correct localStorage value
-  const bypassStorageKey = submoduleId ? `bypass-quiz-${submoduleId}` : null
-  const [bypassQuiz, setBypassQuiz] = useState(() => {
-    if (bypassStorageKey) {
-      return localStorage.getItem(bypassStorageKey) === 'true'
-    }
-    return false
-  })
+  // Track if user wants to bypass all quizzes and see all content (SESSION ONLY)
+  // This is NOT persisted - refreshing the page will reset to normal progress
+  const [bypassQuiz, setBypassQuiz] = useState(false)
 
   // Save section progress to store whenever visibleCount or totalSections changes
   useEffect(() => {
@@ -335,37 +330,28 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
       setVisibleCount(nextVisibleCount)
     }
 
-    // Check if there's another inline quiz remaining in visible sections
-    // Look for the next section with a quiz after current section
-    let nextQuizSectionIndex = -1
-    for (let i = sectionIndex + 1; i < Math.min(nextVisibleCount, parsedSections.length); i++) {
-      if (sectionHasQuiz(parsedSections[i])) {
-        nextQuizSectionIndex = i
-        break
-      }
-    }
-
-    if (nextQuizSectionIndex >= 0) {
-      // Scroll to next quiz section
+    if (nextVisibleCount > visibleCount) {
+      // Content was revealed - scroll to the newly revealed section (next section after current quiz)
+      const nextSectionIndex = sectionIndex + 1
       setTimeout(() => {
-        const nextQuizRef = sectionRefs.current[nextQuizSectionIndex]
-        if (nextQuizRef) {
-          // Find the quiz element within this section
-          const quizElement = nextQuizRef.querySelector('.inline-quiz')
+        const nextSectionRef = sectionRefs.current[nextSectionIndex]
+        if (nextSectionRef) {
           const headerOffset = 80
-          const targetElement = quizElement || nextQuizRef
-          const elementPosition = targetElement.getBoundingClientRect().top
+          const elementPosition = nextSectionRef.getBoundingClientRect().top
           const offsetPosition = elementPosition + window.scrollY - headerOffset
 
           window.scrollTo({
             top: offsetPosition,
             behavior: 'smooth',
           })
-          console.log(`[InlineQuiz] 📍 Scrolling to next quiz in section ${nextQuizSectionIndex + 1}`)
+          console.log(`[InlineQuiz] 📍 Scrolling to next content section ${nextSectionIndex + 1}`)
         }
       }, 400)
-    } else if (nextVisibleCount >= sections.length) {
-      // No more quizzes and all sections revealed - trigger completion to open next content
+    }
+    
+    // Check if all quizzes completed (all sections revealed)
+    if (nextVisibleCount >= sections.length) {
+      // All sections revealed - trigger completion to open games
       if (onAllSectionsComplete && !completionCalledRef.current) {
         completionCalledRef.current = true
         console.log(`[InlineQuiz] 🎉 All quizzes completed - opening next content`)
@@ -557,22 +543,20 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     )
   }
 
-  // Handle bypass - show all content at once
-  // Save bypass state to localStorage scoped to current submodule
+  // Handle bypass - show all content at once (SESSION ONLY)
+  // Does NOT mark as complete or persist - just reveals content for current session
   const handleBypassQuiz = () => {
     setBypassQuiz(true)
-    if (bypassStorageKey) {
-      localStorage.setItem(bypassStorageKey, 'true')
-    }
-    setVisibleCount(sections.length)
-    // Mark all sections as completed for bypass mode
+    // Show all sections visually (but don't persist this change)
+    // Mark all quizzes as "answered" for UI purposes only
     const allIndices = new Set(parsedSections.map((_, i) => i))
     setCompletedQuizzes(allIndices)
-    // Trigger completion callback
-    if (onAllSectionsComplete && !completionCalledRef.current) {
-      completionCalledRef.current = true
-      setTimeout(onAllSectionsComplete, 500)
-    }
+    // Notify parent to show games (session-only)
+    onBypassActivated?.()
+    // NOTE: We intentionally do NOT:
+    // - Persist to localStorage (session-only)
+    // - Call onAllSectionsComplete (don't mark submodule as complete)
+    // - Update visibleCount in store (use effectiveVisibleCount for display only)
   }
 
   // Determine how many sections to show

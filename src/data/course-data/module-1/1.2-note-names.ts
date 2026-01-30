@@ -273,22 +273,103 @@ C D E F | G A B c|]`,
       questionCount: 10,
     },
   ],
-  // New game configuration format - 3-tier journey for Module 1.2
+  // Interleaved Progressive Pattern: Octave 3-4 → Octave 3-5 → Full Range
+  // Each level: Recognition → Recall → Application (9 games total, 255 XP)
   games: [
+    // ===== LEVEL 1: Octave 3-4 =====
     {
-      type: 'note-hunt',
-      labelVi: 'Săn Nốt',
-      description: 'Tìm tất cả nốt C/F trên Piano',
+      type: 'octave-challenge',
+      labelVi: '🎵 Thử Thách Quãng Tám: Mức 1',
+      descriptionVi: 'Nhận diện C3-C4, D3-D4',
+      config: {
+        notes: ['C3', 'C4', 'D3', 'D4'],
+        questionCount: 4,
+        xpReward: 15,
+      },
     },
     {
-      type: 'listen-match',
-      labelVi: 'Nghe Quãng Tám',
-      description: 'Nghe nốt và chọn đúng quãng tám',
+      type: 'find-frequency',
+      labelVi: '🎹 Tìm Tần Số: Mức 1',
+      descriptionVi: 'Chơi C3, C4 trên Piano',
+      config: {
+        notes: ['C3', 'C4', 'D3', 'D4'],
+        questionCount: 4,
+        xpReward: 20,
+      },
     },
     {
-      type: 'same-different',
-      labelVi: 'Giống hay Khác',
-      description: 'So sánh tên của 2 nốt nhạc',
+      type: 'high-low-battle',
+      labelVi: '⚖️ Cao Thấp Đối Kháng: Mức 1',
+      descriptionVi: 'So sánh C3 vs C4',
+      config: {
+        notes: ['C3', 'C4', 'D3', 'D4'],
+        questionCount: 4,
+        xpReward: 25,
+      },
+    },
+
+    // ===== LEVEL 2: Octave 3-5 =====
+    {
+      type: 'octave-challenge',
+      labelVi: '🎵 Thử Thách Quãng Tám: Mức 2',
+      descriptionVi: 'Mở rộng E, F, G qua 3 octave',
+      config: {
+        notes: ['E3', 'E4', 'E5', 'F3', 'F4', 'F5', 'G3', 'G4', 'G5'],
+        questionCount: 5,
+        xpReward: 20,
+      },
+    },
+    {
+      type: 'find-frequency',
+      labelVi: '🎹 Tìm Tần Số: Mức 2',
+      descriptionVi: 'Chơi E3, E4, E5 trên Piano',
+      config: {
+        notes: ['E3', 'E4', 'E5', 'F3', 'F4', 'F5', 'G3', 'G4', 'G5'],
+        questionCount: 5,
+        xpReward: 25,
+      },
+    },
+    {
+      type: 'high-low-battle',
+      labelVi: '⚖️ Cao Thấp Đối Kháng: Mức 2',
+      descriptionVi: 'So sánh 3 nốt qua các octave',
+      config: {
+        notes: ['E3', 'E4', 'E5', 'F3', 'F4', 'F5', 'G3', 'G4', 'G5'],
+        questionCount: 5,
+        xpReward: 30,
+      },
+    },
+
+    // ===== LEVEL 3: Full Range (Max 3 Notes per question) =====
+    {
+      type: 'octave-challenge',
+      labelVi: '🎵 Thử Thách Quãng Tám: Mức 3',
+      descriptionVi: 'Tất cả nốt C2-C6',
+      config: {
+        notes: ['C2', 'C3', 'C4', 'C5', 'C6', 'D2', 'D3', 'D4', 'D5', 'E2', 'E3', 'E4', 'E5'],
+        questionCount: 6,
+        xpReward: 30,
+      },
+    },
+    {
+      type: 'find-frequency',
+      labelVi: '🎹 Tìm Tần Số: Mức 3',
+      descriptionVi: 'Tối đa 3 octave: C3-C4-C5',
+      config: {
+        notes: ['C3', 'C4', 'C5', 'D3', 'D4', 'D5', 'E3', 'E4', 'E5', 'F3', 'F4', 'F5', 'G3', 'G4', 'G5'],
+        questionCount: 6,
+        xpReward: 40,
+      },
+    },
+    {
+      type: 'high-low-battle',
+      labelVi: '⚖️ Cao Thấp Đối Kháng: Mức 3',
+      descriptionVi: 'Sắp xếp 3 nốt khác octave',
+      config: {
+        notes: ['C3', 'C4', 'C5', 'D3', 'D4', 'D5', 'E3', 'E4', 'E5', 'F3', 'F4', 'F5', 'G3', 'G4', 'G5', 'A3', 'A4', 'A5', 'B3', 'B4', 'B5'],
+        questionCount: 6,
+        xpReward: 50,
+      },
     },
   ],
 }
