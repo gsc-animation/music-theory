@@ -6,7 +6,7 @@ import { useIsMobile } from '../../hooks/useMediaQuery'
 // Mobile-specific instrument heights
 const INSTRUMENT_HEIGHTS: Record<InstrumentType, number> = {
   piano: 144, // Reduced by 20% from 180px for better mobile UX
-  guitar: 160,
+  guitar: 150, // Increased by 15% to show all fret dots properly
   flute: 120,
 }
 
@@ -126,7 +126,7 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
   // Mobile: Bottom-fixed, no header, no drag/resize
   if (isMobile) {
     const mobileHeight = INSTRUMENT_HEIGHTS[type]
-    
+
     return (
       <div
         ref={panelRef}
@@ -141,15 +141,13 @@ export const FloatingInstrumentPanel: React.FC<FloatingInstrumentPanelProps> = (
         }}
       >
         {/* Content only - no header on mobile */}
-        <div className="h-full overflow-auto p-2">
-          {children}
-        </div>
+        <div className="h-full overflow-hidden px-1 py-1">{children}</div>
       </div>
     )
   }
 
   // Desktop: Keep existing draggable/resizable behavior
-  
+
   // Minimized state (desktop only)
   if (state.isMinimized) {
     return (

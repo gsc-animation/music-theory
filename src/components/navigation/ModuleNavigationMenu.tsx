@@ -47,7 +47,10 @@ export const ModuleNavigationMenu: React.FC<ModuleNavigationMenuProps> = ({
         const progressPercent = (moduleProgress / totalSubmodules) * 100
 
         return (
-          <div key={module.id} className="border-b border-slate-200 dark:border-slate-700 last:border-0">
+          <div
+            key={module.id}
+            className="border-b border-slate-200 dark:border-slate-700 last:border-0"
+          >
             {/* Module Header - Clickable to expand/collapse */}
             <button
               onClick={() => toggleModule(module.id)}

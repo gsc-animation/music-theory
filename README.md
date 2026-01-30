@@ -19,10 +19,16 @@ npm install
 
 # Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
+
+> **Note:** Development server runs on **http://localhost:5504/** by default.
+
+### 🧪 Test Pages
+
+| Page                 | URL               | Purpose                                   |
+| -------------------- | ----------------- | ----------------------------------------- |
+| Fretboard Click Test | `/test-fretboard` | Debug guitar fretboard position detection |
+| UI Component Test    | `/test-ui`        | Test UI components and layouts            |
 
 ---
 

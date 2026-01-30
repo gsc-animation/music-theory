@@ -28,7 +28,7 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
   const navigate = useNavigate()
   const isMobile = useIsMobile()
   const [isExpanded, setIsExpanded] = useState(false)
-  
+
   const { instruments, toggleInstrument } = useFloatingInstrumentsStore()
   const notationSystem = useSettingsStore((state) => state.notationSystem)
   const toggleNotationSystem = useSettingsStore((state) => state.toggleNotationSystem)
@@ -165,7 +165,10 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
             </button>
 
             {/* Divider */}
-            <div className="h-px bg-slate-600 my-1 w-8 self-center animate-slideInUp" style={{ animationDelay: `${(instrumentConfig.length + 2) * 50}ms` }} />
+            <div
+              className="h-px bg-slate-600 my-1 w-8 self-center animate-slideInUp"
+              style={{ animationDelay: `${(instrumentConfig.length + 2) * 50}ms` }}
+            />
 
             {/* VN Mode Toggle */}
             <button
@@ -201,7 +204,11 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
               style={{ animationDelay: `${(instrumentConfig.length + 4) * 50}ms` }}
             >
               <span className="material-symbols-outlined text-base">
-                {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
+                {theme === 'system'
+                  ? 'brightness_auto'
+                  : theme === 'dark'
+                    ? 'dark_mode'
+                    : 'light_mode'}
               </span>
             </button>
           </>
@@ -214,17 +221,11 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
             flex items-center justify-center
             w-10 h-10 rounded-full shadow-xl
             transition-all duration-300
-            ${
-              isExpanded
-                ? 'bg-slate-700 text-white rotate-45'
-                : 'bg-[#30e8e8] text-slate-900'
-            }
+            ${isExpanded ? 'bg-slate-700 text-white rotate-45' : 'bg-[#30e8e8] text-slate-900'}
           `}
           title={isExpanded ? 'Đóng menu' : 'Mở menu công cụ'}
         >
-          <span className="material-symbols-outlined text-lg">
-            {isExpanded ? 'close' : 'apps'}
-          </span>
+          <span className="material-symbols-outlined text-lg">{isExpanded ? 'close' : 'apps'}</span>
         </button>
       </div>
     )

@@ -96,26 +96,26 @@ test.describe('Mobile Floating Instruments', () => {
 
     test('toolbar should move up when Piano opens', async ({ page }) => {
       const fabButton = page.locator('button:has(span:text("apps"))')
-      
+
       // Get initial toolbar position (no instrument)
       const initialBox = await fabButton.boundingBox()
       expect(initialBox).not.toBeNull()
-      
+
       // Open toolbar and select Piano
       await fabButton.click()
       await page.locator('button:has(span:text("piano"))').click()
-      
+
       // Wait for animation
       await page.waitForTimeout(500)
-      
+
       // Get new toolbar position
       const newBox = await fabButton.boundingBox()
       expect(newBox).not.toBeNull()
-      
+
       if (initialBox && newBox) {
         // Toolbar should have moved UP (y decreased)
         expect(newBox.y).toBeLessThan(initialBox.y)
-        
+
         // Should be roughly 241px from bottom (45 + 180 + 16)
         const distanceFromBottom = MOBILE_VIEWPORT.height - newBox.y
         expect(distanceFromBottom).toBeGreaterThan(200)
@@ -149,7 +149,7 @@ test.describe('Mobile Floating Instruments', () => {
       if (pianoBox && guitarBox && fluteBox) {
         // Piano toolbar should be highest (smallest y)
         expect(pianoBox.y).toBeLessThan(guitarBox.y)
-        
+
         // Guitar toolbar should be between Piano and Flute
         expect(guitarBox.y).toBeLessThan(fluteBox.y)
       }
@@ -210,7 +210,7 @@ test.describe('Mobile Floating Instruments', () => {
       // Count piano keys (1.5 octaves = 18 keys: C, C#, D, D#, E, F, F#, G, G#, A, A#, B × 1.5)
       const pianoKeys = pianoPanel.locator('[data-key]')
       const keyCount = await pianoKeys.count()
-      
+
       expect(keyCount).toBe(18) // C4 to F5 = 18 keys
     })
   })
@@ -262,7 +262,7 @@ test.describe('Mobile Floating Instruments', () => {
       // Both should be visible
       const toolbar = page.locator('button:has(span:text("apps"))')
       const pianoPanel = page.locator('[data-testid="floating-instrument-piano"]')
-      
+
       await expect(toolbar).toBeVisible()
       await expect(pianoPanel).toBeVisible()
 
@@ -293,7 +293,7 @@ test.describe('Desktop Regression Tests', () => {
   test('Piano should show 3 octaves on desktop', async ({ page }) => {
     // Desktop uses different UI - may not have floating instruments or uses different pattern
     // This test verifies desktop behavior is unchanged
-    
+
     // If desktop has floating instruments:
     const fabButton = page.locator('button:has(span:text("apps"))')
     if (await fabButton.isVisible()) {

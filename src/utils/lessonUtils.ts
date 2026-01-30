@@ -7,9 +7,7 @@
  */
 export function getShortLessonName(fullTitle: string): string {
   // Remove common prefixes
-  const cleaned = fullTitle
-    .replace(/^(The|Understanding|Introduction to|Các)\s+/i, '')
-    .trim()
+  const cleaned = fullTitle.replace(/^(The|Understanding|Introduction to|Các)\s+/i, '').trim()
 
   // Split into words
   const words = cleaned.split(/\s+/).filter((w) => w.length > 0)

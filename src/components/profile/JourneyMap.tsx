@@ -35,10 +35,9 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
     return completedSubmodules.includes(allSubmodules[currentIdx - 1].id)
   }
 
-  const handleClick = (moduleId: number, submoduleId: string, unlocked: boolean) => {
-    if (unlocked) {
-      navigate(`/module/${moduleId}/${submoduleId}`)
-    }
+  const handleClick = (moduleId: number, submoduleId: string, _unlocked: boolean) => {
+    // Always allow navigation
+    navigate(`/module/${moduleId}/${submoduleId}`)
   }
 
   return (
@@ -116,7 +115,6 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                         <button
                           key={sub.id}
                           onClick={() => handleClick(module.id, sub.id, unlocked)}
-                          disabled={!unlocked}
                           className={`
                             flex flex-col items-center gap-0.5 p-1.5 rounded-lg transition-all min-w-[65px]
                             ${
@@ -126,7 +124,7 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                                   ? 'bg-cyan-500/20 ring-1 ring-cyan-400/50'
                                   : unlocked
                                     ? 'bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-200 dark:hover:bg-slate-600/40'
-                                    : 'bg-slate-100 dark:bg-slate-800/30 cursor-not-allowed'
+                                    : 'bg-slate-100 dark:bg-slate-800/30 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700/50'
                             }
                           `}
                           title={`${sub.id}: ${sub.title}`}

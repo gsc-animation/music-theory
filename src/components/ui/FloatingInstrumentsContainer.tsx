@@ -1,14 +1,13 @@
-import React, { Suspense, useCallback } from 'react'
+import React, { Suspense, useCallback, useMemo } from 'react'
 import { useFloatingInstrumentsStore } from '../../stores/useFloatingInstrumentsStore'
 import { useAudioStore } from '../../stores/useAudioStore'
 import { FloatingInstrumentPanel } from './FloatingInstrumentPanel'
 import { FloatingInstrumentsToolbar } from './FloatingInstrumentsToolbar'
+import { detectChordFromNotes } from '../../utils/chord-detection'
 
 // Lazy load instrument components
 const VirtualPiano = React.lazy(() => import('../VirtualPiano/VirtualPiano'))
-const VirtualGuitar = React.lazy(() =>
-  import('../VirtualGuitar/VirtualGuitar').then((m) => ({ default: m.VirtualGuitar }))
-)
+const FretboardWrapper = React.lazy(() => import('../VirtualGuitar/FretboardWrapper'))
 const HorizontalSaoTrucVisualizer = React.lazy(
   () => import('../../features/sao-truc/components/HorizontalSaoTrucVisualizer')
 )
@@ -20,12 +19,40 @@ const LoadingFallback = () => (
 )
 
 /**
+ * Guitar component with automatic chord detection
+ * Detects if activeNotes form a chord and displays chord diagram
+ */
+const GuitarWithChordDetection: React.FC<{
+  activeNotes: string[]
+  onNoteClick: (note: string) => void
+}> = ({ activeNotes, onNoteClick }) => {
+  // Detect if notes form a chord
+  const chordName = useMemo(() => {
+    if (activeNotes.length >= 3) {
+      return detectChordFromNotes(activeNotes)
+    }
+    return null
+  }, [activeNotes])
+
+  return (
+    <FretboardWrapper
+      activeNotes={activeNotes}
+      chordName={chordName || undefined}
+      onNoteClick={onNoteClick}
+      compact={true}
+      showFingers={!!chordName}
+      showLabels={!chordName}
+    />
+  )
+}
+
+/**
  * FloatingInstrumentsContainer - Renders floating instrument panels and toolbar
  * Should be placed at the app root level to be always available
  */
 export const FloatingInstrumentsContainer: React.FC = () => {
   const { instruments } = useFloatingInstrumentsStore()
-  const { activeNotes, startNote, stopNote, playNote, releaseNote } = useAudioStore()
+  const { activeNotes, startNote, stopNote, playNoteWithRelease } = useAudioStore()
 
   // Handler for Piano (uses start/stop)
   const handleStartNote = useCallback(
@@ -42,13 +69,12 @@ export const FloatingInstrumentsContainer: React.FC = () => {
     [stopNote]
   )
 
-  // Handler for Guitar (uses playNote)
+  // Handler for Guitar (uses playNoteWithRelease for auto-stop audio)
   const handlePlayNote = useCallback(
     (note: string) => {
-      playNote(note)
-      setTimeout(() => releaseNote(note), 200)
+      playNoteWithRelease(note, '8n')
     },
-    [playNote, releaseNote]
+    [playNoteWithRelease]
   )
 
   return (
@@ -68,11 +94,11 @@ export const FloatingInstrumentsContainer: React.FC = () => {
         </FloatingInstrumentPanel>
       )}
 
-      {/* Guitar Panel */}
+      {/* Guitar Panel with Chord Detection */}
       {instruments.guitar.isVisible && (
         <FloatingInstrumentPanel type="guitar" title="Guitar" icon="music_note">
           <Suspense fallback={<LoadingFallback />}>
-            <VirtualGuitar activeNotes={activeNotes} onPlayNote={handlePlayNote} />
+            <GuitarWithChordDetection activeNotes={activeNotes} onNoteClick={handlePlayNote} />
           </Suspense>
         </FloatingInstrumentPanel>
       )}

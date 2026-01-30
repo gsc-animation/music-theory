@@ -11,10 +11,10 @@ const VirtualGuitar = lazy(() =>
 
 /**
  * TestUIPage - Dedicated page for UI/UX testing
- * 
+ *
  * This page is only for development and testing purposes.
  * It includes various UI components in isolation for easy debugging.
- * 
+ *
  * Access: /test-ui
  */
 const TestUIPage: React.FC = () => {
@@ -62,27 +62,43 @@ const TestUIPage: React.FC = () => {
           <div className="p-4 space-y-4">
             {/* Simple melody */}
             <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Simple melody (C major scale):</p>
-              <Suspense fallback={<div className="animate-pulse h-16 bg-slate-100 dark:bg-slate-700 rounded" />}>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                Simple melody (C major scale):
+              </p>
+              <Suspense
+                fallback={
+                  <div className="animate-pulse h-16 bg-slate-100 dark:bg-slate-700 rounded" />
+                }
+              >
                 <InlineAbcNotation abc="L:1/4\nCDEF|GABC|" />
               </Suspense>
             </div>
 
             {/* Chord example */}
             <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Chords (C, F, G, C):</p>
-              <Suspense fallback={<div className="animate-pulse h-16 bg-slate-100 dark:bg-slate-700 rounded" />}>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                Chords (C, F, G, C):
+              </p>
+              <Suspense
+                fallback={
+                  <div className="animate-pulse h-16 bg-slate-100 dark:bg-slate-700 rounded" />
+                }
+              >
                 <InlineAbcNotation abc="L:1/2\n[CEG]2 [FAc]2 | [GBd]2 [CEG]2 |" />
               </Suspense>
             </div>
 
             {/* Complex example with key signature */}
             <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">Complex example (Jig in 6/8):</p>
-              <Suspense fallback={<div className="animate-pulse h-16 bg-slate-100 dark:bg-slate-700 rounded" />}>
-                <InlineAbcNotation 
-                  abc="T:Bonny Green\nR:jig\nM:6/8\nL:1/8\nK:G\nQ:1/4=180\nC:Traditional English Folk Song (Bucknell, England)\n|:D|GAB d2B|AGE G2E|DED GAB|AGE E2D|\nGAB d2B|AGE GAB|ded BAG|AGE G2:|" 
-                />
+              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                Complex example (Jig in 6/8):
+              </p>
+              <Suspense
+                fallback={
+                  <div className="animate-pulse h-16 bg-slate-100 dark:bg-slate-700 rounded" />
+                }
+              >
+                <InlineAbcNotation abc="T:Bonny Green\nR:jig\nM:6/8\nL:1/8\nK:G\nQ:1/4=180\nC:Traditional English Folk Song (Bucknell, England)\n|:D|GAB d2B|AGE G2E|DED GAB|AGE E2D|\nGAB d2B|AGE GAB|ded BAG|AGE G2:|" />
               </Suspense>
             </div>
           </div>
@@ -99,8 +115,12 @@ const TestUIPage: React.FC = () => {
             </p>
           </div>
           <div className="p-4">
-            <Suspense fallback={<div className="animate-pulse h-32 bg-slate-100 dark:bg-slate-700 rounded" />}>
-              <VirtualPiano 
+            <Suspense
+              fallback={
+                <div className="animate-pulse h-32 bg-slate-100 dark:bg-slate-700 rounded" />
+              }
+            >
+              <VirtualPiano
                 startOctave={3}
                 octaves={3}
                 onStartNote={handleStartNote}
@@ -121,10 +141,12 @@ const TestUIPage: React.FC = () => {
             </p>
           </div>
           <div className="p-4">
-            <Suspense fallback={<div className="animate-pulse h-24 bg-slate-100 dark:bg-slate-700 rounded" />}>
-              <VirtualGuitar 
-                onPlayNote={handlePlayNote}
-              />
+            <Suspense
+              fallback={
+                <div className="animate-pulse h-24 bg-slate-100 dark:bg-slate-700 rounded" />
+              }
+            >
+              <VirtualGuitar onPlayNote={handlePlayNote} />
             </Suspense>
           </div>
         </section>
@@ -150,7 +172,9 @@ const TestUIPage: React.FC = () => {
               <span className="text-primary text-sm font-bold">Primary</span>
             </div>
             <div className="p-3 bg-emerald-500/20 rounded">
-              <span className="text-emerald-600 dark:text-emerald-400 text-sm font-bold">Success</span>
+              <span className="text-emerald-600 dark:text-emerald-400 text-sm font-bold">
+                Success
+              </span>
             </div>
           </div>
         </section>

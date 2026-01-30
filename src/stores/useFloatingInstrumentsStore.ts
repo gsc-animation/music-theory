@@ -44,13 +44,27 @@ export const useFloatingInstrumentsStore = create<FloatingInstrumentsState>()(
       activeInstrument: null,
 
       showInstrument: (type) =>
-        set((state) => ({
-          instruments: {
-            ...state.instruments,
-            [type]: { ...state.instruments[type], isVisible: true, isMinimized: false },
-          },
-          activeInstrument: type,
-        })),
+        set((state) => {
+          // Close all other instruments
+          const updatedInstruments = { ...state.instruments }
+          ;(Object.keys(updatedInstruments) as InstrumentType[]).forEach((key) => {
+            if (key !== type) {
+              updatedInstruments[key] = { ...updatedInstruments[key], isVisible: false }
+            }
+          })
+
+          return {
+            instruments: {
+              ...updatedInstruments,
+              [type]: {
+                ...updatedInstruments[type],
+                isVisible: true,
+                isMinimized: false,
+              },
+            },
+            activeInstrument: type,
+          }
+        }),
 
       hideInstrument: (type) =>
         set((state) => ({
@@ -64,10 +78,21 @@ export const useFloatingInstrumentsStore = create<FloatingInstrumentsState>()(
       toggleInstrument: (type) =>
         set((state) => {
           const isVisible = !state.instruments[type].isVisible
+          const updatedInstruments = { ...state.instruments }
+
+          // If opening, close all others
+          if (isVisible) {
+            ;(Object.keys(updatedInstruments) as InstrumentType[]).forEach((key) => {
+              if (key !== type) {
+                updatedInstruments[key] = { ...updatedInstruments[key], isVisible: false }
+              }
+            })
+          }
+
           return {
             instruments: {
-              ...state.instruments,
-              [type]: { ...state.instruments[type], isVisible, isMinimized: false },
+              ...updatedInstruments,
+              [type]: { ...updatedInstruments[type], isVisible, isMinimized: false },
             },
             activeInstrument: isVisible
               ? type

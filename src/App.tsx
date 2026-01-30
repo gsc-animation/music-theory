@@ -14,6 +14,8 @@ const PracticePage = lazy(() => import('./pages/PracticePage'))
 const ComposePage = lazy(() => import('./pages/ComposePage'))
 const AbcEditorPage = lazy(() => import('./pages/AbcEditorPage'))
 const TestUIPage = lazy(() => import('./pages/TestUIPage'))
+const FretboardTestPage = lazy(() => import('./pages/FretboardTestPage'))
+const GuitarFretboardPopupTestPage = lazy(() => import('./pages/GuitarFretboardPopupTestPage'))
 // Profile page is now eagerly loaded as home page
 
 // Lazy load floating instruments container
@@ -87,6 +89,8 @@ function App() {
             <Route path="/demo" element={<ComposePage />} />
             <Route path="/abc-editor" element={<AbcEditorPage />} />
             <Route path="/test-ui" element={<TestUIPage />} />
+            <Route path="/test-fretboard" element={<FretboardTestPage />} />
+            <Route path="/test-guitar-popup" element={<GuitarFretboardPopupTestPage />} />
           </Routes>
         </Suspense>
       </MainLayout>

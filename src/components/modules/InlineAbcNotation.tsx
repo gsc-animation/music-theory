@@ -16,7 +16,7 @@ export const InlineAbcNotation: React.FC<InlineAbcNotationProps> = ({ abc, title
     if (containerRef.current) {
       // Pre-process abc string to handle literal \n if present
       const formattedAbc = abc.replace(/\\n/g, '\n')
-      
+
       abcjs.renderAbc(containerRef.current, formattedAbc, {
         responsive: 'resize',
         staffwidth: 600, // Increased for better rendering on mobile/desktop

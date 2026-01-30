@@ -22,7 +22,10 @@ function getLuminance(r: number, g: number, b: number): number {
  * Calculate contrast ratio between two colors
  * https://www.w3.org/WAI/GL/wiki/Contrast_ratio
  */
-function getContrastRatio(rgb1: { r: number; g: number; b: number }, rgb2: { r: number; g: number; b: number }): number {
+function getContrastRatio(
+  rgb1: { r: number; g: number; b: number },
+  rgb2: { r: number; g: number; b: number }
+): number {
   const lum1 = getLuminance(rgb1.r, rgb1.g, rgb1.b)
   const lum2 = getLuminance(rgb2.r, rgb2.g, rgb2.b)
   const brightest = Math.max(lum1, lum2)
@@ -58,12 +61,12 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
   test('ABC notation noteheads have sufficient contrast on white background', async ({ page }) => {
     // Find ABC notation elements
     const notehead = page.locator('.abcjs-notehead').first()
-    
-    if (await notehead.count() > 0) {
+
+    if ((await notehead.count()) > 0) {
       const noteheadColor = await notehead.evaluate((el) => {
         return window.getComputedStyle(el).fill
       })
-      
+
       const backgroundColor = await page.evaluate(() => {
         const container = document.querySelector('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -75,7 +78,7 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
       if (noteRgb && bgRgb) {
         const contrast = getContrastRatio(noteRgb, bgRgb)
         console.log(`Notehead contrast ratio (Light Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // WCAG AA requires 3:1 for graphics/large text
         expect(contrast).toBeGreaterThanOrEqual(3.0)
       }
@@ -84,12 +87,12 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
 
   test('ABC title text meets WCAG AA contrast (4.5:1)', async ({ page }) => {
     const titleElement = page.locator('.abc-renderer .text-teal-700').first()
-    
-    if (await titleElement.count() > 0) {
+
+    if ((await titleElement.count()) > 0) {
       const titleColor = await titleElement.evaluate((el) => {
         return window.getComputedStyle(el).color
       })
-      
+
       const backgroundColor = await titleElement.evaluate((el) => {
         const container = el.closest('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -101,7 +104,7 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
       if (titleRgb && bgRgb) {
         const contrast = getContrastRatio(titleRgb, bgRgb)
         console.log(`Title contrast ratio (Light Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // WCAG AA requires 4.5:1 for normal text
         expect(contrast).toBeGreaterThanOrEqual(4.5)
       }
@@ -110,12 +113,12 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
 
   test('ABC description text meets WCAG AA contrast', async ({ page }) => {
     const descElement = page.locator('.abc-renderer .text-slate-600').first()
-    
-    if (await descElement.count() > 0) {
+
+    if ((await descElement.count()) > 0) {
       const descColor = await descElement.evaluate((el) => {
         return window.getComputedStyle(el).color
       })
-      
+
       const backgroundColor = await descElement.evaluate((el) => {
         const container = el.closest('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -127,7 +130,7 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
       if (descRgb && bgRgb) {
         const contrast = getContrastRatio(descRgb, bgRgb)
         console.log(`Description contrast ratio (Light Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // WCAG AA requires 4.5:1 for normal text
         expect(contrast).toBeGreaterThanOrEqual(4.5)
       }
@@ -136,12 +139,12 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
 
   test('staff lines are clearly visible in Light Mode', async ({ page }) => {
     const staffLine = page.locator('.abcjs-staff').first()
-    
-    if (await staffLine.count() > 0) {
+
+    if ((await staffLine.count()) > 0) {
       const staffColor = await staffLine.evaluate((el) => {
         return window.getComputedStyle(el).stroke
       })
-      
+
       const backgroundColor = await page.evaluate(() => {
         const container = document.querySelector('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -153,7 +156,7 @@ test.describe('Mobile Light Mode - Color Contrast (WCAG AA)', () => {
       if (staffRgb && bgRgb) {
         const contrast = getContrastRatio(staffRgb, bgRgb)
         console.log(`Staff line contrast ratio (Light Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // Staff lines should have at least 3:1 contrast
         expect(contrast).toBeGreaterThanOrEqual(3.0)
       }
@@ -175,12 +178,12 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
 
   test('ABC notation noteheads have sufficient contrast on dark background', async ({ page }) => {
     const notehead = page.locator('.abcjs-notehead').first()
-    
-    if (await notehead.count() > 0) {
+
+    if ((await notehead.count()) > 0) {
       const noteheadColor = await notehead.evaluate((el) => {
         return window.getComputedStyle(el).fill
       })
-      
+
       const backgroundColor = await page.evaluate(() => {
         const container = document.querySelector('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -192,7 +195,7 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
       if (noteRgb && bgRgb) {
         const contrast = getContrastRatio(noteRgb, bgRgb)
         console.log(`Notehead contrast ratio (Dark Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // WCAG AA requires 3:1 for graphics/large text
         expect(contrast).toBeGreaterThanOrEqual(3.0)
       }
@@ -201,12 +204,12 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
 
   test('ABC title text meets WCAG AA contrast in Dark Mode', async ({ page }) => {
     const titleElement = page.locator('.abc-renderer .dark\\:text-teal-400').first()
-    
-    if (await titleElement.count() > 0) {
+
+    if ((await titleElement.count()) > 0) {
       const titleColor = await titleElement.evaluate((el) => {
         return window.getComputedStyle(el).color
       })
-      
+
       const backgroundColor = await titleElement.evaluate((el) => {
         const container = el.closest('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -218,7 +221,7 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
       if (titleRgb && bgRgb) {
         const contrast = getContrastRatio(titleRgb, bgRgb)
         console.log(`Title contrast ratio (Dark Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // WCAG AA requires 4.5:1 for normal text
         expect(contrast).toBeGreaterThanOrEqual(4.5)
       }
@@ -227,12 +230,12 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
 
   test('ABC description text meets WCAG AA contrast in Dark Mode', async ({ page }) => {
     const descElement = page.locator('.abc-renderer .dark\\:text-slate-400').first()
-    
-    if (await descElement.count() > 0) {
+
+    if ((await descElement.count()) > 0) {
       const descColor = await descElement.evaluate((el) => {
         return window.getComputedStyle(el).color
       })
-      
+
       const backgroundColor = await descElement.evaluate((el) => {
         const container = el.closest('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -244,7 +247,7 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
       if (descRgb && bgRgb) {
         const contrast = getContrastRatio(descRgb, bgRgb)
         console.log(`Description contrast ratio (Dark Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // WCAG AA requires 4.5:1 for normal text
         expect(contrast).toBeGreaterThanOrEqual(4.5)
       }
@@ -253,12 +256,12 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
 
   test('staff lines are clearly visible in Dark Mode', async ({ page }) => {
     const staffLine = page.locator('.abcjs-staff').first()
-    
-    if (await staffLine.count() > 0) {
+
+    if ((await staffLine.count()) > 0) {
       const staffColor = await staffLine.evaluate((el) => {
         return window.getComputedStyle(el).stroke
       })
-      
+
       const backgroundColor = await page.evaluate(() => {
         const container = document.querySelector('.abc-renderer')
         return window.getComputedStyle(container || document.body).backgroundColor
@@ -270,7 +273,7 @@ test.describe('Mobile Dark Mode - Color Contrast (WCAG AA)', () => {
       if (staffRgb && bgRgb) {
         const contrast = getContrastRatio(staffRgb, bgRgb)
         console.log(`Staff line contrast ratio (Dark Mode): ${contrast.toFixed(2)}:1`)
-        
+
         // Staff lines should have at least 3:1 contrast
         expect(contrast).toBeGreaterThanOrEqual(3.0)
       }
@@ -288,33 +291,31 @@ test.describe('Mobile Responsive Staff Rendering', () => {
 
   test('ABC staff width adapts to mobile viewport', async ({ page }) => {
     const abcContainer = page.locator('.abc-renderer').first()
-    
-    if (await abcContainer.count() > 0) {
-      const containerWidth = await abcContainer.evaluate(el => 
-        el.getBoundingClientRect().width
-      )
-      
+
+    if ((await abcContainer.count()) > 0) {
+      const containerWidth = await abcContainer.evaluate((el) => el.getBoundingClientRect().width)
+
       const viewportWidth = page.viewportSize()?.width || 375
-      
+
       // Container should not exceed viewport width
       expect(containerWidth).toBeLessThanOrEqual(viewportWidth)
-      
+
       console.log(`ABC container width: ${containerWidth}px (viewport: ${viewportWidth}px)`)
     }
   })
 
   test('horizontal scroll is available for wide staves on mobile', async ({ page }) => {
     const scrollContainer = page.locator('.abc-renderer').first().locator('..')
-    
-    if (await scrollContainer.count() > 0) {
-      const hasOverflow = await scrollContainer.evaluate(el => {
+
+    if ((await scrollContainer.count()) > 0) {
+      const hasOverflow = await scrollContainer.evaluate((el) => {
         const style = window.getComputedStyle(el)
         return style.overflowX === 'auto' || el.scrollWidth > el.clientWidth
       })
-      
+
       // Should either have overflow-x: auto or actual scrollable content
       expect(hasOverflow).toBe(true)
-      
+
       console.log('Horizontal scroll is properly configured for mobile')
     }
   })
@@ -322,18 +323,20 @@ test.describe('Mobile Responsive Staff Rendering', () => {
   test('Grand Staff View uses responsive width on mobile', async ({ page }) => {
     // Navigate to a lesson with Grand Staff
     const grandStaff = page.locator('.inline-grand-staff').first()
-    
-    if (await grandStaff.count() > 0) {
-      const staffWidth = await grandStaff.locator('#paper-inline-staff').evaluate((el: HTMLElement) => {
-        const svg = el.querySelector('svg')
-        return svg ? svg.getBoundingClientRect().width : 0
-      })
-      
+
+    if ((await grandStaff.count()) > 0) {
+      const staffWidth = await grandStaff
+        .locator('#paper-inline-staff')
+        .evaluate((el: HTMLElement) => {
+          const svg = el.querySelector('svg')
+          return svg ? svg.getBoundingClientRect().width : 0
+        })
+
       const viewportWidth = page.viewportSize()?.width || 375
-      
+
       // Staff should fit within mobile viewport (allowing some tolerance for scroll)
       expect(staffWidth).toBeLessThanOrEqual(viewportWidth + 100)
-      
+
       console.log(`Grand Staff width: ${staffWidth}px (viewport: ${viewportWidth}px)`)
     }
   })
@@ -342,10 +345,12 @@ test.describe('Mobile Responsive Staff Rendering', () => {
     // Check entire page doesn't have horizontal scrollbar
     const bodyScrollWidth = await page.evaluate(() => document.body.scrollWidth)
     const bodyClientWidth = await page.evaluate(() => document.body.clientWidth)
-    
+
     // Allow 1px tolerance for rounding errors
     expect(bodyScrollWidth).toBeLessThanOrEqual(bodyClientWidth + 1)
-    
-    console.log(`Page scroll status - scrollWidth: ${bodyScrollWidth}, clientWidth: ${bodyClientWidth}`)
+
+    console.log(
+      `Page scroll status - scrollWidth: ${bodyScrollWidth}, clientWidth: ${bodyClientWidth}`
+    )
   })
 })
