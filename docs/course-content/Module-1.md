@@ -88,13 +88,47 @@
 | Fa (Bass)    | Dòng kẻ | "Good Boys Do Fine Always" (G-B-D-F-A) | "Sống Sao Đẹp Fa La"                         |
 | Fa (Bass)    | Khe     | "All Cows Eat Grass" (A-C-E-G)         | "LA ĐÔ MI SOL"                               |
 
-**Bài tập:**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Loại              | Mô tả                                   | Độ khó |
-| ----------------- | --------------------------------------- | ------ |
-| `note-id`         | Xem nốt trên khuông → Chọn tên đúng     | ⭐     |
-| `keyboard-play`   | Nghe tên nốt → Nhấn phím Piano đúng     | ⭐⭐   |
-| `staff-placement` | Kéo thả nốt vào đúng vị trí trên khuông | ⭐⭐⭐ |
+Thiết kế game theo pattern "Master-Before-Advance" - học viên phải thành thạo mỗi bộ nốt trước khi mở rộng:
+
+```
+LEVEL 1 (2 nốt: C-D)
+  ├─ 🎵 Nhận Diện (note-id)       → 10 XP
+  ├─ 🎹 Chơi Nhạc Cụ (instrument) → 15 XP
+  └─ 📍 Đặt Nốt (staff-placement) → 20 XP
+
+LEVEL 2 (3 nốt: C-D-E)
+  ├─ 🎵 Nhận Diện                 → 15 XP
+  ├─ 🎹 Chơi Nhạc Cụ              → 20 XP
+  └─ 📍 Đặt Nốt                   → 25 XP
+
+LEVEL 3 (5 nốt: C-D-E-F-G)
+  ├─ 🎵 Nhận Diện                 → 20 XP
+  ├─ 🎹 Chơi Nhạc Cụ              → 25 XP
+  └─ 📍 Đặt Nốt                   → 30 XP
+
+LEVEL 4 (7 nốt: FULL SCALE)
+  ├─ 🎵 Nhận Diện                 → 30 XP
+  ├─ 🎹 Chơi Nhạc Cụ              → 40 XP
+  └─ 📍 Đặt Nốt                   → 50 XP ⭐
+
+Tổng: 12 games | 300 XP
+```
+
+**Loại Game:**
+
+| Type               | Mô tả                                      | Skill Level   |
+| ------------------ | ------------------------------------------ | ------------- |
+| `note-id`          | Xem nốt trên khuông → Chọn tên đúng        | Recognition   |
+| `instrument-match` | Nghe tên nốt → Nhấn phím Piano/Guitar đúng | Active Recall |
+| `staff-placement`  | Click vào đúng vị trí nốt trên khuông nhạc | Application   |
+
+**XP System:**
+
+- First completion: Full XP reward
+- Replay: 10% of original XP
+- Progress persisted to IndexedDB + Supabase
 
 ---
 
@@ -164,13 +198,36 @@
 | 1.2.5 | So sánh Quãng tám    | C3-C4-C5, giải thích tần số nhân đôi (261.63 Hz → 523.25 Hz)     |
 | 1.2.6 | Thang âm C đầy đủ    | C Major Scale, giải thích whole step vs half step (E-F, B-C)     |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                                   | Mô tả Gameplay                                                                                                                                       |
-| :----- | :----------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⭐     | **Octave Challenge** (Thử thách Quãng tám) | **Mục tiêu**: Nhận diện đúng chỉ số octave. <br> **Luật**: Show nốt trên Grand Staff (ví dụ nốt C rất cao). Chọn đáp án: "C3", "C4", hay "C5"?       |
-| ⭐⭐   | **Find the Frequency** (Tìm tần số)        | **Mục tiêu**: Phản xạ vị trí trên nhạc cụ. <br> **Luật**: Ra lệnh "Hãy chơi C3!" → Học viên phải bấm đúng phím C3 trên Piano ảo (không được bấm C4). |
-| ⭐⭐⭐ | **High/Low Battle** (Đấu trường Cao độ)    | **Mục tiêu**: So sánh cao độ. <br> **Luật**: Nghe/Xem 2 nốt (ví dụ E4 và G3). Hỏi "Nốt nào cao hơn?". Hoặc "Sắp xếp 3 nốt từ thấp đến cao".          |
+```
+LEVEL 1 (Octave 3-4)
+  ├─ 🎵 Octave Challenge    → 15 XP  (C3-C4, D3-D4)
+  ├─ 🎹 Find Frequency      → 20 XP  (Chơi C3, C4 trên Piano)
+  └─ ⚖️ High/Low Battle     → 25 XP  (So sánh C3 vs C4)
+
+LEVEL 2 (Octave 3-5)
+  ├─ 🎵 Octave Challenge    → 20 XP  (Mở rộng E, F, G qua 3 octave)
+  ├─ 🎹 Find Frequency      → 25 XP  (Chơi E3, E4, E5)
+  └─ ⚖️ High/Low Battle     → 30 XP  (So sánh 3 nốt)
+
+LEVEL 3 (Full Range - Max 3 Notes)
+  ├─ 🎵 Octave Challenge    → 30 XP  (Tất cả nốt C2-C6)
+  ├─ 🎹 Find Frequency      → 40 XP  (Tối đa 3 octave: C3-C4-C5)
+  └─ ⚖️ High/Low Battle     → 50 XP  (Sắp xếp 3 nốt khác octave)
+
+Tổng: 9 games | 255 XP
+
+> ⚠️ **Lưu ý**: Tai người khó phân biệt hơn 3 quãng tám cùng lúc, nên giới hạn tối đa 3 nốt cho Find Frequency.
+```
+
+**Game Types:**
+
+| Type               | Mô tả                                  | Skill Level   |
+| ------------------ | -------------------------------------- | ------------- |
+| `octave-challenge` | Nhận diện chỉ số octave (C3, C4, C5)   | Recognition   |
+| `find-frequency`   | Nghe tên nốt+octave → Chơi đúng vị trí | Active Recall |
+| `high-low-battle`  | So sánh/sắp xếp cao độ                 | Application   |
 
 ---
 
@@ -264,13 +321,62 @@
 | 1.3.5 | Quy tắc Ô nhịp            | Demo dấu hóa chỉ hiệu lực trong ô nhịp                            |
 | 1.3.6 | Enharmonic: E♯ = F        | Trường hợp đặc biệt E♯=F, B♯=C                                    |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                             | Mô tả Gameplay                                                                                                                                 |
-| :----- | :----------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⭐     | **Accidental Spotter** (Soi dấu hóa) | **Mục tiêu**: Nhận diện ký hiệu. <br> **Luật**: Flashcard hiện nốt có dấu. Hỏi "Đây là nốt gì?". Đáp án: "F#", "Gb", "F Natural".              |
-| ⭐⭐   | **Black Key Ninja** (Ninja Phím Đen) | **Mục tiêu**: Phản xạ phím đen. <br> **Luật**: Game tốc độ cao trên Piano + Guitar. "Play F#!" "Play Bb!" → Bấm nhanh trên nhạc cụ ảo.         |
-| ⭐⭐⭐ | **The Editor** (Biên tập viên)       | **Mục tiêu**: Viết nhạc đúng. <br> **Luật**: Nghe đoạn nhạc mẫu (có nốt thăng). Kéo thả dấu ♯/♭ vào đúng nốt trên khuông để khớp với âm thanh. |
+```
+LEVEL 1 (2 Sharps: C#, F#)
+  ├─ 🎵 Accidental Spotter  → 10 XP  (Nhận diện C#, F#)
+  ├─ 🎹 Black Key Ninja     → 15 XP  (Chơi C#, F# trên Piano)
+  └─ ✏️ The Editor          → 20 XP  (Đặt dấu # vào C, F)
+
+LEVEL 2 (3 Flats: Bb, Eb, Ab)
+  ├─ 🎵 Accidental Spotter  → 15 XP  (Nhận diện Bb, Eb, Ab)
+  ├─ 🎹 Black Key Ninja     → 20 XP  (Chơi 3 nốt giáng)
+  └─ ✏️ The Editor          → 25 XP  (Đặt dấu ♭)
+
+LEVEL 3 (5 Black Keys + Naturals)
+  ├─ 🎵 Accidental Spotter  → 20 XP  (Tất cả dấu hóa)
+  ├─ 🎹 Black Key Ninja     → 30 XP  (5 phím đen + dấu bình)
+  └─ ✏️ The Editor          → 40 XP  (Viết melody với dấu hóa)
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                 | Mô tả                            | Skill Level   |
+| -------------------- | -------------------------------- | ------------- |
+| `accidental-spotter` | Xem nốt có dấu → Chọn tên đúng   | Recognition   |
+| `black-key-ninja`    | Nghe tên nốt → Bấm phím đen đúng | Active Recall |
+| `the-editor`         | **Drag-Drop** dấu hóa vào khuông | Application   |
+
+**The Editor - UX Design Chi Tiết:**
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  🎼 ABC Notation Canvas (Render realtime)                  │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  [Khuông nhạc với các nốt nhạc đang hiển thị]        │  │
+│  │  Mỗi nốt có hit-zone để nhận drop event              │  │
+│  └──────────────────────────────────────────────────────┘  │
+│                                                            │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  TOOLBAR: Drag các button này vào nốt               │   │
+│  │  ┌───┐  ┌───┐  ┌───┐  ┌─────┐                       │   │
+│  │  │ ♯ │  │ ♭ │  │ ♮ │  │ 🗑️ │                       │   │
+│  │  └───┘  └───┘  └───┘  └─────┘                       │   │
+│  │  Sharp  Flat  Natural  Trash                        │   │
+│  └─────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────┘
+```
+
+**Interaction Flow:**
+
+1. **Drag** một dấu hóa (♯/♭/♮) từ toolbar
+2. **Drop** vào note target trên canvas → ABCJS re-render với dấu mới
+3. **Drag to 🗑️** xóa dấu hóa khỏi note đã có dấu
+4. **Real-time audio**: Mỗi khi drop, phát âm thanh mới của nốt
+5. **Validation**: So sánh với đáp án mẫu, hiện ✅/❌
 
 ---
 
@@ -300,13 +406,34 @@
 | **Trên Guitar**: Cách nhau 2 ngăn phím = 1 cung.                        | Guitar ảo: Từ fret 1 nhảy lên fret 3.                 |
 | **Công thức tóm tắt**: 1 Tone = 2 Semitones.                            | Biểu đồ toán học đơn giản: 1/2 + 1/2 = 1.             |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                              | Mô tả Gameplay                                                                                                                                                                                |
-| :----- | :------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⭐     | **Step Counter** (Máy đếm bước)       | **Mục tiêu**: Xác định khoảng cách liền kề. <br> **Luật**: Highlight 2 nốt trên Piano (ví dụ C và D). Hỏi: "Whole Step (Cung)" hay "Half Step (Nửa cung)"?                                    |
-| ⭐⭐   | **Build a Step** (Xây bậc thang)      | **Mục tiêu**: Tự tìm nốt theo khoảng cách. <br> **Luật**: "Hãy chơi nốt cao hơn C4 một cung (Whole step)". Học viên bấm D4. "Cao hơn E4 một nửa cung". Học viên bấm F4.                       |
-| ⭐⭐⭐ | **String Walker** (Người đi trên dây) | **Mục tiêu**: Áp dụng lên Guitar. <br> **Luật**: Cho nốt gốc trên Guitar (ví dụ dây 1 buông E). Yêu cầu: "Tìm nốt cách đó 1 cung và 1 nửa cung (3 semitones)". Học viên click vào Fret 3 (G). |
+```
+LEVEL 1 (Nửa cung: E-F, B-C)
+  ├─ 🎵 Step Counter        → 10 XP  (Nhận diện E-F, B-C)
+  ├─ 🎹 Build a Step        → 15 XP  (Chơi nửa cung từ E, B)
+  └─ 🎸 String Walker       → 20 XP  (1 fret = nửa cung)
+
+LEVEL 2 (Cung: C-D, F-G, A-B)
+  ├─ 🎵 Step Counter        → 15 XP  (Nhận diện whole steps)
+  ├─ 🎹 Build a Step        → 20 XP  (Chơi cung từ C, F, A)
+  └─ 🎸 String Walker       → 25 XP  (2 frets = 1 cung)
+
+LEVEL 3 (Mix Semitone + Tone)
+  ├─ 🎵 Step Counter        → 20 XP  (Phân biệt nhanh)
+  ├─ 🎹 Build a Step        → 30 XP  (Xây 2-3 bước liên tiếp)
+  └─ 🎸 String Walker       → 40 XP  (Đi 3-4 semitones)
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                                    | Skill Level   |
+| --------------- | ---------------------------------------- | ------------- |
+| `step-counter`  | Xem 2 nốt → Chọn Cung hay Nửa cung       | Recognition   |
+| `build-a-step`  | Nghe yêu cầu → Chơi nốt đúng khoảng cách | Active Recall |
+| `string-walker` | Áp dụng đếm fret trên Guitar             | Application   |
 
 ---
 
@@ -343,12 +470,28 @@
 | **Quy tắc thang âm (Scale Idea)**: Mỗi dòng kẻ chỉ chứa 1 chữ cái.                | Ví dụ Scale F Major: F G A Bb C... (Không viết A# vì sẽ bị lặp chữ A). |
 | **Hướng đi**: Giai điệu đi lên thường dùng #, đi xuống dùng b (quy tắc ngón tay). | Demo `{{abc:C ^C D}}` vs `{{abc:D _D C}}`.                             |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                               | Mô tả Gameplay                                                                                                                                                                            |
-| :----- | :------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⭐     | **Twin Finder** (Tìm anh em sinh đôi)  | **Mục tiêu**: Nhớ cặp đồng âm. <br> **Luật**: Hiện nốt C#. Chọn nốt đồng âm với nó trong các đáp án: "D", "Db", "Cb"?                                                                     |
-| ⭐⭐   | **Alias Agent** (Điệp viên 2 mang)     | **Mục tiêu**: Phản xạ trên phím đàn. <br> **Luật**: "Chơi nốt Gb!". Học viên bấm phím đen. "Vẫn phím đó, chơi nốt F#!". Học viên bấm lại phím cũ. Game ghi nhận "Chính xác, cùng 1 phím". |
-| ⭐⭐⭐ | **Grammar Police** (Cảnh sát chính tả) | **Mục tiêu**: Chọn đúng ngữ cảnh (Khó). <br> **Luật**: Cho thang âm F Major: F - G - A - [?]. Chọn điền "Bb" hay "A#"? (Gợi ý: Không được lặp lại chữ A).                                 |
+```
+LEVEL 1 (2 cặp: C#/Db, F#/Gb)
+  ├─ 🎵 Twin Finder         → 15 XP  (Nhận diện C#=Db, F#=Gb)
+  ├─ 🎹 Alias Agent         → 20 XP  (Chơi cùng phím, khác tên)
+  └─ 📝 Grammar Police      → 25 XP  (Chọn # hay ♭ theo context)
+
+LEVEL 2 (5 cặp phím đen)
+  ├─ 🎵 Twin Finder         → 25 XP  (+D#/Eb, G#/Ab, A#/Bb)
+  ├─ 🎹 Alias Agent         → 35 XP  (Tất cả 5 phím đen)
+  └─ 📝 Grammar Police      → 45 XP  (Scale context: F Major, G Major)
+
+Tổng: 6 games | 165 XP
+```
+
+**Game Types:**
+
+| Type             | Mô tả                              | Skill Level   |
+| ---------------- | ---------------------------------- | ------------- |
+| `twin-finder`    | Xem nốt → Chọn tên đồng âm         | Recognition   |
+| `alias-agent`    | Chơi cùng phím với 2 tên khác nhau | Active Recall |
+| `grammar-police` | Chọn # hay ♭ tùy ngữ cảnh scale    | Application   |
 
 ---

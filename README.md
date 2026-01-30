@@ -367,27 +367,101 @@ src/
 
 ---
 
-## 🎮 Game System
+## 🎮 Game System Architecture
 
-### Journey Map
+### Game Registry Pattern
 
-Games use a stage-based progression:
+Games are managed through a centralized registry that decouples game components from submodule configurations:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Game System Architecture                  │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  SubmoduleData (1.1-staff-clefs.ts)                        │
+│      └── games: [ {type: 'note-id', config: {...}}, ...]   │
+│                           │                                 │
+│                           ▼                                 │
+│  Game Registry (game-registry.ts)                          │
+│      └── GAME_REGISTRY['note-id'] → NoteIdentificationQuiz │
+│                           │                                 │
+│                           ▼                                 │
+│  UniversalGameRouter.tsx                                   │
+│      ├── JourneyMap (game selection UI)                    │
+│      ├── Dynamic component loading (React.lazy)            │
+│      └── GameCelebration (completion feedback)             │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Game Types
+
+| Game Type          | Component              | Description                      |
+| ------------------ | ---------------------- | -------------------------------- |
+| `note-id`          | NoteIdentificationQuiz | See note → Select name           |
+| `instrument-match` | NoteIdentificationQuiz | Hear name → Play on Piano/Guitar |
+| `staff-placement`  | NoteIdentificationQuiz | Click correct position on staff  |
+| `note-hunt`        | NoteHuntGame           | Find all C/F notes on keyboard   |
+| `listen-match`     | ListenMatchGame        | Listen → Match octave            |
+| `same-different`   | SameOrDifferentGame    | Compare two note names           |
+
+### Submodule Game Configuration
 
 ```typescript
-const gameStages: GameStage[] = [
-  { id: 'e-g', name: 'E & G', notes: ['E4', 'G4'], starsRequired: 0 },
-  { id: 'e-g-b', name: 'E, G, B', notes: ['E4', 'G4', 'B4'], starsRequired: 2 },
-  // ... more stages
-]
+// src/data/course-data/module-1/1.1-staff-clefs.ts
+export const submodule1_1: Submodule = {
+  id: '1.1',
+  // ...
+  games: [
+    {
+      type: 'note-id',
+      labelVi: '🎵 Nhận Diện: 2 Nốt',
+      descriptionVi: 'Bắt đầu với Đô & Rê (C-D)',
+      config: {
+        notes: ['C4', 'D4'],
+        questionCount: 4,
+        xpReward: 10,
+      },
+    },
+    // ... more games
+  ],
+}
 ```
+
+### Interleaved Progressive Pattern
+
+Games follow a "Master-Before-Advance" pattern - students must master each note set before expanding:
+
+```
+LEVEL 1 (2 notes) → LEVEL 2 (3 notes) → LEVEL 3 (5 notes) → LEVEL 4 (7 notes)
+    ├─ note-id          ├─ note-id          ├─ note-id          ├─ note-id
+    ├─ instrument       ├─ instrument       ├─ instrument       ├─ instrument
+    └─ placement        └─ placement        └─ placement        └─ placement
+```
+
+### XP & Progress System
+
+| Event                   | XP Reward                   |
+| ----------------------- | --------------------------- |
+| First game completion   | Full `xpReward` from config |
+| Replay (already passed) | 10% of original XP          |
+| Failed attempt          | 0 XP                        |
+| Complete submodule      | +50 XP bonus                |
+
+**Progress Persistence:**
+
+- Local: IndexedDB via Zustand persist
+- Cloud: Automatic sync to Supabase (debounced)
+- Merge: Best scores preserved across devices
 
 ### Star Rating
 
 | Performance     | Stars  |
 | --------------- | ------ |
-| < 70% accuracy  | ⭐     |
-| 70-89% accuracy | ⭐⭐   |
-| ≥ 90% accuracy  | ⭐⭐⭐ |
+| < 60% accuracy  | ☆☆☆    |
+| 60-79% accuracy | ⭐     |
+| 80-99% accuracy | ⭐⭐   |
+| 100% accuracy   | ⭐⭐⭐ |
 
 ---
 
