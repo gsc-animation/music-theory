@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { COURSE_MODULES } from '../../data/course-data'
 import { useProgressStore } from '../../stores/useProgressStore'
+import { ProgressRing } from '../ui/ProgressRing'
 
 interface JourneyMapProps {
   className?: string
@@ -22,7 +23,7 @@ const MODULE_THEMES: Record<number, { icon: string; color: string }> = {
  */
 export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
   const navigate = useNavigate()
-  const { completedSubmodules, currentSubmoduleId } = useProgressStore()
+  const { completedSubmodules, currentSubmoduleId, getSectionProgress } = useProgressStore()
 
   const isCompleted = (submoduleId: string) => completedSubmodules.includes(submoduleId)
   const isCurrent = (submoduleId: string) => currentSubmoduleId === submoduleId
@@ -129,23 +130,45 @@ export const JourneyMap: React.FC<JourneyMapProps> = ({ className = '' }) => {
                           `}
                           title={`${sub.id}: ${sub.title}`}
                         >
-                          {/* Checkpoint Circle */}
-                          <div
-                            className={`
-                              w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold
-                              ${
-                                done
-                                  ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/50'
-                                  : curr
-                                    ? 'bg-cyan-400 text-slate-900 shadow-md shadow-cyan-400/50 animate-pulse'
-                                    : unlocked
-                                      ? 'bg-slate-300 dark:bg-slate-600 text-slate-600 dark:text-slate-300'
-                                      : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600'
-                              }
-                            `}
-                          >
-                            {done ? '✓' : subIndex + 1}
-                          </div>
+                          {/* Checkpoint Circle with Progress Ring */}
+                          {(() => {
+                            const sectionProg = getSectionProgress(sub.id)
+                            const progressPercent = sectionProg
+                              ? Math.round((sectionProg.visibleCount / sectionProg.totalSections) * 100)
+                              : 0
+                            
+                            return (
+                              <ProgressRing
+                                progress={done ? 100 : progressPercent}
+                                size={32}
+                                strokeWidth={3}
+                                className={
+                                  done
+                                    ? 'text-emerald-500'
+                                    : progressPercent > 0
+                                      ? 'text-cyan-400'
+                                      : 'text-slate-300 dark:text-slate-600'
+                                }
+                              >
+                                <div
+                                  className={`
+                                    w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold
+                                    ${
+                                      done
+                                        ? 'bg-emerald-500 text-white'
+                                        : curr
+                                          ? 'bg-cyan-400 text-slate-900 animate-pulse'
+                                          : unlocked
+                                            ? 'bg-slate-300 dark:bg-slate-600 text-slate-600 dark:text-slate-300'
+                                            : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600'
+                                    }
+                                  `}
+                                >
+                                  {done ? '✓' : subIndex + 1}
+                                </div>
+                              </ProgressRing>
+                            )
+                          })()}
                           {/* Submodule Title */}
                           <span
                             className={`text-[9px] leading-tight text-center w-full ${
