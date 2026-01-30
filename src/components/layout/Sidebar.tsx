@@ -532,7 +532,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ${sidebarCollapsed ? 'w-[72px]' : 'w-[280px]'} 
         flex-shrink-0 bg-white dark:bg-[#1a1d21]
         border-r border-slate-200 dark:border-slate-700
-        hidden md:flex flex-col sticky top-0 self-start shadow-[2px_0_20px_rgba(0,0,0,0.02)] z-30
+        hidden md:flex flex-col sticky top-0 h-screen overflow-y-auto no-scrollbar shadow-[2px_0_20px_rgba(0,0,0,0.02)] z-30
         transition-all duration-300 ease-in-out
         ${className}
       `}
