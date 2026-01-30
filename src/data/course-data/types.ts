@@ -28,6 +28,9 @@ export interface Exercise {
   gameType?: string // For accidental-game: specifies which module's game (e.g., 'module-1.3')
 }
 
+// Re-export game types for convenience
+export type { SubmoduleGameConfig } from '../game-types'
+
 export interface Submodule {
   id: string // e.g., "1.1", "1.2"
   title: string
@@ -36,7 +39,8 @@ export interface Submodule {
   theoryContent?: string // Markdown content for theory section
   staffAbc?: string // ABC notation for Grand Staff
   abcDemos?: AbcDemo[]
-  exercises?: Exercise[] // Interactive quizzes/exercises
+  exercises?: Exercise[] // @deprecated - Use games instead
+  games?: import('../game-types').SubmoduleGameConfig[] // New game config format
 }
 
 export interface Module {

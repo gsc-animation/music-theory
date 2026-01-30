@@ -22,6 +22,10 @@ const AbcDemoSection = React.lazy(() => import('../components/modules/AbcDemoSec
 const ProgressiveTheoryContent = React.lazy(
   () => import('../components/modules/ProgressiveTheoryContent')
 )
+const NoteIdentificationQuiz = React.lazy(
+  () => import('../components/modules/NoteIdentificationQuiz')
+)
+const UniversalGameRouter = React.lazy(() => import('../components/game-shell/UniversalGameRouter'))
 
 /**
  * SubmodulePage - Dynamic lesson page that shows/hides sections based on submodule config
@@ -30,9 +34,10 @@ export const SubmodulePage: React.FC = () => {
   const { moduleId, submoduleId } = useParams<{ moduleId: string; submoduleId: string }>()
   const navigate = useNavigate()
 
-  const { setCurrentPosition, completeSubmodule, isSubmoduleCompleted } = useProgressStore()
+  const { setCurrentPosition, completeSubmodule, completedSubmodules } = useProgressStore()
 
   const [showNoteNames, setShowNoteNames] = React.useState(false)
+  // Track whether theory section is complete (to reveal games)
   const [theoryComplete, setTheoryComplete] = React.useState(false)
   const interactiveRef = React.useRef<HTMLDivElement>(null)
 
@@ -45,7 +50,13 @@ export const SubmodulePage: React.FC = () => {
   const module = moduleId ? findModule(parseInt(moduleId)) : undefined
   const nextSubmodule = submoduleId ? getNextSubmodule(submoduleId) : undefined
   const prevSubmodule = submoduleId ? getPreviousSubmodule(submoduleId) : undefined
-  const isCompleted = submoduleId ? isSubmoduleCompleted(submoduleId) : false
+  const isCompleted = submoduleId ? completedSubmodules.includes(submoduleId) : false
+
+  // Sync theoryComplete with isCompleted when store hydrates or route changes
+  // IMPORTANT: Reset to false when navigating to an incomplete submodule
+  React.useEffect(() => {
+    setTheoryComplete(isCompleted)
+  }, [isCompleted, submoduleId])
 
   // Update current position when page loads
   React.useEffect(() => {
@@ -225,6 +236,96 @@ export const SubmodulePage: React.FC = () => {
                         }
                       >
                         <AbcDemoSection demos={submodule.abcDemos} />
+                      </React.Suspense>
+                    </div>
+                  )}
+
+                {/* Games Section - NEW: Uses UniversalGameRouter with games config */}
+                {theoryComplete && submodule.games && submodule.games.length > 0 && (
+                  <div className="mt-6" style={{ animation: 'fadeIn 0.5s ease-out' }}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="material-symbols-outlined text-[#30e8e8]">
+                        sports_esports
+                      </span>
+                      <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+                        Thực Hành
+                      </span>
+                      <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full">
+                        🎮 Game!
+                      </span>
+                    </div>
+                    <React.Suspense
+                      fallback={
+                        <div className="w-full h-32 flex items-center justify-center text-slate-400">
+                          Loading games...
+                        </div>
+                      }
+                    >
+                      <UniversalGameRouter submoduleId={submodule.id} games={submodule.games} />
+                    </React.Suspense>
+                  </div>
+                )}
+
+                {/* Legacy Exercises Section - for backward compatibility */}
+                {theoryComplete &&
+                  !submodule.games &&
+                  submodule.exercises &&
+                  submodule.exercises.length > 0 && (
+                    <div className="mt-6" style={{ animation: 'fadeIn 0.5s ease-out' }}>
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="material-symbols-outlined text-[#30e8e8]">
+                          sports_esports
+                        </span>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">
+                          Thực Hành
+                        </span>
+                        <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full">
+                          🎮 Game!
+                        </span>
+                      </div>
+                      <React.Suspense
+                        fallback={
+                          <div className="w-full h-32 flex items-center justify-center text-slate-400">
+                            Loading games...
+                          </div>
+                        }
+                      >
+                        {submodule.exercises.map((exercise, index) => {
+                          if (exercise.type === 'note-id' && exercise.notes) {
+                            return (
+                              <NoteIdentificationQuiz
+                                key={`exercise-${index}`}
+                                submoduleId={submodule.id}
+                                notes={exercise.notes}
+                                questionCount={exercise.questionCount || 5}
+                              />
+                            )
+                          }
+                          // Fallback for other exercise types (coming soon)
+                          const exerciseLabels: Record<string, string> = {
+                            'accidental-game': 'Nhận biết Dấu hóa',
+                            chord: 'Nhận biết Hợp âm',
+                            interval: 'Nhận biết Quãng',
+                            rhythm: 'Nhận biết Nhịp điệu',
+                          }
+                          const label = exerciseLabels[exercise.type] || exercise.type
+                          return (
+                            <div
+                              key={`exercise-${index}`}
+                              className="p-6 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 text-center"
+                            >
+                              <span className="material-symbols-outlined text-4xl text-slate-400 mb-2">
+                                construction
+                              </span>
+                              <p className="text-slate-600 dark:text-slate-400 font-medium">
+                                {label}
+                              </p>
+                              <p className="text-sm text-slate-500 dark:text-slate-500 mt-1">
+                                Trò chơi đang được phát triển...
+                              </p>
+                            </div>
+                          )
+                        })}
                       </React.Suspense>
                     </div>
                   )}

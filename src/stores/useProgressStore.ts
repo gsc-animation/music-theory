@@ -265,7 +265,18 @@ export const useProgressStore = create<ProgressState>()(
           const existing = state.completedLevels[levelKey]
           const passed = percentage >= requiredScore
           const stars = percentage >= 100 ? 3 : percentage >= 80 ? 2 : percentage >= 60 ? 1 : 0
-          const isNewPass = passed && !existing?.passed
+          const isFirstPass = passed && !existing?.passed
+
+          // XP calculation:
+          // - First pass: full xpReward
+          // - Replay (already passed): 10% of xpReward
+          // - Failed attempt: 0 XP
+          let xpToAdd = 0
+          if (isFirstPass) {
+            xpToAdd = xpReward // Full XP for first completion
+          } else if (passed && existing?.passed) {
+            xpToAdd = Math.round(xpReward * 0.1) // 10% XP for replay
+          }
 
           return {
             completedLevels: {
@@ -276,7 +287,7 @@ export const useProgressStore = create<ProgressState>()(
                 passed: passed || existing?.passed || false,
               },
             },
-            totalXP: state.totalXP + (isNewPass ? xpReward : 0),
+            totalXP: state.totalXP + xpToAdd,
           }
         }),
 
