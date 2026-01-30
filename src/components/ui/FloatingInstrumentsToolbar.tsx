@@ -231,130 +231,159 @@ export const FloatingInstrumentsToolbar: React.FC = () => {
     )
   }
 
-  // Desktop: show all buttons
+  // Desktop: collapsible menu (same pattern as mobile)
   return (
-    <div className="fixed bottom-4 right-4 z-[1100] flex flex-col gap-2">
-      {/* XP Display - clickable to go to next lesson */}
+    <div className="fixed bottom-4 right-4 z-[1100] flex flex-col-reverse gap-2">
+      {/* Main Toggle Button */}
       <button
-        onClick={handleXPClick}
-        className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 border border-slate-600 hover:bg-slate-700 hover:scale-110 transition-all cursor-pointer"
-        title={nextLesson ? `Tiếp tục học: ${nextLesson.id}` : 'Xem bài học'}
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={`
+          flex items-center justify-center
+          w-14 h-14 rounded-full shadow-xl
+          transition-all duration-300
+          ${isExpanded ? 'bg-slate-700 text-white rotate-45' : 'bg-[#30e8e8] text-slate-900 hover:scale-110'}
+        `}
+        title={isExpanded ? 'Đóng menu' : 'Mở menu công cụ'}
       >
-        <span
-          className="material-symbols-outlined text-amber-500 text-xl"
-          style={{ fontVariationSettings: "'FILL' 1" }}
-        >
-          star
-        </span>
-
-        {/* XP Value Badge */}
-        <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-amber-500 text-slate-900 text-[10px] font-bold rounded-full min-w-[24px] text-center">
-          {totalXP}
-        </span>
-
-        {/* Tooltip */}
-        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-          {xpToNextLevel} XP để lên level tiếp theo
-        </span>
+        <span className="material-symbols-outlined text-2xl">{isExpanded ? 'close' : 'apps'}</span>
       </button>
 
-      {/* Instrument Buttons */}
-      {instrumentConfig.map(({ type, icon, label }) => {
-        const isVisible = instruments[type].isVisible
-
-        return (
+      {/* Expanded Menu Items - show when expanded */}
+      {isExpanded && (
+        <>
+          {/* XP Display - clickable to go to next lesson */}
           <button
-            key={type}
-            onClick={() => toggleInstrument(type)}
+            onClick={handleXPClick}
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 border border-slate-600 hover:bg-slate-700 hover:scale-110 transition-all cursor-pointer animate-slideInUp"
+            title={nextLesson ? `Tiếp tục học: ${nextLesson.id}` : 'Xem bài học'}
+            style={{ animationDelay: '0ms' }}
+          >
+            <span
+              className="material-symbols-outlined text-amber-500 text-xl"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              star
+            </span>
+
+            {/* XP Value Badge */}
+            <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-amber-500 text-slate-900 text-[10px] font-bold rounded-full min-w-[24px] text-center">
+              {totalXP}
+            </span>
+
+            {/* Tooltip */}
+            <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              {xpToNextLevel} XP để lên level tiếp theo
+            </span>
+          </button>
+
+          {/* Instrument Buttons */}
+          {instrumentConfig.map(({ type, icon, label }, index) => {
+            const isVisible = instruments[type].isVisible
+
+            return (
+              <button
+                key={type}
+                onClick={() => toggleInstrument(type)}
+                className={`
+                  group relative flex items-center justify-center
+                  w-12 h-12 rounded-full shadow-lg
+                  transition-all duration-200 hover:scale-110
+                  animate-slideInUp
+                  ${
+                    isVisible
+                      ? 'bg-[#30e8e8] text-slate-900'
+                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600'
+                  }
+                `}
+                title={`${isVisible ? 'Hide' : 'Show'} ${label}`}
+                style={{ animationDelay: `${(index + 1) * 50}ms` }}
+              >
+                <span className="material-symbols-outlined text-xl">{icon}</span>
+
+                {/* Tooltip */}
+                <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                  {label}
+                </span>
+
+                {/* Active indicator */}
+                {isVisible && (
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" />
+                )}
+              </button>
+            )
+          })}
+
+          {/* Bug Report Button */}
+          <button
+            onClick={() => setModalOpen(true)}
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-rose-600 text-white hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer border border-rose-500 animate-slideInUp"
+            title="Bug Report - Xem logs và copy để báo lỗi"
+            style={{ animationDelay: `${(instrumentConfig.length + 1) * 50}ms` }}
+          >
+            <span className="material-symbols-outlined text-xl">bug_report</span>
+
+            {/* Error count badge */}
+            {errorCount > 0 && (
+              <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-amber-400 text-slate-900 text-[10px] font-bold rounded-full min-w-[20px] text-center">
+                {errorCount > 9 ? '9+' : errorCount}
+              </span>
+            )}
+
+            {/* Tooltip */}
+            <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              Bug Report
+            </span>
+          </button>
+
+          {/* Divider */}
+          <div
+            className="h-px bg-slate-600 my-1 w-12 self-center animate-slideInUp"
+            style={{ animationDelay: `${(instrumentConfig.length + 2) * 50}ms` }}
+          />
+
+          {/* VN Mode Toggle */}
+          <button
+            onClick={toggleNotationSystem}
             className={`
               group relative flex items-center justify-center
               w-12 h-12 rounded-full shadow-lg
               transition-all duration-200 hover:scale-110
+              animate-slideInUp
               ${
-                isVisible
+                notationSystem === 'solfege'
                   ? 'bg-[#30e8e8] text-slate-900'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600'
               }
             `}
-            title={`${isVisible ? 'Hide' : 'Show'} ${label}`}
+            title={notationSystem === 'solfege' ? 'Vietnamese Notation (Active)' : 'Switch to VN Mode'}
+            style={{ animationDelay: `${(instrumentConfig.length + 3) * 50}ms` }}
           >
-            <span className="material-symbols-outlined text-xl">{icon}</span>
+            <span className="text-xs font-bold">VN</span>
 
             {/* Tooltip */}
             <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-              {label}
+              {notationSystem === 'solfege' ? 'Vietnamese Notation' : 'VN Mode'}
+            </span>
+          </button>
+
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:scale-110 transition-all cursor-pointer border border-slate-600 animate-slideInUp"
+            title={`Theme: ${theme}`}
+            style={{ animationDelay: `${(instrumentConfig.length + 4) * 50}ms` }}
+          >
+            <span className="material-symbols-outlined text-xl">
+              {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
             </span>
 
-            {/* Active indicator */}
-            {isVisible && (
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white" />
-            )}
+            {/* Tooltip */}
+            <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+              {theme === 'system' ? 'Auto' : theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+            </span>
           </button>
-        )
-      })}
-
-      {/* Bug Report Button */}
-      <button
-        onClick={() => setModalOpen(true)}
-        className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-rose-600 text-white hover:bg-rose-500 hover:scale-110 transition-all cursor-pointer border border-rose-500"
-        title="Bug Report - Xem logs và copy để báo lỗi"
-      >
-        <span className="material-symbols-outlined text-xl">bug_report</span>
-
-        {/* Error count badge */}
-        {errorCount > 0 && (
-          <span className="absolute -top-1 -right-1 px-1.5 py-0.5 bg-amber-400 text-slate-900 text-[10px] font-bold rounded-full min-w-[20px] text-center">
-            {errorCount > 9 ? '9+' : errorCount}
-          </span>
-        )}
-
-        {/* Tooltip */}
-        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-          Bug Report
-        </span>
-      </button>
-
-      {/* Divider */}
-      <div className="h-px bg-slate-600 my-1" />
-
-      {/* VN Mode Toggle */}
-      <button
-        onClick={toggleNotationSystem}
-        className={`
-          group relative flex items-center justify-center
-          w-12 h-12 rounded-full shadow-lg
-          transition-all duration-200 hover:scale-110
-          ${
-            notationSystem === 'solfege'
-              ? 'bg-[#30e8e8] text-slate-900'
-              : 'bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-600'
-          }
-        `}
-        title={notationSystem === 'solfege' ? 'Vietnamese Notation (Active)' : 'Switch to VN Mode'}
-      >
-        <span className="text-xs font-bold">VN</span>
-
-        {/* Tooltip */}
-        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-          {notationSystem === 'solfege' ? 'Vietnamese Notation' : 'VN Mode'}
-        </span>
-      </button>
-
-      {/* Theme Toggle */}
-      <button
-        onClick={toggleTheme}
-        className="group relative flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:scale-110 transition-all cursor-pointer border border-slate-600"
-        title={`Theme: ${theme}`}
-      >
-        <span className="material-symbols-outlined text-xl">
-          {theme === 'system' ? 'brightness_auto' : theme === 'dark' ? 'dark_mode' : 'light_mode'}
-        </span>
-
-        {/* Tooltip */}
-        <span className="absolute right-14 px-2 py-1 bg-slate-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-          {theme === 'system' ? 'Auto' : theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-        </span>
-      </button>
+        </>
+      )}
     </div>
   )
 }
