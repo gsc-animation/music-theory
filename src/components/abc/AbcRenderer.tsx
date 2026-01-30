@@ -244,7 +244,6 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
   // This ensures notes remain clickable after playback
   const renderWithClickListener = useCallback(
     (container: HTMLDivElement, abcContent: string) => {
-      console.log('📝 [AbcRenderer] Rendering with clickListener')
       const result = abcjs.renderAbc(container, abcContent, {
         ...RENDER_OPTIONS,
         clickListener: (abcelem: unknown) => {
@@ -255,7 +254,6 @@ export const AbcRenderer: React.FC<AbcRendererProps> = ({
           }
         },
       })
-      console.log('✅ [AbcRenderer] Render complete with clickListener')
       return result
     },
     [handleNoteClick, RENDER_OPTIONS]
