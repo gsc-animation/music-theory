@@ -54,6 +54,7 @@ export async function loadRemoteProgress(): Promise<UserProgress | null> {
       totalPracticeMinutes: row.total_practice_minutes || 0,
       currentModuleId: row.current_module_id || 1,
       currentSubmoduleId: row.current_submodule_id || '1.1',
+      sectionProgress: row.section_progress || {},
     }
   } catch (error) {
     console.error('[ProgressSync] Failed to load remote progress:', error)
@@ -78,6 +79,7 @@ export async function saveProgressToSupabase(progress: UserProgress): Promise<bo
         completed_submodules: progress.completedSubmodules,
         completed_levels: progress.completedLevels,
         submodule_scores: progress.submoduleScores,
+        section_progress: progress.sectionProgress,
         total_xp: progress.totalXP,
         streak_days: progress.streakDays,
         last_active_date: progress.lastActiveDate,
@@ -159,11 +161,23 @@ export function mergeProgress(local: UserProgress, remote: UserProgress): UserPr
     submoduleScores[key] = Math.max(localScore, submoduleScores[key] || 0)
   }
 
+  // Merge section progress (take higher visibleCount per submodule)
+  const sectionProgress: Record<string, { visibleCount: number; totalSections: number }> = {
+    ...remote.sectionProgress,
+  }
+  for (const [key, localProgress] of Object.entries(local.sectionProgress || {})) {
+    const remoteProgress = sectionProgress[key]
+    if (!remoteProgress || localProgress.visibleCount > remoteProgress.visibleCount) {
+      sectionProgress[key] = localProgress
+    }
+  }
+
   // For other values, take the higher/more recent value
   return {
     completedSubmodules,
     completedLevels,
     submoduleScores,
+    sectionProgress,
     totalXP: Math.max(local.totalXP, remote.totalXP),
     streakDays: Math.max(local.streakDays, remote.streakDays),
     lastActiveDate:

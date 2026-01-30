@@ -112,6 +112,9 @@ export interface UserProgress {
 
   // Quiz/exercise results per submodule
   submoduleScores: Record<string, number> // submoduleId -> best score (0-100)
+
+  // Section progress per submodule (for inline quiz tracking)
+  sectionProgress: Record<string, { visibleCount: number; totalSections: number }>
 }
 
 interface ProgressState extends UserProgress {
@@ -135,6 +138,12 @@ interface ProgressState extends UserProgress {
   // Cloud sync actions
   initFromCloud: () => Promise<void>
   _applyMergedProgress: (progress: UserProgress) => void
+
+  // Section progress tracking
+  setSectionProgress: (submoduleId: string, visibleCount: number, totalSections: number) => void
+  getSectionProgress: (
+    submoduleId: string
+  ) => { visibleCount: number; totalSections: number } | undefined
 }
 
 const initialState: UserProgress = {
@@ -148,6 +157,7 @@ const initialState: UserProgress = {
   practiceSessionsCompleted: 0,
   totalPracticeMinutes: 0,
   submoduleScores: {},
+  sectionProgress: {},
 }
 
 // XP rewards
@@ -279,6 +289,7 @@ export const useProgressStore = create<ProgressState>()(
           completedSubmodules: currentState.completedSubmodules,
           completedLevels: currentState.completedLevels,
           submoduleScores: currentState.submoduleScores,
+          sectionProgress: currentState.sectionProgress,
           totalXP: currentState.totalXP,
           streakDays: currentState.streakDays,
           lastActiveDate: currentState.lastActiveDate,
@@ -295,6 +306,23 @@ export const useProgressStore = create<ProgressState>()(
       },
 
       _applyMergedProgress: (progress: UserProgress) => set(progress),
+
+      // Section progress tracking
+      setSectionProgress: (submoduleId, visibleCount, totalSections) =>
+        set((state) => {
+          const percentage = Math.round((visibleCount / totalSections) * 100)
+          console.log(
+            `[SectionProgress] 📊 ${submoduleId}: ${visibleCount}/${totalSections} (${percentage}%)`
+          )
+          return {
+            sectionProgress: {
+              ...state.sectionProgress,
+              [submoduleId]: { visibleCount, totalSections },
+            },
+          }
+        }),
+
+      getSectionProgress: (submoduleId) => get().sectionProgress[submoduleId],
     }),
     {
       name: 'music-theory-progress',
@@ -310,6 +338,7 @@ export const useProgressStore = create<ProgressState>()(
         practiceSessionsCompleted: state.practiceSessionsCompleted,
         totalPracticeMinutes: state.totalPracticeMinutes,
         submoduleScores: state.submoduleScores,
+        sectionProgress: state.sectionProgress,
       }),
     }
   )
@@ -344,6 +373,7 @@ useProgressStore.subscribe((state) => {
     completedSubmodules: state.completedSubmodules,
     completedLevels: state.completedLevels,
     submoduleScores: state.submoduleScores,
+    sectionProgress: state.sectionProgress,
     totalXP: state.totalXP,
     streakDays: state.streakDays,
     lastActiveDate: state.lastActiveDate,

@@ -51,6 +51,7 @@ const SidebarContent: React.FC<{
   setCurrentPosition: (moduleId: number, submoduleId: string) => void
   completedSubmodules: string[]
   getModuleProgress: (moduleId: number) => number
+  getSectionProgress: (submoduleId: string) => { visibleCount: number; totalSections: number } | undefined
   startGame: () => void
   stopGame: () => void
   isPlaying: boolean
@@ -66,6 +67,7 @@ const SidebarContent: React.FC<{
   setCurrentPosition,
   completedSubmodules,
   getModuleProgress,
+  getSectionProgress,
   startGame,
   stopGame,
   isPlaying,
@@ -327,36 +329,51 @@ const SidebarContent: React.FC<{
                                       }
                                     `}
                                   >
-                                    {/* Status Icon */}
-                                    <span
-                                      className={`
-                                      material-symbols-outlined text-[16px]
-                                      ${
-                                        isCompleted
-                                          ? 'text-emerald-500'
-                                          : isActive
-                                            ? 'text-[#30e8e8]'
-                                            : 'text-slate-300 dark:text-slate-600'
-                                      }
-                                    `}
-                                      style={
-                                        isCompleted ? { fontVariationSettings: "'FILL' 1" } : {}
-                                      }
-                                    >
-                                      {isCompleted
-                                        ? 'check_circle'
-                                        : isActive
-                                          ? 'radio_button_checked'
-                                          : 'radio_button_unchecked'}
-                                    </span>
+                                    {/* Status Icon with Progress Ring */}
+                                    {(() => {
+                                      const sectionProg = getSectionProgress(submodule.id)
+                                      const progressPercent = sectionProg
+                                        ? Math.round((sectionProg.visibleCount / sectionProg.totalSections) * 100)
+                                        : 0
+
+                                      return (
+                                        <div className="relative flex-shrink-0">
+                                          <ProgressRing
+                                            progress={isCompleted ? 100 : progressPercent}
+                                            size={24}
+                                            strokeWidth={2.5}
+                                            className={
+                                              isCompleted
+                                                ? 'text-emerald-500'
+                                                : progressPercent > 0
+                                                  ? 'text-[#30e8e8]'
+                                                  : 'text-slate-400 dark:text-slate-500'
+                                            }
+                                          >
+                                            {isCompleted ? (
+                                              <span
+                                                className="material-symbols-outlined text-[12px] text-emerald-500"
+                                                style={{ fontVariationSettings: "'FILL' 1" }}
+                                              >
+                                                check
+                                              </span>
+                                            ) : (
+                                              <span className="text-[8px] font-bold text-slate-600 dark:text-slate-300">
+                                                {progressPercent}%
+                                              </span>
+                                            )}
+                                          </ProgressRing>
+                                        </div>
+                                      )
+                                    })()}
 
                                     {/* Submodule Title */}
                                     <div className="flex-1 min-w-0">
                                       <span
                                         className={`
-                                        text-xs block truncate
-                                        ${isActive ? 'font-semibold' : 'font-medium'}
-                                      `}
+                                          text-xs block truncate
+                                          ${isActive ? 'font-semibold' : 'font-medium'}
+                                        `}
                                       >
                                         {submodule.id} {submodule.title}
                                       </span>
@@ -469,6 +486,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     setCurrentPosition,
     completedSubmodules,
     getModuleProgress,
+    getSectionProgress,
   } = useProgressStore()
 
   const startGame = useGameStore((state) => state.startGame)
@@ -493,6 +511,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             setCurrentPosition={setCurrentPosition}
             completedSubmodules={completedSubmodules}
             getModuleProgress={getModuleProgress}
+            getSectionProgress={getSectionProgress}
             startGame={startGame}
             stopGame={stopGame}
             isPlaying={isPlaying}
@@ -528,6 +547,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         setCurrentPosition={setCurrentPosition}
         completedSubmodules={completedSubmodules}
         getModuleProgress={getModuleProgress}
+        getSectionProgress={getSectionProgress}
         startGame={startGame}
         stopGame={stopGame}
         isPlaying={isPlaying}

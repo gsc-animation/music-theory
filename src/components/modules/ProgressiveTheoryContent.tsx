@@ -5,6 +5,7 @@ import { InlinePiano } from '../VirtualPiano/InlinePiano'
 import { InlineFlute } from '../../features/sao-truc/components/InlineFlute'
 import { InlineGrandStaff } from '../MusicStaff/InlineGrandStaff'
 import { InlineQuiz } from './InlineQuiz'
+import { useProgressStore } from '../../stores/useProgressStore'
 
 interface ProgressiveTheoryContentProps {
   content: string
@@ -266,8 +267,17 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     return Math.min(count, parsedSections.length)
   }, [parsedSections])
 
-  // Track which sections are visible - start with the calculated initial count
-  const [visibleCount, setVisibleCount] = useState(initialVisibleCount)
+  // Get progress store actions
+  const addXP = useProgressStore((state) => state.addXP)
+  const setSectionProgress = useProgressStore((state) => state.setSectionProgress)
+  const getSectionProgress = useProgressStore((state) => state.getSectionProgress)
+
+  // Initialize visible count from saved progress
+  const savedProgress = submoduleId ? getSectionProgress(submoduleId) : undefined
+  const initialFromSaved = savedProgress?.visibleCount ?? initialVisibleCount
+
+  // Track which sections are visible - start with saved or calculated initial count
+  const [visibleCount, setVisibleCount] = useState(Math.max(initialFromSaved, initialVisibleCount))
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
 
   // Track which quizzes have been completed (by section index)
@@ -287,6 +297,13 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     return false
   })
 
+  // Save section progress to store whenever visibleCount or totalSections changes
+  useEffect(() => {
+    if (submoduleId && sections.length > 0) {
+      setSectionProgress(submoduleId, visibleCount, sections.length)
+    }
+  }, [submoduleId, visibleCount, sections.length, setSectionProgress])
+
   // Check if last section has a quiz
   const lastSectionHasQuiz = useMemo(() => {
     if (parsedSections.length === 0) return false
@@ -297,10 +314,18 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
     // Mark this quiz as completed
     setCompletedQuizzes((prev) => new Set([...prev, sectionIndex]))
 
+    // Award XP for quiz completion (triggers Supabase sync via store subscription)
+    const xpReward = 5
+    addXP(xpReward)
+    console.log(
+      `[InlineQuiz] ✅ Quiz ${sectionIndex + 1} completed in ${submoduleId || 'unknown'} - +${xpReward} XP`
+    )
+
     // Reveal next section(s) - skip over sections without quiz
+    let nextVisibleCount = visibleCount
     if (sectionIndex === visibleCount - 1 && visibleCount < sections.length) {
       // Find how many consecutive sections without quiz follow
-      let nextVisibleCount = visibleCount + 1
+      nextVisibleCount = visibleCount + 1
       while (
         nextVisibleCount < sections.length &&
         !sectionHasQuiz(parsedSections[nextVisibleCount - 1])
@@ -310,15 +335,44 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
       setVisibleCount(nextVisibleCount)
     }
 
-    // If this was the last section's quiz, trigger completion
-    if (
-      sectionIndex === sections.length - 1 &&
-      onAllSectionsComplete &&
-      !completionCalledRef.current
-    ) {
-      completionCalledRef.current = true
-      setTimeout(onAllSectionsComplete, 500)
+    // Check if there's another inline quiz remaining in visible sections
+    // Look for the next section with a quiz after current section
+    let nextQuizSectionIndex = -1
+    for (let i = sectionIndex + 1; i < Math.min(nextVisibleCount, parsedSections.length); i++) {
+      if (sectionHasQuiz(parsedSections[i])) {
+        nextQuizSectionIndex = i
+        break
+      }
     }
+
+    if (nextQuizSectionIndex >= 0) {
+      // Scroll to next quiz section
+      setTimeout(() => {
+        const nextQuizRef = sectionRefs.current[nextQuizSectionIndex]
+        if (nextQuizRef) {
+          // Find the quiz element within this section
+          const quizElement = nextQuizRef.querySelector('.inline-quiz')
+          const headerOffset = 80
+          const targetElement = quizElement || nextQuizRef
+          const elementPosition = targetElement.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.scrollY - headerOffset
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          })
+          console.log(`[InlineQuiz] 📍 Scrolling to next quiz in section ${nextQuizSectionIndex + 1}`)
+        }
+      }, 400)
+    } else if (nextVisibleCount >= sections.length) {
+      // No more quizzes and all sections revealed - trigger completion to open next content
+      if (onAllSectionsComplete && !completionCalledRef.current) {
+        completionCalledRef.current = true
+        console.log(`[InlineQuiz] 🎉 All quizzes completed - opening next content`)
+        setTimeout(onAllSectionsComplete, 500)
+      }
+    }
+    // Note: If there are more sections to reveal with quizzes, the auto-scroll effect will handle it
   }
 
   // Check for completion when all sections are visible AND last section has no quiz
@@ -564,6 +618,13 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
                 </button>
               </div>
             )}
+
+            {/* Section separator - visual gap between sections */}
+            {!isLast && isQuizCompleted && (
+              <div className="section-separator">
+                <span className="section-separator-icon">✦</span>
+              </div>
+            )}
           </div>
         )
       })}
@@ -571,6 +632,47 @@ export const ProgressiveTheoryContent: React.FC<ProgressiveTheoryContentProps> =
       <style>{`
         .progressive-theory-content .theory-section {
           margin-bottom: 1.5rem;
+        }
+        
+        /* Section separator - visual gap between content sections */
+        .section-separator {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2.5rem 0;
+          margin: 2rem 0;
+          position: relative;
+        }
+        
+        .section-separator::before {
+          content: '';
+          width: 2px;
+          height: 40px;
+          background: linear-gradient(to bottom, transparent, rgba(48, 232, 232, 0.3), transparent);
+          margin-bottom: 0.75rem;
+        }
+        
+        .section-separator::after {
+          content: '';
+          width: 2px;
+          height: 40px;
+          background: linear-gradient(to bottom, transparent, rgba(48, 232, 232, 0.3), transparent);
+          margin-top: 0.75rem;
+        }
+        
+        .section-separator-icon {
+          padding: 0.5rem;
+          color: #30e8e8;
+          font-size: 1.25rem;
+          opacity: 0.7;
+          background: rgba(48, 232, 232, 0.1);
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         
         @keyframes fadeIn {

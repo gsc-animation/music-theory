@@ -40,6 +40,7 @@ export interface UserProgressRow {
     { percentage: number; stars: number; passed: boolean; bestTime?: number }
   >
   submodule_scores: Record<string, number>
+  section_progress: Record<string, { visibleCount: number; totalSections: number }>
   total_xp: number
   streak_days: number
   last_active_date: string

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS user_progress (
   completed_submodules JSONB DEFAULT '[]'::jsonb,
   completed_levels JSONB DEFAULT '{}'::jsonb,
   submodule_scores JSONB DEFAULT '{}'::jsonb,
+  section_progress JSONB DEFAULT '{}'::jsonb,
   total_xp INTEGER DEFAULT 0,
   streak_days INTEGER DEFAULT 0,
   last_active_date TEXT DEFAULT '',
@@ -51,3 +52,9 @@ CREATE TRIGGER update_user_progress_updated_at
 
 -- Verify the table was created
 SELECT 'user_progress table created successfully!' AS status;
+
+-- ===============================================
+-- MIGRATION: Add section_progress column (if table existed before)
+-- Run this if you already have the user_progress table
+-- ===============================================
+-- ALTER TABLE user_progress ADD COLUMN IF NOT EXISTS section_progress JSONB DEFAULT '{}'::jsonb;
