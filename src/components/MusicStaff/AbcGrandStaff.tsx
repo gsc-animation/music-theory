@@ -703,24 +703,88 @@ ${abcNotes} |`
           background: transparent;
         }
         .abc-grand-staff .abcjs-inline-audio {
-          background-color: rgba(241, 245, 249, 0.95);
-          border-radius: 8px;
-          padding: 8px 12px;
-          border: 1px solid #e2e8f0;
+          background-color: #f1f5f9;
+          border-radius: 12px;
+          padding: 10px 16px;
+          border: 1px solid #cbd5e1;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-btn {
-          background-color: #0891b2;
-          border: none;
-          color: white;
+          background-color: #0891b2 !important;
+          border: none !important;
+          color: white !important;
+          border-radius: 4px;
+          width: 22px !important;
+          height: 22px !important;
+          min-width: 22px !important;
+          min-height: 22px !important;
+          max-width: 22px !important;
+          max-height: 22px !important;
+          padding: 2px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          box-sizing: border-box !important;
+        }
+        .abc-grand-staff .abcjs-inline-audio .abcjs-btn svg,
+        .abc-grand-staff .abcjs-inline-audio .abcjs-btn path {
+          fill: white !important;
+          stroke: white !important;
+        }
+        .abc-grand-staff .abcjs-inline-audio .abcjs-btn svg {
+          width: 10px !important;
+          height: 10px !important;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-btn:hover {
-          background-color: #0e7490;
+          background-color: #0e7490 !important;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background {
           background-color: #cbd5e1;
+          border-radius: 4px;
+          height: 8px !important;
+          max-height: 8px !important;
+          top: 0 !important;
+          position: relative !important;
+          border: none !important;
         }
         .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator {
           background-color: #0891b2;
+          border-radius: 4px;
+          height: 8px !important;
+          max-height: 8px !important;
+          top: 0 !important;
+          position: absolute !important;
+        }
+        /* Progress bar container */
+        .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress {
+          height: 8px !important;
+          max-height: 8px !important;
+          min-height: 8px !important;
+          position: relative !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+        /* Ensure tempo/warp controls are visible */
+        .abc-grand-staff .abcjs-inline-audio .abcjs-tempo-wrapper,
+        .abc-grand-staff .abcjs-inline-audio .abcjs-css-warning {
+          color: #334155 !important;
+        }
+        .abc-grand-staff .abcjs-inline-audio input[type="range"] {
+          accent-color: #0891b2;
+        }
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+          .abc-grand-staff .abcjs-inline-audio {
+            padding: 6px 10px;
+            gap: 6px;
+          }
+          .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-background,
+          .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress-indicator,
+          .abc-grand-staff .abcjs-inline-audio .abcjs-midi-progress {
+            height: 6px !important;
+            max-height: 6px !important;
+            min-height: 6px !important;
+          }
         }
 
         /* Dark mode overrides */
