@@ -58,13 +58,36 @@
 | 3.1.3 | F Major với Bb | Demo why B must become Bb                         |
 | 3.1.4 | Scale Builder  | Interactive: chọn root note → auto-generate scale |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game          | Mô tả Gameplay                                    |
-| :----- | :---------------- | :------------------------------------------------ |
-| ⭐     | **Scale Note ID** | Giọng D Major có mấy dấu thăng? Là những dấu nào? |
-| ⭐⭐   | **Scale Play**    | Chơi đúng các nốt của âm giai trên Piano ảo       |
-| ⭐⭐⭐ | **Scale Builder** | Kéo thả nốt để hoàn thành âm giai khuyết          |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (C Major Scale)
+  ├─ 🎵 Scale Note ID       → 10 XP  (Nhận diện nốt trong C Major)
+  ├─ 🎹 Scale Play          → 15 XP  (Chơi C Major trên Piano)
+  └─ 🛠️ Scale Builder       → 20 XP  (Xây scale theo W-W-H-W-W-W-H)
+
+LEVEL 2 (+ G Major & F Major)
+  ├─ 🎵 Scale Note ID       → 15 XP  (G Major có F#, F Major có B♭)
+  ├─ 🎹 Scale Play          → 20 XP  (Chơi G, F Major)
+  └─ 🛠️ Scale Builder       → 25 XP  (Điền nốt thiếu + dấu hóa)
+
+LEVEL 3 (Any Key - D, A, E, B♭)
+  ├─ 🎵 Scale Note ID       → 20 XP  (Nhận diện bất kỳ giọng)
+  ├─ 🎹 Scale Play          → 30 XP  (Chơi scale bất kỳ)
+  └─ 🛠️ Scale Builder       → 40 XP  (Hoàn thành âm giai khuyết) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                                             | Skill Level   |
+| --------------- | ------------------------------------------------- | ------------- |
+| `scale-note-id` | Giọng D Major có mấy dấu thăng? Là những dấu nào? | Recognition   |
+| `scale-play`    | Chơi đúng các nốt của âm giai trên Piano ảo       | Active Recall |
+| `scale-builder` | Kéo thả nốt để hoàn thành âm giai khuyết          | Application   |
 
 ---
 
@@ -127,13 +150,36 @@
 | 3.2.3 | Key ID Practice           | Flashcard random key signatures |
 | 3.2.4 | Circle of Fifths          | Interactive circle              |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game          | Mô tả Gameplay                             |
-| :----- | :---------------- | :----------------------------------------- |
-| ⭐     | **Order Quiz**    | Điền thứ tự dấu thăng/giáng còn thiếu      |
-| ⭐⭐   | **Key Sig ID**    | Nhìn hóa biểu → Chọn tên giọng đúng        |
-| ⭐⭐⭐ | **Key Sig Write** | Cho tên giọng → Kéo thả dấu hóa vào khuông |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (1-2 dấu: G, D, F, B♭)
+  ├─ 🎵 Order Quiz          → 10 XP  (Điền thứ tự dấu thăng/giáng)
+  ├─ 👁️ Key Sig ID          → 15 XP  (Nhìn hóa biểu 1-2 dấu)
+  └─ ✏️ Key Sig Write       → 20 XP  (Viết hóa biểu cho G, F)
+
+LEVEL 2 (3-4 dấu: A, E, E♭, A♭)
+  ├─ 🎵 Order Quiz          → 15 XP  (Thứ tự dài hơn)
+  ├─ 👁️ Key Sig ID          → 20 XP  (Nhìn 3-4 dấu hóa)
+  └─ ✏️ Key Sig Write       → 25 XP  (Kéo thả dấu hóa vào khuông)
+
+LEVEL 3 (Full: Tất cả 12 giọng)
+  ├─ 🎵 Order Quiz          → 20 XP  (FCGDAEB / BEADGCF đầy đủ)
+  ├─ 👁️ Key Sig ID          → 30 XP  (Nhận diện nhanh 5-7 dấu)
+  └─ ✏️ Key Sig Write       → 40 XP  (Circle of Fifths quiz) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                                      | Skill Level   |
+| --------------- | ------------------------------------------ | ------------- |
+| `order-quiz`    | Điền thứ tự dấu thăng/giáng còn thiếu      | Recognition   |
+| `key-sig-id`    | Nhìn hóa biểu → Chọn tên giọng đúng        | Active Recall |
+| `key-sig-write` | Cho tên giọng → Kéo thả dấu hóa vào khuông | Application   |
 
 ---
 
@@ -189,13 +235,36 @@
 | 3.3.2 | Interval Gallery    | Tất cả quãng từ 2nd đến 8ve  |
 | 3.3.3 | Melodic vs Harmonic | So sánh 2 cách chơi interval |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game               | Mô tả Gameplay                       |
-| :----- | :--------------------- | :----------------------------------- |
-| ⭐     | **Interval Number ID** | Đếm quãng trên khuông nhạc           |
-| ⭐⭐   | **Interval Play**      | Nghe và chơi lại quãng trên phím đàn |
-| ⭐⭐⭐ | **Speed Count**        | Đếm quãng trong thời gian giới hạn   |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Quãng 2, 3)
+  ├─ 🎵 Interval Number ID  → 10 XP  (Đếm quãng 2nd, 3rd)
+  ├─ 🎹 Interval Play       → 15 XP  (Chơi quãng trên Piano)
+  └─ ⏱️ Speed Count        → 20 XP  (Đếm nhanh trong 10s)
+
+LEVEL 2 (+ Quãng 4, 5, 6)
+  ├─ 🎵 Interval Number ID  → 15 XP  (Thêm 4th, 5th, 6th)
+  ├─ 🎹 Interval Play       → 20 XP  (Chơi quãng rộng hơn)
+  └─ ⏱️ Speed Count        → 25 XP  (Đếm nhanh hơn)
+
+LEVEL 3 (Full: 2nd - Octave)
+  ├─ 🎵 Interval Number ID  → 20 XP  (Tất cả quãng + 7th, 8ve)
+  ├─ 🎹 Interval Play       → 30 XP  (Melodic + Harmonic)
+  └─ ⏱️ Speed Count        → 40 XP  (Time challenge) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                 | Mô tả                                | Skill Level   |
+| -------------------- | ------------------------------------ | ------------- |
+| `interval-number-id` | Đếm quãng trên khuông nhạc           | Recognition   |
+| `interval-play`      | Nghe và chơi lại quãng trên phím đàn | Active Recall |
+| `speed-count`        | Đếm quãng trong thời gian giới hạn   | Application   |
 
 ---
 
@@ -261,13 +330,36 @@
 | 3.4.3 | Augmented Tritone     | "Diabolus in Musica"               |
 | 3.4.4 | Interval Song Library | Danh sách bài hát cho mỗi interval |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game             | Mô tả Gameplay                                 |
-| :----- | :------------------- | :--------------------------------------------- |
-| ⭐     | **Quality Quiz**     | Nhìn 2 nốt → đếm semitones → chọn tính chất    |
-| ⭐⭐   | **Interval Ear ID**  | Nghe → đoán interval (P5, M3, m3...)           |
-| ⭐⭐⭐ | **Full Interval ID** | Xác định đầy đủ: "Minor 6th", "Perfect 4th"... |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Perfect: P4, P5)
+  ├─ 🎵 Quality Quiz        → 10 XP  (Nhận diện P4=5, P5=7 semitones)
+  ├─ 👂 Interval Ear ID     → 15 XP  (Nghe "Star Wars", "Here Comes...")
+  └─ 🎹 Full Interval ID    → 20 XP  (Xác định "Perfect 4th")
+
+LEVEL 2 (+ Major/Minor 3rd)
+  ├─ 🎵 Quality Quiz        → 15 XP  (M3=4, m3=3 semitones)
+  ├─ 👂 Interval Ear ID     → 20 XP  (Vui vs Buồn: M3 vs m3)
+  └─ 🎹 Full Interval ID    → 25 XP  ("Major 3rd", "minor 3rd")
+
+LEVEL 3 (Full: + 2nds, 6ths, 7ths, Aug/Dim)
+  ├─ 🎵 Quality Quiz        → 20 XP  (Tất cả tính chất)
+  ├─ 👂 Interval Ear ID     → 30 XP  (Library of songs)
+  └─ 🎹 Full Interval ID    → 40 XP  ("Augmented 4th"...) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type               | Mô tả                                          | Skill Level   |
+| ------------------ | ---------------------------------------------- | ------------- |
+| `quality-quiz`     | Nhìn 2 nốt → đếm semitones → chọn tính chất    | Recognition   |
+| `interval-ear-id`  | Nghe → đoán interval (P5, M3, m3...)           | Active Recall |
+| `full-interval-id` | Xác định đầy đủ: "Minor 6th", "Perfect 4th"... | Application   |
 
 ---
 
@@ -331,13 +423,36 @@
 | 3.5.3 | Melodic Minor  | Different ascending vs descending |
 | 3.5.4 | Relative Pairs | C Major ↔ A minor comparison      |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game             | Mô tả Gameplay                                |
-| :----- | :------------------- | :-------------------------------------------- |
-| ⭐     | **Minor Type ID**    | Nghe scale → Natural, Harmonic, hay Melodic?  |
-| ⭐⭐   | **Relative Finder**  | Cho G Major → Relative minor là gì? (E minor) |
-| ⭐⭐⭐ | **Minor Scale Play** | Chơi đúng 3 loại minor scale trên instrument  |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Natural Minor)
+  ├─ 🎵 Minor Type ID       → 10 XP  (Nhận diện Natural minor)
+  ├─ 🔗 Relative Finder    → 15 XP  (C Major ↔ A minor)
+  └─ 🎹 Minor Scale Play   → 20 XP  (Chơi A Natural Minor)
+
+LEVEL 2 (+ Harmonic Minor)
+  ├─ 🎵 Minor Type ID       → 15 XP  (Natural vs Harmonic)
+  ├─ 🔗 Relative Finder    → 20 XP  (G Major ↔ E minor...)
+  └─ 🎹 Minor Scale Play   → 25 XP  (Chơi có nâng bậc 7)
+
+LEVEL 3 (+ Melodic Minor)
+  ├─ 🎵 Minor Type ID       → 20 XP  (Phân biệt cả 3 dạng)
+  ├─ 🔗 Relative Finder    → 30 XP  (Bất kỳ giọng)
+  └─ 🎹 Minor Scale Play   → 40 XP  (Lên khác xuống) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type               | Mô tả                                         | Skill Level   |
+| ------------------ | --------------------------------------------- | ------------- |
+| `minor-type-id`    | Nghe scale → Natural, Harmonic, hay Melodic?  | Recognition   |
+| `relative-finder`  | Cho G Major → Relative minor là gì? (E minor) | Active Recall |
+| `minor-scale-play` | Chơi đúng 3 loại minor scale trên instrument  | Application   |
 
 ---
 
@@ -401,12 +516,35 @@
 | 3.6.3 | 5 Black Keys          | Instant pentatonic on Piano |
 | 3.6.4 | Vietnamese Pentatonic | Điệu Bắc vs Điệu Nam        |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game             | Mô tả Gameplay                                   |
-| :----- | :------------------- | :----------------------------------------------- |
-| ⭐     | **Pentatonic ID**    | Major Pentatonic hay Minor Pentatonic?           |
-| ⭐⭐   | **Flute Pentatonic** | Chơi giai điệu ngũ cung trên Sáo Trúc ảo         |
-| ⭐⭐⭐ | **Improv Challenge** | Tạo giai điệu trên backing track, được chấm điểm |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Major Pentatonic)
+  ├─ 🎵 Pentatonic ID       → 10 XP  (Nhận diện Major Pent: 1-2-3-5-6)
+  ├─ 🎼 Flute Pentatonic   → 15 XP  (Chơi 5 phím đen trên Sáo)
+  └─ 🎶 Improv Challenge   → 20 XP  (Tạo melody tự do)
+
+LEVEL 2 (+ Minor Pentatonic)
+  ├─ 🎵 Pentatonic ID       → 15 XP  (Minor Pent: 1-♭3-4-5-♭7)
+  ├─ 🎸 Guitar Pentatonic  → 20 XP  (Box 1 pattern trên Guitar)
+  └─ 🎶 Improv Challenge   → 25 XP  (Blues/Rock style)
+
+LEVEL 3 (Vietnamese Pentatonic)
+  ├─ 🎵 Pentatonic ID       → 20 XP  (Điệu Bắc vs Điệu Nam)
+  ├─ 🎼 Flute Pentatonic   → 30 XP  (Kỹ thuật rung, nhấn, luyến)
+  └─ 🎶 Improv Challenge   → 40 XP  (Tạo giai điệu Việt Nam) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type               | Mô tả                                            | Skill Level   |
+| ------------------ | ------------------------------------------------ | ------------- |
+| `pentatonic-id`    | Major Pentatonic hay Minor Pentatonic?           | Recognition   |
+| `flute-pentatonic` | Chơi giai điệu ngũ cung trên Sáo Trúc ảo         | Active Recall |
+| `improv-challenge` | Tạo giai điệu trên backing track, được chấm điểm | Application   |
 
 ---

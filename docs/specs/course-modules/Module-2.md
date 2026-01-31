@@ -63,13 +63,36 @@
 | 2.1.3 | Mix Quarter & Eighth | Kết hợp nốt đen và móc đơn trong cùng ô nhịp           |
 | 2.1.4 | 16th Note Rush       | Demo nốt móc kép tốc độ cao                            |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game          | Mô tả Gameplay                                                    |
-| :----- | :---------------- | :---------------------------------------------------------------- |
-| ⭐     | **Note Value ID** | Xem hình nốt → Chọn đúng tên và giá trị (Whole, Half, Quarter...) |
-| ⭐⭐   | **Rhythm Tap**    | Nghe pattern → Gõ lại đúng nhịp trên drum pad ảo                  |
-| ⭐⭐⭐ | **Beat Counter**  | Cho ô nhịp phức tạp → Đếm tổng số phách và điền đáp án            |
+Thiết kế game theo pattern "Master-Before-Advance" - học viên phải thành thạo từng nhóm giá trị nốt trước khi mở rộng:
+
+```
+LEVEL 1 (Nốt tròn & Nốt trắng)
+  ├─ 🎵 Note Value ID       → 10 XP  (Nhận diện Whole, Half)
+  ├─ 🥁 Rhythm Tap          → 15 XP  (Gõ pattern tròn, trắng)
+  └─ 🔢 Beat Counter        → 20 XP  (Đếm phách trong ô nhịp)
+
+LEVEL 2 (+ Nốt đen & Móc đơn)
+  ├─ 🎵 Note Value ID       → 15 XP  (Thêm Quarter, Eighth)
+  ├─ 🥁 Rhythm Tap          → 20 XP  (Pattern 4 loại nốt)
+  └─ 🔢 Beat Counter        → 25 XP  (Đếm phách phức tạp hơn)
+
+LEVEL 3 (Full Range + Móc kép)
+  ├─ 🎵 Note Value ID       → 20 XP  (Tất cả 5 loại nốt)
+  ├─ 🥁 Rhythm Tap          → 30 XP  (Pattern với 16th notes)
+  └─ 🔢 Beat Counter        → 40 XP  (Ô nhịp phức hợp) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                                         | Skill Level   |
+| --------------- | --------------------------------------------- | ------------- |
+| `note-value-id` | Xem hình nốt → Chọn tên và giá trị đúng       | Recognition   |
+| `rhythm-tap`    | Nghe pattern → Gõ lại đúng nhịp trên drum pad | Active Recall |
+| `beat-counter`  | Cho ô nhịp → Đếm tổng số phách và điền đáp án | Application   |
 
 ---
 
@@ -122,13 +145,36 @@
 | 2.2.2 | "Hơi thở" trong giai điệu    | So sánh 2 versions: với và không có rests         |
 | 2.2.3 | Syncopation cơ bản           | Jazz pattern với off-beat rests                   |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game             | Mô tả Gameplay                               |
-| :----- | :------------------- | :------------------------------------------- |
-| ⭐     | **Rest ID**          | Xem hình dấu lặng → Chọn tên và giá trị      |
-| ⭐⭐   | **Rhythm+Rests**     | Gõ nhịp với cả nốt và dấu lặng               |
-| ⭐⭐⭐ | **Measure Complete** | Điền nốt hoặc rest để hoàn thành ô nhịp đúng |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Lặng tròn & Lặng trắng)
+  ├─ 🎵 Rest ID             → 10 XP  (Nhận diện Whole/Half rests)
+  ├─ 🥁 Rhythm+Rests        → 15 XP  (Gõ pattern có rests dài)
+  └─ 📝 Measure Complete    → 20 XP  (Điền rest để hoàn thành ô nhịp)
+
+LEVEL 2 (+ Lặng đen)
+  ├─ 🎵 Rest ID             → 15 XP  (Thêm Quarter rest)
+  ├─ 🥁 Rhythm+Rests        → 20 XP  (Pattern "chơi-nghỉ")
+  └─ 📝 Measure Complete    → 25 XP  (Ô nhịp phức tạp hơn)
+
+LEVEL 3 (Full Range + Lặng móc)
+  ├─ 🎵 Rest ID             → 20 XP  (Tất cả 5 loại dấu lặng)
+  ├─ 🥁 Rhythm+Rests        → 30 XP  (Syncopation với rests)
+  └─ 📝 Measure Complete    → 40 XP  (Điền nốt HOẶC rest) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type               | Mô tả                                   | Skill Level   |
+| ------------------ | --------------------------------------- | ------------- |
+| `rest-id`          | Xem hình dấu lặng → Chọn tên và giá trị | Recognition   |
+| `rhythm-rests`     | Gõ nhịp với cả nốt và dấu lặng          | Active Recall |
+| `measure-complete` | Điền nốt hoặc rest để hoàn thành ô nhịp | Application   |
 
 ---
 
@@ -182,13 +228,36 @@
 | 2.3.2 | Tie Across Barlines    | Demo tie xuyên ô nhịp                     |
 | 2.3.3 | Tie vs Slur            | Side-by-side comparison với audio         |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game              | Mô tả Gameplay                           |
-| :----- | :-------------------- | :--------------------------------------- |
-| ⭐     | **Dotted Value Calc** | Tính giá trị nốt chấm (dotted half = ?)  |
-| ⭐⭐   | **Dotted Rhythm Tap** | Gõ pattern có nốt chấm                   |
-| ⭐⭐⭐ | **Tie or Slur?**      | Nhìn khuông nhạc → phân biệt tie và slur |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Nốt đen chấm)
+  ├─ 🎵 Dotted Value Calc   → 10 XP  (Tính giá trị đen chấm = 1.5)
+  ├─ 🥁 Dotted Rhythm Tap   → 15 XP  (Gõ pattern đen chấm + móc đơn)
+  └─ 🔗 Tie or Slur?        → 20 XP  (Phân biệt cơ bản)
+
+LEVEL 2 (+ Nốt trắng chấm & Ties)
+  ├─ 🎵 Dotted Value Calc   → 15 XP  (Thêm trắng chấm = 3 phách)
+  ├─ 🥁 Dotted Rhythm Tap   → 20 XP  (Pattern có ties xuyên ô)
+  └─ 🔗 Tie or Slur?        → 25 XP  (Nhận diện ties phức tạp)
+
+LEVEL 3 (Full Range + Double Dots)
+  ├─ 🎵 Dotted Value Calc   → 20 XP  (Chấm đôi: +50% +25%)
+  ├─ 🥁 Dotted Rhythm Tap   → 30 XP  (Pattern phức hợp)
+  └─ 🔗 Tie or Slur?        → 40 XP  (Cả 2 trong cùng khuông) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                | Mô tả                                    | Skill Level   |
+| ------------------- | ---------------------------------------- | ------------- |
+| `dotted-value-calc` | Tính giá trị nốt chấm (dotted half = ?)  | Recognition   |
+| `dotted-rhythm-tap` | Gõ pattern có nốt chấm                   | Active Recall |
+| `tie-or-slur`       | Nhìn khuông nhạc → phân biệt tie và slur | Application   |
 
 ---
 
@@ -243,13 +312,36 @@
 | 2.4.2 | 4/4 vs 3/4 vs 2/4        | So sánh 3 loại nhịp với cùng giai điệu |
 | 2.4.3 | Strong/Weak Beat Demo    | Visual với dot size khác nhau          |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game          | Mô tả Gameplay                                  |
-| :----- | :---------------- | :---------------------------------------------- |
-| ⭐     | **Beat Strength** | Xác định phách mạnh/nhẹ trong ô nhịp            |
-| ⭐⭐   | **Time Sig ID**   | Nghe đoạn nhạc → Xác định nhịp (4/4, 3/4, 2/4?) |
-| ⭐⭐⭐ | **Time Sig Tap**  | Gõ đúng pattern cho nhịp được yêu cầu           |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Nhịp 4/4 - Common Time)
+  ├─ 🎵 Beat Strength       → 10 XP  (Nhận diện mạnh-nhẹ-vừa-nhẹ)
+  ├─ 👂 Time Sig ID         → 15 XP  (Nghe đoạn nhạc 4/4)
+  └─ 🥁 Time Sig Tap        → 20 XP  (Gõ pattern 4/4)
+
+LEVEL 2 (+ Nhịp 3/4 - Waltz)
+  ├─ 🎵 Beat Strength       → 15 XP  (So sánh 4/4 vs 3/4)
+  ├─ 👂 Time Sig ID         → 20 XP  (Phân biệt 4/4 và 3/4)
+  └─ 🥁 Time Sig Tap        → 25 XP  (Gõ pattern waltz)
+
+LEVEL 3 (Full: 2/4, 3/4, 4/4)
+  ├─ 🎵 Beat Strength       → 20 XP  (Cả 3 loại nhịp)
+  ├─ 👂 Time Sig ID         → 30 XP  (Nghe → đoán cả 3)
+  └─ 🥁 Time Sig Tap        → 40 XP  (Gõ chính xác theo yêu cầu) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                                 | Skill Level   |
+| --------------- | ------------------------------------- | ------------- |
+| `beat-strength` | Xác định phách mạnh/nhẹ trong ô nhịp  | Recognition   |
+| `time-sig-id`   | Nghe đoạn nhạc → Xác định nhịp        | Active Recall |
+| `time-sig-tap`  | Gõ đúng pattern cho nhịp được yêu cầu | Application   |
 
 ---
 
@@ -305,13 +397,36 @@
 | 2.5.2 | 12/8 Blues Shuffle | Classic blues feel             |
 | 2.5.3 | Straight vs Swing  | Toggle giữa 2 styles           |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                | Mô tả Gameplay                          |
-| :----- | :---------------------- | :-------------------------------------- |
-| ⭐     | **Simple vs Compound**  | Nghe → phân biệt nhịp đơn hay nhịp ghép |
-| ⭐⭐   | **Triplet Feel**        | Gõ triplet patterns chính xác           |
-| ⭐⭐⭐ | **Compound Rhythm Tap** | Gõ pattern 6/8 hoặc 12/8 phức tạp       |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Nhịp 6/8)
+  ├─ 🎵 Simple vs Compound   → 10 XP  (Phân biệt 3/4 vs 6/8)
+  ├─ 🎶 Triplet Feel         → 15 XP  (Gõ "1-2-3, 1-2-3")
+  └─ 🥁 Compound Rhythm Tap  → 20 XP  (Pattern 6/8 cơ bản)
+
+LEVEL 2 (+ Nhịp 9/8, 12/8)
+  ├─ 🎵 Simple vs Compound   → 15 XP  (Nhận diện 9/8, 12/8)
+  ├─ 🎶 Triplet Feel         → 20 XP  (Blues shuffle 12/8)
+  └─ 🥁 Compound Rhythm Tap  → 25 XP  (Pattern 9/8, 12/8)
+
+LEVEL 3 (Swing vs Straight)
+  ├─ 🎵 Simple vs Compound   → 20 XP  (Tất cả nhịp ghép)
+  ├─ 🎶 Triplet Feel         → 30 XP  (Straight vs Swung)
+  └─ 🥁 Compound Rhythm Tap  → 40 XP  (Jig + Blues) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                  | Mô tả                                   | Skill Level   |
+| --------------------- | --------------------------------------- | ------------- |
+| `simple-compound`     | Nghe → phân biệt nhịp đơn hay nhịp ghép | Recognition   |
+| `triplet-feel`        | Gõ triplet patterns chính xác           | Active Recall |
+| `compound-rhythm-tap` | Gõ pattern 6/8, 9/8 hoặc 12/8 phức tạp  | Application   |
 
 ---
 
@@ -364,12 +479,35 @@
 | 2.6.2 | Tempo Terms     | Flashcard thuật ngữ tiếng Ý               |
 | 2.6.3 | Match the Tempo | Nghe nhạc → điều chỉnh metronome khớp     |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game        | Mô tả Gameplay                                  |
-| :----- | :-------------- | :---------------------------------------------- |
-| ⭐     | **Tempo Term**  | Cho BPM 140 → chọn thuật ngữ đúng (Allegro)     |
-| ⭐⭐   | **Tempo ID**    | Nghe metronome → đoán BPM range                 |
-| ⭐⭐⭐ | **Tempo Match** | Điều chỉnh metronome khớp với bài hát đang phát |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Slow: Largo-Adagio-Andante)
+  ├─ 🎵 Tempo Term          → 10 XP  (Thuật ngữ tốc độ chậm)
+  ├─ 👂 Tempo ID            → 15 XP  (Đoán BPM range 40-108)
+  └─ 🎹 Tempo Match         → 20 XP  (Điều chỉnh metronome khớp)
+
+LEVEL 2 (+ Medium: Moderato-Allegro)
+  ├─ 🎵 Tempo Term          → 15 XP  (Thêm tốc độ trung bình)
+  ├─ 👂 Tempo ID            → 20 XP  (Đoán 108-168 BPM)
+  └─ 🎹 Tempo Match         → 25 XP  (Pop/Rock tempo)
+
+LEVEL 3 (Full Range + Fast: Vivace-Presto)
+  ├─ 🎵 Tempo Term          → 20 XP  (Tất cả 7 thuật ngữ)
+  ├─ 👂 Tempo ID            → 30 XP  (Đoán full range 40-200+)
+  └─ 🎹 Tempo Match         → 40 XP  (Match bài hát thực tế) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type          | Mô tả                                           | Skill Level   |
+| ------------- | ----------------------------------------------- | ------------- |
+| `tempo-term`  | Cho BPM → chọn thuật ngữ đúng (Allegro...)      | Recognition   |
+| `tempo-id`    | Nghe metronome → đoán BPM range                 | Active Recall |
+| `tempo-match` | Điều chỉnh metronome khớp với bài hát đang phát | Application   |
 
 ---

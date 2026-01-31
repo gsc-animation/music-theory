@@ -63,13 +63,36 @@
 | 4.1.2 | C-G-Am-F Loop           | 4 chords progression        |
 | 4.1.3 | Piano vs Guitar Voicing | Cùng hợp âm, khác cách đánh |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game          | Mô tả Gameplay                      |
-| :----- | :---------------- | :---------------------------------- |
-| ⭐     | **Chord Note ID** | Hợp âm C gồm những nốt nào? (C-E-G) |
-| ⭐⭐   | **Chord Builder** | Chọn Root → điền 3rd và 5th đúng    |
-| ⭐⭐⭐ | **Chord Play**    | Chơi đúng chord trên Piano/Guitar   |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (C Major & G Major Triads)
+  ├─ 🎵 Chord Note ID       → 10 XP  (Hợp âm C gồm C-E-G)
+  ├─ 🛠️ Chord Builder       → 15 XP  (Chọn Root → điền 3rd, 5th)
+  └─ 🎹 Chord Play          → 20 XP  (Chơi C, G trên Piano)
+
+LEVEL 2 (+ F Major & A minor)
+  ├─ 🎵 Chord Note ID       → 15 XP  (Am có quãng 3 thứ!)
+  ├─ 🛠️ Chord Builder       → 20 XP  (Xây Major vs minor)
+  └─ 🎹 Chord Play          → 25 XP  (4 chords cơ bản)
+
+LEVEL 3 (Guitar Chords + Dm, Em)
+  ├─ 🎵 Chord Note ID       → 20 XP  (Nhận diện nhanh)
+  ├─ 🎸 Chord Builder       → 30 XP  (Chọn thế bấm Guitar)
+  └─ 🎹 Chord Play          → 40 XP  (C-G-Am-F loop) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                               | Skill Level   |
+| --------------- | ----------------------------------- | ------------- |
+| `chord-note-id` | Hợp âm C gồm những nốt nào? (C-E-G) | Recognition   |
+| `chord-builder` | Chọn Root → điền 3rd và 5th đúng    | Active Recall |
+| `chord-play`    | Chơi đúng chord trên Piano/Guitar   | Application   |
 
 ---
 
@@ -123,13 +146,36 @@
 | 4.2.3 | Augmented "Dreamy" | Floating, unresolved |
 | 4.2.4 | Quality Toggle     | Switch between all 4 |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                          | Mô tả Gameplay                         |
-| :----- | :-------------------------------- | :------------------------------------- |
-| ⭐     | **Chord Quality ID**              | Nhìn nốt → Major, minor, dim, hay aug? |
-| ⭐⭐   | **Ear Training: Major or Minor?** | Nghe → đoán tính chất                  |
-| ⭐⭐⭐ | **Full Quality ID**               | Nghe → xác định cả 4 loại              |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Major vs Minor)
+  ├─ 🎵 Chord Quality ID    → 10 XP  (Nhìn nốt → Major hay minor?)
+  ├─ 👂 Major or Minor Ear  → 15 XP  (Nghe: Vui 😄 hay Buồn 😢?)
+  └─ 🎹 Emotion Match       → 20 XP  (Chơi chord theo emoji)
+
+LEVEL 2 (+ Diminished)
+  ├─ 🎵 Chord Quality ID    → 15 XP  (Thêm dim: đáng sợ 😱)
+  ├─ 👂 3-Quality Ear       → 20 XP  (Major/minor/dim)
+  └─ 🎹 Emotion Match       → 25 XP  (3 loại cảm xúc)
+
+LEVEL 3 (+ Augmented)
+  ├─ 🎵 Chord Quality ID    → 20 XP  (Cả 4: M/m/dim/aug)
+  ├─ 👂 Full Quality Ear    → 30 XP  ("Dreamy" ☁️ = aug)
+  └─ 🎹 Emotion Match       → 40 XP  (4 emoji = 4 quality) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type               | Mô tả                                  | Skill Level   |
+| ------------------ | -------------------------------------- | ------------- |
+| `chord-quality-id` | Nhìn nốt → Major, minor, dim, hay aug? | Recognition   |
+| `major-minor-ear`  | Nghe → đoán tính chất                  | Active Recall |
+| `emotion-match`    | Chơi chord phù hợp với emoji cảm xúc   | Application   |
 
 ---
 
@@ -189,13 +235,36 @@
 | 4.3.3 | vii° Diminished          | The "spicy" chord      |
 | 4.3.4 | Key of G Diatonic        | G-Am-Bm-C-D-Em-F#dim   |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game              | Mô tả Gameplay                          |
-| :----- | :-------------------- | :-------------------------------------- |
-| ⭐     | **Diatonic Chord ID** | Bậc vi của C là gì? (Am)                |
-| ⭐⭐   | **Quality Pattern**   | Điền M/m/dim cho I-ii-iii-IV-V-vi-vii°  |
-| ⭐⭐⭐ | **Diatonic Builder**  | Điền các hợp âm còn thiếu trong giọng F |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (I, IV, V - Primary Chords)
+  ├─ 🎵 Diatonic Chord ID   → 10 XP  (Bậc I, IV, V của C)
+  ├─ 📝 Quality Pattern    → 15 XP  (Điền M cho I, IV, V)
+  └─ 🛠️ Diatonic Builder   → 20 XP  (Xây C, F, G trong giọng C)
+
+LEVEL 2 (+ ii, iii, vi - Minor Chords)
+  ├─ 🎵 Diatonic Chord ID   → 15 XP  (Dm, Em, Am trong C)
+  ├─ 📝 Quality Pattern    → 20 XP  (Điền m cho ii, iii, vi)
+  └─ 🛠️ Diatonic Builder   → 25 XP  (Hoàn thành 6/7 chords)
+
+LEVEL 3 (+ vii° - Full Set)
+  ├─ 🎵 Diatonic Chord ID   → 20 XP  (Tất cả 7 bậc trong G, F)
+  ├─ 📝 Quality Pattern    → 30 XP  (M-m-m-M-M-m-dim)
+  └─ 🛠️ Diatonic Builder   → 40 XP  (Bất kỳ giọng) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                | Mô tả                                   | Skill Level   |
+| ------------------- | --------------------------------------- | ------------- |
+| `diatonic-chord-id` | Bậc vi của C là gì? (Am)                | Recognition   |
+| `quality-pattern`   | Điền M/m/dim cho I-ii-iii-IV-V-vi-vii°  | Active Recall |
+| `diatonic-builder`  | Điền các hợp âm còn thiếu trong giọng F | Application   |
 
 ---
 
@@ -250,13 +319,36 @@
 | 4.4.2 | I-V-vi-IV in C, G, D | Same progression, 3 keys        |
 | 4.4.3 | Transposer Tool      | Interactive key change          |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game                   | Mô tả Gameplay                      |
-| :----- | :------------------------- | :---------------------------------- |
-| ⭐     | **Roman Convert**          | Am trong key C = ? (vi)             |
-| ⭐⭐   | **Transpose Quiz**         | I-V-vi-IV trong G là gì? (G-D-Em-C) |
-| ⭐⭐⭐ | **Roman Progression Play** | Chơi tiến trình I-IV-V trong key D  |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Key of C)
+  ├─ 🎵 Roman Convert       → 10 XP  (Am trong C = vi)
+  ├─ ⚡ Transpose Quiz      → 15 XP  (I-V-vi-IV trong C = ?)
+  └─ 🎹 Roman Prog Play    → 20 XP  (Chơi C-G-Am-F)
+
+LEVEL 2 (+ Key of G)
+  ├─ 🎵 Roman Convert       → 15 XP  (Em trong G = vi)
+  ├─ ⚡ Transpose Quiz      → 20 XP  (I-V-vi-IV trong G = ?)
+  └─ 🎹 Roman Prog Play    → 25 XP  (Chơi G-D-Em-C)
+
+LEVEL 3 (Any Key: D, A, F...)
+  ├─ 🎵 Roman Convert       → 20 XP  (Bất kỳ giọng)
+  ├─ ⚡ Transpose Quiz      → 30 XP  (Nashville Number System)
+  └─ 🎹 Roman Prog Play    → 40 XP  (Chơi tiến trình trong D) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                     | Mô tả                               | Skill Level   |
+| ------------------------ | ----------------------------------- | ------------- |
+| `roman-convert`          | Am trong key C = ? (vi)             | Recognition   |
+| `transpose-quiz`         | I-V-vi-IV trong G là gì? (G-D-Em-C) | Active Recall |
+| `roman-progression-play` | Chơi tiến trình I-IV-V trong key D  | Application   |
 
 ---
 
@@ -321,13 +413,36 @@
 | 4.5.3 | Flat Keys (left side)   | F, Bb, Eb, Ab, Db, Gb        |
 | 4.5.4 | Relative Pairs          | Major + minor cùng vị trí    |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game              | Mô tả Gameplay                       |
-| :----- | :-------------------- | :----------------------------------- |
-| ⭐     | **Circle Key ID**     | A Major ở đâu? Có mấy #? (3 giờ, 3#) |
-| ⭐⭐   | **Circle Navigation** | Điền tên giọng còn thiếu trên vòng   |
-| ⭐⭐⭐ | **Neighbor Keys**     | Giọng nào "hàng xóm" với E Major?    |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Sharp Keys: G, D, A)
+  ├─ 🎵 Circle Key ID       → 10 XP  (G = 1#, D = 2#...)
+  ├─ 🧭 Circle Navigation  → 15 XP  (C → G → D = chiều kim)
+  └─ 🔗 Neighbor Keys       → 20 XP  (C hàng xóm với G, F)
+
+LEVEL 2 (+ Flat Keys: F, B♭, E♭)
+  ├─ 🎵 Circle Key ID       → 15 XP  (F = 1♭, B♭ = 2♭...)
+  ├─ 🧭 Circle Navigation  → 20 XP  (C → F → B♭ = ngược chiều)
+  └─ 🔗 Neighbor Keys       → 25 XP  (Modulation gần và xa)
+
+LEVEL 3 (Full Circle + Relative Minor)
+  ├─ 🎵 Circle Key ID       → 20 XP  (Tất cả 12 giọng + minor)
+  ├─ 🧭 Circle Navigation  → 30 XP  (Đi từ A đến E♭)
+  └─ 🔗 Neighbor Keys       → 40 XP  (Related keys quiz) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                | Mô tả                                | Skill Level   |
+| ------------------- | ------------------------------------ | ------------- |
+| `circle-key-id`     | A Major ở đâu? Có mấy #? (3 giờ, 3#) | Recognition   |
+| `circle-navigation` | Điền tên giọng còn thiếu trên vòng   | Active Recall |
+| `neighbor-keys`     | Giọng nào "hàng xóm" với E Major?    | Application   |
 
 ---
 
@@ -389,13 +504,36 @@
 | 4.6.2 | Slash Chord Notation   | C/E, C/G, F/A...                   |
 | 4.6.3 | Voice Leading Demo     | C → F → G → C with smooth movement |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game               | Mô tả Gameplay                            |
-| :----- | :--------------------- | :---------------------------------------- |
-| ⭐     | **Inversion ID**       | Nhìn nốt → Root, 1st, hay 2nd inversion?  |
-| ⭐⭐   | **Inversion Play**     | Chơi C/G trên Piano                       |
-| ⭐⭐⭐ | **Voice Leading Path** | Chọn inversions để tạo smooth progression |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Root Position & 1st Inversion)
+  ├─ 🎵 Inversion ID        → 10 XP  (Nhìn nốt → Root hay 1st?)
+  ├─ 🎹 Inversion Play      → 15 XP  (Chơi C và C/E)
+  └─ 📍 Voice Leading Path → 20 XP  (C → F với common tone)
+
+LEVEL 2 (+ 2nd Inversion)
+  ├─ 🎵 Inversion ID        → 15 XP  (Cả 3 thế: Root/1st/2nd)
+  ├─ 🎹 Inversion Play      → 20 XP  (Chơi C/G, F/C, G/D)
+  └─ 📍 Voice Leading Path → 25 XP  (Smooth progression 3 chords)
+
+LEVEL 3 (Full Voice Leading)
+  ├─ 🎵 Inversion ID        → 20 XP  (Nhận diện nhanh)
+  ├─ 🎹 Inversion Play      → 30 XP  (Slash chords: G/B, Am/C)
+  └─ 📍 Voice Leading Path → 40 XP  (I-IV-V-I mượt mà) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type                 | Mô tả                                     | Skill Level   |
+| -------------------- | ----------------------------------------- | ------------- |
+| `inversion-id`       | Nhìn nốt → Root, 1st, hay 2nd inversion?  | Recognition   |
+| `inversion-play`     | Chơi C/G trên Piano                       | Active Recall |
+| `voice-leading-path` | Chọn inversions để tạo smooth progression | Application   |
 
 ---
 
@@ -459,12 +597,35 @@
 | 4.7.3 | ii-V-I Loop          | The Jazz progression            |
 | 4.7.4 | 7th Chords on Guitar | G7, C7, E7 open chords          |
 
-**Thiết kế Game (3-Tier Progression):**
+**Game Journey (Interleaved Progressive Pattern):**
 
-| Cấp độ | Tên Game          | Mô tả Gameplay                      |
-| :----- | :---------------- | :---------------------------------- |
-| ⭐     | **7th Type ID**   | Nghe → Maj7, min7, hay Dom7?        |
-| ⭐⭐   | **Build the 7th** | Cho triad → thêm đúng nốt 7         |
-| ⭐⭐⭐ | **ii-V-I Play**   | Chơi progression trong key được cho |
+Thiết kế game theo pattern "Master-Before-Advance":
+
+```
+LEVEL 1 (Maj7 & min7)
+  ├─ 🎵 7th Type ID         → 10 XP  (Maj7 vs min7)
+  ├─ 🛠️ Build the 7th      → 15 XP  (Cho triad → thêm 7th)
+  └─ 🎹 7th Chord Play      → 20 XP  (Chơi Cmaj7, Am7)
+
+LEVEL 2 (+ Dominant 7 - V7)
+  ├─ 🎵 7th Type ID         → 15 XP  (Dom7: Major + m7!)
+  ├─ 🛠️ Build the 7th      → 20 XP  (Xây G7 → C)
+  └─ 🎹 7th Chord Play      → 25 XP  (V7 → I resolution)
+
+LEVEL 3 (ii-V-I in Jazz)
+  ├─ 🎵 7th Type ID         → 20 XP  (Cả 3 loại + context)
+  ├─ 🛠️ Build the 7th      → 30 XP  (Dm7 → G7 → Cmaj7)
+  └─ 🎹 ii-V-I Play        → 40 XP  (Jazz progression) ⭐
+
+Tổng: 9 games | 195 XP
+```
+
+**Game Types:**
+
+| Type            | Mô tả                               | Skill Level   |
+| --------------- | ----------------------------------- | ------------- |
+| `7th-type-id`   | Nghe → Maj7, min7, hay Dom7?        | Recognition   |
+| `build-the-7th` | Cho triad → thêm đúng nốt 7         | Active Recall |
+| `ii-v-i-play`   | Chơi progression trong key được cho | Application   |
 
 ---
