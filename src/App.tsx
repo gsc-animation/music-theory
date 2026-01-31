@@ -18,6 +18,7 @@ const FretboardTestPage = lazy(() => import('./pages/FretboardTestPage'))
 const GuitarFretboardPopupTestPage = lazy(() => import('./pages/GuitarFretboardPopupTestPage'))
 const TestAbcNotationPage = lazy(() => import('./pages/TestAbcNotationPage'))
 
+const IPhonePlayerTestPage = lazy(() => import('./pages/IPhonePlayerTestPage'))
 const Module2GameTestPage = lazy(() => import('./pages/Module2GameTestPage'))
 // Profile page is now eagerly loaded as home page
 
@@ -104,6 +105,7 @@ function App() {
             <Route path="/test-guitar-popup" element={<GuitarFretboardPopupTestPage />} />
             <Route path="/test-abc-notation" element={<TestAbcNotationPage />} />
 
+            <Route path="/test-iphone-player" element={<IPhonePlayerTestPage />} />
             <Route path="/test-games-m2" element={<Module2GameTestPage />} />
           </Routes>
         </Suspense>
