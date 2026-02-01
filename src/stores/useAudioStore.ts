@@ -108,20 +108,7 @@ export const useAudioStore = create<AudioState>((set) => ({
   // Play note without recording - for preview/click playback
   // This highlights instruments but doesn't add to recordedNotes
   playNote: async (note: string) => {
-    // Auto-initialize on first interaction
-    const { isReady } = useAudioStore.getState()
-    if (!isReady) {
-      await audioEngine.initialize()
-      set({ isReady: true })
-    }
-
-    audioEngine.startNote(note)
-    set((state) => ({
-      activeNotes: state.activeNotes.includes(note)
-        ? state.activeNotes
-        : [...state.activeNotes, note],
-      isPlaying: true,
-    }))
+    await useAudioStore.getState().playNoteWithRelease(note, '8n')
   },
 
   // Release note without affecting recordedNotes

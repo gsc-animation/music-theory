@@ -1,4 +1,6 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useMemo, lazy, Suspense } from 'react'
+
+const AbcNoteSymbol = lazy(() => import('./AbcNoteSymbol'))
 
 interface NoteValueIdGameProps {
   submoduleId: string
@@ -25,7 +27,7 @@ const NOTE_VALUES: NoteValue[] = [
     nameVi: 'Nốt Tròn',
     symbol: '𝅝',
     beats: 4,
-    abcNotation: 'C4',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nC4|]',
     description: '4 beats - longest common note',
   },
   {
@@ -34,7 +36,7 @@ const NOTE_VALUES: NoteValue[] = [
     nameVi: 'Nốt Trắng',
     symbol: '𝅗𝅥',
     beats: 2,
-    abcNotation: 'C2',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nC2z2|]',
     description: '2 beats - half of a whole note',
   },
   {
@@ -43,7 +45,7 @@ const NOTE_VALUES: NoteValue[] = [
     nameVi: 'Nốt Đen',
     symbol: '♩',
     beats: 1,
-    abcNotation: 'C',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nCz3|]',
     description: '1 beat - the heartbeat of music',
   },
   {
@@ -52,7 +54,7 @@ const NOTE_VALUES: NoteValue[] = [
     nameVi: 'Móc Đơn',
     symbol: '♪',
     beats: 0.5,
-    abcNotation: 'C/',
+    abcNotation: 'L:1/8\nM:4/4\nK:C\nCz7|]',
     description: '1/2 beat - twice as fast',
   },
   {
@@ -61,7 +63,7 @@ const NOTE_VALUES: NoteValue[] = [
     nameVi: 'Móc Kép',
     symbol: '𝅘𝅥𝅯',
     beats: 0.25,
-    abcNotation: 'C//',
+    abcNotation: 'L:1/16\nM:4/4\nK:C\nCz15|]',
     description: '1/4 beat - very fast!',
   },
 ]
@@ -90,36 +92,28 @@ const NoteValueIdGame: React.FC<NoteValueIdGameProps> = ({
   const [score, setScore] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [showFeedback, setShowFeedback] = useState(false)
-  const [questions, setQuestions] = useState<NoteValue[]>(() => generateQuestions(0))
 
   const totalQuestions = 5
+  const currentLevelConfig = LEVELS[currentLevel]
 
-  // Generate random questions for current level
-  function generateQuestions(levelIndex: number): NoteValue[] {
-    const level = LEVELS[levelIndex]
-    const availableNotes = NOTE_VALUES.filter((n) => level.notes.includes(n.id))
+  // Generate questions for current level using useMemo
+  const questions = useMemo(() => {
+    const availableNotes = NOTE_VALUES.filter((n) => currentLevelConfig.notes.includes(n.id))
     const result: NoteValue[] = []
-
     for (let i = 0; i < totalQuestions; i++) {
       const randomNote = availableNotes[Math.floor(Math.random() * availableNotes.length)]
       result.push(randomNote)
     }
-
     return result
-  }
+  }, [currentLevel, currentLevelConfig.notes])
 
-  // Get current question
   const currentQuestion = questions[questionIndex]
-  const currentLevelConfig = LEVELS[currentLevel]
 
-  // Get answer options (shuffled)
-  const getOptions = useCallback(() => {
-    const level = LEVELS[currentLevel]
-    const availableNotes = NOTE_VALUES.filter((n) => level.notes.includes(n.id))
+  // Get shuffled options using useMemo
+  const options = useMemo(() => {
+    const availableNotes = NOTE_VALUES.filter((n) => currentLevelConfig.notes.includes(n.id))
     return [...availableNotes].sort(() => Math.random() - 0.5)
-  }, [currentLevel])
-
-  const [options] = useState(() => getOptions())
+  }, [currentLevelConfig.notes, questionIndex])
 
   // Handle answer selection
   const handleAnswer = (noteId: string) => {
@@ -149,14 +143,13 @@ const NoteValueIdGame: React.FC<NoteValueIdGameProps> = ({
     }, 1500)
   }
 
-  // Handle level change
+  // Handle level change (questions regenerate via useMemo when currentLevel changes)
   const handleLevelChange = (levelIndex: number) => {
     setCurrentLevel(levelIndex)
     setQuestionIndex(0)
     setScore(0)
     setSelectedAnswer(null)
     setShowFeedback(false)
-    setQuestions(generateQuestions(levelIndex))
   }
 
   return (
@@ -198,8 +191,12 @@ const NoteValueIdGame: React.FC<NoteValueIdGameProps> = ({
           What is the value of this note?
         </p>
 
-        {/* Large Note Symbol */}
-        <div className="text-8xl mb-4">{currentQuestion.symbol}</div>
+        {/* Large Note Symbol - Using ABC rendering */}
+        <div className="flex justify-center mb-4">
+          <Suspense fallback={<div className="text-4xl">Loading...</div>}>
+            <AbcNoteSymbol noteAbc={currentQuestion.abcNotation} width={200} height={100} />
+          </Suspense>
+        </div>
 
         {/* Hint: Beats */}
         <p className="text-sm text-slate-400 dark:text-slate-500">
@@ -231,7 +228,11 @@ const NoteValueIdGame: React.FC<NoteValueIdGameProps> = ({
               }`}
             >
               <div className="flex items-center gap-3">
-                <span className="text-3xl">{note.symbol}</span>
+                <div className="w-20 h-14 flex-shrink-0">
+                  <Suspense fallback={<span className="text-xl">♪</span>}>
+                    <AbcNoteSymbol noteAbc={note.abcNotation} width={80} height={56} />
+                  </Suspense>
+                </div>
                 <div>
                   <p className="font-semibold text-slate-800 dark:text-white">
                     {note.name}

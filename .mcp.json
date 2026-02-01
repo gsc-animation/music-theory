@@ -1,5 +1,12 @@
 {
   "mcpServers": {
+    "stitch": {
+      "serverUrl": "https://stitch.googleapis.com/mcp",
+      "headers": {
+        "Authorization": "Bearer REPLACE_WITH_YOUR_TOKEN",
+        "X-Goog-User-Project": "fut-pll-05"
+      }
+    },
     "claude-flow": {
       "command": "npx",
       "args": [

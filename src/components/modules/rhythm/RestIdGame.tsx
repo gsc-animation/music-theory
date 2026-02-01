@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, lazy, Suspense } from 'react'
+
+const AbcNoteSymbol = lazy(() => import('./AbcNoteSymbol'))
 
 interface RestIdGameProps {
   submoduleId: string
@@ -16,6 +18,7 @@ interface RestValue {
   beats: number
   mnemonic: string
   description: string
+  abcNotation: string
 }
 
 const REST_VALUES: RestValue[] = [
@@ -27,6 +30,7 @@ const REST_VALUES: RestValue[] = [
     beats: 4,
     mnemonic: 'Hangs under line 4 like a heavy box',
     description: 'Rest for a whole measure (4 beats in 4/4)',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nz4|]',
   },
   {
     id: 'half',
@@ -36,6 +40,7 @@ const REST_VALUES: RestValue[] = [
     beats: 2,
     mnemonic: 'Sits on top of line 3 like a hat',
     description: 'Rest for 2 beats',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nz2z2|]',
   },
   {
     id: 'quarter',
@@ -45,6 +50,7 @@ const REST_VALUES: RestValue[] = [
     beats: 1,
     mnemonic: 'Zigzag like a lightning bolt',
     description: 'Rest for 1 beat',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nzz3|]',
   },
   {
     id: 'eighth',
@@ -54,6 +60,7 @@ const REST_VALUES: RestValue[] = [
     beats: 0.5,
     mnemonic: 'Number 7 with one flag',
     description: 'Rest for half a beat',
+    abcNotation: 'L:1/8\nM:4/4\nK:C\nzz7|]',
   },
   {
     id: 'sixteenth',
@@ -63,6 +70,7 @@ const REST_VALUES: RestValue[] = [
     beats: 0.25,
     mnemonic: 'Number 7 with two flags',
     description: 'Rest for quarter of a beat',
+    abcNotation: 'L:1/16\nM:4/4\nK:C\nzz15|]',
   },
 ]
 
@@ -196,8 +204,12 @@ const RestIdGame: React.FC<RestIdGameProps> = ({
           What is the value of this rest?
         </p>
 
-        {/* Large Rest Symbol */}
-        <div className="text-8xl mb-4 font-music">{currentQuestion.symbol}</div>
+        {/* Large Rest Symbol - Using ABC rendering */}
+        <div className="flex justify-center mb-4">
+          <Suspense fallback={<div className="text-4xl">Loading...</div>}>
+            <AbcNoteSymbol noteAbc={currentQuestion.abcNotation} width={200} height={100} />
+          </Suspense>
+        </div>
 
         {/* Hint: Beats */}
         <p className="text-sm text-slate-400 dark:text-slate-500">
@@ -229,7 +241,11 @@ const RestIdGame: React.FC<RestIdGameProps> = ({
               }`}
             >
               <div className="flex items-center gap-3">
-                <span className="text-3xl font-music">{rest.symbol}</span>
+                <div className="w-20 h-14 flex-shrink-0">
+                  <Suspense fallback={<span className="text-xl">♪</span>}>
+                    <AbcNoteSymbol noteAbc={rest.abcNotation} width={80} height={56} />
+                  </Suspense>
+                </div>
                 <div>
                   <p className="font-semibold text-slate-800 dark:text-white">
                     {rest.name}

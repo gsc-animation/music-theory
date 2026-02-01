@@ -1,5 +1,7 @@
-import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
+import React, { useState, useCallback, useMemo, useEffect, useRef, lazy, Suspense } from 'react'
 import { useAudioStore } from '../../../stores/useAudioStore'
+
+const AbcNoteSymbol = lazy(() => import('./AbcNoteSymbol'))
 
 interface BeatStrengthGameProps {
   submoduleId: string
@@ -17,6 +19,7 @@ interface TimeSignature {
   nameVi: string
   beatPattern: ('strong' | 'medium' | 'weak')[]
   description: string
+  abcNotation: string
 }
 
 const TIME_SIGNATURES: TimeSignature[] = [
@@ -28,6 +31,7 @@ const TIME_SIGNATURES: TimeSignature[] = [
     nameVi: 'Nhịp 4/4',
     beatPattern: ['strong', 'weak', 'medium', 'weak'],
     description: 'Strong-Weak-Medium-Weak',
+    abcNotation: 'L:1/4\nM:4/4\nK:C\nCDEF|]',
   },
   {
     id: '3-4',
@@ -37,6 +41,7 @@ const TIME_SIGNATURES: TimeSignature[] = [
     nameVi: 'Nhịp 3/4',
     beatPattern: ['strong', 'weak', 'weak'],
     description: 'Strong-Weak-Weak (Waltz)',
+    abcNotation: 'L:1/4\nM:3/4\nK:C\nCDE|]',
   },
   {
     id: '2-4',
@@ -46,6 +51,7 @@ const TIME_SIGNATURES: TimeSignature[] = [
     nameVi: 'Nhịp 2/4',
     beatPattern: ['strong', 'weak'],
     description: 'Strong-Weak (March)',
+    abcNotation: 'L:1/4\nM:2/4\nK:C\nCD|]',
   },
 ]
 
@@ -247,18 +253,14 @@ const BeatStrengthGame: React.FC<BeatStrengthGameProps> = ({
         Question {questionIndex + 1} of {totalQuestions} • Score: {score}
       </div>
 
-      {/* Time Signature Display */}
+      {/* Time Signature Display - Using ABC rendering */}
       <div className="text-center py-4">
-        <div className="bg-slate-100 dark:bg-slate-700 rounded-2xl p-6 inline-block">
-          <div className="text-5xl font-bold text-slate-800 dark:text-white">
-            <span className="block">{currentQuestion.top}</span>
-            <div className="border-t-2 border-slate-400 my-1" />
-            <span className="block">{currentQuestion.bottom}</span>
-          </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
-            {currentQuestion.name} • {currentQuestion.nameVi}
-          </p>
-        </div>
+        <Suspense fallback={<div className="text-4xl">Loading...</div>}>
+          <AbcNoteSymbol noteAbc={currentQuestion.abcNotation} width={300} height={120} />
+        </Suspense>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+          {currentQuestion.name} • {currentQuestion.nameVi}
+        </p>
       </div>
 
       {/* Instructions */}

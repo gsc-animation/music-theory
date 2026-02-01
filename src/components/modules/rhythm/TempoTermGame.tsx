@@ -278,7 +278,7 @@ const TempoTermGame: React.FC<TempoTermGameProps> = ({
                     {term.name}
                   </p>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    {term.nameVi} • {term.bpmMin}-{term.bpmMax} BPM
+                    {term.nameVi}
                   </p>
                 </div>
               </div>
