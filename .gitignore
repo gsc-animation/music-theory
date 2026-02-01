@@ -32,3 +32,5 @@ reference/
 .env
 test-results/
 e2e/
+
+.mcp.json
