@@ -30,3 +30,5 @@ coverage/lcov-report/data/
 # Reference materials (not needed for build)
 reference/
 .env
+test-results/
+e2e/
